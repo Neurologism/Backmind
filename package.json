@@ -5,20 +5,24 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "npx tsc",
-    "start": "node dist/index.js",
+    "start": "pm2 start dist/index.js -i 1 --name backmind",
+    "stop": "pm2 stop backmind",
+    "restart": "pm2 restart backmind",
+    "monit": "pm2 monit backmind",
     "dev": "nodemon src/index.ts"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "dotenv": "^16.4.5",
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "pm2": "^5.4.2"
   },
   "devDependencies": {
     "@types/express": "^4.17.21",
     "@types/node": "^22.5.1",
+    "nodemon": "^3.1.4",
     "ts-node": "^10.9.2",
-    "typescript": "^5.5.4",
-    "nodemon": "^3.1.4"
+    "typescript": "^5.5.4"
   }
 }

@@ -1,9 +1,7 @@
 #!/bin/bash
-touch deploy_worked
 cd backmind
-pm2 stop backmind
+/home/emil/.nvm/versions/node/v20.12.1/bin/pm2 stop backmind
 git pull
-npm i
-npx tsc
-pm2 start dist/index.js -i 1 --name backmind
-exit
+/home/emil/.nvm/versions/node/v20.12.1/bin/npm i
+/home/emil/.nvm/versions/node/v20.12.1/bin/npx tsc
+/home/emil/.nvm/versions/node/v20.12.1/bin/pm2 start dist/index.js -i 1 --name backmind

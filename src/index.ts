@@ -20,6 +20,15 @@ async function init_mongo() {
   console.log("Connected to database server. ")
   const db = dbclient.db(db_name)
   const collection = db.collection('documents');
+  if (process.env.RESET_DB == "true") {
+    console.log("Resetting database... ")
+    await db.dropDatabase();
+    const collections = ['users', 'projects'];
+    for (const collectionName of collections) {
+      await db.createCollection(collectionName);
+    }
+    console.log("Database reset successful")
+  }
 }
 
 app.get("/", (req: Request, res: Response) => {
@@ -28,7 +37,7 @@ app.get("/", (req: Request, res: Response) => {
 
 init_mongo()
   .then(() => app.listen(express_port, () => {
-    console.log(`[server]: Server is running at http://localhost:${express_port}`);
+    console.log(`express server is running at http://localhost:${express_port}`);
   })
 );
 

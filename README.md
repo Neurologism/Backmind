@@ -26,6 +26,7 @@ MONGO_PORT=27017
 DB_NAME="backmind"
 MONGO_USER="myuser"
 MONGO_PASS='mypass'
+RESET_DB="true"
 ```
 
 ## Production

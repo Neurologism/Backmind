@@ -23,4 +23,4 @@ jobs:
 
       - name: Deploy to server
         run: |
-          ssh -o StrictHostKeyChecking=no emil@ssh.icinoxis.net 'bash -s' < ./deploy.sh
+          ssh -o StrictHostKeyChecking=no emil@ssh.icinoxis.net 'bash -s' < ./scripts/deploy.sh

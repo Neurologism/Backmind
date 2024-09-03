@@ -9,13 +9,15 @@
     "stop": "pm2 stop backmind",
     "restart": "pm2 restart backmind",
     "monit": "pm2 monit backmind",
-    "dev": "nodemon src/index.ts"
+    "dev": "nodemon ./src/index.ts"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/mongodb": "^4.0.6",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "mongodb": "^6.8.0",
     "pm2": "^5.4.2"
   },
   "devDependencies": {

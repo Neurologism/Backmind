@@ -17,10 +17,15 @@ Afterwards, use `npm run dev` to run for developement purposes.
 
 Configuration data is stored as environment variables in the [`.env`](/.env) file. 
 The file is part of the [`.gitignore`](/.env), thus you will have to create it manually. 
-Below, you can find an example configuration utilizing most environment variables. 
+Below, you can find an example configuration utilizing some environment variables. 
 
 ```
-PORT=3000
+EXPRESS_PORT=3000
+MONGO_URL="127.0.0.1"
+MONGO_PORT=27017
+DB_NAME="backmind"
+MONGO_USER="myuser"
+MONGO_PASS='mypass'
 ```
 
 ## Production

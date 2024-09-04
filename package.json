@@ -9,7 +9,8 @@
     "stop": "pm2 stop backmind",
     "restart": "pm2 restart backmind",
     "monit": "pm2 monit backmind",
-    "dev": "nodemon ./src/index.ts"
+    "dev": "nodemon ./src/index.ts",
+    "pretty": "prettier --write \"**/*.ts\""
   },
   "author": "",
   "license": "ISC",

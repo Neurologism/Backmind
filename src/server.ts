@@ -29,7 +29,7 @@ process.env.JWT_SECRET = process.env.JWT_SECRET || crypto.randomBytes(32).toStri
  *         description: working
  */
 app.get('/', async (req: Request, res: Response) => {
-  res.send('Backbrain Express Server');
+  res.send('Backmind Express Server');
   return;
 });
 

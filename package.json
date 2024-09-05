@@ -2,14 +2,14 @@
   "name": "backmind",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/index.js",
+  "main": "dist/server.js",
   "scripts": {
     "build": "npx tsc",
-    "start": "pm2 start dist/index.js -i 1 --name backmind",
+    "start": "pm2 start dist/server.js -i 1 --name backmind",
     "stop": "pm2 stop backmind",
     "restart": "pm2 restart backmind",
     "monit": "pm2 monit backmind",
-    "dev": "nodemon ./src/index.ts",
+    "dev": "nodemon ./src/server.ts",
     "pretty": "prettier --write \"**/*.ts\""
   },
   "author": "",

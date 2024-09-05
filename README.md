@@ -20,12 +20,13 @@ The file is part of the [`.gitignore`](/.env), thus you will have to create it m
 Below, you can find an example configuration utilizing some environment variables. 
 
 ```
+MONGO_URI='mongodb://user:password@hostname:port'
+JWT_SECRET="Coffee" // if not specified, it is generated randomly
+JWT_TOKEN_EXPIRE_IN="1h"
 EXPRESS_PORT=3000
-MONGO_URL="127.0.0.1"
-MONGO_PORT=27017
 DB_NAME="backmind"
-MONGO_USER="myuser"
-MONGO_PASS='mypass'
+RESET_DB="false"
+SALT_ROUNDS="10"
 ```
 
 ## Production

@@ -6,6 +6,7 @@ import authRoutes from './routes/auth';
 import userRoutes from './routes/user';
 import projectRoutes from './routes/project';
 import crypto from 'crypto';
+import { setupSwagger } from './swagger';
 
 dotenv.config();
 
@@ -14,9 +15,19 @@ app.use(bodyParser.json());
 app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/project', projectRoutes);
+setupSwagger(app);
 const express_port = process.env.EXPRESS_PORT || 3000;
 process.env.JWT_SECRET = process.env.JWT_SECRET || crypto.randomBytes(32).toString('hex');
 
+/**
+ * @swagger
+ * /:
+ *   get:
+ *     summary: test the api
+ *     responses:
+ *       200:
+ *         description: working
+ */
 app.get('/', async (req: Request, res: Response) => {
   res.send('Backbrain Express Server');
   return;

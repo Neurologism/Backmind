@@ -29,6 +29,10 @@ RESET_DB="false"
 SALT_ROUNDS="10"
 ```
 
+## Documentation
+
+Documentation is generated using swagger and can be accessed at `/api-docs`. 
+
 ## Production
 
 Use the following pre-defined commands from [`package.json`](/package.json) for basic usage. 

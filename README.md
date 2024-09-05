@@ -1,5 +1,5 @@
 # Backmind
-The backend repo for brainet utilizing nodejs, express, typescript, mongodb and pm2 for production. 
+The backend repo for brainet utilizing nodejs, express, typescript and mongodb.
 
 ## Installation
 
@@ -28,6 +28,10 @@ DB_NAME="backmind"
 RESET_DB="false"
 SALT_ROUNDS="10"
 ```
+
+## Documentation
+
+Documentation is generated using swagger and can be accessed at `/api-docs`. 
 
 ## Production
 

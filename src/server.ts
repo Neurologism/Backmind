@@ -7,17 +7,23 @@ import userRoutes from './routes/user';
 import projectRoutes from './routes/project';
 import crypto from 'crypto';
 import { setupSwagger } from './swagger';
+import cors from 'cors';
 
 dotenv.config();
 
 const app: Express = express();
 app.use(bodyParser.json());
+app.use(cors());
+
 app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/project', projectRoutes);
+
 setupSwagger(app);
+
 const express_port = process.env.EXPRESS_PORT || 3000;
-process.env.JWT_SECRET = process.env.JWT_SECRET || crypto.randomBytes(32).toString('hex');
+process.env.JWT_SECRET =
+  process.env.JWT_SECRET || crypto.randomBytes(32).toString('hex');
 
 /**
  * @swagger

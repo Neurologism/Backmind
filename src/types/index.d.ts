@@ -18,9 +18,5 @@ export interface RequestExplicit extends Request {
   dbprojects: Collection;
 }
 
-export type Block = Object; // TODO
-
-export type Variable = Object; // TODO
-
 export * from './user';
 export * from './project';

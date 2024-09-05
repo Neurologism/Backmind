@@ -1,5 +1,5 @@
 # Backmind
-The backend repo for brainet utilizing nodejs, express, typescript, mongodb and pm2 for production. 
+The backend repo for brainet utilizing nodejs, express, typescript and mongodb.
 
 ## Installation
 

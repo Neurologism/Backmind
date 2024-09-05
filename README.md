@@ -32,6 +32,7 @@ SALT_ROUNDS="10"
 ## Documentation
 
 Documentation is generated using swagger and can be accessed at `/api-docs`. 
+The swagger documentation is generated from comments next to the routes. 
 
 ## Production
 

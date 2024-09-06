@@ -1,6 +1,7 @@
 import swaggerJsdoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 import { Express } from 'express';
+import { request } from 'http';
 
 const swaggerDefinition = {
   openapi: '3.0.0',
@@ -29,6 +30,37 @@ const swaggerDefinition = {
     '/api/auth/register': {
       post: {
         summary: 'Register a new user.',
+        description:
+          'Use this endpoint to register a new user. You can use the /api/user/is-taken endpoint to make sure the brainet tag and email address are still available. To create a new user, you absolutely need to specify email, brainet tag and password. ',
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': {
+              schema: {
+                type: 'object',
+                properties: {
+                  user: {
+                    type: 'object',
+                    properties: {
+                      email: {
+                        type: 'string',
+                        example: 'max@mustermann.net',
+                      },
+                      brainet_tag: {
+                        type: 'string',
+                        example: 'randomuser1234',
+                      },
+                      plain_password: {
+                        type: 'string',
+                        example: 'mypassword123',
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
         responses: {
           '201': {
             description: 'Successfully registered',
@@ -36,13 +68,65 @@ const swaggerDefinition = {
           '400': {
             description: 'Email or brainet tag already in use',
           },
+          '500': {
+            description: 'Internal server error',
+          },
         },
       },
     },
     '/api/auth/login': {
       post: {
         summary: 'Login a user.',
+        description:
+          'Use this method to login as a user. You need to provide the email or brainet tag and plain password. ',
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': {
+              schema: {
+                type: 'object',
+                properties: {
+                  user: {
+                    type: 'object',
+                    properties: {
+                      email: {
+                        type: 'string',
+                        example: 'max@mustermann.net',
+                      },
+                      brainet_tag: {
+                        type: 'string',
+                        example: 'randomuser1234',
+                      },
+                      plain_password: {
+                        type: 'string',
+                        example: 'password123',
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
         responses: {
+          '200': {
+            description: 'Successfully logged in',
+            content: {
+              'application/json': {
+                schema: {
+                  type: 'object',
+                  properties: {
+                    token: {
+                      type: 'string',
+                      description:
+                        'Use this token for further requests under the Authorization header.',
+                      example: 'eyJhbGciOi0298i718u345hgtr',
+                    },
+                  },
+                },
+              },
+            },
+          },
           '404': {
             description: 'User not found',
           },
@@ -362,12 +446,12 @@ const swaggerDefinition = {
                       brainet_tag: {
                         type: 'string',
                         description:
-                          "Use '/api/user/is_taken' to make sure this brainet tag isn't already taken.",
+                          "Use '/api/user/is-taken' to make sure this brainet tag isn't already taken.",
                       },
                       email: {
                         type: 'string',
                         description:
-                          "Use '/api/user/is_taken' to make sure the email isn't already in use.",
+                          "Use '/api/user/is-taken' to make sure the email isn't already in use.",
                       },
                       about_you: {
                         type: 'string',
@@ -411,7 +495,7 @@ const swaggerDefinition = {
         },
       },
     },
-    '/api/user/is_taken': {
+    '/api/user/is-taken': {
       post: {
         summary: 'Check if an email or brainet tag is taken.',
         description:

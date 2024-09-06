@@ -37,17 +37,17 @@ export const register = async (req: Request, res: Response) => {
 };
 
 export const login = async (req: Request, res: Response) => {
-  const given_user: UserLogin = req.body['user'];
-  let query = await req.dbusers!.findOne(given_user);
-
+  const query = await req.dbusers!.findOne({
+    email: req.body['user'].email,
+    brainet_tag: req.body['user'].brainet_tag,
+  });
   if (query === null) {
-    res.status(404).send('User not found');
-    return;
+    return res.status(404).send('User not found');
   }
   const query_user = query as UserExplicit;
 
   const isMatch = await bcrypt.compare(
-    given_user.plain_password,
+    req.body['user'].plain_password,
     query_user.password_hash
   );
 
@@ -61,8 +61,8 @@ export const login = async (req: Request, res: Response) => {
     process.env.JWT_SECRET as string,
     { expiresIn: process.env.JWT_TOKEN_EXPIRE_IN || '1h' }
   );
-  res.json({ token: token });
-  return;
+
+  return res.json({ token: token });
 };
 
 export const logout = async (req: Request, res: Response) => {

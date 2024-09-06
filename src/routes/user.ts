@@ -17,7 +17,7 @@ router.post('/get', dbMiddleware, authMiddleware, getUser);
 
 router.post('/update', dbMiddleware, authMiddleware, updateUser);
 
-router.get('/is_taken', dbMiddleware, authMiddleware, isTakenUser);
+router.get('/is-taken', dbMiddleware, authMiddleware, isTakenUser);
 
 router.post('/search', dbMiddleware, authMiddleware, searchUser);
 

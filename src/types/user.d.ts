@@ -18,7 +18,8 @@ export type User = {
 export type UserExplicit = Required<User>;
 
 export type UserLogin = {
-  email: string;
+  email?: string;
+  brainet_tag?: string;
   plain_password: string;
 };
 

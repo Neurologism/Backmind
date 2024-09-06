@@ -31,9 +31,15 @@ export const register = async (req: Request, res: Response) => {
     following_ids: [],
   };
 
-  req.dbusers!.insertOne(newUser);
+  const result = await req.dbusers!.insertOne(newUser);
 
-  res.status(201).json({ message: 'User registered successfully' });
+  const token = jwt.sign(
+    { _id: '' + result.insertedId },
+    process.env.JWT_SECRET as string,
+    { expiresIn: process.env.JWT_TOKEN_EXPIRE_IN || '1h' }
+  );
+
+  res.status(201).json({ message: 'User registered successfully', token: token });
 };
 
 export const login = async (req: Request, res: Response) => {
@@ -62,7 +68,7 @@ export const login = async (req: Request, res: Response) => {
     { expiresIn: process.env.JWT_TOKEN_EXPIRE_IN || '1h' }
   );
 
-  return res.json({ token: token });
+  return res.status(200).json({ token: token });
 };
 
 export const logout = async (req: Request, res: Response) => {

@@ -13,19 +13,21 @@ export const authMiddleware = (
 ) => {
   const token = req.header('Authorization')?.split(' ')[1];
 
-  if (!token) {
-    return res.status(401).json({ message: 'No token, authorization denied' });
-  }
-
   try {
     const decoded = jwt.verify(
-      token,
+      token!,
       process.env.JWT_SECRET as string
     ) as JwtPayload;
     req.user_id = new ObjectId(decoded.id);
     next();
   } catch (err) {
-    req.user_id = null;
-    next();
+    if (err instanceof jwt.JsonWebTokenError) {
+      req.user_id = null;
+      console.log(err);
+      next();
+    } else {
+      res.status(500).send('Internal server error.');
+      throw err;
+    }
   }
 };

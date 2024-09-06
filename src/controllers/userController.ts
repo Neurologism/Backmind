@@ -21,24 +21,24 @@ const sanitizeUser = (user: UserUpdate): UserUpdate => {
 export const getUser = async (req: Request, res: Response) => {
   req as RequestExplicit;
   let user;
-  if (isEmptyObject(req.body) || req.body['user']['_id'] === req.user_id) {
-    if (req.user_id === undefined) {
+  if (isEmptyObject(req.body) || isEmptyObject(req.body["user"]) || req.body['user']['_id'] === req.user_id) {
+    if (req.user_id === null) {
       return res
         .status(401)
         .send("You provided an empty body but aren't authenticated. ");
     }
-    user = req.dbusers!.findOne({ _id: req.user_id! }) as User;
+    user = await req.dbusers!.findOne({ _id: req.user_id! }) as User;
     if (user === null) {
       return res.status(404).send('No user found matching the criteria.');
     }
     user.password_hash = undefined;
-    return res.status(200).send(user);
+    return res.status(200).json({user: user})
   } else {
     const search_properties = {
       _id: req.body['user']['id'],
       brainet_tag: req.body['user']['brainet_tag'],
     };
-    user = req.dbusers!.findOne(search_properties);
+    user = await req.dbusers!.findOne(search_properties);
     if (user === null) {
       return res.status(404).send('No user found matching the criteria.');
     }
@@ -47,7 +47,7 @@ export const getUser = async (req: Request, res: Response) => {
     forbiddenProperties.forEach((item) => {
       user![item] = undefined;
     });
-    return res.status(200).send(user);
+    return res.status(200).json({user: user})
   }
 };
 
@@ -56,7 +56,7 @@ export const updateUser = async (req: Request, res: Response) => {
   if (req.user_id === undefined) {
     return res.status(401).send('You are not authenticated.');
   }
-  const db_user = req.dbusers!.findOne({
+  const db_user = await req.dbusers!.findOne({
     _id: req.user_id!,
   }) as unknown as UserExplicit;
   if (db_user === null) {
@@ -110,7 +110,7 @@ export const isTakenUser = async (req: Request, res: Response) => {
       { brainet_tag: req.body['user']['brainet_tag'] },
     ],
   };
-  const user = req.dbusers!.findOne(search_properties);
+  const user = await req.dbusers!.findOne(search_properties);
   if (user === null) {
     return res.status(200).send('This user is not taken.');
   }

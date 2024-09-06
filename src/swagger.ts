@@ -64,6 +64,21 @@ const swaggerDefinition = {
         responses: {
           '201': {
             description: 'Successfully registered',
+            content: {
+              'application/json': {
+                schema: {
+                  type: 'object',
+                  properties: {
+                    token: {
+                      type: 'string',
+                      description:
+                        'Use this token for further requests under the Authorization header.',
+                      example: 'eyJhbGciOi0298i718u345hgtr',
+                    },
+                  },
+                },
+              },
+            },
           },
           '400': {
             description: 'Email or brainet tag already in use',

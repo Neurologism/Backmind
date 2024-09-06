@@ -26,15 +26,6 @@ process.env.JWT_SECRET =
   process.env.JWT_SECRET || crypto.randomBytes(32).toString('hex');
 process.env.SALT_ROUNDS = process.env.SALT_ROUNDS || '10';
 
-/**
- * @swagger
- * /:
- *   get:
- *     summary: test the api
- *     responses:
- *       200:
- *         description: working
- */
 app.get('/', async (req: Request, res: Response) => {
   res.send('Backmind Express Server');
   return;

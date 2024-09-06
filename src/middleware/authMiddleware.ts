@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
+import { ObjectId } from 'mongodb';
 
 interface JwtPayload {
   id: string;
@@ -21,7 +22,7 @@ export const authMiddleware = (
       token,
       process.env.JWT_SECRET as string
     ) as JwtPayload;
-    req.user_id = Number(decoded.id);
+    req.user_id = new ObjectId(decoded.id);
     next();
   } catch (err) {
     req.user_id = null;

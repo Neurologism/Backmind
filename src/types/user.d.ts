@@ -10,9 +10,9 @@ export type User = {
   date_of_birth?: number;
   visibility?: 'public' | 'private';
   created_on?: number;
-  project_ids?: number[];
-  follower_ids?: number[];
-  following_ids?: number[];
+  project_ids?: ObjectId[];
+  follower_ids?: ObjectId[];
+  following_ids?: ObjectId[];
 };
 
 export type UserExplicit = Required<User>;

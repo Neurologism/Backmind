@@ -24,6 +24,7 @@ setupSwagger(app);
 const express_port = process.env.EXPRESS_PORT || 3000;
 process.env.JWT_SECRET =
   process.env.JWT_SECRET || crypto.randomBytes(32).toString('hex');
+process.env.SALT_ROUNDS = process.env.SALT_ROUNDS || '10';
 
 /**
  * @swagger

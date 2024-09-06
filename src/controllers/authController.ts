@@ -14,7 +14,7 @@ export const register = async (req: Request, res: Response) => {
       .json({ message: 'User with that email or brainet_tag already exists' });
   }
 
-  const salt = await bcrypt.genSalt(Number(process.env.SALT_ROUNDS || '10'));
+  const salt = await bcrypt.genSalt(Number(process.env.SALT_ROUNDS));
   const hashedPassword = await bcrypt.hash(given_user.plain_password, salt);
 
   const newUser: User = {

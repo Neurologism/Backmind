@@ -27,3 +27,15 @@ export type UserRegister = {
   plain_password: string;
   brainet_tag: string;
 };
+
+export type UserUpdate = {
+  email?: string;
+  about_you?: string;
+  displayname?: string;
+  brainet_tag?: string;
+  date_of_birth?: number;
+  visibility?: 'public' | 'private';
+  new_password?: string;
+  old_password?: string;
+  password_hash?: string;
+};

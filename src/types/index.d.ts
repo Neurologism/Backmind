@@ -4,7 +4,7 @@ import { Db, Collection } from 'mongodb';
 
 declare module 'express-serve-static-core' {
   interface Request {
-    user_id?: Number;
+    user_id?: Number | null;
     db?: Db;
     dbusers?: Collection;
     dbprojects?: Collection;
@@ -12,7 +12,7 @@ declare module 'express-serve-static-core' {
 }
 
 export interface RequestExplicit extends Request {
-  user_id: Number;
+  user_id: Number | null;
   db: Db;
   dbusers: Collection;
   dbprojects: Collection;

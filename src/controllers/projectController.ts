@@ -26,26 +26,17 @@ export const deleteProject = async (req: Request, res: Response) => {
   console.error('Not implemented yet.');
 };
 
-export const modelStartTraining = async (
-  req: Request,
-  res: Response
-) => {
+export const modelStartTraining = async (req: Request, res: Response) => {
   req as RequestExplicit;
   console.error('Not implemented yet.');
 };
 
-export const modelStopTraining = async (
-  req: Request,
-  res: Response
-) => {
+export const modelStopTraining = async (req: Request, res: Response) => {
   req as RequestExplicit;
   console.error('Not implemented yet.');
 };
 
-export const modelStatusTraining = async (
-  req: Request,
-  res: Response
-) => {
+export const modelStatusTraining = async (req: Request, res: Response) => {
   req as RequestExplicit;
   console.error('Not implemented yet.');
 };

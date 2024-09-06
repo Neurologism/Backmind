@@ -28,7 +28,7 @@ const swaggerDefinition = {
     },
     '/api/auth/register': {
       post: {
-        summary: 'Register a new user',
+        summary: 'Register a new user.',
         responses: {
           '201': {
             description: 'Successfully registered',
@@ -41,7 +41,7 @@ const swaggerDefinition = {
     },
     '/api/auth/login': {
       post: {
-        summary: 'Login a user',
+        summary: 'Login a user.',
         responses: {
           '404': {
             description: 'User not found',
@@ -54,7 +54,7 @@ const swaggerDefinition = {
     },
     '/api/auth/logout': {
       post: {
-        summary: 'Logout a user',
+        summary: 'Logout a user.',
         description: 'In development',
         deprecated: true,
       },

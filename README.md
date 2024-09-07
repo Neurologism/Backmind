@@ -28,7 +28,7 @@ EXPRESS_PORT=3000
 DB_NAME="backmind"
 RESET_DB="false"
 SALT_ROUNDS="10"
-NODE_ENV="development" // this is highly recommended if you're not in production
+SEND_ERR_TO_CLIENT="true" // should only be enabled in devlopement
 LOG_LEVEL="info" // either silly, debug, verbose, info, warn, error
 ```
 

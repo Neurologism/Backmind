@@ -45,7 +45,7 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   res.status(500).json({
     status: 'error',
     msg:
-      process.env.NODE_ENV === 'developement'
+      process.env.SEND_ERR_TO_CLIENT === 'true'
         ? 'Internal Server Error'
         : err.message,
   });

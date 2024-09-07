@@ -12,8 +12,8 @@ const swaggerDefinition = {
   },
   servers: [
     {
-      url: 'https://backmind.icinoxis.net:3000',
-      description: 'Dev server',
+      url: 'https://backmind.icinoxis.net',
+      description: 'deployment server',
     },
   ],
   paths: {

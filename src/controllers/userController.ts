@@ -25,11 +25,11 @@ export const getUser = async (req: Request, res: Response) => {
     if (req.user_id === null) {
       return res
         .status(401)
-        .send("You provided an empty body but aren't authenticated. ");
+        .json({msg:"You provided an empty body but aren't authenticated. "});
     }
     user = await req.dbusers!.findOne({ _id: req.user_id! }) as User;
     if (user === null) {
-      return res.status(404).send('No user found matching the criteria.');
+      return res.status(404).json({msg:'No user found matching the criteria.'});
     }
     user.password_hash = undefined;
     return res.status(200).json({user: user})
@@ -40,7 +40,7 @@ export const getUser = async (req: Request, res: Response) => {
     };
     user = await req.dbusers!.findOne(search_properties);
     if (user === null) {
-      return res.status(404).send('No user found matching the criteria.');
+      return res.status(404).json({msg:'No user found matching the criteria.'});
     }
     user as User;
     const forbiddenProperties = ['password_hash', 'email', 'date_of_birth'];
@@ -54,29 +54,29 @@ export const getUser = async (req: Request, res: Response) => {
 export const updateUser = async (req: Request, res: Response) => {
   req as RequestExplicit;
   if (req.user_id === undefined) {
-    return res.status(401).send('You are not authenticated.');
+    return res.status(401).json({msg:'You are not authenticated.'});
   }
   const db_user = await req.dbusers!.findOne({
     _id: req.user_id!,
   }) as unknown as UserExplicit;
   if (db_user === null) {
-    return res.status(404).send('This user does not exist.');
+    return res.status(404).json({msg:'This user does not exist.'});
   }
   if (req.body['user'] === undefined) {
-    return res.status(400).send('You need to provide a user object.');
+    return res.status(400).json({msg:'You need to provide a user object.'});
   }
   const user = sanitizeUser(req.body['user'] as UserUpdate);
   if (isEmptyObject(user)) {
-    return res.status(400).send('You provided an empty user.');
+    return res.status(400).json({msg:'You provided an empty user.'});
   }
   if (user.new_password !== undefined && user.old_password === undefined) {
     return res
       .status(400)
-      .send('You need to provide the old password for a password change.');
+      .json({msg:'You need to provide the old password for a password change.'});
   }
   if (user.old_password !== undefined) {
     if (bcrypt.compareSync(user.old_password, db_user.password_hash)) {
-      return res.status(400).send('The old password is incorrect.');
+      return res.status(400).json({msg:'The old password is incorrect.'});
     }
     if (user.new_password !== undefined) {
       user.password_hash = bcrypt.hashSync(
@@ -88,13 +88,13 @@ export const updateUser = async (req: Request, res: Response) => {
     user.old_password = undefined;
   }
   req.dbusers!.updateOne({ _id: req.user_id! }, { $set: user });
-  return res.status(200).send('User updated successfully.');
+  return res.status(200).json({msg:'User updated successfully.'});
 };
 
 export const isTakenUser = async (req: Request, res: Response) => {
   req as RequestExplicit;
   if (req.body['user'] === undefined) {
-    return res.status(400).send('You need to provide a user object.');
+    return res.status(400).json({msg:'You need to provide a user object.'});
   }
   if (
     req.body['user']['email'] === undefined &&
@@ -102,7 +102,7 @@ export const isTakenUser = async (req: Request, res: Response) => {
   ) {
     return res
       .status(400)
-      .send('You need to provide an email or a brainet_tag.');
+      .json({msg:'You need to provide an email or a brainet_tag.'});
   }
   const search_properties = {
     $or: [
@@ -112,9 +112,9 @@ export const isTakenUser = async (req: Request, res: Response) => {
   };
   const user = await req.dbusers!.findOne(search_properties);
   if (user === null) {
-    return res.status(200).send('This user is not taken.');
+    return res.status(200).json({msg:'This user is not taken.'});
   }
-  return res.status(409).send('This email or brainet tag is already in use.');
+  return res.status(409).json({msg:'This email or brainet tag is already in use.'});
 };
 
 export const deleteUser = async (req: Request, res: Response) => {

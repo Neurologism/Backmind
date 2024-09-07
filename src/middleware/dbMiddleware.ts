@@ -14,6 +14,6 @@ export const dbMiddleware = async (
     next();
   } catch (error) {
     req.logger.error('Failed to inject database', error);
-    res.status(500).json({ message: 'Internal server error' });
+    res.status(500).json({ msg: 'Internal server error' });
   }
 };

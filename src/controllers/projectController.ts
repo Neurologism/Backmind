@@ -10,23 +10,23 @@ import bcrypt from 'bcrypt';
 export const getProject = async (req: Request, res: Response) => {
   req as RequestExplicit;
   if (!req.body['project']['_id']) {
-    return res.status(400).send('Please specify a project id.');
+    return res.status(400).json({msg:'Please specify a project id.'});
   }
   const project = (await req.dbprojects!.findOne({
     _id: req.body['project']['_id'],
   })) as ProjectExplicit;
   if (project === null) {
-    return res.status(404).send('No project found matching the criteria.');
+    return res.status(404).json({msg:'No project found matching the criteria.'});
   }
   if (project.visibility === 'private') {
     if (req.user_id === null) {
-      return res.status(404).send('No project found matching the criteria.');
+      return res.status(404).json({msg:'No project found matching the criteria.'});
     }
     if (
       project.owner_id !== req.user_id ||
       !project.contributors.includes(req.user_id)
     ) {
-      return res.status(404).send('No project found matching the criteria.');
+      return res.status(404).json({msg:'No project found matching the criteria.'});
     }
   }
   return res.status(200).json({ project });
@@ -35,18 +35,18 @@ export const getProject = async (req: Request, res: Response) => {
 export const updateProject = async (req: Request, res: Response) => {
   req as RequestExplicit;
   if (!req.body['project']['_id']) {
-    return res.status(400).send('Please specify a project id.');
+    return res.status(400).json({msg:'Please specify a project id.'});
   }
   const dbProject = (await req.dbprojects!.findOne({
     _id: req.body['project']['_id'],
   })) as ProjectExplicit;
   if (dbProject === null) {
-    return res.status(404).send('No project found matching the criteria.');
+    return res.status(404).json({msg:'No project found matching the criteria.'});
   }
   let modify_project = { $set: {} };
   if (dbProject.visibility === 'private') {
     if (req.user_id === null) {
-      return res.status(404).send('No project found matching the criteria.');
+      return res.status(404).json({msg:'No project found matching the criteria.'});
     } else if (dbProject.owner_id === req.user_id) {
       modify_project = {
         $set: {
@@ -64,7 +64,7 @@ export const updateProject = async (req: Request, res: Response) => {
         if (req.body['project']['plain_password'] === undefined) {
           return res
             .status(400)
-            .send('Please specify a password to change the project owner.');
+            .json({msg:'Please specify a password to change the project owner.'});
         }
         if (
           (await req.dbusers!.findOne({
@@ -73,8 +73,8 @@ export const updateProject = async (req: Request, res: Response) => {
         ) {
           return res
             .status(404)
-            .send(
-              'Please specify a valid owner id. The given user does not exist.'
+            .json({msg:
+              'Please specify a valid owner id. The given user does not exist.'}
             );
         }
         const user = (await req.dbusers!.findOne({
@@ -86,7 +86,7 @@ export const updateProject = async (req: Request, res: Response) => {
             user.password_hash
           )
         ) {
-          return res.status(400).send('The password is incorrect.');
+          return res.status(400).json({msg:'The password is incorrect.'});
         }
       }
     }
@@ -100,31 +100,31 @@ export const updateProject = async (req: Request, res: Response) => {
       },
     };
   } else {
-    return res.status(404).send('No project found matching the criteria.');
+    return res.status(404).json({msg:'No project found matching the criteria.'});
   }
   await req.dbprojects!.updateOne(
     { _id: req.body['project']['_id'] },
     modify_project
   );
-  return res.status(200).send('Project changed successfully.');
+  return res.status(200).json({msg:'Project changed successfully.'});
 };
 
 export const createProject = async (req: Request, res: Response) => {
   req as RequestExplicit;
   if (req.user_id === null) {
-    return res.status(401).send('Please log in first.');
+    return res.status(401).json({msg:'Please log in first.'});
   }
   if (
     req.body['project']['visibility'] !== 'public' &&
     req.body['project']['visibility'] !== 'private'
   ) {
-    return res.status(400).send('Please specify a valid visibility.');
+    return res.status(400).json({msg:'Please specify a valid visibility.'});
   }
   if (
     req.body['project']['name'] === undefined ||
     req.body['project']['description'] === undefined
   ) {
-    return res.status(400).send('Please specify a name and a description.');
+    return res.status(400).json({msg:'Please specify a name and a description.'});
   }
   const project: Project = {
     name: req.body['project']['name'],
@@ -138,7 +138,7 @@ export const createProject = async (req: Request, res: Response) => {
     variables: [],
   };
   await req.dbprojects!.insertOne(project);
-  return res.status(200).send('Project created successfully.');
+  return res.status(200).json({msg:'Project created successfully.'});
 };
 
 export const deleteProject = async (req: Request, res: Response) => {

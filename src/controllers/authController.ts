@@ -11,7 +11,7 @@ export const register = async (req: Request, res: Response) => {
   if (userExists) {
     return res
       .status(400)
-      .json({ message: 'User with that email or brainet_tag already exists' });
+      .json({ msg: 'User with that email or brainet_tag already exists' });
   }
 
   const salt = await bcrypt.genSalt(Number(process.env.SALT_ROUNDS));
@@ -39,7 +39,7 @@ export const register = async (req: Request, res: Response) => {
     { expiresIn: process.env.JWT_TOKEN_EXPIRE_IN || '1h' }
   );
 
-  res.status(201).json({ message: 'User registered successfully', token: token });
+  res.status(201).json({ msg: 'User registered successfully', token: token });
 };
 
 export const login = async (req: Request, res: Response) => {
@@ -48,7 +48,7 @@ export const login = async (req: Request, res: Response) => {
     brainet_tag: req.body['user'].brainet_tag,
   });
   if (query === null) {
-    return res.status(404).send('User not found');
+    return res.status(404).json({msg:'User not found'});
   }
   const query_user = query as UserExplicit;
 
@@ -58,7 +58,7 @@ export const login = async (req: Request, res: Response) => {
   );
 
   if (!isMatch) {
-    res.status(401).send('Invalid credentials');
+    res.status(401).json({msg:'Invalid credentials'});
     return;
   }
 

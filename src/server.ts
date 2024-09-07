@@ -44,7 +44,7 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   req.logger.error(err.stack);
   res.status(500).json({
     status: 'error',
-    message:
+    msg:
       process.env.NODE_ENV === 'developement'
         ? 'Internal Server Error'
         : err.message,

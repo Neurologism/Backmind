@@ -6,7 +6,7 @@ const payload = {
   },
 };
 
-fetch('https://backmind.icinoxis.net:3000/api/auth/login', {
+fetch('https://backmind.icinoxis.net/api/auth/login', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json',

@@ -43,12 +43,13 @@ export const register = async (req: Request, res: Response) => {
 };
 
 export const login = async (req: Request, res: Response) => {
-  const query = await req.dbusers!.findOne({
-    email: req.body['user'].email,
-    brainet_tag: req.body['user'].brainet_tag,
-  });
+  const given_user: any = {};
+  if (req.body['user']['email']) given_user.email = req.body['user']['email'];
+  if (req.body['user']['brainet_tag'])
+    given_user.brainet_tag = req.body['user']['brainet_tag'];
+  const query = await req.dbusers!.findOne(given_user);
   if (query === null) {
-    return res.status(404).json({msg:'User not found'});
+    return res.status(404).json({ msg: 'User not found' });
   }
   const query_user = query as UserExplicit;
 
@@ -58,7 +59,7 @@ export const login = async (req: Request, res: Response) => {
   );
 
   if (!isMatch) {
-    res.status(401).json({msg:'Invalid credentials'});
+    res.status(401).json({ msg: 'Invalid credentials' });
     return;
   }
 

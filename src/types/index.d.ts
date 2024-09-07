@@ -1,6 +1,7 @@
 import { JwtPayload } from 'jsonwebtoken';
 import { Request } from 'express';
 import { Db, Collection, ObjectId } from 'mongodb';
+import { Logger } from 'winston';
 
 declare module 'express-serve-static-core' {
   interface Request {
@@ -8,6 +9,7 @@ declare module 'express-serve-static-core' {
     db?: Db;
     dbusers?: Collection;
     dbprojects?: Collection;
+    logger: Logger;
   }
 }
 
@@ -16,6 +18,7 @@ export interface RequestExplicit extends Request {
   db: Db;
   dbusers: Collection;
   dbprojects: Collection;
+  logger: Logger;
 }
 
 export * from './user';

@@ -143,35 +143,35 @@ export const createProject = async (req: Request, res: Response) => {
 
 export const deleteProject = async (req: Request, res: Response) => {
   req as RequestExplicit;
-  console.error('Not implemented yet.');
+  req.logger.error('Not implemented yet.');
 };
 
 export const searchProject = async (req: Request, res: Response) => {
   req as RequestExplicit;
-  console.error('Not implemented yet.');
+  req.logger.error('Not implemented yet.');
 };
 
 export const modelStartTraining = async (req: Request, res: Response) => {
   req as RequestExplicit;
-  console.error('Not implemented yet.');
+  req.logger.error('Not implemented yet.');
 };
 
 export const modelStopTraining = async (req: Request, res: Response) => {
   req as RequestExplicit;
-  console.error('Not implemented yet.');
+  req.logger.error('Not implemented yet.');
 };
 
 export const modelStatusTraining = async (req: Request, res: Response) => {
   req as RequestExplicit;
-  console.error('Not implemented yet.');
+  req.logger.error('Not implemented yet.');
 };
 
 export const modelQuery = async (req: Request, res: Response) => {
   req as RequestExplicit;
-  console.error('Not implemented yet.');
+  req.logger.error('Not implemented yet.');
 };
 
 export const modelDownload = async (req: Request, res: Response) => {
   req as RequestExplicit;
-  console.error('Not implemented yet.');
+  req.logger.error('Not implemented yet.');
 };

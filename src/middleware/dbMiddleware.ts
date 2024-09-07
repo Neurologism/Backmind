@@ -13,7 +13,7 @@ export const dbMiddleware = async (
     req.dbprojects = req.db.collection('projects');
     next();
   } catch (error) {
-    console.error('Failed to inject database', error);
+    req.logger.error('Failed to inject database', error);
     res.status(500).json({ message: 'Internal server error' });
   }
 };

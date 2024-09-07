@@ -119,20 +119,20 @@ export const isTakenUser = async (req: Request, res: Response) => {
 
 export const deleteUser = async (req: Request, res: Response) => {
   req as RequestExplicit;
-  console.error('Not implemented yet.');
+  req.logger.error('Not implemented yet.');
 };
 
 export const followUser = async (req: Request, res: Response) => {
   req as RequestExplicit;
-  console.error('Not implemented yet.');
+  req.logger.error('Not implemented yet.');
 };
 
 export const unfollowUser = async (req: Request, res: Response) => {
   req as RequestExplicit;
-  console.error('Not implemented yet.');
+  req.logger.error('Not implemented yet.');
 };
 
 export const searchUser = async (req: Request, res: Response) => {
   req as RequestExplicit;
-  console.error('Not implemented yet.');
+  req.logger.error('Not implemented yet.');
 };

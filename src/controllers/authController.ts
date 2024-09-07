@@ -72,5 +72,5 @@ export const login = async (req: Request, res: Response) => {
 };
 
 export const logout = async (req: Request, res: Response) => {
-  console.error('Not implemented yet.');
+  req.logger.error('Not implemented yet.');
 };

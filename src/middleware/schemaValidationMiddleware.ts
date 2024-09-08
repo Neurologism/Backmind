@@ -4,7 +4,7 @@ import { Request, Response, NextFunction } from 'express';
 export const schemaValidationMiddleware = (schema: z.Schema<any>) => {
   return (req: Request, res: Response, next: NextFunction) => {
     try {
-      schema.parse(req.body);
+      schema.parseAsync(req.body);
       next();
     } catch (error: any) {
       if (error instanceof z.ZodError) {

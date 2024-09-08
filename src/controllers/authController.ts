@@ -5,14 +5,6 @@ import { User, UserRegister, UserExplicit } from '../types';
 
 export const register = async (req: Request, res: Response) => {
   const given_user: UserRegister = req.body['user'];
-  const userExists = await req.dbusers!.findOne({
-    $or: [{ email: given_user.email }, { brainet_tag: given_user.brainet_tag }],
-  });
-  if (userExists) {
-    return res
-      .status(400)
-      .json({ msg: 'User with that email or brainet_tag already exists' });
-  }
 
   const salt = await bcrypt.genSalt(Number(process.env.SALT_ROUNDS));
   const hashedPassword = await bcrypt.hash(given_user.plain_password, salt);

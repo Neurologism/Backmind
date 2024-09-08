@@ -1,8 +1,6 @@
 import swaggerJsdoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 import { Express } from 'express';
-import { request } from 'http';
-import { url } from 'inspector';
 
 const swaggerDefinition = {
   openapi: '3.0.0',
@@ -19,7 +17,7 @@ const swaggerDefinition = {
     {
       url: 'http://localhost:3000',
       description: 'Development server',
-    }
+    },
   ],
   paths: {
     '/': {

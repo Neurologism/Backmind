@@ -1,8 +1,8 @@
 import { ObjectId } from 'mongodb';
 
-export type ProjectVariable = {}
+export type ProjectVariable = {};
 
-export type ProjectBlock = {}
+export type ProjectBlock = {};
 
 export type Project = {
   _id?: ObjectId;

@@ -10,21 +10,73 @@ import {
   searchUser,
   isTakenUser,
 } from '../controllers/userController';
+import { schemaValidationMiddleware } from '../middleware/schemaValidationMiddleware';
+import {
+  getUserSchema,
+  updateUserSchema,
+  deleteUserSchema,
+  followUserSchema,
+  unfollowUserSchema,
+  searchUserSchema,
+  isTakenUserSchema,
+} from '../schemas/user';
 
 const router = express.Router();
 
-router.post('/get', dbMiddleware, authMiddleware, getUser);
+router.post(
+  '/get',
+  dbMiddleware,
+  authMiddleware,
+  schemaValidationMiddleware(getUserSchema),
+  getUser
+);
 
-router.post('/update', dbMiddleware, authMiddleware, updateUser);
+router.post(
+  '/update',
+  dbMiddleware,
+  authMiddleware,
+  schemaValidationMiddleware(updateUserSchema),
+  updateUser
+);
 
-router.get('/is-taken', dbMiddleware, authMiddleware, isTakenUser);
+router.get(
+  '/is-taken',
+  dbMiddleware,
+  authMiddleware,
+  schemaValidationMiddleware(isTakenUserSchema),
+  isTakenUser
+);
 
-router.post('/search', dbMiddleware, authMiddleware, searchUser);
+router.post(
+  '/search',
+  dbMiddleware,
+  authMiddleware,
+  schemaValidationMiddleware(searchUserSchema),
+  searchUser
+);
 
-router.post('/delete', dbMiddleware, authMiddleware, deleteUser);
+router.post(
+  '/delete',
+  dbMiddleware,
+  authMiddleware,
+  schemaValidationMiddleware(deleteUserSchema),
+  deleteUser
+);
 
-router.post('/follow', dbMiddleware, authMiddleware, followUser);
+router.post(
+  '/follow',
+  dbMiddleware,
+  authMiddleware,
+  schemaValidationMiddleware(followUserSchema),
+  followUser
+);
 
-router.post('/unfollow', dbMiddleware, authMiddleware, unfollowUser);
+router.post(
+  '/unfollow',
+  dbMiddleware,
+  authMiddleware,
+  schemaValidationMiddleware(unfollowUserSchema),
+  unfollowUser
+);
 
 export default router;

@@ -11,7 +11,7 @@ import cors from 'cors';
 import morgan from 'morgan';
 import fs from 'fs';
 import path from 'path';
-import { loggingMiddleware } from './middleware/loggingMiddleware';
+import { logger, loggingMiddleware } from './middleware/loggingMiddleware';
 
 dotenv.config();
 
@@ -41,8 +41,8 @@ app.use(
 );
 app.use(loggingMiddleware);
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
-  req.logger.error(err.stack);
-  res.status(500).json({
+  logger.error(err.stack);
+  return res.status(500).json({
     status: 'error',
     msg:
       process.env.SEND_ERR_TO_CLIENT === 'true'
@@ -69,7 +69,7 @@ app.get('/', async (req: Request, res: Response) => {
 
 connectToDatabase().then(() =>
   app.listen(express_port, () => {
-    console.log(
+    logger.info(
       `Express server is running at http://localhost:${express_port}`
     );
   })

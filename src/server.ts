@@ -1,6 +1,5 @@
 import express, { Express, Request, Response, NextFunction } from 'express';
 import bodyParser from 'body-parser';
-import dotenv from 'dotenv';
 import { connectToDatabase } from './database';
 import authRoutes from './routes/authRoutes';
 import userRoutes from './routes/userRoutes';
@@ -11,8 +10,9 @@ import morgan from 'morgan';
 import fs from 'fs';
 import path from 'path';
 import { logger, loggingMiddleware } from './middleware/loggingMiddleware';
+import { setEnv } from './env';
 
-dotenv.config();
+setEnv();
 
 try {
   fs.mkdirSync('./logs');

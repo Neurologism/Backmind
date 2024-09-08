@@ -84,7 +84,7 @@ const swaggerDefinition = {
             },
           },
           '400': {
-            description: 'Email or brainet tag already in use',
+            description: 'Invalid input.',
           },
           '500': {
             description: 'Internal server error',

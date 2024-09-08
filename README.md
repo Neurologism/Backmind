@@ -10,6 +10,7 @@ To clone the package locally and make it usable.
 git clone https://github.com/SirPythonPhoenix/backmind.git
 cd backmind
 npm i
+touch .env
 ```
 
 Afterwards, use `npm run dev` to run for developement purposes.
@@ -38,7 +39,7 @@ MIN_BRAINET_TAG_LENGTH=3
 MIN_PROJECT_NAME_LENGTH=1
 ```
 
-### Example configs
+### Examples
 
 Example developement configuration:
 

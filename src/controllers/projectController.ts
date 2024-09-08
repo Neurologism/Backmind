@@ -102,6 +102,7 @@ export const updateProject = async (req: Request, res: Response) => {
       $set: {
         ...req.body.project,
         plain_password: undefined,
+        last_edited: Date.now(),
       },
     }
   );

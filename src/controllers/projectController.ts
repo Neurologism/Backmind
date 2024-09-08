@@ -110,34 +110,26 @@ export const updateProject = async (req: Request, res: Response) => {
 
 export const createProject = async (req: Request, res: Response) => {
   req as RequestExplicit;
-  if (req.user_id === null) {
-    return res.status(401).json({ msg: 'Please log in first.' });
-  }
-  if (
-    req.body['project']['visibility'] !== 'public' &&
-    req.body['project']['visibility'] !== 'private'
-  ) {
-    return res.status(400).json({ msg: 'Please specify a valid visibility.' });
-  }
-  if (
-    req.body['project']['name'] === undefined ||
-    req.body['project']['description'] === undefined
-  ) {
+
+  const isLoggedIn = req.user_id !== null;
+  if (!isLoggedIn) {
     return res
-      .status(400)
-      .json({ msg: 'Please specify a name and a description.' });
+      .status(401)
+      .json({ msg: 'You need to be logged in to create a project.' });
   }
+
   const project: Project = {
-    name: req.body['project']['name'],
-    description: req.body['project']['description'],
-    owner_id: req.user_id,
+    name: req.body.project.name,
+    description: req.body.project.description,
+    owner_id: req.user_id!,
     contributors: [],
-    visibility: req.body['project']['visibility'],
+    visibility: req.body.project.visibility,
     created_on: Date.now(),
     last_edited: Date.now(),
     blocks: [],
     variables: [],
   };
+
   await req.dbprojects!.insertOne(project);
   return res.status(200).json({ msg: 'Project created successfully.' });
 };

@@ -21,7 +21,7 @@ export const registerSchema = z
       });
       return userExists === null;
     },
-    { message: 'User with that email or brainet_tag already exists' }
+    { message: 'User with that email or brainet_tag already exists.' }
   );
 
 export const loginSchema = z

@@ -59,5 +59,10 @@
     "*.{ts,md,tsx}": [
       "prettier --write"
     ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   }
 }

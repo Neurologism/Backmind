@@ -2,6 +2,7 @@ import swaggerJsdoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 import { Express } from 'express';
 import { request } from 'http';
+import { url } from 'inspector';
 
 const swaggerDefinition = {
   openapi: '3.0.0',
@@ -15,6 +16,10 @@ const swaggerDefinition = {
       url: 'https://backmind.icinoxis.net',
       description: 'deployment server',
     },
+    {
+      url: 'http://localhost:3000',
+      description: 'Development server',
+    }
   ],
   paths: {
     '/': {
@@ -31,7 +36,7 @@ const swaggerDefinition = {
       post: {
         summary: 'Register a new user.',
         description:
-          'Use this endpoint to register a new user. You can use the /api/user/is-taken endpoint to make sure the brainet tag and email address are still available. To create a new user, you absolutely need to specify email, brainet tag and password. ',
+          'Use this endpoint to register a new user. You can use the /api/user/is-taken endpoint to make sure the brainet tag and email address are still available. To create a new user, you absolutely need to specify email, brainet tag and password. The minimum password length is 6, the minimum brainet tag length is 3. ',
         requestBody: {
           required: true,
           content: {
@@ -447,7 +452,7 @@ const swaggerDefinition = {
       post: {
         summary: 'Change account information.',
         description:
-          "Use this, if you want to change account information, like email, about you, displayname, brainet_tag, password, date_of_birth, visibility. You can only change the account data if you're logged in as the corresponding user. If you want to change the password, you will have to provide the old password.",
+          "Use this, if you want to change account information, like email, about you, displayname, brainet_tag, password, date_of_birth, visibility. You can only change the account data if you're logged in as the corresponding user. If you want to change the password, you will have to provide the old password. The minimum password length is 6, the minimum brainet tag length is 3.",
         requestBody: {
           required: false,
           content: {

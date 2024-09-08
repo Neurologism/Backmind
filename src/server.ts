@@ -2,9 +2,9 @@ import express, { Express, Request, Response, NextFunction } from 'express';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import { connectToDatabase } from './database';
-import authRoutes from './routes/auth';
-import userRoutes from './routes/user';
-import projectRoutes from './routes/project';
+import authRoutes from './routes/authRoutes';
+import userRoutes from './routes/userRoutes';
+import projectRoutes from './routes/projectRoutes';
 import { setupSwagger } from './swagger';
 import cors from 'cors';
 import morgan from 'morgan';
@@ -55,8 +55,6 @@ app.use('/api/user', userRoutes);
 app.use('/api/project', projectRoutes);
 
 setupSwagger(app);
-
-
 
 app.get('/', async (req: Request, res: Response) => {
   req.logger.debug('GET / worked fine :)');

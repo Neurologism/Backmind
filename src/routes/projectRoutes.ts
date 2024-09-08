@@ -25,7 +25,7 @@ import {
   modelStatusTrainingSchema,
   modelQuerySchema,
   modelDownloadSchema,
-} from '../schemas/project';
+} from '../schemas/projectSchemas';
 
 const router = express.Router();
 

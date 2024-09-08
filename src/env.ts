@@ -8,4 +8,5 @@ process.env.MIN_PASS_LENGTH = process.env.MIN_PASS_LENGTH || '6';
 process.env.MIN_BRAINET_TAG_LENGTH = process.env.MIN_BRAINET_TAG_LENGTH || '3';
 process.env.MIN_PROJECT_NAME_LENGTH =
   process.env.MIN_PROJECT_NAME_LENGTH || '1';
-process.env.SEND_ERR_TO_CLIENT = process.env.SEND_ERR_TO_CLIENT === 'true' ? 'true' : 'false';
+process.env.SEND_ERR_TO_CLIENT =
+  process.env.SEND_ERR_TO_CLIENT === 'true' ? 'true' : 'false';

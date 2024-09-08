@@ -2,7 +2,7 @@ import express from 'express';
 import { dbMiddleware } from '../middleware/dbMiddleware';
 import { register, login, logout } from '../controllers/authController';
 import { schemaValidationMiddleware } from '../middleware/schemaValidationMiddleware';
-import { registerSchema, loginSchema, logoutSchema } from '../schemas/auth';
+import { registerSchema, loginSchema, logoutSchema } from '../schemas/authSchemas';
 
 const router = express.Router();
 

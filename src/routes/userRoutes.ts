@@ -19,7 +19,7 @@ import {
   unfollowUserSchema,
   searchUserSchema,
   isTakenUserSchema,
-} from '../schemas/user';
+} from '../schemas/userSchemas';
 
 const router = express.Router();
 

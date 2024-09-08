@@ -14,7 +14,7 @@ export const updateProjectSchema = z
       _id: z.string().transform((_id) => new ObjectId(_id)),
       name: z.string().optional(),
       description: z.string().optional(),
-      visibility: z.string().optional(),
+      visibility: z.enum(['public', 'private']).optional(),
       owner_id: z
         .string()
         .optional()
@@ -69,12 +69,10 @@ export const updateProjectAsContributorSchema = z.object({
   project: z
     .object({
       project: z.object({
-        _id: z
-          .any()
-          .refine((_id) => _id instanceof ObjectId, {
-            message:
-              "Do not parse this schema before _id hasn't been converted to a valid mongodb object id.",
-          }),
+        _id: z.any().refine((_id) => _id instanceof ObjectId, {
+          message:
+            "Do not parse this schema before _id hasn't been converted to a valid mongodb object id.",
+        }),
         description: z.string().optional(),
         blocks: z.array(z.object({})).optional(),
         variables: z.array(z.object({})).optional(),
@@ -94,7 +92,13 @@ export const updateProjectAsContributorSchema = z.object({
     ),
 });
 
-export const createProjectSchema = z.object({});
+export const createProjectSchema = z.object({
+  project: z.object({
+    name: z.string().min(Number(process.env.MIN_PROJECT_NAME_LENGTH)),
+    description: z.string(),
+    visibility: z.enum(['public', 'private']),
+  }),
+});
 
 export const deleteProjectSchema = z.object({});
 

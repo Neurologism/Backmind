@@ -6,7 +6,7 @@ import {
   ProjectExplicit,
 } from '../types';
 import bcrypt from 'bcrypt';
-import { updateProjectAsContributorSchema } from '../schemas/project';
+import { updateProjectAsContributorSchema } from '../schemas/projectSchemas';
 import { z } from 'zod';
 
 export const getProject = async (req: Request, res: Response) => {

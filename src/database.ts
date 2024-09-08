@@ -11,9 +11,9 @@ export const connectToDatabase = async (): Promise<Db> => {
   }
   const client = new MongoClient(process.env.MONGO_URI as string);
   await client.connect();
-  db = client.db(process.env.DB_NAME || 'backmind');
+  db = client.db(process.env.DB_NAME);
 
-  if (process.env.RESET_DB == 'true') {
+  if (process.env.RESET_DB) {
     console.log('Resetting database... ');
     await db.dropDatabase();
     const collections = ['users', 'projects'];

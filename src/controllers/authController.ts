@@ -29,7 +29,7 @@ export const register = async (req: Request, res: Response) => {
   const token = jwt.sign(
     { _id: '' + result.insertedId },
     process.env.JWT_SECRET as string,
-    { expiresIn: process.env.JWT_TOKEN_EXPIRE_IN || '1h' }
+    { expiresIn: process.env.JWT_TOKEN_EXPIRE_IN }
   );
 
   res.status(201).json({ msg: 'User registered successfully', token: token });
@@ -59,7 +59,7 @@ export const login = async (req: Request, res: Response) => {
   const token = jwt.sign(
     { _id: '' + query_user._id },
     process.env.JWT_SECRET as string,
-    { expiresIn: process.env.JWT_TOKEN_EXPIRE_IN || '1h' }
+    { expiresIn: process.env.JWT_TOKEN_EXPIRE_IN }
   );
 
   return res.status(200).json({ token: token });

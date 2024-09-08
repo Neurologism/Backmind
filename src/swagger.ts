@@ -55,7 +55,7 @@ const swaggerDefinition = {
                       },
                       plain_password: {
                         type: 'string',
-                        example: 'mypassword123',
+                        example: 'password123',
                       },
                     },
                   },

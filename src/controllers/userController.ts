@@ -15,8 +15,7 @@ const sanitizeUser = (user: UserUpdate): UserUpdate => {
     new_password: user.new_password,
     old_password: user.old_password,
   };
-  return sanitizedUser;
-  
+  return sanitizedUser
 };
 
 export const getUser = async (req: Request, res: Response) => {

@@ -9,4 +9,4 @@ git checkout main
 git pull
 npm i
 npx tsc
-pm2 start backmind
+pm2 start dist/server.js -i 1 --name backmind

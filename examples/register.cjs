@@ -2,7 +2,7 @@ const payload = {
   user: {
     email: 'max@mustermann.net',
     brainet_tag: 'randomuser1234',
-    plain_password: '1234',
+    plain_password: '123456',
   },
 };
 

@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { RequestExplicit, User, UserExplicit, UserUpdate } from '../types';
 import bcrypt from 'bcrypt';
 
-const isEmptyObject = (obj: Object) => JSON.stringify(obj) === '{}';
+const isEmptyObject = (obj: object) => JSON.stringify(obj) === '{}';
 
 const sanitizeUser = (user: UserUpdate): UserUpdate => {
   const sanitizedUser = {
@@ -15,8 +15,10 @@ const sanitizeUser = (user: UserUpdate): UserUpdate => {
     new_password: user.new_password,
     old_password: user.old_password,
   };
-  return sanitizedUser
+  return sanitizedUser;
 };
+
+
 
 export const getUser = async (req: Request, res: Response) => {
   req as RequestExplicit;

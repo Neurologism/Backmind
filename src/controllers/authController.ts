@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { User, UserLogin, UserRegister, UserExplicit } from '../types';
+import { User, UserRegister, UserExplicit } from '../types';
 
 export const register = async (req: Request, res: Response) => {
-  let given_user: UserRegister = req.body['user'];
+  const given_user: UserRegister = req.body['user'];
   const userExists = await req.dbusers!.findOne({
     $or: [{ email: given_user.email }, { brainet_tag: given_user.brainet_tag }],
   });

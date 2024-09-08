@@ -16,6 +16,7 @@ const sanitizeUser = (user: UserUpdate): UserUpdate => {
     old_password: user.old_password,
   };
   return sanitizedUser;
+  
 };
 
 export const getUser = async (req: Request, res: Response) => {
@@ -78,11 +79,9 @@ export const updateUser = async (req: Request, res: Response) => {
     return res.status(400).json({ msg: 'You provided an empty user.' });
   }
   if (user.new_password !== undefined && user.old_password === undefined) {
-    return res
-      .status(400)
-      .json({
-        msg: 'You need to provide the old password for a password change.',
-      });
+    return res.status(400).json({
+      msg: 'You need to provide the old password for a password change.',
+    });
   }
   if (user.old_password !== undefined) {
     if (bcrypt.compareSync(user.old_password, db_user.password_hash)) {

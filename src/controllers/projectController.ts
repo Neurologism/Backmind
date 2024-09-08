@@ -72,22 +72,18 @@ export const updateProject = async (req: Request, res: Response) => {
       };
       if (req.body['project']['owner_id']) {
         if (req.body['project']['plain_password'] === undefined) {
-          return res
-            .status(400)
-            .json({
-              msg: 'Please specify a password to change the project owner.',
-            });
+          return res.status(400).json({
+            msg: 'Please specify a password to change the project owner.',
+          });
         }
         if (
           (await req.dbusers!.findOne({
             _id: req.body['project']['owner_id'],
           })) === null
         ) {
-          return res
-            .status(404)
-            .json({
-              msg: 'Please specify a valid owner id. The given user does not exist.',
-            });
+          return res.status(404).json({
+            msg: 'Please specify a valid owner id. The given user does not exist.',
+          });
         }
         const user = (await req.dbusers!.findOne({
           _id: req.user_id,

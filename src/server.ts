@@ -5,7 +5,6 @@ import { connectToDatabase } from './database';
 import authRoutes from './routes/auth';
 import userRoutes from './routes/user';
 import projectRoutes from './routes/project';
-import crypto from 'crypto';
 import { setupSwagger } from './swagger';
 import cors from 'cors';
 import morgan from 'morgan';
@@ -57,12 +56,7 @@ app.use('/api/project', projectRoutes);
 
 setupSwagger(app);
 
-const express_port = process.env.EXPRESS_PORT || 3000;
-process.env.JWT_SECRET =
-  process.env.JWT_SECRET || crypto.randomBytes(32).toString('hex');
-process.env.SALT_ROUNDS = process.env.SALT_ROUNDS || '10';
-process.env.MIN_PASS_LENGTH = process.env.MIN_PASS_LENGTH || '6';
-process.env.MIN_BRAINET_TAG_LENGTH = process.env.MIN_BRAINET_TAG_LENGTH || '3';
+
 
 app.get('/', async (req: Request, res: Response) => {
   req.logger.debug('GET / worked fine :)');
@@ -70,9 +64,9 @@ app.get('/', async (req: Request, res: Response) => {
 });
 
 connectToDatabase().then(() =>
-  app.listen(express_port, () => {
+  app.listen(Number(process.env.EXPRESS_PORT), () => {
     logger.info(
-      `Express server is running at http://localhost:${express_port}`
+      `Express server is running at http://localhost:${process.env.EXPRESS_PORT}`
     );
   })
 );

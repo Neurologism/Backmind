@@ -61,6 +61,8 @@ const express_port = process.env.EXPRESS_PORT || 3000;
 process.env.JWT_SECRET =
   process.env.JWT_SECRET || crypto.randomBytes(32).toString('hex');
 process.env.SALT_ROUNDS = process.env.SALT_ROUNDS || '10';
+process.env.MIN_PASS_LENGTH = process.env.MIN_PASS_LENGTH || '6';
+process.env.MIN_BRAINET_TAG_LENGTH = process.env.MIN_BRAINET_TAG_LENGTH || '3';
 
 app.get('/', async (req: Request, res: Response) => {
   req.logger.debug('GET / worked fine :)');

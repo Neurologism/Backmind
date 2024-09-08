@@ -5,8 +5,8 @@ export const registerSchema = z
   .object({
     user: z.object({
       email: z.string().email(),
-      brainet_tag: z.string().min(3),
-      plain_password: z.string().min(6),
+      brainet_tag: z.string().min(Number(process.env.MIN_BRAINET_TAG_LENGTH)),
+      plain_password: z.string().min(Number(process.env.MIN_PASS_LENGTH)),
     }),
   })
   .refine(
@@ -28,8 +28,11 @@ export const loginSchema = z
   .object({
     user: z.object({
       email: z.string().email().optional(),
-      brainet_tag: z.string().min(3).optional(),
-      plain_password: z.string().min(6),
+      brainet_tag: z
+        .string()
+        .min(Number(process.env.MIN_BRAINET_TAG_LENGTH))
+        .optional(),
+      plain_password: z.string().min(Number(process.env.MIN_PASS_LENGTH)),
     }),
   })
   .refine(

@@ -30,6 +30,8 @@ RESET_DB="false"
 SALT_ROUNDS="10"
 SEND_ERR_TO_CLIENT="true" // should only be enabled in devlopement
 LOG_LEVEL="info" // either silly, debug, verbose, info, warn, error
+MIN_PASS_LENGTH='6'
+MIN_BRAINET_TAG_LENGTH='3'
 ```
 
 ## Documentation

@@ -22,7 +22,6 @@ export const register = async (req: Request, res: Response) => {
     follower_ids: [],
     following_ids: [],
   };
-  console.log(newUser);
 
   const result = await req.dbusers!.insertOne(newUser);
 

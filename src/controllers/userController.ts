@@ -18,6 +18,8 @@ const sanitizeUser = (user: UserUpdate): UserUpdate => {
   return sanitizedUser;
 };
 
+
+
 export const getUser = async (req: Request, res: Response) => {
   req as RequestExplicit;
   let user;

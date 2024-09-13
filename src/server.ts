@@ -1,13 +1,15 @@
 import { setEnv } from './env';
+import fs from 'fs';
+
 setEnv();
 try {
   fs.mkdirSync('./logs');
 } catch (err: any) {
   if (err.code !== 'EEXIST') throw err;
 }
+
 import app from './app';
 import { connectToDatabase } from './database';
-import fs from 'fs';
 import { logger } from './middleware/loggingMiddleware';
 
 connectToDatabase().then(() =>

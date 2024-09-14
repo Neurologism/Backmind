@@ -360,9 +360,9 @@ const swaggerDefinition = {
                       properties: {
                         _id: {
                           type: 'string',
-                          example: '029iiu73h4t42e5t29io0u3h45t'
-                        }
-                      }
+                          example: '029iiu73h4t42e5t29io0u3h45t',
+                        },
+                      },
                     },
                   },
                 },

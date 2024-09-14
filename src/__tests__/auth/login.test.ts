@@ -20,7 +20,9 @@ describe('POST /api/auth/login', () => {
 
     expect(response.status).toBe(200);
 
-    const validationResult = await loginResponseSchema.safeParseAsync(response.body);
+    const validationResult = await loginResponseSchema.safeParseAsync(
+      response.body
+    );
     expect(validationResult.success).toBe(true);
   });
 });

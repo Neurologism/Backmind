@@ -20,7 +20,9 @@ describe('POST /api/auth/register', () => {
 
     expect(response.status).toBe(201);
 
-    const validationResult = await registerResponseSchema.safeParseAsync(response.body);
+    const validationResult = await registerResponseSchema.safeParseAsync(
+      response.body
+    );
     expect(validationResult.success).toBe(true);
   });
 });

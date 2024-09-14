@@ -132,7 +132,12 @@ export const createProject = async (req: Request, res: Response) => {
   };
 
   const insertResult = await req.dbprojects!.insertOne(project);
-  return res.status(200).json({ msg: 'Project created successfully.', project: { _id: insertResult.insertedId } });
+  return res
+    .status(200)
+    .json({
+      msg: 'Project created successfully.',
+      project: { _id: insertResult.insertedId },
+    });
 };
 
 export const deleteProject = async (req: Request, res: Response) => {

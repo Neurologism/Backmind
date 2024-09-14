@@ -89,3 +89,7 @@ Logging is done via winston and morgan.
 Morgan logs all requests to [`./logs/access.log`](./logs/access.log) and the console stream.
 Winston logs general log messages to [`./logs/error.log`](./logs/error.log) and [`./logs/combined.log`](./logs/combined.log).
 The log level for winston can be set via LOG_LEVEL in [`.env`](.env)
+
+## Testing
+
+Testing is done via `npm run test`. Jest is used as a testing framework and supertest is used for express request testing. Make sure, that the database is reset before testing with the environment variable `RESET_DB=true`. Type validation in testing is done with zod. 

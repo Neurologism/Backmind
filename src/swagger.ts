@@ -350,6 +350,24 @@ const swaggerDefinition = {
         responses: {
           '200': {
             description: 'Project created successfully.',
+            content: {
+              'application/json': {
+                schema: {
+                  type: 'object',
+                  properties: {
+                    project: {
+                      type: 'object',
+                      properties: {
+                        _id: {
+                          type: 'string',
+                          example: '029iiu73h4t42e5t29io0u3h45t'
+                        }
+                      }
+                    },
+                  },
+                },
+              },
+            },
           },
           '400': {
             description: 'Invalid input.',

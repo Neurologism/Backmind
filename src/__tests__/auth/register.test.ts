@@ -2,7 +2,7 @@ import request from 'supertest';
 import app from '../../app';
 import { z } from 'zod';
 
-const rootResponseSchema = z.object({
+const registerResponseSchema = z.object({
   token: z.string(),
 });
 
@@ -20,7 +20,7 @@ describe('POST /api/auth/register', () => {
 
     expect(response.status).toBe(201);
 
-    const validationResult = rootResponseSchema.safeParse(response.body);
+    const validationResult = await registerResponseSchema.safeParseAsync(response.body);
     expect(validationResult.success).toBe(true);
   });
 });

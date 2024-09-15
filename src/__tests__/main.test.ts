@@ -249,7 +249,57 @@ describe('POST /api/project/get', () => {
     const validationResult = await getProjectResponseScheme.safeParseAsync(
       response.body
     );
-    console.log(response.body);
     expect(validationResult.success).toBe(true);
+  });
+});
+
+const updateProjectResponseScheme = z
+  .object({
+    msg: z.string(),
+  })
+  .strict();
+
+describe('POST /api/project/update', () => {
+  it('should update a project', async () => {
+    const response = await request(app)
+      .post('/api/project/update')
+      .set(`Authorization`, `Bearer ${authToken}`)
+      .send({
+        project: {
+          _id: projectId,
+          name: 'changed',
+          description: 'changed',
+          visibility: 'public',
+          plain_password: 'test1234',
+        },
+      });
+
+    expect(response.status).toBe(200);
+
+    const validationResult = await updateProjectResponseScheme.safeParseAsync(
+      response.body
+    );
+    expect(validationResult.success).toBe(true);
+  });
+
+  it('should match the updated project', async () => {
+    const response = await request(app)
+      .post('/api/project/get')
+      .set(`Authorization`, `Bearer ${authToken}`)
+      .send({
+        project: {
+          _id: projectId,
+        },
+      });
+
+    expect(response.status).toBe(200);
+
+    const validationResult = await getProjectResponseScheme.safeParseAsync(
+      response.body
+    );
+    expect(validationResult.success).toBe(true);
+    expect(response.body.project.name).toBe('changed');
+    expect(response.body.project.description).toBe('changed');
+    expect(response.body.project.visibility).toBe('public');
   });
 });

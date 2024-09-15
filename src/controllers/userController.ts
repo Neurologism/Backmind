@@ -20,43 +20,47 @@ const sanitizeUser = (user: UserUpdate): UserUpdate => {
 
 export const getUser = async (req: Request, res: Response) => {
   req as RequestExplicit;
-  let user;
-  if (
-    isEmptyObject(req.body) ||
-    isEmptyObject(req.body['user']) ||
-    req.body['user']['_id'] === req.user_id
-  ) {
-    if (req.user_id === null) {
+
+  let search_params;
+
+  if (isEmptyObject(req.body)) {
+    if (req.user_id === undefined) {
       return res
         .status(401)
-        .json({ msg: "You provided an empty body but aren't authenticated. " });
+        .json({ msg: 'You are not authenticated but provided an empty body.' });
     }
-    user = (await req.dbusers!.findOne({ _id: req.user_id! })) as User;
-    if (user === null) {
-      return res
-        .status(404)
-        .json({ msg: 'No user found matching the criteria.' });
-    }
-    user.password_hash = undefined;
-    return res.status(200).json({ user: user });
-  } else {
-    const search_properties = {
-      _id: req.body['user']['id'],
-      brainet_tag: req.body['user']['brainet_tag'],
+    search_params = {
+      _id: req.user_id,
     };
-    user = await req.dbusers!.findOne(search_properties);
-    if (user === null) {
-      return res
-        .status(404)
-        .json({ msg: 'No user found matching the criteria.' });
-    }
-    user as User;
-    const forbiddenProperties = ['password_hash', 'email', 'date_of_birth'];
-    forbiddenProperties.forEach((item) => {
-      user![item] = undefined;
-    });
-    return res.status(200).json({ user: user });
+  } else {
+    search_params = req.body.user;
   }
+
+  const user = await req.dbusers!.findOne(search_params);
+  if (user === null) {
+    return res
+      .status(404)
+      .json({ msg: 'No user found matching the criteria.' });
+  }
+
+  const isUser = user._id.toString() === req.user_id?.toString();
+  const isFollowedByUser = user.following_ids.includes(req.user_id!);
+
+  if (user.visibility === 'private' && !isUser && !isFollowedByUser) {
+    return res
+      .status(403)
+      .json({
+        msg: 'This user is private. You can only access private users if they follow you.',
+      });
+  }
+
+  user.password_hash = undefined;
+  if (!isUser) {
+    user.email = undefined;
+    user.date_of_birth = undefined;
+  }
+
+  return res.status(200).json({ user: user });
 };
 
 export const updateUser = async (req: Request, res: Response) => {

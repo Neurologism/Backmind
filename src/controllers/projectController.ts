@@ -8,6 +8,7 @@ import {
 import bcrypt from 'bcrypt';
 import { updateProjectAsContributorSchema } from '../schemas/projectSchemas';
 import { z } from 'zod';
+import { initComponents } from '../utility/initComponents';
 
 export const getProject = async (req: Request, res: Response) => {
   req as RequestExplicit;
@@ -106,10 +107,7 @@ export const updateProject = async (req: Request, res: Response) => {
   await req.dbprojects!.updateOne(
     { _id: req.body.project._id },
     {
-      $set: {
-        ...req.body.project,
-        last_edited: Date.now(),
-      },
+      $set: req.body.project,
     }
   );
   return res.status(200).json({ msg: 'Project changed successfully.' });
@@ -133,6 +131,8 @@ export const createProject = async (req: Request, res: Response) => {
     visibility: req.body.project.visibility,
     created_on: Date.now(),
     last_edited: Date.now(),
+    camera_position: [0, 0, 0],
+    components: initComponents(),
   };
 
   const insertResult = await req.dbprojects!.insertOne(project);

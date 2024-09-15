@@ -1,6 +1,7 @@
 import request from 'supertest';
 import { z } from 'zod';
 import app from '../app';
+import { componentsSchema } from '../schemas/componentsSchemas';
 
 const registerResponseSchema = z.object({
   token: z.string(),
@@ -228,6 +229,8 @@ const getProjectResponseScheme = z
         visibility: z.string(),
         created_on: z.number(),
         last_edited: z.number(),
+        camera_position: z.tuple([z.number(), z.number(), z.number()]),
+        components: componentsSchema,
       })
       .strict(),
   })
@@ -271,6 +274,7 @@ describe('POST /api/project/update', () => {
           description: 'changed',
           visibility: 'public',
           plain_password: 'test1234',
+          camera_position: [1, 1, 1],
         },
       });
 

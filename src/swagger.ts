@@ -2,6 +2,74 @@ import swaggerJsdoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 import { Express } from 'express';
 
+const parameter = {
+  type: 'object',
+  properties: {
+    type: {
+      type: 'string',
+    },
+    value: {
+      type: 'any',
+    },
+    parameters: {
+      type: 'array',
+      items: {
+        type: 'object',
+        description: 'This will be a parameter object. (recursive structure)',
+      },
+    },
+  },
+};
+
+const components = {
+  type: 'object',
+  properties: {
+    add: {
+      type: 'object',
+      properties: {
+        modules: {
+          type: 'array',
+          items: parameter,
+        },
+        connections: {
+          type: 'array',
+          items: {
+            type: 'object',
+            properties: {
+              from: {
+                type: 'string',
+                example: 'module1',
+              },
+              to: {
+                type: 'string',
+                example: 'module2',
+              },
+            },
+          },
+        },
+      },
+    },
+    train: {
+      type: 'object',
+      properties: {
+        parameters: {
+          type: 'array',
+          items: parameter,
+        },
+      },
+    },
+    predict: {
+      type: 'object',
+      properties: {
+        parameters: {
+          type: 'array',
+          items: parameter,
+        },
+      },
+    },
+  },
+};
+
 const swaggerDefinition = {
   openapi: '3.0.0',
   info: {
@@ -225,6 +293,14 @@ const swaggerDefinition = {
                         last_edited: {
                           type: 'integer',
                         },
+                        camera_position: {
+                          type: 'array',
+                          items: {
+                            type: 'number',
+                          },
+                          example: [0, 0, 0],
+                        },
+                        components: components,
                       },
                     },
                   },
@@ -285,6 +361,14 @@ const swaggerDefinition = {
                       plain_password: {
                         type: 'string',
                       },
+                      camera_position: {
+                        type: 'array',
+                        items: {
+                          type: 'number',
+                        },
+                        example: [0, 0, 0],
+                      },
+                      components: components,
                     },
                   },
                 },

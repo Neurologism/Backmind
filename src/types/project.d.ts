@@ -9,6 +9,8 @@ export type Project = {
   visibility?: 'public' | 'private';
   created_on?: number;
   last_edited?: number;
+  camera_position?: [number, number, number];
+  components?: any;
 };
 
 export type ProjectExplicit = Required<Project>;

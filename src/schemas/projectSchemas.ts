@@ -1,6 +1,6 @@
 import { z } from 'zod';
-import { connectToDatabase } from '../database';
 import { ObjectId } from 'mongodb';
+import { componentsSchema } from './componentsSchemas';
 
 export const getProjectSchema = z
   .object({
@@ -44,8 +44,10 @@ export const updateProjectSchema = z
           .string()
           .min(Number(process.env.MIN_PASS_LENGTH))
           .optional(),
-        blocks: z.array(z.object({})).optional(),
-        variables: z.array(z.object({})).optional(),
+        components: componentsSchema.optional(),
+        camera_position: z
+          .tuple([z.number(), z.number(), z.number()])
+          .optional(),
       })
       .strict(),
   })
@@ -58,8 +60,8 @@ export const updateProjectSchema = z
         !data.project.visibility &&
         !data.project.owner_id &&
         !data.project.contributors &&
-        !data.project.blocks &&
-        !data.project.variables
+        !data.project.components &&
+        !data.project.camera_position
       ) {
         return false;
       }
@@ -88,32 +90,28 @@ export const updateProjectAsContributorSchema = z
   .object({
     project: z
       .object({
-        project: z.object({
-          _id: z.any().refine((_id) => _id instanceof ObjectId, {
-            message:
-              "Do not parse this schema before _id hasn't been converted to a valid mongodb object id.",
-          }),
-          description: z.string().optional(),
-          blocks: z.array(z.object({})).optional(),
-          variables: z.array(z.object({})).optional(),
+        _id: z.any().refine((_id) => _id instanceof ObjectId, {
+          message:
+            "Do not parse this schema before _id hasn't been converted to a valid mongodb object id.",
         }),
+        description: z.string().optional(),
+        components: componentsSchema.optional(),
+        camera_position: z
+          .tuple([z.number(), z.number(), z.number()])
+          .optional(),
       })
-      .strict()
-      .refine(
-        async (data) => {
-          if (
-            !data.project.description &&
-            !data.project.blocks &&
-            !data.project.variables
-          ) {
-            return false;
-          }
-          return true;
-        },
-        { message: 'You must provide at least one field to update.' }
-      ),
+      .strict(),
   })
-  .strict();
+  .strict()
+  .refine(
+    async (data) => {
+      if (!data.project.description && !data.project.components) {
+        return false;
+      }
+      return true;
+    },
+    { message: 'You must provide at least one field to update.' }
+  );
 
 export const createProjectSchema = z
   .object({

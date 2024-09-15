@@ -4,8 +4,6 @@ on:
   pull_request:
     branches:
       - main
-  push:
-    branches: ['main']
 
 jobs:
   test:
@@ -27,4 +25,4 @@ jobs:
         run: echo "MONGO_URI=${{ secrets.MONGO_URI }}" > .env
 
       - name: Run Jest tests
-        run: npm test
+        run: npx jest

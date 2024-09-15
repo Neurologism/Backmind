@@ -1,12 +1,14 @@
 import { MongoClient, Db } from 'mongodb';
 
+let connected = false;
 let db: Db;
+let client: MongoClient;
 
 export const connectToDatabase = async (): Promise<Db> => {
-  if (db) {
+  if (connected) {
     return db;
   }
-  const client = new MongoClient(process.env.MONGO_URI as string);
+  client = new MongoClient(process.env.MONGO_URI as string);
   await client.connect();
   db = client.db(process.env.DB_NAME);
 
@@ -21,5 +23,11 @@ export const connectToDatabase = async (): Promise<Db> => {
   }
 
   console.log(`Connected to database: ${process.env.DB_NAME}`);
+  connected = true;
   return db;
 };
+
+export const disconnectFromDatabase = async () => {
+  await client.close();
+  connected = false;
+}

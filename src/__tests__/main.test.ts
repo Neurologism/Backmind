@@ -2,6 +2,7 @@ import request from 'supertest';
 import { z } from 'zod';
 import app from '../app';
 import { componentsSchema } from '../schemas/componentsSchemas';
+import { disconnectFromDatabase } from '../database';
 
 const registerResponseSchema = z.object({
   token: z.string(),
@@ -9,6 +10,10 @@ const registerResponseSchema = z.object({
 
 let authToken: string;
 let projectId: string;
+
+afterAll(async () => {
+  await disconnectFromDatabase();
+});
 
 describe('POST /api/auth/register', () => {
   it('should return a valid auth token', async () => {

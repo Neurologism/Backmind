@@ -1,22 +1,7 @@
 import { Request, Response } from 'express';
-import { RequestExplicit, User, UserExplicit, UserUpdate } from '../types';
+import { RequestExplicit, UserExplicit } from '../types';
 import bcrypt from 'bcrypt';
-
-const isEmptyObject = (obj: object) => JSON.stringify(obj) === '{}';
-
-const sanitizeUser = (user: UserUpdate): UserUpdate => {
-  const sanitizedUser = {
-    email: user.email,
-    about_you: user.about_you,
-    displayname: user.displayname,
-    brainet_tag: user.brainet_tag,
-    date_of_birth: user.date_of_birth,
-    visibility: user.visibility,
-    new_password: user.new_password,
-    old_password: user.old_password,
-  };
-  return sanitizedUser;
-};
+import { isEmptyObject } from '../utility/main';
 
 export const getUser = async (req: Request, res: Response) => {
   req as RequestExplicit;
@@ -52,10 +37,10 @@ export const getUser = async (req: Request, res: Response) => {
     });
   }
 
-  user.password_hash = undefined;
+  delete user.password_hash;
   if (!isUser) {
-    user.email = undefined;
-    user.date_of_birth = undefined;
+    delete user.email;
+    delete user.date_of_birth;
   }
 
   return res.status(200).json({ user: user });
@@ -63,41 +48,43 @@ export const getUser = async (req: Request, res: Response) => {
 
 export const updateUser = async (req: Request, res: Response) => {
   req as RequestExplicit;
+
   if (req.user_id === undefined) {
     return res.status(401).json({ msg: 'You are not authenticated.' });
   }
+
   const db_user = (await req.dbusers!.findOne({
     _id: req.user_id!,
   })) as unknown as UserExplicit;
+
   if (db_user === null) {
-    return res.status(404).json({ msg: 'This user does not exist.' });
+    return res
+      .status(404)
+      .json({ msg: 'Authentication token invalid. Try relogging.' });
   }
-  if (req.body['user'] === undefined) {
-    return res.status(400).json({ msg: 'You need to provide a user object.' });
-  }
-  const user = sanitizeUser(req.body['user'] as UserUpdate);
-  if (isEmptyObject(user)) {
-    return res.status(400).json({ msg: 'You provided an empty user.' });
-  }
-  if (user.new_password !== undefined && user.old_password === undefined) {
-    return res.status(400).json({
-      msg: 'You need to provide the old password for a password change.',
-    });
-  }
-  if (user.old_password !== undefined) {
-    if (bcrypt.compareSync(user.old_password, db_user.password_hash)) {
+
+  if (req.body.user.old_password !== undefined) {
+    const passwordsMatch = bcrypt.compareSync(
+      req.body.user.old_password,
+      db_user.password_hash
+    );
+    if (!passwordsMatch) {
       return res.status(400).json({ msg: 'The old password is incorrect.' });
     }
-    if (user.new_password !== undefined) {
-      user.password_hash = bcrypt.hashSync(
-        user.new_password,
-        Number(process.env.SALT_ROUNDS)
-      );
-      user.new_password = undefined;
-    }
-    user.old_password = undefined;
+    delete req.body.user.old_password;
   }
-  req.dbusers!.updateOne({ _id: req.user_id! }, { $set: user });
+
+  if (req.body.user.new_password !== undefined) {
+    req.body.password_hash = bcrypt.hashSync(
+      req.body.user.new_password,
+      Number(process.env.SALT_ROUNDS)
+    );
+    delete req.body.user.new_password;
+  }
+
+  console.log(req.body.user);
+
+  req.dbusers!.updateOne({ _id: req.user_id! }, { $set: req.body.user });
   return res.status(200).json({ msg: 'User updated successfully.' });
 };
 

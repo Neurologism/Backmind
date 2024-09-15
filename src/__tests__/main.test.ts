@@ -30,9 +30,11 @@ describe('POST /api/auth/register', () => {
   });
 });
 
-const loginResponseSchema = z.object({
-  token: z.string(),
-});
+const loginResponseSchema = z
+  .object({
+    token: z.string(),
+  })
+  .strict();
 
 describe('POST /api/auth/login', () => {
   it('should return a valid auth token', async () => {
@@ -56,35 +58,43 @@ describe('POST /api/auth/login', () => {
   });
 });
 
-const getSelfUserResponseScheme = z.object({
-  user: z.object({
-    _id: z.string(),
-    email: z.string(),
-    date_of_birth: z.number(),
-    brainet_tag: z.string(),
-    displayname: z.string(),
-    about_you: z.string(),
-    visibility: z.string(),
-    created_on: z.number(),
-    project_ids: z.array(z.string()),
-    follower_ids: z.array(z.string()),
-    following_ids: z.array(z.string()),
-  }),
-});
+const getSelfUserResponseScheme = z
+  .object({
+    user: z
+      .object({
+        _id: z.string(),
+        email: z.string(),
+        date_of_birth: z.number(),
+        brainet_tag: z.string(),
+        displayname: z.string(),
+        about_you: z.string(),
+        visibility: z.string(),
+        created_on: z.number(),
+        project_ids: z.array(z.string()),
+        follower_ids: z.array(z.string()),
+        following_ids: z.array(z.string()),
+      })
+      .strict(),
+  })
+  .strict();
 
-const getOtherUserResponseScheme = z.object({
-  user: z.object({
-    _id: z.string(),
-    brainet_tag: z.string(),
-    displayname: z.string(),
-    about_you: z.string(),
-    visibility: z.string(),
-    created_on: z.number(),
-    project_ids: z.array(z.string()),
-    follower_ids: z.array(z.string()),
-    following_ids: z.array(z.string()),
-  }),
-});
+const getOtherUserResponseScheme = z
+  .object({
+    user: z
+      .object({
+        _id: z.string(),
+        brainet_tag: z.string(),
+        displayname: z.string(),
+        about_you: z.string(),
+        visibility: z.string(),
+        created_on: z.number(),
+        project_ids: z.array(z.string()),
+        follower_ids: z.array(z.string()),
+        following_ids: z.array(z.string()),
+      })
+      .strict(),
+  })
+  .strict();
 
 describe('POST /api/user/get', () => {
   it('should return the logged in user', async () => {
@@ -114,10 +124,42 @@ describe('POST /api/user/get', () => {
   });
 });
 
+describe('POST /api/user/update', () => {
+  it('should update the user currently logged in', async () => {
+    const response = await request(app)
+      .post('/api/user/update')
+      .set(`Authorization`, `Bearer ${authToken}`)
+      .send({
+        user: {
+          about_you: 'changed',
+          displayname: 'changed',
+          visibility: 'private',
+          new_password: 'test1234',
+          old_password: 'test1234',
+        },
+      });
+
+    expect(response.status).toBe(200);
+  });
+
+  it('should match the updated user', async () => {
+    const response = await request(app)
+      .post('/api/user/get')
+      .set(`Authorization`, `Bearer ${authToken}`);
+
+    expect(response.status).toBe(200);
+    expect(response.body.user.about_you).toBe('changed');
+    expect(response.body.user.displayname).toBe('changed');
+    expect(response.body.user.visibility).toBe('private');
+  });
+});
+
 const createProjectResponseScheme = z.object({
-  project: z.object({
-    _id: z.string(),
-  }),
+  project: z
+    .object({
+      _id: z.string(),
+    })
+    .strict(),
 });
 
 describe('POST /api/project/create', () => {

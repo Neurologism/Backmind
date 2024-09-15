@@ -3,12 +3,15 @@ import { connectToDatabase } from '../database';
 
 export const registerSchema = z
   .object({
-    user: z.object({
-      email: z.string().email(),
-      brainet_tag: z.string().min(Number(process.env.MIN_BRAINET_TAG_LENGTH)),
-      plain_password: z.string().min(Number(process.env.MIN_PASS_LENGTH)),
-    }),
+    user: z
+      .object({
+        email: z.string().email(),
+        brainet_tag: z.string().min(Number(process.env.MIN_BRAINET_TAG_LENGTH)),
+        plain_password: z.string().min(Number(process.env.MIN_PASS_LENGTH)),
+      })
+      .strict(),
   })
+  .strict()
   .refine(
     async (data) => {
       const db = await connectToDatabase();
@@ -26,15 +29,18 @@ export const registerSchema = z
 
 export const loginSchema = z
   .object({
-    user: z.object({
-      email: z.string().email().optional(),
-      brainet_tag: z
-        .string()
-        .min(Number(process.env.MIN_BRAINET_TAG_LENGTH))
-        .optional(),
-      plain_password: z.string().min(Number(process.env.MIN_PASS_LENGTH)),
-    }),
+    user: z
+      .object({
+        email: z.string().email().optional(),
+        brainet_tag: z
+          .string()
+          .min(Number(process.env.MIN_BRAINET_TAG_LENGTH))
+          .optional(),
+        plain_password: z.string().min(Number(process.env.MIN_PASS_LENGTH)),
+      })
+      .strict(),
   })
+  .strict()
   .refine(
     async (data) => {
       if (!data.user.email && !data.user.brainet_tag) {
@@ -45,4 +51,4 @@ export const loginSchema = z
     { message: 'Either email or brainet_tag must be provided' }
   );
 
-export const logoutSchema = z.object({});
+export const logoutSchema = z.object({}).strict();

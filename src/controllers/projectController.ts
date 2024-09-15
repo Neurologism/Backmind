@@ -97,12 +97,12 @@ export const updateProject = async (req: Request, res: Response) => {
     }
   }
 
+  delete req.body.project.plain_password;
   await req.dbprojects!.updateOne(
     { _id: req.body.project._id },
     {
       $set: {
         ...req.body.project,
-        plain_password: undefined,
         last_edited: Date.now(),
       },
     }

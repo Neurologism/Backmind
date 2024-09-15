@@ -2,9 +2,11 @@ import request from 'supertest';
 import app from '../app';
 import { z } from 'zod';
 
-const rootResponseSchema = z.object({
-  msg: z.string(),
-});
+const rootResponseSchema = z
+  .object({
+    msg: z.string(),
+  })
+  .strict();
 
 describe('GET /', () => {
   it('should return a greeting message', async () => {

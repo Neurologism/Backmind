@@ -23,22 +23,6 @@ Configuration data is stored as environment variables in the [`.env`](/.env) fil
 The file is part of the [`.gitignore`](/.gitignore), thus you will have to create it manually.
 Below, you can find an example configuration utilizing some environment variables. You can take a look at all environment and their default values in [`env.ts`](/src/env.ts) which initializes all environment variables. 
 
-```bash
-# /.env
-MONGO_URI='mongodb://user:password@hostname:port'
-JWT_SECRET=Coffee # if not specified, it is generated randomly
-JWT_TOKEN_EXPIRE_IN=24h
-EXPRESS_PORT=3000
-DB_NAME=backmind
-RESET_DB=false
-SALT_ROUNDS=10
-SEND_ERR_TO_CLIENT=true # should only be enabled in devlopement
-LOG_LEVEL=info # either silly, debug, verbose, info, warn, error
-MIN_PASS_LENGTH=6
-MIN_BRAINET_TAG_LENGTH=3
-MIN_PROJECT_NAME_LENGTH=1
-```
-
 ### Examples
 
 Example developement configuration:

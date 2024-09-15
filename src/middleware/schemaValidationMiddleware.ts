@@ -13,7 +13,11 @@ export const schemaValidationMiddleware = (schema: z.Schema<any>) => {
           error_friendly: error.flatten(),
         });
       } else {
-        return res.status(400).json({ error: 'Invalid JSON' });
+        if (process.env.SEND_ERR_TO_CLIENT) {
+          return res.status(500).json({ error: error.stack });
+        } else {
+          return res.status(500).json({ error: 'Internal server error' });
+        }
       }
     }
   };

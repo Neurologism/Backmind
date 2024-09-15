@@ -17,13 +17,13 @@ export const getProject = async (req: Request, res: Response) => {
   })) as ProjectExplicit;
   if (project === null) {
     return res.status(404).json({
-      msg: "There is no project with that id or you don' have access to it.",
+      msg: "There is no project with that id or you don't have access to it.",
     });
   }
   if (project.visibility === 'private') {
     if (req.user_id === null) {
       return res.status(404).json({
-        msg: "There is no project with that id or you don' have access to it.",
+        msg: "There is no project with that id or you don't have access to it.",
       });
     }
     if (
@@ -31,7 +31,7 @@ export const getProject = async (req: Request, res: Response) => {
       !project.contributors.includes(req.user_id)
     ) {
       return res.status(404).json({
-        msg: "There is no project with that id or you don' have access to it.",
+        msg: "There is no project with that id or you don't have access to it.",
       });
     }
   }
@@ -54,22 +54,19 @@ export const updateProject = async (req: Request, res: Response) => {
   const projectExists = dbProject !== null;
   if (!projectExists) {
     return res.status(404).json({
-      msg: "There is no project with that id or you don' have access to it.",
+      msg: "There is no project with that id or you don't have access to it.",
     });
   }
 
-  const isProjectOwner = dbProject.owner_id === req.user_id;
+  const isProjectOwner =
+    dbProject.owner_id.toString() === req.user_id!.toString();
   const canUpdateProject =
     isProjectOwner || dbProject.contributors.includes(req.user_id!);
   if (!canUpdateProject) {
     return res.status(404).json({
-      msg: "There is no project with that id or you don' have access to it.",
+      msg: "There is no project with that id or you don't have access to it.",
     });
   }
-
-  const current_user = (await req.dbusers!.findOne({
-    _id: req.user_id,
-  })) as unknown as UserExplicit;
 
   if (!isProjectOwner) {
     try {
@@ -85,6 +82,10 @@ export const updateProject = async (req: Request, res: Response) => {
       }
     }
   }
+
+  const current_user = (await req.dbusers!.findOne({
+    _id: req.user_id,
+  })) as unknown as UserExplicit;
 
   if (req.body.project.plain_password) {
     const passwordsMatch = bcrypt.compareSync(
@@ -119,10 +120,10 @@ export const createProject = async (req: Request, res: Response) => {
       .json({ msg: 'You need to be logged in to create a project.' });
   }
 
-  const project: Project = {
+  const project = {
     name: req.body.project.name,
     description: req.body.project.description,
-    owner_id: req.user_id!,
+    owner_id: req.user_id!.toString(),
     contributors: [],
     visibility: req.body.project.visibility,
     created_on: Date.now(),
@@ -132,12 +133,10 @@ export const createProject = async (req: Request, res: Response) => {
   };
 
   const insertResult = await req.dbprojects!.insertOne(project);
-  return res
-    .status(200)
-    .json({
-      msg: 'Project created successfully.',
-      project: { _id: insertResult.insertedId },
-    });
+  return res.status(200).json({
+    msg: 'Project created successfully.',
+    project: { _id: insertResult.insertedId },
+  });
 };
 
 export const deleteProject = async (req: Request, res: Response) => {

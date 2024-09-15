@@ -18,13 +18,21 @@ export const updateProjectSchema = z
       owner_id: z
         .string()
         .optional()
-        .transform((owner_id) => new ObjectId(owner_id)),
+        .transform((owner_id) => {
+          if (owner_id === undefined) {
+            return undefined;
+          }
+          return new ObjectId(owner_id);
+        }),
       contributors: z
         .array(z.string())
         .optional()
-        .transform((contributors) =>
-          contributors!.map((contributor) => new ObjectId(contributor))
-        ),
+        .transform((contributors) => {
+          if (contributors === undefined) {
+            return undefined;
+          }
+          return contributors!.map((contributor) => new ObjectId(contributor));
+        }),
       plain_password: z
         .string()
         .min(Number(process.env.MIN_PASS_LENGTH))
@@ -46,6 +54,7 @@ export const updateProjectSchema = z
       ) {
         return false;
       }
+      return true;
     },
     { message: 'You must provide at least one field to update.' }
   )
@@ -54,6 +63,7 @@ export const updateProjectSchema = z
       if (data.project.owner_id && !data.project.plain_password) {
         return false;
       }
+      return true;
     },
     {
       message:
@@ -87,6 +97,7 @@ export const updateProjectAsContributorSchema = z.object({
         ) {
           return false;
         }
+        return true;
       },
       { message: 'You must provide at least one field to update.' }
     ),

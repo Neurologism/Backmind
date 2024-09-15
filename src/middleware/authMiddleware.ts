@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 import { ObjectId } from 'mongodb';
 
 interface JwtPayload {
-  id: string;
+  _id: string;
 }
 
 export const authMiddleware = (
@@ -18,7 +18,8 @@ export const authMiddleware = (
       token!,
       process.env.JWT_SECRET as string
     ) as JwtPayload;
-    req.user_id = new ObjectId(decoded.id);
+    const user_id = new ObjectId(decoded._id);
+    req.user_id = user_id;
     next();
   } catch (err) {
     if (err instanceof jwt.JsonWebTokenError) {

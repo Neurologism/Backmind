@@ -1,6 +1,6 @@
 import request from 'supertest';
-import app from '../app';
 import { z } from 'zod';
+import app from '../app';
 
 const registerResponseSchema = z.object({
   token: z.string(),
@@ -55,6 +55,34 @@ describe('POST /api/auth/login', () => {
     );
     expect(validationResult.success).toBe(true);
     authToken = response.body.token;
+  });
+});
+
+describe('POST /api/user/is-taken', () => {
+  it('this user should be taken', async () => {
+    const response = await request(app)
+      .post('/api/user/is-taken')
+      .send({
+        user: {
+          email: 'test@test.com',
+          brainet_tag: 'test',
+        },
+      });
+
+    expect(response.status).toBe(409);
+  });
+
+  it('this user should not be taken', async () => {
+    const response = await request(app)
+      .post('/api/user/is-taken')
+      .send({
+        user: {
+          email: 'random@random.com',
+          brainet_tag: 'random',
+        },
+      });
+
+    expect(response.status).toBe(200);
   });
 });
 

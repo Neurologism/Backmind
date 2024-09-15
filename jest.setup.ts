@@ -10,7 +10,7 @@ try {
 }
 
 process.env.DB_NAME = 'backmind-test';
-process.env.RESET_DB = 'false';
+process.env.RESET_DB = 'true';
 
 declare global {
   var authToken: string;

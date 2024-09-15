@@ -90,30 +90,25 @@ export const updateUser = async (req: Request, res: Response) => {
 
 export const isTakenUser = async (req: Request, res: Response) => {
   req as RequestExplicit;
-  if (req.body['user'] === undefined) {
-    return res.status(400).json({ msg: 'You need to provide a user object.' });
-  }
-  if (
-    req.body['user']['email'] === undefined &&
-    req.body['user']['brainet_tag'] === undefined
-  ) {
-    return res
-      .status(400)
-      .json({ msg: 'You need to provide an email or a brainet_tag.' });
-  }
-  const search_properties = {
-    $or: [
-      { email: req.body['user']['email'] },
-      { brainet_tag: req.body['user']['brainet_tag'] },
-    ],
+
+  const search_properties: { $or: { email?: any; brainet_tag?: any }[] } = {
+    $or: [],
   };
-  const user = await req.dbusers!.findOne(search_properties);
-  if (user === null) {
-    return res.status(200).json({ msg: 'This user is not taken.' });
+
+  if (req.body.user.email !== undefined) {
+    search_properties.$or.push({ email: req.body.user.email });
   }
-  return res
-    .status(409)
-    .json({ msg: 'This email or brainet tag is already in use.' });
+  if (req.body.user.brainet_tag !== undefined) {
+    search_properties.$or.push({ brainet_tag: req.body.user.brainet_tag });
+  }
+
+  const user = await req.dbusers!.findOne(search_properties);
+  if (user !== null) {
+    return res
+      .status(409)
+      .json({ msg: 'This email or brainet tag is already in use.' });
+  }
+  return res.status(200).json({ msg: 'This user is not taken.' });
 };
 
 export const deleteUser = async (req: Request, res: Response) => {

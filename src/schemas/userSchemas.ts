@@ -77,6 +77,29 @@ export const updateUserSchema = z
     { message: 'You need to provide the old password for a password change.' }
   );
 
+export const isTakenUserSchema = z
+  .object({
+    user: z
+      .object({
+        brainet_tag: z.string().optional(),
+        email: z.string().optional(),
+      })
+      .strict(),
+  })
+  .strict()
+  .refine(
+    (data) => {
+      if (isEmptyObject(data.user)) {
+        return false;
+      }
+      return true;
+    },
+    {
+      message:
+        'Provide either a brainet tag or an email to check if it is taken.',
+    }
+  );
+
 export const deleteUserSchema = z.object({}).strict();
 
 export const followUserSchema = z.object({}).strict();
@@ -84,5 +107,3 @@ export const followUserSchema = z.object({}).strict();
 export const unfollowUserSchema = z.object({}).strict();
 
 export const searchUserSchema = z.object({}).strict();
-
-export const isTakenUserSchema = z.object({}).strict();

@@ -39,7 +39,7 @@ router.post(
   updateUser
 );
 
-router.get(
+router.post(
   '/is-taken',
   dbMiddleware,
   authMiddleware,

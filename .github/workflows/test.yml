@@ -22,6 +22,9 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+      
+      - name: create .env file
+        run: echo "MONGO_URI=${{ secrets.MONGO_URI }}" > .env
 
       - name: Run Jest tests
-        run: MONGO_URI='${{ secrets.MONGO_URI }}' && npm test
+        run: npm test

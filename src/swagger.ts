@@ -211,6 +211,9 @@ const swaggerDefinition = {
                         },
                         contributors: {
                           type: 'array',
+                          items: {
+                            type: 'string'
+                          }
                         },
                         visibility: {
                           type: 'string',

@@ -47,11 +47,9 @@ export const getUser = async (req: Request, res: Response) => {
   const isFollowedByUser = user.following_ids.includes(req.user_id!);
 
   if (user.visibility === 'private' && !isUser && !isFollowedByUser) {
-    return res
-      .status(403)
-      .json({
-        msg: 'This user is private. You can only access private users if they follow you.',
-      });
+    return res.status(403).json({
+      msg: 'This user is private. You can only access private users if they follow you.',
+    });
   }
 
   user.password_hash = undefined;

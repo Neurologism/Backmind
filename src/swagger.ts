@@ -165,7 +165,7 @@ const swaggerDefinition = {
       post: {
         summary: 'Used to get a project.',
         description:
-          'This returns a project including its blocks and other relevant information like last edited date. If the project is private, you need to be logged in and an owner or contributor to access it.',
+          'This returns a project including its operations and other relevant information like last edited date. If the project is private, you need to be logged in and an owner or contributor to access it.',
         requestBody: {
           required: true,
           content: {
@@ -222,12 +222,6 @@ const swaggerDefinition = {
                         last_edited: {
                           type: 'integer',
                         },
-                        blocks: {
-                          type: 'array',
-                        },
-                        variables: {
-                          type: 'array',
-                        },
                       },
                     },
                   },
@@ -252,7 +246,7 @@ const swaggerDefinition = {
       post: {
         summary: "Used to change a project's properties.",
         description:
-          "This method can be used to change most of a project's properties. You need to be logged in to change the project. If you are a contributor, you can change the project's description, blocks, and variables. If you are the owner, you can change the name, description, visibility, contributors, blocks, variables, and even transfer ownership. If you want to transfer ownership, you need to provide your password. You always have to provide the project id.",
+          "This method can be used to change most of a project's properties. You need to be logged in to change the project. If you are a contributor, you can change the project's description and operations. If you are the owner, you can change the name, description, visibility, contributors, operations, and even transfer ownership. If you want to transfer ownership, you need to provide your password. You always have to provide the project id.",
         requestBody: {
           required: true,
           content: {
@@ -281,12 +275,6 @@ const swaggerDefinition = {
                       visibility: {
                         type: 'string',
                         description: 'either private or public',
-                      },
-                      blocks: {
-                        type: 'array',
-                      },
-                      variables: {
-                        type: 'array',
                       },
                       plain_password: {
                         type: 'string',

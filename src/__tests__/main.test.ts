@@ -182,13 +182,16 @@ describe('POST /api/user/update', () => {
   });
 });
 
-const createProjectResponseScheme = z.object({
-  project: z
-    .object({
-      _id: z.string(),
-    })
-    .strict(),
-});
+const createProjectResponseScheme = z
+  .object({
+    project: z
+      .object({
+        _id: z.string(),
+      })
+      .strict(),
+    msg: z.string().optional(),
+  })
+  .strict();
 
 describe('POST /api/project/create', () => {
   it('should create a project', async () => {
@@ -210,5 +213,43 @@ describe('POST /api/project/create', () => {
     );
     expect(validationResult.success).toBe(true);
     projectId = response.body.project._id;
+  });
+});
+
+const getProjectResponseScheme = z
+  .object({
+    project: z
+      .object({
+        _id: z.string(),
+        name: z.string(),
+        description: z.string(),
+        owner_id: z.string(),
+        contributors: z.array(z.string()),
+        visibility: z.string(),
+        created_on: z.number(),
+        last_edited: z.number(),
+      })
+      .strict(),
+  })
+  .strict();
+
+describe('POST /api/project/get', () => {
+  it('should return a project', async () => {
+    const response = await request(app)
+      .post('/api/project/get')
+      .set(`Authorization`, `Bearer ${authToken}`)
+      .send({
+        project: {
+          _id: projectId,
+        },
+      });
+
+    expect(response.status).toBe(200);
+
+    const validationResult = await getProjectResponseScheme.safeParseAsync(
+      response.body
+    );
+    console.log(response.body);
+    expect(validationResult.success).toBe(true);
   });
 });

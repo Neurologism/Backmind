@@ -25,17 +25,17 @@ export const getProject = async (req: Request, res: Response) => {
   if (project.visibility === 'private') {
     if (req.user_id === null) {
       return res.status(404).json({
-        msg: "This project is private. You need to be logged in to access it. ",
+        msg: 'This project is private. You need to be logged in to access it. ',
       });
     }
-    const isOwner = project.owner_id.toString() === req.user_id!.toString()
-    const isContributor = project.contributors.map((contributor) => contributor.toString()).includes(req.user_id!.toString())
+    const isOwner = project.owner_id.toString() === req.user_id!.toString();
+    const isContributor = project.contributors
+      .map((contributor) => contributor.toString())
+      .includes(req.user_id!.toString());
 
-    if (
-      !isOwner && !isContributor
-    ) {
+    if (!isOwner && !isContributor) {
       return res.status(404).json({
-        msg: "This project is private.",
+        msg: 'This project is private.',
       });
     }
   }
@@ -132,14 +132,13 @@ export const createProject = async (req: Request, res: Response) => {
     contributors: [],
     visibility: req.body.project.visibility,
     created_on: Date.now(),
-    last_edited: Date.now()
+    last_edited: Date.now(),
   };
 
   const insertResult = await req.dbprojects!.insertOne(project);
-  await req.dbusers!.updateOne(
-    { _id: req.user_id! },
-    { $push: { project_ids: insertResult.insertedId } } as any
-  );
+  await req.dbusers!.updateOne({ _id: req.user_id! }, {
+    $push: { project_ids: insertResult.insertedId },
+  } as any);
   return res.status(200).json({
     msg: 'Project created successfully.',
     project: { _id: insertResult.insertedId },

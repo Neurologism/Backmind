@@ -9,7 +9,6 @@ import bcrypt from 'bcrypt';
 import { updateProjectAsContributorSchema } from '../schemas/projectSchemas';
 import { z } from 'zod';
 import { initComponents } from '../utility/initComponents';
-import { strapComponents } from '../utility/strapComponents';
 
 export const getProject = async (req: Request, res: Response) => {
   req as RequestExplicit;
@@ -152,31 +151,6 @@ export const deleteProject = async (req: Request, res: Response) => {
 };
 
 export const searchProject = async (req: Request, res: Response) => {
-  req as RequestExplicit;
-  req.logger.error('Not implemented yet.');
-};
-
-export const modelStartTraining = async (req: Request, res: Response) => {
-  req as RequestExplicit;
-  req.logger.error('Not implemented yet.');
-};
-
-export const modelStopTraining = async (req: Request, res: Response) => {
-  req as RequestExplicit;
-  req.logger.error('Not implemented yet.');
-};
-
-export const modelStatusTraining = async (req: Request, res: Response) => {
-  req as RequestExplicit;
-  req.logger.error('Not implemented yet.');
-};
-
-export const modelQuery = async (req: Request, res: Response) => {
-  req as RequestExplicit;
-  req.logger.error('Not implemented yet.');
-};
-
-export const modelDownload = async (req: Request, res: Response) => {
   req as RequestExplicit;
   req.logger.error('Not implemented yet.');
 };

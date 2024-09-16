@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { connectToDatabase } from '../database';
+import { connectToDatabase } from '../utility/connectToDatabase';
 import { RequestExplicit } from '../types';
 
 export const dbMiddleware = async (

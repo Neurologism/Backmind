@@ -2,7 +2,7 @@ import request from 'supertest';
 import { z } from 'zod';
 import app from '../app';
 import { componentsSchema } from '../schemas/componentsSchemas';
-import { disconnectFromDatabase } from '../database';
+import { disconnectFromDatabase } from '../utility/connectToDatabase';
 
 const registerResponseSchema = z.object({
   token: z.string(),

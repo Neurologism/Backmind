@@ -1,5 +1,6 @@
 import { setEnv } from './env';
 import fs from 'fs';
+import { trainingWorker } from './brainetUtility/trainingWorker';
 
 setEnv();
 try {
@@ -11,7 +12,6 @@ try {
 import { compileBrainet } from './brainetUtility/compileBrainet';
 import { connectToDatabase } from './utility/connectToDatabase';
 import { logger } from './middleware/loggingMiddleware';
-import app from './app';
 
 async function main() {
   if (process.env.RECOMPILE_BRAINET === 'true') {
@@ -22,11 +22,7 @@ async function main() {
     }
   }
   await connectToDatabase();
-  app.listen(Number(process.env.EXPRESS_PORT), () => {
-    logger.info(
-      `Express server is running at http://localhost:${process.env.EXPRESS_PORT}`
-    );
-  });
+  await trainingWorker();
 }
 
 main();

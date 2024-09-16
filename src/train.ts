@@ -22,7 +22,7 @@ async function main() {
     }
   }
   await connectToDatabase();
-  await trainingWorker();
+  trainingWorker();
 }
 
 main();

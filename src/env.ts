@@ -27,8 +27,14 @@ export const setEnv = () => {
   process.env.BRAINET_PATH =
     process.env.BRAINET_PATH || 'brainet/json_interface/';
   process.env.BRAINET_RUN_JSON_FILENAME =
-    process.env.BRAINET_RUN_JSON_PATH || 'runJson';
+    process.env.BRAINET_RUN_JSON_FILENAME || 'runJson';
   process.env.BRAINET_CPP_FILENAME =
-    process.env.BRAINET_RUN_JSON_PATH || 'run_json.cpp';
+    process.env.BRAINET_CPP_FILENAME || 'run_json.cpp';
+  process.env.BRAINET_TASK_JSON_FILENAME =
+    process.env.BRAINET_TASK_JSON_FILENAME || 'task.json';
   process.env.CPP_VERSION = process.env.CPP_VERSION || 'c++20';
+  process.env.MAX_TRAINING_QUEUE_LENGTH =
+    process.env.MAX_TRAINING_QUEUE_LENGTH || '30';
+  process.env.START_TRAINING_WORKER_AS_SERVER =
+    process.env.START_TRAINING_WORKER_AS_SERVER === 'true' ? 'true' : '';
 };

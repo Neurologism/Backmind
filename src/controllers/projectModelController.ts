@@ -5,6 +5,15 @@ import { stripComponents } from '../utility/stripComponents';
 export const modelStartTraining = async (req: Request, res: Response) => {
   req as RequestExplicit;
 
+  if (
+    (await req.dbTrainingQueue!.countDocuments()) >
+    Number(process.env.MAX_TRAINING_QUEUE_LENGTH)
+  ) {
+    return res
+      .status(400)
+      .send({ msg: 'Training queue is full. Try again later.' });
+  }
+
   const task = stripComponents(req.project.components);
   const model = {
     status: 'queued',

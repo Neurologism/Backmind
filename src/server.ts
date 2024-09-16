@@ -11,6 +11,7 @@ try {
 import { compileBrainet } from './brainetUtility/compileBrainet';
 import { connectToDatabase } from './utility/connectToDatabase';
 import { logger } from './middleware/loggingMiddleware';
+import { trainingWorker } from './brainetUtility/trainingWorker';
 import app from './app';
 
 async function main() {
@@ -22,6 +23,10 @@ async function main() {
     }
   }
   await connectToDatabase();
+  if (process.env.START_TRAINING_WORKER_AS_SERVER) {
+    console.log('Starting training worker as server');
+    trainingWorker();
+  }
   app.listen(Number(process.env.EXPRESS_PORT), () => {
     logger.info(
       `Express server is running at http://localhost:${process.env.EXPRESS_PORT}`

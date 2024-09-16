@@ -10,11 +10,11 @@
     "server-start": "pm2 start dist/server.js -i 1 --name backmind-server",
     "server-stop": "pm2 stop backmind-server",
     "server-restart": "pm2 restart backmind-server",
-    "server-dev": "nodemon ./src/server.ts",
+    "server-dev": "nodemon ./src/server.ts --watch ./src",
     "train-start": "pm2 start dist/train.js -i 1 --name backmind-train",
     "train-stop": "pm2 stop backmind-train",
     "train-restart": "pm2 restart backmind-train",
-    "train-dev": "nodemon ./src/train.ts"
+    "train-dev": "nodemon ./src/train.ts --watch ./src"
   },
   "author": "",
   "license": "ISC",

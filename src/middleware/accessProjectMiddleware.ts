@@ -12,7 +12,7 @@ export const accessProjectMiddleware = async (
     });
   }
 
-  const dbProject = (await req.dbprojects!.findOne({
+  const dbProject = (await req.dbProjects!.findOne({
     _id: req.body.project._id,
   })) as ProjectExplicit;
 

@@ -6,7 +6,7 @@ export const getProjectMiddleware = async (
   res: Response,
   next: NextFunction
 ) => {
-  const project = (await req.dbprojects!.findOne({
+  const project = (await req.dbProjects!.findOne({
     _id: req.body.project._id,
   })) as ProjectExplicit;
 

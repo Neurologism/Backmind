@@ -21,7 +21,7 @@ export const getUser = async (req: Request, res: Response) => {
     search_params = req.body.user;
   }
 
-  const user = await req.dbusers!.findOne(search_params);
+  const user = await req.dbUsers!.findOne(search_params);
   if (user === null) {
     return res
       .status(404)
@@ -53,7 +53,7 @@ export const updateUser = async (req: Request, res: Response) => {
     return res.status(401).json({ msg: 'You are not authenticated.' });
   }
 
-  const db_user = (await req.dbusers!.findOne({
+  const db_user = (await req.dbUsers!.findOne({
     _id: req.user_id!,
   })) as unknown as UserExplicit;
 
@@ -84,7 +84,7 @@ export const updateUser = async (req: Request, res: Response) => {
 
   console.log(req.body.user);
 
-  req.dbusers!.updateOne({ _id: req.user_id! }, { $set: req.body.user });
+  req.dbUsers!.updateOne({ _id: req.user_id! }, { $set: req.body.user });
   return res.status(200).json({ msg: 'User updated successfully.' });
 };
 
@@ -102,7 +102,7 @@ export const isTakenUser = async (req: Request, res: Response) => {
     search_properties.$or.push({ brainet_tag: req.body.user.brainet_tag });
   }
 
-  const user = await req.dbusers!.findOne(search_properties);
+  const user = await req.dbUsers!.findOne(search_properties);
   if (user !== null) {
     return res
       .status(409)

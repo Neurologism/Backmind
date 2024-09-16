@@ -23,7 +23,7 @@ export const register = async (req: Request, res: Response) => {
     following_ids: [],
   };
 
-  const result = await req.dbusers!.insertOne(newUser);
+  const result = await req.dbUsers!.insertOne(newUser);
 
   const token = jwt.sign(
     { _id: '' + result.insertedId },
@@ -39,7 +39,7 @@ export const login = async (req: Request, res: Response) => {
   if (req.body['user']['email']) given_user.email = req.body['user']['email'];
   if (req.body['user']['brainet_tag'])
     given_user.brainet_tag = req.body['user']['brainet_tag'];
-  const query = await req.dbusers!.findOne(given_user);
+  const query = await req.dbUsers!.findOne(given_user);
   if (query === null) {
     return res.status(404).json({ msg: 'User not found' });
   }

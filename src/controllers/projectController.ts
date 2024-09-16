@@ -34,7 +34,7 @@ export const updateProject = async (req: Request, res: Response) => {
     }
   }
 
-  const current_user = (await req.dbusers!.findOne({
+  const current_user = (await req.dbUsers!.findOne({
     _id: req.user_id!,
   })) as unknown as UserExplicit;
 
@@ -49,7 +49,7 @@ export const updateProject = async (req: Request, res: Response) => {
   }
 
   delete req.body.project.plain_password;
-  await req.dbprojects!.updateOne(
+  await req.dbProjects!.updateOne(
     { _id: req.body.project._id },
     {
       $set: req.body.project,
@@ -80,8 +80,8 @@ export const createProject = async (req: Request, res: Response) => {
     components: initComponents(),
   };
 
-  const insertResult = await req.dbprojects!.insertOne(project);
-  await req.dbusers!.updateOne({ _id: req.user_id! }, {
+  const insertResult = await req.dbProjects!.insertOne(project);
+  await req.dbUsers!.updateOne({ _id: req.user_id! }, {
     $push: { project_ids: insertResult.insertedId },
   } as any);
   return res.status(200).json({

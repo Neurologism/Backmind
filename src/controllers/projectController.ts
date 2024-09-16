@@ -9,6 +9,7 @@ import bcrypt from 'bcrypt';
 import { updateProjectAsContributorSchema } from '../schemas/projectSchemas';
 import { z } from 'zod';
 import { initComponents } from '../utility/initComponents';
+import { strapComponents } from '../utility/strapComponents';
 
 export const getProject = async (req: Request, res: Response) => {
   req as RequestExplicit;

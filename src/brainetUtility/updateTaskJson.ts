@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 
 export const updateTaskJson = (task: any) => {
-  const jsonString = JSON.stringify(task);
+  const jsonString = JSON.stringify({ operations: task });
   fs.writeFileSync(
     path.join(
       __dirname,

@@ -14,7 +14,9 @@ export const modelStartTraining = async (req: Request, res: Response) => {
       .send({ msg: 'Training queue is full. Try again later.' });
   }
 
+  console.log(req.project.components);
   const task = stripComponents(req.project.components);
+  console.log(task);
   const model = {
     status: 'queued',
     output: [],

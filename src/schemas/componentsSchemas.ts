@@ -20,7 +20,7 @@ export const moduleConnectionSchema = z
 export const moduleSchema = z
   .object({
     type: z.string(),
-    parameters: z.array(componentParametersSchema),
+    parameters: componentParametersSchema,
     position: z.tuple([z.number(), z.number()]),
   })
   .strict();

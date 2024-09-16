@@ -1,11 +1,11 @@
 import crypto from 'crypto';
 import dotenv from 'dotenv';
 
-dotenv.config();
+export const setEnv = (filename: string = '.env') => {
+  dotenv.config({ path: filename });
 
-export const setEnv = () => {
   if (!process.env.MONGO_URI) {
-    throw new Error('MONGO_URI must be set in .env file');
+    console.warn('WARNING: MONGO_URI must be set in .env file');
   }
   process.env.EXPRESS_PORT = process.env.EXPRESS_PORT || '3000';
   process.env.JWT_SECRET =

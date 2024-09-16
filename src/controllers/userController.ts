@@ -82,8 +82,6 @@ export const updateUser = async (req: Request, res: Response) => {
     delete req.body.user.new_password;
   }
 
-  console.log(req.body.user);
-
   req.dbUsers!.updateOne({ _id: req.user_id! }, { $set: req.body.user });
   return res.status(200).json({ msg: 'User updated successfully.' });
 };

@@ -2,12 +2,16 @@ import { connectToDatabase } from '../utility/connectToDatabase';
 import { trainModel } from './trainModel';
 import { updateTaskJson } from './updateTaskJson';
 
+let working = false;
+
 export async function trainingWorker() {
   const db = await connectToDatabase();
   const dbTrainingQueue = db.collection('training_queue');
   const dbModels = db.collection('models');
 
-  while (true) {
+  working = true;
+
+  while (working) {
     const queueItem = await dbTrainingQueue.findOneAndDelete({});
 
     if (queueItem === null) {
@@ -37,4 +41,8 @@ export async function trainingWorker() {
 
     await trainModel(model!._id);
   }
+}
+
+export function stopTrainingWorker() {
+  working = false;
 }

@@ -1,5 +1,11 @@
-import request from 'supertest';
 import { z } from 'zod';
+import request from 'supertest';
+import { setEnv } from '../env';
+import fs from 'fs';
+
+setEnv();
+setEnv('.env.test');
+
 import app from '../app';
 import { componentsSchema } from '../schemas/componentsSchemas';
 import { disconnectFromDatabase } from '../utility/connectToDatabase';

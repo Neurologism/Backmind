@@ -1,8 +1,17 @@
 import { setEnv } from './env';
 import fs from 'fs';
 import { trainingWorker } from './brainetUtility/trainingWorker';
+const yargs = require('yargs/yargs');
+const { hideBin } = require('yargs/helpers');
 
+const argv = yargs(hideBin(process.argv)).argv;
+
+if (argv.test) {
+  setEnv('.env.test');
+  console.log('Running in test mode');
+}
 setEnv();
+
 try {
   fs.mkdirSync('./logs');
 } catch (err: any) {

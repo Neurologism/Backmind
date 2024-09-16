@@ -16,6 +16,7 @@ import {
   modelQuerySchema,
   modelDownloadSchema,
 } from '../schemas/projectModelSchemas';
+import { accessProjectMiddleware } from '../middleware/accessProjectMiddleware';
 
 const router = express.Router();
 
@@ -24,6 +25,7 @@ router.post(
   dbMiddleware,
   authMiddleware,
   schemaValidationMiddleware(modelStartTrainingSchema),
+  accessProjectMiddleware,
   modelStartTraining
 );
 

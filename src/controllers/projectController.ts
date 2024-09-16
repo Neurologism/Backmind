@@ -6,75 +6,20 @@ import {
   ProjectExplicit,
 } from '../types';
 import bcrypt from 'bcrypt';
+import { initComponents } from '../utility/initComponents';
 import { updateProjectAsContributorSchema } from '../schemas/projectSchemas';
 import { z } from 'zod';
-import { initComponents } from '../utility/initComponents';
 
 export const getProject = async (req: Request, res: Response) => {
   req as RequestExplicit;
 
-  const project = (await req.dbprojects!.findOne({
-    _id: req.body.project._id,
-  })) as ProjectExplicit;
-
-  if (project === null) {
-    return res.status(404).json({
-      msg: "This project doesn't exist.",
-    });
-  }
-
-  if (project.visibility === 'private') {
-    if (req.user_id === null) {
-      return res.status(404).json({
-        msg: 'This project is private. You need to be logged in to access it. ',
-      });
-    }
-    const isOwner = project.owner_id.toString() === req.user_id!.toString();
-    const isContributor = project.contributors
-      .map((contributor) => contributor.toString())
-      .includes(req.user_id!.toString());
-
-    if (!isOwner && !isContributor) {
-      return res.status(404).json({
-        msg: 'This project is private.',
-      });
-    }
-  }
-
-  return res.status(200).json({ project });
+  return res.status(200).json({ project: req.project! });
 };
 
 export const updateProject = async (req: Request, res: Response) => {
   req as RequestExplicit;
 
-  if (req.user_id === null) {
-    return res
-      .status(400)
-      .json({ msg: 'You need to provide an auth token to update a project.' });
-  }
-
-  const dbProject = (await req.dbprojects!.findOne({
-    _id: req.body.project._id,
-  })) as ProjectExplicit;
-
-  const projectExists = dbProject !== null;
-  if (!projectExists) {
-    return res.status(404).json({
-      msg: "There is no project with that id or you don't have access to it.",
-    });
-  }
-
-  const isProjectOwner =
-    dbProject.owner_id.toString() === req.user_id!.toString();
-  const canUpdateProject =
-    isProjectOwner || dbProject.contributors.includes(req.user_id!);
-  if (!canUpdateProject) {
-    return res.status(404).json({
-      msg: "There is no project with that id or you don't have access to it.",
-    });
-  }
-
-  if (!isProjectOwner) {
+  if (!req.middlewareParams.isProjectOwner) {
     try {
       req.body = await updateProjectAsContributorSchema.parseAsync(req.body);
     } catch (error: any) {
@@ -90,7 +35,7 @@ export const updateProject = async (req: Request, res: Response) => {
   }
 
   const current_user = (await req.dbusers!.findOne({
-    _id: req.user_id,
+    _id: req.user_id!,
   })) as unknown as UserExplicit;
 
   if (req.body.project.plain_password) {

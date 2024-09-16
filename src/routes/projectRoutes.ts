@@ -17,6 +17,8 @@ import {
   searchProjectSchema,
 } from '../schemas/projectSchemas';
 import projectModelRoutes from './projectModelRoutes';
+import { getProjectMiddleware } from '../middleware/getProjectMiddleware';
+import { accessProjectMiddleware } from '../middleware/accessProjectMiddleware';
 
 const router = express.Router();
 
@@ -25,6 +27,7 @@ router.post(
   dbMiddleware,
   authMiddleware,
   schemaValidationMiddleware(getProjectSchema),
+  getProjectMiddleware,
   getProject
 );
 
@@ -33,6 +36,7 @@ router.post(
   dbMiddleware,
   authMiddleware,
   schemaValidationMiddleware(updateProjectSchema),
+  accessProjectMiddleware,
   updateProject
 );
 

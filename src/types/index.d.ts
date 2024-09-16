@@ -9,6 +9,8 @@ declare module 'express-serve-static-core' {
     db?: Db;
     dbusers?: Collection;
     dbprojects?: Collection;
+    project?: ProjectExplicit;
+    middlewareParams?: any;
     logger: Logger;
   }
 }

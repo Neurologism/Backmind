@@ -78,6 +78,7 @@ export const createProject = async (req: Request, res: Response) => {
     last_edited: Date.now(),
     camera_position: [0, 0, 0],
     components: initComponents(),
+    models: [],
   };
 
   const insertResult = await req.dbProjects!.insertOne(project);

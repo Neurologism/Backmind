@@ -8,7 +8,7 @@ export const accessProjectMiddleware = async (
 ) => {
   if (req.user_id === null) {
     return res.status(400).json({
-      msg: 'You need to provide an auth token to update or train a project.',
+      msg: 'You need to provide an auth token.',
     });
   }
 

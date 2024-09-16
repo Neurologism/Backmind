@@ -236,6 +236,7 @@ const getProjectResponseScheme = z
         last_edited: z.number(),
         camera_position: z.tuple([z.number(), z.number(), z.number()]),
         components: componentsSchema,
+        models: z.array(z.string()),
       })
       .strict(),
   })

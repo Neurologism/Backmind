@@ -34,6 +34,7 @@ router.post(
   dbMiddleware,
   authMiddleware,
   schemaValidationMiddleware(modelStopTrainingSchema),
+  accessProjectMiddleware,
   modelStopTraining
 );
 
@@ -42,6 +43,7 @@ router.post(
   dbMiddleware,
   authMiddleware,
   schemaValidationMiddleware(modelStatusTrainingSchema),
+  accessProjectMiddleware,
   modelStatusTraining
 );
 

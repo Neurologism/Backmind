@@ -30,4 +30,4 @@ export const connectToDatabase = async (): Promise<Db> => {
 export const disconnectFromDatabase = async () => {
   await client.close();
   connected = false;
-}
+};

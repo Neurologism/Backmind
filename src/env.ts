@@ -22,9 +22,13 @@ export const setEnv = () => {
   process.env.JWT_TOKEN_EXPIRE_IN = process.env.JWT_TOKEN_EXPIRE_IN || '24h';
   process.env.LOG_LEVEL = process.env.LOG_LEVEL || 'info';
   process.env.DB_NAME = process.env.DB_NAME || 'backmind';
-  process.env.RECOMPILE_BRAINET = process.env.RECOMPILE_BRAINET === 'true' ? 'true' : '';
-  process.env.BRAINET_PATH = process.env.BRAINET_PATH || "brainet/json_interface/"
-  process.env.BRAINET_RUN_JSON_FILENAME = process.env.BRAINET_RUN_JSON_PATH || "runJson"
-  process.env.BRAINET_CPP_FILENAME = process.env.BRAINET_RUN_JSON_PATH || "run_json.cpp"
-  process.env.CPP_VERSION = process.env.CPP_VERSION || "c++20"
+  process.env.RECOMPILE_BRAINET =
+    process.env.RECOMPILE_BRAINET === 'true' ? 'true' : '';
+  process.env.BRAINET_PATH =
+    process.env.BRAINET_PATH || 'brainet/json_interface/';
+  process.env.BRAINET_RUN_JSON_FILENAME =
+    process.env.BRAINET_RUN_JSON_PATH || 'runJson';
+  process.env.BRAINET_CPP_FILENAME =
+    process.env.BRAINET_RUN_JSON_PATH || 'run_json.cpp';
+  process.env.CPP_VERSION = process.env.CPP_VERSION || 'c++20';
 };

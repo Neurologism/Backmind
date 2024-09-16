@@ -15,7 +15,7 @@ export const connectToDatabase = async (): Promise<Db> => {
   db = client.db(process.env.DB_NAME);
 
   let resetDb = process.env.RESET_DB === 'true';
-  if (!arraysEqual(await db.listCollections().toArray(), collections)) {
+  if ((await db.listCollections().toArray()).length !== collections.length) {
     console.log('Resetting databse due to missing collections...');
     resetDb = true;
   }

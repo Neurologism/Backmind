@@ -393,7 +393,6 @@ describe('POST /api/project/model/training-status', () => {
     const validationResult = await statusTrainingResponseScheme.safeParseAsync(
       response.body
     );
-    console.log(response.body);
     expect(validationResult.success).toBe(true);
   });
 });
@@ -420,7 +419,6 @@ describe('POST /api/project/model/training-stop', () => {
     const validationResult = await stopTrainingResponseScheme.safeParseAsync(
       response.body
     );
-    console.log(response.body);
     expect(validationResult.success).toBe(true);
   });
 
@@ -439,7 +437,6 @@ describe('POST /api/project/model/training-stop', () => {
     const validationResult = await statusTrainingResponseScheme.safeParseAsync(
       response.body
     );
-    console.log(response.body);
     expect(validationResult.success).toBe(true);
 
     expect(response.body.model.status).toBe('stopped');

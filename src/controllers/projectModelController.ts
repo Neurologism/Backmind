@@ -10,7 +10,7 @@ export const modelStartTraining = async (req: Request, res: Response) => {
     Number(process.env.MAX_TRAINING_QUEUE_LENGTH)
   ) {
     return res
-      .status(400)
+      .status(403)
       .send({ msg: 'Training queue is full. Try again later.' });
   }
 

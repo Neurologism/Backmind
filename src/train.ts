@@ -6,7 +6,7 @@ const { hideBin } = require('yargs/helpers');
 
 const argv = yargs(hideBin(process.argv)).argv;
 
-if (argv.test) {
+if ('test' in argv) {
   setEnv('.env.test');
   console.log('Running in test mode');
 }

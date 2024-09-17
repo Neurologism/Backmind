@@ -5,7 +5,7 @@
   "main": "dist/server.js",
   "scripts": {
     "pretty": "prettier --write \"**/*.ts\"",
-    "test": "pm2 start src/train.ts -i 1 --name backmind-train-test -- --test && jest --coverage && pm2 delete backmind-train-test",
+    "test": "pm2 start src/train.ts -i 1 --name backmind-train-test -- --test; jest --coverage; pm2 delete backmind-train-test",
     "build": "npx tsc",
     "server-start": "pm2 start dist/server.js -i 1 --name backmind-server",
     "server-stop": "pm2 stop backmind-server",

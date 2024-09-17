@@ -1,10 +1,9 @@
 import { z } from 'zod';
 import request from 'supertest';
 import { setEnv } from '../env';
-import fs from 'fs';
 
-setEnv();
 setEnv('.env.test');
+setEnv();
 
 import app from '../app';
 import { componentsSchema } from '../schemas/componentsSchemas';

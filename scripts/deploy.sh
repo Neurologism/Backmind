@@ -8,5 +8,5 @@ git clean -f
 git checkout main
 git pull
 npm i
-npm build
-npm start
+npm run build
+npm run server-start

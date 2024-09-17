@@ -1,7 +1,17 @@
 import { setEnv } from './env';
 import fs from 'fs';
+import { trainingWorker } from './brainetUtility/trainingWorker';
+const yargs = require('yargs/yargs');
+const { hideBin } = require('yargs/helpers');
 
+const argv = yargs(hideBin(process.argv)).argv;
+
+if (argv.test) {
+  setEnv('.env.test');
+  console.log('Running in test mode');
+}
 setEnv();
+
 try {
   fs.mkdirSync('./logs');
 } catch (err: any) {
@@ -11,8 +21,6 @@ try {
 import { compileBrainet } from './brainetUtility/compileBrainet';
 import { connectToDatabase } from './utility/connectToDatabase';
 import { logger } from './middleware/loggingMiddleware';
-import { trainingWorker } from './brainetUtility/trainingWorker';
-import app from './app';
 
 async function main() {
   if (process.env.RECOMPILE_BRAINET === 'true') {
@@ -23,15 +31,7 @@ async function main() {
     }
   }
   await connectToDatabase();
-  if (process.env.START_TRAINING_WORKER_AS_SERVER) {
-    console.log('Starting training worker as server');
-    trainingWorker();
-  }
-  app.listen(Number(process.env.EXPRESS_PORT), () => {
-    logger.info(
-      `Express server is running at http://localhost:${process.env.EXPRESS_PORT}`
-    );
-  });
+  trainingWorker();
 }
 
 main();

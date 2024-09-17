@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { connectToDatabase } from '../database';
+import { connectToDatabase } from '../utility/connectToDatabase';
 
 export const registerSchema = z
   .object({

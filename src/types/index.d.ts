@@ -7,8 +7,12 @@ declare module 'express-serve-static-core' {
   interface Request {
     user_id?: ObjectId | null;
     db?: Db;
-    dbusers?: Collection;
-    dbprojects?: Collection;
+    dbUsers?: Collection;
+    dbProjects?: Collection;
+    dbTrainingQueue?: Collection;
+    dbModels?: Collection;
+    project?: ProjectExplicit;
+    middlewareParams?: any;
     logger: Logger;
   }
 }
@@ -16,9 +20,10 @@ declare module 'express-serve-static-core' {
 export interface RequestExplicit extends Request {
   user_id: ObjectId | null;
   db: Db;
-  dbusers: Collection;
-  dbprojects: Collection;
-  logger: Logger;
+  dbUsers: Collection;
+  dbProjects: Collection;
+  dbTrainingQueue: Collection;
+  dbModels: Collection;
 }
 
 export * from './user';

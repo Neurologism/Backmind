@@ -128,13 +128,3 @@ export const createProjectSchema = z
 export const deleteProjectSchema = z.object({}).strict();
 
 export const searchProjectSchema = z.object({}).strict();
-
-export const modelStartTrainingSchema = z.object({}).strict();
-
-export const modelStopTrainingSchema = z.object({}).strict();
-
-export const modelStatusTrainingSchema = z.object({}).strict();
-
-export const modelQuerySchema = z.object({}).strict();
-
-export const modelDownloadSchema = z.object({}).strict();

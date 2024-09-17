@@ -25,4 +25,4 @@ jobs:
         run: echo "MONGO_URI=${{ secrets.MONGO_URI }}" > .env
 
       - name: Run Jest tests
-        run: npx jest
+        run: npm test

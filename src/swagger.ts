@@ -9,7 +9,8 @@ const parameter = {
       type: 'string',
     },
     value: {
-      type: 'any',
+      type: 'string, number',
+      example: 'string or number',
     },
     parameters: {
       type: 'array',
@@ -301,6 +302,14 @@ const swaggerDefinition = {
                           example: [0, 0, 0],
                         },
                         components: components,
+                        models: {
+                          type: 'array',
+                          description:
+                            'Array of model ids associated with that project',
+                          items: {
+                            type: 'string',
+                          },
+                        },
                       },
                     },
                   },
@@ -470,20 +479,176 @@ const swaggerDefinition = {
     },
     '/api/project/model/training-start': {
       post: {
-        summary: 'in development',
-        deprecated: true,
+        summary: 'Start model training.',
+        description:
+          'Use this endpoint to start the training process for a model.',
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': {
+              schema: {
+                type: 'object',
+                properties: {
+                  project: {
+                    type: 'object',
+                    properties: {
+                      _id: {
+                        type: 'string',
+                        description:
+                          'The ID of the project for which to start the training.',
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+        responses: {
+          '200': {
+            description: 'Training started successfully.',
+          },
+          '400': {
+            description: 'Invalid input.',
+          },
+          '403': {
+            description: 'Training queue is full. Try again later.',
+          },
+          '404': {
+            description: 'Project not found.',
+          },
+          '500': {
+            description: 'Internal server error.',
+          },
+        },
       },
     },
     '/api/project/model/training-stop': {
       post: {
-        summary: 'in development',
-        deprecated: true,
+        summary: 'Stop model training.',
+        description:
+          'Use this endpoint to stop the training process for a model.',
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': {
+              schema: {
+                type: 'object',
+                properties: {
+                  model: {
+                    type: 'object',
+                    properties: {
+                      _id: {
+                        type: 'string',
+                        description:
+                          'The ID of the model for which to stop the training.',
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+        responses: {
+          '200': {
+            description: 'Training stopped successfully.',
+          },
+          '400': {
+            description: 'Invalid input.',
+          },
+          '404': {
+            description: 'Project or model not found.',
+          },
+          '500': {
+            description: 'Internal server error.',
+          },
+        },
       },
     },
     '/api/project/model/training-status': {
       post: {
-        summary: 'in development',
-        deprecated: true,
+        summary: 'Get model training status.',
+        description: 'Use this endpoint to get the training status of a model.',
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': {
+              schema: {
+                type: 'object',
+                properties: {
+                  model: {
+                    type: 'object',
+                    properties: {
+                      _id: {
+                        type: 'string',
+                        description:
+                          'The ID of the model for which to get the training status.',
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+        responses: {
+          '200': {
+            description: 'Model training status retrieved successfully.',
+            content: {
+              'application/json': {
+                schema: {
+                  type: 'object',
+                  properties: {
+                    model: {
+                      type: 'object',
+                      properties: {
+                        status: {
+                          type: 'string',
+                          description:
+                            'either queued, training, finished, error or stopped',
+                          example:
+                            'either queued, training, finished, error or stopped',
+                        },
+                        output: {
+                          type: 'string',
+                        },
+                        queued_at: {
+                          type: 'integer',
+                          format: 0,
+                        },
+                        started_at: {
+                          type: 'integer',
+                          format: 0,
+                        },
+                        finished_at: {
+                          type: 'integer',
+                          format: 0,
+                        },
+                        error: {
+                          type: 'any',
+                          example: 'any',
+                        },
+                        project_id: {
+                          type: 'string',
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+          '400': {
+            description: 'Invalid input.',
+          },
+          '404': {
+            description: 'Project or model not found.',
+          },
+          '500': {
+            description: 'Internal server error.',
+          },
+        },
       },
     },
     '/api/project/model/query': {

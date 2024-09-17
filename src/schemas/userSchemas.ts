@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { ObjectId } from 'mongodb';
-import { isEmptyObject } from '../utility/main';
+import { isEmptyObject } from '../utility/isEmptyObject';
 
 export const getUserSchema = z
   .object({

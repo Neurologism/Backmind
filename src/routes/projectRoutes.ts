@@ -7,11 +7,6 @@ import {
   updateProject,
   createProject,
   deleteProject,
-  modelStartTraining,
-  modelStopTraining,
-  modelStatusTraining,
-  modelQuery,
-  modelDownload,
 } from '../controllers/projectController';
 import { schemaValidationMiddleware } from '../middleware/schemaValidationMiddleware';
 import {
@@ -20,12 +15,10 @@ import {
   createProjectSchema,
   deleteProjectSchema,
   searchProjectSchema,
-  modelStartTrainingSchema,
-  modelStopTrainingSchema,
-  modelStatusTrainingSchema,
-  modelQuerySchema,
-  modelDownloadSchema,
 } from '../schemas/projectSchemas';
+import projectModelRoutes from './projectModelRoutes';
+import { getProjectMiddleware } from '../middleware/getProjectMiddleware';
+import { accessProjectMiddleware } from '../middleware/accessProjectMiddleware';
 
 const router = express.Router();
 
@@ -34,6 +27,7 @@ router.post(
   dbMiddleware,
   authMiddleware,
   schemaValidationMiddleware(getProjectSchema),
+  getProjectMiddleware,
   getProject
 );
 
@@ -42,6 +36,7 @@ router.post(
   dbMiddleware,
   authMiddleware,
   schemaValidationMiddleware(updateProjectSchema),
+  accessProjectMiddleware,
   updateProject
 );
 
@@ -69,44 +64,6 @@ router.post(
   searchProject
 );
 
-router.post(
-  '/model/training-start',
-  dbMiddleware,
-  authMiddleware,
-  schemaValidationMiddleware(modelStartTrainingSchema),
-  modelStartTraining
-);
-
-router.post(
-  '/model/training-stop',
-  dbMiddleware,
-  authMiddleware,
-  schemaValidationMiddleware(modelStopTrainingSchema),
-  modelStopTraining
-);
-
-router.post(
-  '/model/training-status',
-  dbMiddleware,
-  authMiddleware,
-  schemaValidationMiddleware(modelStatusTrainingSchema),
-  modelStatusTraining
-);
-
-router.post(
-  '/model/query',
-  dbMiddleware,
-  authMiddleware,
-  schemaValidationMiddleware(modelQuerySchema),
-  modelQuery
-);
-
-router.post(
-  '/model/download',
-  dbMiddleware,
-  authMiddleware,
-  schemaValidationMiddleware(modelDownloadSchema),
-  modelDownload
-);
+router.use('/model', projectModelRoutes);
 
 export default router;

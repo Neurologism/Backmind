@@ -1,6 +1,11 @@
-import request from 'supertest';
-import app from '../app';
 import { z } from 'zod';
+import request from 'supertest';
+import { setEnv } from '../env';
+
+setEnv('.env.test');
+setEnv();
+
+import app from '../app';
 
 const rootResponseSchema = z
   .object({

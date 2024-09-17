@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { connectToDatabase } from '../database';
+import { connectToDatabase } from '../utility/connectToDatabase';
 import { RequestExplicit } from '../types';
 
 export const dbMiddleware = async (
@@ -9,8 +9,10 @@ export const dbMiddleware = async (
 ) => {
   try {
     req.db = await connectToDatabase();
-    req.dbusers = req.db.collection('users');
-    req.dbprojects = req.db.collection('projects');
+    req.dbUsers = req.db.collection('users');
+    req.dbProjects = req.db.collection('projects');
+    req.dbTrainingQueue = req.db.collection('training_queue');
+    req.dbModels = req.db.collection('models');
     next();
   } catch (error) {
     req.logger.error('Failed to inject database', error);

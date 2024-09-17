@@ -1,0 +1,66 @@
+import express from 'express';
+import { dbMiddleware } from '../middleware/dbMiddleware';
+import { authMiddleware } from '../middleware/authMiddleware';
+import {
+  modelStartTraining,
+  modelStopTraining,
+  modelStatusTraining,
+  modelQuery,
+  modelDownload,
+} from '../controllers/projectModelController';
+import { schemaValidationMiddleware } from '../middleware/schemaValidationMiddleware';
+import {
+  modelStartTrainingSchema,
+  modelStopTrainingSchema,
+  modelStatusTrainingSchema,
+  modelQuerySchema,
+  modelDownloadSchema,
+} from '../schemas/projectModelSchemas';
+import { accessProjectMiddleware } from '../middleware/accessProjectMiddleware';
+
+const router = express.Router();
+
+router.post(
+  '/training-start',
+  dbMiddleware,
+  authMiddleware,
+  schemaValidationMiddleware(modelStartTrainingSchema),
+  accessProjectMiddleware,
+  modelStartTraining
+);
+
+router.post(
+  '/training-stop',
+  dbMiddleware,
+  authMiddleware,
+  schemaValidationMiddleware(modelStopTrainingSchema),
+  accessProjectMiddleware,
+  modelStopTraining
+);
+
+router.post(
+  '/training-status',
+  dbMiddleware,
+  authMiddleware,
+  schemaValidationMiddleware(modelStatusTrainingSchema),
+  accessProjectMiddleware,
+  modelStatusTraining
+);
+
+router.post(
+  '/query',
+  dbMiddleware,
+  authMiddleware,
+  schemaValidationMiddleware(modelQuerySchema),
+  modelQuery
+);
+
+router.post(
+  '/download',
+  dbMiddleware,
+  authMiddleware,
+  schemaValidationMiddleware(modelDownloadSchema),
+  modelDownload
+);
+
+export default router;

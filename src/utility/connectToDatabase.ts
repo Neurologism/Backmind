@@ -1,5 +1,7 @@
 import { MongoClient, Db } from 'mongodb';
+import { arraysEqual } from './arraysEqual';
 
+const collections = ['users', 'projects', 'training_queue', 'models'];
 let connected = false;
 let db: Db;
 let client: MongoClient;
@@ -12,10 +14,14 @@ export const connectToDatabase = async (): Promise<Db> => {
   await client.connect();
   db = client.db(process.env.DB_NAME);
 
-  if (process.env.RESET_DB) {
+  let resetDb = process.env.RESET_DB === 'true';
+  if ((await db.listCollections().toArray()).length !== collections.length) {
+    console.log('Resetting databse due to missing collections...');
+    resetDb = true;
+  }
+  if (resetDb) {
     console.log('Resetting database... ');
     await db.dropDatabase();
-    const collections = ['users', 'projects'];
     for (const collectionName of collections) {
       await db.createCollection(collectionName);
     }
@@ -30,4 +36,4 @@ export const connectToDatabase = async (): Promise<Db> => {
 export const disconnectFromDatabase = async () => {
   await client.close();
   connected = false;
-}
+};

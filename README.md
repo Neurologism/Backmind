@@ -15,6 +15,17 @@ touch .env
 
 Afterwards, use `npm run dev` to run for developement purposes.
 
+You will also have to install brainet to be able to train models. First, make sure you have c++ and the g++ compiler installed. Then, run the following commands in the backmind directory.
+The `brainet` directory is included in the .gitignore file. 
+
+```bash
+git clone https://github.com/Neurologism/brainet.git
+cd brainet/json_interface
+g++ run_json.cpp -std=c++20 -o runJson
+```
+
+If you're not on linux, pick a different compiler than g++. Also, do not set the environment variable `RECOMPILE_BRAINET='true'` if g++ is not available. You will have to compile manually. 
+
 ## Configuration
 
 ### Basics

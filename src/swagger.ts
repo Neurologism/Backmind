@@ -302,6 +302,14 @@ const swaggerDefinition = {
                           example: [0, 0, 0],
                         },
                         components: components,
+                        models: {
+                          type: 'array',
+                          description:
+                            'Array of model ids associated with that project',
+                          items: {
+                            type: 'string',
+                          },
+                        },
                       },
                     },
                   },

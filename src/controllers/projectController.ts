@@ -135,8 +135,8 @@ export const deleteProject = async (req: Request, res: Response) => {
     });
   }
 
-  await req.dbModels!.deleteMany({ project_id: req.project!._id });
   await req.dbProjects!.deleteOne({ _id: req.project!._id });
+  await req.dbModels!.deleteMany({ project_id: req.project!._id });
   await req.dbUsers!.updateOne(
     { _id: req.user_id! },
     {

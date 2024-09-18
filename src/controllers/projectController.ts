@@ -115,7 +115,35 @@ export const createProject = async (req: Request, res: Response) => {
 
 export const deleteProject = async (req: Request, res: Response) => {
   req as RequestExplicit;
-  req.logger.error('Not implemented yet.');
+
+  if (!req.middlewareParams.isProjectOwner) {
+    return res
+      .status(401)
+      .json({ msg: 'You are not the owner of this project.' });
+  }
+
+  const activeModels =
+    (await req.dbModels!.findOne({
+      $and: [
+        { project_id: req.project!._id },
+        { $or: [{ status: 'queued' }, { status: 'training' }] },
+      ],
+    })) !== null;
+  if (activeModels) {
+    return res.status(400).json({
+      msg: 'You cannot delete a project with training in queue or in progress.',
+    });
+  }
+
+  await req.dbModels!.deleteMany({ project_id: req.project!._id });
+  await req.dbProjects!.deleteOne({ _id: req.project!._id });
+  await req.dbUsers!.updateOne(
+    { _id: req.user_id! },
+    {
+      $pull: { project_ids: req.project!._id },
+    }
+  );
+  return res.status(200).json({ msg: 'Project deleted successfully.' });
 };
 
 export const searchProject = async (req: Request, res: Response) => {

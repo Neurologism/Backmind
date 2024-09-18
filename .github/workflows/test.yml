@@ -19,8 +19,6 @@ jobs:
         image: mongo:latest
         ports:
           - 27017:27017
-        options: >
-          --bind_ip_all
         env:
           MONGO_INITDB_ROOT_USERNAME: root
           MONGO_INITDB_ROOT_PASSWORD: password

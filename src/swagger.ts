@@ -238,7 +238,24 @@ const swaggerDefinition = {
     },
     '/api/auth/logout': {
       post: {
-        summary: 'Logout a user.',
+        summary: 'Invalidate the current auth token of a user. ',
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
+        description: 'In development',
+        deprecated: true,
+      },
+    },
+    '/api/auth/logout-all': {
+      post: {
+        summary: 'Invalidate all tokens of a user. ',
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         description: 'In development',
         deprecated: true,
       },
@@ -246,6 +263,11 @@ const swaggerDefinition = {
     '/api/project/get': {
       post: {
         summary: 'Used to get a project.',
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         description:
           'This returns a project including its operations and other relevant information like last edited date. If the project is private, you need to be logged in and an owner or contributor to access it.',
         requestBody: {
@@ -347,6 +369,11 @@ const swaggerDefinition = {
     '/api/project/update': {
       post: {
         summary: "Used to change a project's properties.",
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         description:
           "This method can be used to change most of a project's properties. You need to be logged in to change the project. If you are a contributor, you can change the project's description and operations. If you are the owner, you can change the name, description, visibility, contributors, operations, and even transfer ownership. If you want to transfer ownership, you need to provide your password. You always have to provide the project id.",
         requestBody: {
@@ -420,6 +447,11 @@ const swaggerDefinition = {
     '/api/project/create': {
       post: {
         summary: 'Used to create a project.',
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         description:
           'To create a project, you have to be logged in and provide your auth token. Furthermore, you have to specify name, description, and visibility. The description can be an empty string. The visibility can be either public or private.',
         requestBody: {
@@ -484,18 +516,33 @@ const swaggerDefinition = {
     '/api/project/delete': {
       post: {
         summary: 'in development',
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         deprecated: true,
       },
     },
     '/api/project/search': {
       post: {
         summary: 'in development',
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         deprecated: true,
       },
     },
     '/api/project/model/training-start': {
       post: {
         summary: 'Start model training.',
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         description:
           'Use this endpoint to start the training process for a model.',
         requestBody: {
@@ -542,6 +589,11 @@ const swaggerDefinition = {
     '/api/project/model/training-stop': {
       post: {
         summary: 'Stop model training.',
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         description:
           'Use this endpoint to stop the training process for a model.',
         requestBody: {
@@ -585,6 +637,11 @@ const swaggerDefinition = {
     '/api/project/model/training-status': {
       post: {
         summary: 'Get model training status.',
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         description: 'Use this endpoint to get the training status of a model.',
         requestBody: {
           required: true,
@@ -670,18 +727,33 @@ const swaggerDefinition = {
     '/api/project/model/query': {
       post: {
         summary: 'in development',
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         deprecated: true,
       },
     },
     '/api/project/model/download': {
       post: {
         summary: 'in development',
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         deprecated: true,
       },
     },
     '/api/user/get': {
       post: {
         summary: 'Retrieve a user.',
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         description:
           'Use this to get a user by id or brainet_tag. If you want to get the user that is currently logged in, you leave the body empty, but make sure to include your token. If you want to get a user that has the account visibility set to private, the user will have to be a follower of you and you will also have to include your auth token.',
         requestBody: {
@@ -782,6 +854,11 @@ const swaggerDefinition = {
     '/api/user/update': {
       post: {
         summary: 'Change account information.',
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         description:
           "Use this, if you want to change account information, like email, about you, displayname, brainet_tag, password, date_of_birth, visibility. You can only change the account data if you're logged in as the corresponding user. If you want to change the password, you will have to provide the old password. The minimum password length is 6, the minimum brainet tag length is 3.",
         requestBody: {
@@ -893,24 +970,44 @@ const swaggerDefinition = {
     '/api/user/search': {
       post: {
         summary: 'in development',
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         deprecated: true,
       },
     },
     '/api/user/delete': {
       post: {
         summary: 'in development',
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         deprecated: true,
       },
     },
     '/api/user/follow': {
       post: {
         summary: 'in development',
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         deprecated: true,
       },
     },
     '/api/user/unfollow': {
       post: {
         summary: 'in development',
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         deprecated: true,
       },
     },

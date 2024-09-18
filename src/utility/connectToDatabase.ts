@@ -10,6 +10,7 @@ export const connectToDatabase = async (): Promise<Db> => {
   if (connected) {
     return db;
   }
+  console.log('Trying to connect to the database...');
   client = new MongoClient(process.env.MONGO_URI as string);
   await client.connect();
   db = client.db(process.env.DB_NAME);

@@ -53,6 +53,7 @@ router.post(
   dbMiddleware,
   authMiddleware,
   schemaValidationMiddleware(deleteProjectSchema),
+  accessProjectMiddleware,
   deleteProject
 );
 

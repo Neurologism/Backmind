@@ -1,22 +1,95 @@
 # Backmind
 
-The backend repo for brainet utilizing nodejs, express, typescript and mongodb.
+Welcome to the backend repository for our innovative educational AI project, [Brainet](https://github.com/Neurologism/brainet)! Our goal is to empower users to build artificial intelligence systems using a visual, block-based interface similar to Scratch or LEGO, making AI development accessible and fun for everyone.
+
+## Table of Contents
+
+Already know where you're going? We've got you covered.
+
+- [What is Brainet ?](#what-is-brainet)
+- [Technical Stack](#technical-stack)
+- [Installation](#installation)
+- [Configuration](#configuration)
+- [Documentation](#documentation)
+- [Logging](#logging)
+
+## What is Brainet?
+
+[Brainet](https://github.com/Neurologism/brainet) is designed to simplify the process of creating and experimenting with AI models by using a modular, block-based approach. This method enables users to construct complex AI systems intuitively, without needing deep programming knowledge. Our platform provides an engaging and interactive way to learn about AI and machine learning by manipulating blocks that represent different components and functions.
+
+## Technical Stack
+
+The backend of Brainet is built using a modern and robust technology stack, ensuring scalability, performance, and ease of development:
+
+### Node.js
+
+Node.js is an open-source, cross-platform runtime environment that enables server-side scripting using JavaScript. It is designed to build scalable network applications with high performance. Node.js operates on a single-threaded, event-driven architecture, which allows it to handle numerous concurrent connections efficiently.
+
+### Express
+
+Express is a minimal and flexible Node.js web application framework that provides a robust set of features for web and mobile applications. It simplifies the process of building server-side applications by offering a straightforward API for routing, middleware integration, and handling HTTP requests.
+
+### TypeScript
+
+TypeScript is a statically typed superset of JavaScript developed by Microsoft that adds optional static types and type-checking to the language. By compiling TypeScript code into plain JavaScript, it enhances code quality and maintainability, catching errors during development rather than runtime.
+
+### PM2
+
+PM2 is a production process manager for Node.js applications that simplifies the deployment, monitoring, and management of applications. It provides features such as process management, load balancing, and automatic restarts, ensuring that applications run smoothly and reliably in production environments.
+
+### Swagger
+
+Swagger (now known as OpenAPI) is a framework for API documentation and development that helps design, build, document, and consume RESTful web services. Swagger provides a standardized format for describing APIs.
 
 ## Installation
 
-To clone the package locally and make it usable.
+### 1. Install Required Tools
+
+You can either install Node using your package manager or using [this convenient helper](https://nodejs.org/en/download/package-manager) if you haven't installed it already. Afterwards, verify that you've installed Node.js and npm by running:
+
+```bash
+node -v # should print something like `v.20.17.0`
+npm -v # should print something like `v.10.8.2`
+```
+
+### 2. Installing MongoDB
+
+To proceed, you need to install MongoDB Community Edition on your local machine. MongoDB offers official installation guides based on your operating system. Follow the instructions for your platform to ensure a correct setup. Select the appropriate tutorial from the list below:
+
+| Platform | Link                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Linux    | [Red Hat or CentOS](https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-red-hat/) <br> [Ubuntu](https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-ubuntu/) <br> [Debian](https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-debian/) <br> [SUSE](https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-suse/) <br> [Amazon Linux](https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-amazon/) |
+| maxOS    | [macOS]()                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| Windows  | [Windows]()                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| Docker   | [Docker]()                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+
+### 3. Cloning the Backmind Repository
+
+Navigate to or create a directory where you want to store backmind and run the following commands. Remember to insert your MongoDB login data into the `MONGO_URI` environment variable.
 
 ```bash
 git clone https://github.com/SirPythonPhoenix/backmind.git
 cd backmind
-npm i
-touch .env
+npm install
+echo "MONGO_URI='mongodb://user:password@localhost:27017'" >> .env
 ```
 
-Afterwards, use `npm run dev` to run for developement purposes.
+### 4. Cloning the Brainet Repository (optional)
+
+This step is optional, as you will only need it, if you want to train a model locally.
+
+#### Install Required Tools
+
+Ensure you have C++ and the g++ compiler installed on your system. If you’re using Linux, you can typically install these using your package manager. For example, on Debian-based systems like Ubuntu, you can use:
+
+```bash
+sudo apt-get install g++ build-essential
+```
+
+#### Installing Brainet
 
 You will also have to install brainet to be able to train models. First, make sure you have c++ and the g++ compiler installed. Then, run the following commands in the backmind directory.
-The `brainet` directory is included in the .gitignore file. 
+The `brainet` directory is included in the .gitignore file.
 
 ```bash
 git clone https://github.com/Neurologism/brainet.git
@@ -24,7 +97,42 @@ cd brainet/json_interface
 g++ run_json.cpp -std=c++20 -o runJson
 ```
 
-If you're not on linux, pick a different compiler than g++. Also, do not set the environment variable `RECOMPILE_BRAINET='true'` if g++ is not available. You will have to compile manually. 
+If you're not on linux, pick a different compiler than g++. Also, do not set the environment variable `RECOMPILE_BRAINET='true'` if g++ is not available as it will use g++ by default.
+
+#### Running the Training Worker
+
+To run a training worker process for developement parallel to the express server, set the environment variable `START_TRAINING_WORKER_AS_SERVER=true`.
+If you just want to run a training worker without express server, you can use `npm run train-dev`.
+If you want to host a dedicated training worker, use `npm run build` and afterwards `npm run train-start`.
+Don't forget to set the environment variable `BRAINET_PATH=.../brainet/json_interface` depending on your needs.
+
+### Running for Developement
+
+Use the following npm scripts for developement.
+
+```bash
+npm run pretty # formats the code
+npm test # test the code
+
+npm run server-dev # to start an express server
+npm run train-dev # to start a plain training worker
+```
+
+### Running for Deployment
+
+Use the following npm scripts for developement.
+
+```bash
+npm run build # nuilds type script into java script code
+
+npm run server-start # starts the express server
+npm run server-stop # stops the express server
+
+npm run train-start # starts the training worker
+npm run train-stop # stops the training worker
+```
+
+As backmind uses pm2, it is possible to use the full array of pm2 commands. To do so, make sure you've installed pm2 globally `npm i -g pm2` (or use npx). For instance, this would make it possible to use `pm2 start dist/index.js -i 0` to use the pm2 load balancer on all available cores on a dedicated server. You can find more [here](https://github.com/Unitech/pm2).
 
 ## Configuration
 
@@ -32,7 +140,7 @@ If you're not on linux, pick a different compiler than g++. Also, do not set the
 
 Configuration data is stored as environment variables in the [`.env`](/.env) file.
 The file is part of the [`.gitignore`](/.gitignore), thus you will have to create it manually.
-Below, you can find an example configuration utilizing some environment variables. You can take a look at all environment and their default values in [`env.ts`](/src/env.ts) which initializes all environment variables. 
+Below, you can find an example configuration utilizing some environment variables. You can take a look at all environment and their default values in [`env.ts`](/src/env.ts) which initializes all environment variables.
 
 ### Examples
 
@@ -61,30 +169,12 @@ LOG_LEVEL="info"
 
 ## Documentation
 
-Documentation is generated using swagger and can be accessed at `/api-docs`.
-The swagger documentation is generated from the [`swagger.ts`](/src/swagger.ts) file. 
-
-## Production
-
-Use the following pre-defined commands from [`package.json`](/package.json) for basic usage.
-
-```bash
-npm run build # builds to /dist which is necessary to run
-npm run start # starts the express-server
-npm run stop # stops the process
-npm run restart # restarts the process
-npm run monit # view process status
-```
-
-As backmind uses the pm2 package for production, it is possible to use the full array of pm2 commands. To do so, make sure you've installed pm2 globally `npm i -g pm2`. For instance, this would make it possible to use `pm2 start dist/index.js -i 0` to use the pm2 load balancer on all available cores on a dedicated server. You can find more [here](https://github.com/Unitech/pm2).
+Documentation is generated using swagger and can be accessed at `hostname/api-docs`.
+The swagger documentation is generated from the [`swagger.ts`](/src/swagger.ts) file.
 
 ## Logging
 
 Logging is done via winston and morgan.
 Morgan logs all requests to [`./logs/access.log`](./logs/access.log) and the console stream.
-Winston logs general log messages to [`./logs/error.log`](./logs/error.log) and [`./logs/combined.log`](./logs/combined.log).
+Winston logs to [`./logs/error.log`](./logs/error.log) and [`./logs/combined.log`](./logs/combined.log).
 The log level for winston can be set via LOG_LEVEL in [`.env`](.env)
-
-## Testing
-
-Testing is done via `npm run test`. Jest is used as a testing framework and supertest is used for express request testing. Make sure, that the database is reset before testing with the environment variable `RESET_DB=true`. Type validation in testing is done with zod. 

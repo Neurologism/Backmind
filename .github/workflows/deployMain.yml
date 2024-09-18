@@ -1,0 +1,36 @@
+name: Deploy Main
+
+on:
+  push:
+    branches: ['main']
+
+jobs:
+  deploy-express:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Deploy to server
+        run: |
+          ssh -o StrictHostKeyChecking=no brainet@142.93.175.194 'bash -s' < ./scripts/deployMainExpress.sh
+
+  deploy-train-worker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Deploy to server
+        run: |
+          ssh -o StrictHostKeyChecking=no brainet@157.230.103.24 'bash -s' < ./scripts/deployMainTrainWorker.sh

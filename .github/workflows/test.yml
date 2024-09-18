@@ -4,10 +4,24 @@ on:
   pull_request:
     branches:
       - main
+      - developement
+  push:
+    branches: 
+      - main
+      - developement
 
 jobs:
   test:
     runs-on: ubuntu-latest
+
+    services:
+      mongodb:
+        image: mongo:latest
+        ports:
+          - 27017:27017
+        env:
+          MONGO_INITDB_ROOT_USERNAME: root
+          MONGO_INITDB_ROOT_PASSWORD: password
 
     steps:
       - name: Checkout code
@@ -16,13 +30,13 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '16'
+          node-version: '20'
 
       - name: Install dependencies
         run: npm install
-      
+
       - name: create .env file
-        run: echo "MONGO_URI=${{ secrets.MONGO_URI }}" > .env
+        run: echo "MONGO_URI='mongodb://root:password@localhost:27017'" > .env
 
       - name: Run Jest tests
         run: npm test

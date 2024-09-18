@@ -1,11 +1,11 @@
-name: Deploy
+name: Deploy Developement
 
 on:
   push:
-    branches: ['main']
+    branches: ['none'] # will have to be developement
 
 jobs:
-  deploy:
+  deploy-dev:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -18,4 +18,4 @@ jobs:
 
       - name: Deploy to server
         run: |
-          ssh -o StrictHostKeyChecking=no emil@ssh.icinoxis.net 'bash -s' < ./scripts/deploy.sh
+          ssh -o StrictHostKeyChecking=no emil@ssh.icinoxis.net 'bash -s' < ./scripts/deployDev.sh

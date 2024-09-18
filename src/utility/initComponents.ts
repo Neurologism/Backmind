@@ -1,14 +1,61 @@
 export const initComponents = () => {
   const components = {
     add: {
-      modules: [],
-      connections: [],
+      modules: [
+        {
+          type: 'dense',
+          position: [0, 0],
+          parameters: [
+            { type: 'object', value: 'relu' },
+            { type: 'parameter', value: 100 },
+            { type: 'parameter', value: 'module1' },
+          ],
+        },
+        {
+          type: 'dense',
+          position: [0, 0],
+          parameters: [
+            { type: 'object', value: 'softmax' },
+            { type: 'parameter', value: 10 },
+            { type: 'parameter', value: 'module2' },
+          ],
+        },
+        {
+          type: 'loss',
+          position: [0, 0],
+          parameters: [
+            { type: 'object', value: 'error_rate' },
+            { type: 'parameter', value: 'module3' },
+          ],
+        },
+      ],
+      connections: [
+        { from: 'module1', to: 'module2' },
+        { from: 'module2', to: 'module3' },
+      ],
     },
     train: {
-      parameters: [],
+      parameters: [
+        { type: 'parameter', value: 'module1' },
+        { type: 'parameter', value: 'module3' },
+        { type: 'parameter', value: 10 },
+        { type: 'parameter', value: 128 },
+        {
+          type: 'object',
+          value: 'sgd',
+          parameters: [
+            { type: 'parameter', value: 0.1 },
+            { type: 'parameter', value: 500 },
+          ],
+        },
+        { type: 'parameter', value: 10 },
+      ],
     },
     predict: {
-      parameters: [],
+      parameters: [
+        { type: 'parameter', value: 'module1' },
+        { type: 'parameter', value: 'module3' },
+      ],
     },
   };
   return components;

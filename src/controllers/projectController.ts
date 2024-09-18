@@ -9,6 +9,7 @@ import bcrypt from 'bcrypt';
 import { initComponents } from '../utility/initComponents';
 import { updateProjectAsContributorSchema } from '../schemas/projectSchemas';
 import { z } from 'zod';
+import { projectNameExists } from '../utility/projectNameExists';
 
 export const getProject = async (req: Request, res: Response) => {
   req as RequestExplicit;
@@ -18,6 +19,19 @@ export const getProject = async (req: Request, res: Response) => {
 
 export const updateProject = async (req: Request, res: Response) => {
   req as RequestExplicit;
+
+  if (
+    req.body.project.name !== undefined &&
+    req.body.project.name !== req.project!.name
+  ) {
+    const nameTaken = await projectNameExists(
+      req.body.project.name,
+      req.user_id!
+    );
+    if (nameTaken) {
+      return res.status(409).json({ msg: 'Project name already taken.' });
+    }
+  }
 
   if (!req.middlewareParams.isProjectOwner) {
     try {
@@ -66,6 +80,14 @@ export const createProject = async (req: Request, res: Response) => {
     return res
       .status(401)
       .json({ msg: 'You need to be logged in to create a project.' });
+  }
+
+  const nameTaken = await projectNameExists(
+    req.body.project.name,
+    req.user_id!
+  );
+  if (nameTaken) {
+    return res.status(409).json({ msg: 'Project name already taken.' });
   }
 
   const project = {

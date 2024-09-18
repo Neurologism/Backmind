@@ -81,13 +81,26 @@ const swaggerDefinition = {
   servers: [
     {
       url: 'https://backmind.icinoxis.net',
-      description: 'deployment server',
+      description: 'Deployment server',
+    },
+    {
+      url: 'https://dev-backmind.icinoxis.net',
+      description: 'Developement server',
     },
     {
       url: 'http://localhost:3000',
-      description: 'Development server',
+      description: 'Local server',
     },
   ],
+  components: {
+    securitySchemes: {
+      bearerAuth: {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+      },
+    },
+  },
   paths: {
     '/': {
       get: {
@@ -287,6 +300,7 @@ const swaggerDefinition = {
                         visibility: {
                           type: 'string',
                           description: 'either private or public',
+                          example: 'private or public',
                         },
                         created_on: {
                           type: 'integer',
@@ -366,6 +380,7 @@ const swaggerDefinition = {
                       visibility: {
                         type: 'string',
                         description: 'either private or public',
+                        example: 'private or public',
                       },
                       plain_password: {
                         type: 'string',
@@ -426,6 +441,7 @@ const swaggerDefinition = {
                       visibility: {
                         type: 'string',
                         description: 'either private or public',
+                        example: 'private or public',
                       },
                     },
                   },
@@ -694,6 +710,62 @@ const swaggerDefinition = {
         responses: {
           '200': {
             description: 'User retrieved successfully.',
+            content: {
+              'application/json': {
+                schema: {
+                  type: 'object',
+                  properties: {
+                    user: {
+                      type: 'object',
+                      properties: {
+                        _id: {
+                          type: 'string',
+                        },
+                        brainet_tag: {
+                          type: 'string',
+                        },
+                        email: {
+                          type: 'string',
+                        },
+                        about_you: {
+                          type: 'string',
+                        },
+                        displayname: {
+                          type: 'string',
+                        },
+                        date_of_birth: {
+                          type: 'integer',
+                        },
+                        visibility: {
+                          type: 'string',
+                          description: 'either private or public',
+                          example: 'private or public',
+                        },
+                        followers: {
+                          type: 'array',
+                          items: {
+                            type: 'string',
+                          },
+                        },
+                        following: {
+                          type: 'array',
+                          items: {
+                            type: 'string',
+                          },
+                        },
+                        project_ids: {
+                          type: 'array',
+                          items: {
+                            type: 'string',
+                            example: '029iiu73h4t42e5t29io0u3h45t',
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
           },
           '400': {
             description: 'Invalid input.',
@@ -745,8 +817,8 @@ const swaggerDefinition = {
                       },
                       visibility: {
                         type: 'string',
-                        description:
-                          "This needs to be either 'private' or 'public'.",
+                        description: 'either private or public',
+                        example: 'private or public',
                       },
                       new_password: {
                         type: 'string',

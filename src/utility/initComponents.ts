@@ -4,7 +4,7 @@ export const initComponents = () => {
       modules: [
         {
           type: 'dense',
-          position: [0, 0],
+          position: [10, 50],
           parameters: [
             { type: 'object', value: 'relu' },
             { type: 'parameter', value: 100 },
@@ -13,7 +13,7 @@ export const initComponents = () => {
         },
         {
           type: 'dense',
-          position: [0, 0],
+          position: [100, 200],
           parameters: [
             { type: 'object', value: 'softmax' },
             { type: 'parameter', value: 10 },
@@ -22,7 +22,7 @@ export const initComponents = () => {
         },
         {
           type: 'loss',
-          position: [0, 0],
+          position: [300, 400],
           parameters: [
             { type: 'object', value: 'error_rate' },
             { type: 'parameter', value: 'module3' },

@@ -127,4 +127,8 @@ export const createProjectSchema = z
 
 export const deleteProjectSchema = z.object({}).strict();
 
-export const searchProjectSchema = z.object({}).strict();
+export const searchProjectSchema = z
+  .object({
+    query: z.object({ q: z.string().min(1) }).strict(),
+  })
+  .strict();

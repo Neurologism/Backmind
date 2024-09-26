@@ -11,6 +11,7 @@ export type Project = {
   last_edited?: number;
   camera_position?: [number, number, number];
   components?: any;
+  models?: ObjectId[];
 };
 
 export type ProjectExplicit = Required<Project>;

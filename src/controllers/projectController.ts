@@ -148,5 +148,30 @@ export const deleteProject = async (req: Request, res: Response) => {
 
 export const searchProject = async (req: Request, res: Response) => {
   req as RequestExplicit;
-  req.logger.error('Not implemented yet.');
+
+  const projects = (await req
+    .dbProjects!.find({
+      $and: [
+        { visibility: 'public' },
+        {
+          $or: [
+            { name: { $regex: req.query.q as string } },
+            { description: { $regex: req.query.q as string } },
+          ],
+        },
+      ],
+    })
+    .limit(30)
+    .toArray()) as Project[];
+
+  for (const project of projects) {
+    delete project.contributors;
+    delete project.created_on;
+    delete project.last_edited;
+    delete project.camera_position;
+    delete project.components;
+    delete project.models;
+  }
+
+  return res.status(200).json({ projects: projects });
 };

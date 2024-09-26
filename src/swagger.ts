@@ -587,7 +587,7 @@ const swaggerDefinition = {
               schema: {
                 type: 'object',
                 properties: {
-                  search_properties: {
+                  query: {
                     type: 'object',
                     properties: {
                       q: {
@@ -604,6 +604,42 @@ const swaggerDefinition = {
         responses: {
           '200': {
             description: 'Search successful.',
+            content: {
+              'application/json': {
+                schema: {
+                  type: 'object',
+                  properties: {
+                    projects: {
+                      type: 'array',
+                      items: [
+                        {
+                          type: 'object',
+                          properties: {
+                            _id: {
+                              type: 'string',
+                            },
+                            name: {
+                              type: 'string',
+                            },
+                            description: {
+                              type: 'string',
+                            },
+                            owner_id: {
+                              type: 'string',
+                            },
+                            visibility: {
+                              type: 'string',
+                              description: 'either private or public',
+                              example: 'private or public',
+                            },
+                          },
+                        },
+                      ],
+                    },
+                  },
+                },
+              },
+            },
           },
           '400': {
             description: 'Invalid input.',

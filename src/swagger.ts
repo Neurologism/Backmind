@@ -572,13 +572,48 @@ const swaggerDefinition = {
     },
     '/api/project/search': {
       post: {
-        summary: 'in development',
+        summary: 'Search for multiple projects.',
+        description:
+          'This endpoint enables it to search for projects. You do not need to be logged in. You can only search for public projects. ',
         security: [
           {
             bearerAuth: [],
           },
         ],
-        deprecated: true,
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': {
+              schema: {
+                type: 'object',
+                properties: {
+                  search_properties: {
+                    type: 'object',
+                    properties: {
+                      name: {
+                        type: 'string',
+                      },
+                      description: {
+                        type: 'string',
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+        responses: {
+          '200': {
+            description: 'Search successful.',
+          },
+          '400': {
+            description: 'Invalid input.',
+          },
+          '500': {
+            description: 'Internal server error.',
+          },
+        },
       },
     },
     '/api/project/model/training-start': {

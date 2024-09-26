@@ -590,11 +590,9 @@ const swaggerDefinition = {
                   search_properties: {
                     type: 'object',
                     properties: {
-                      name: {
+                      q: {
                         type: 'string',
-                      },
-                      description: {
-                        type: 'string',
+                        description: 'The search query.',
                       },
                     },
                   },

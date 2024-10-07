@@ -5,12 +5,12 @@
   "main": "dist/src/server.js",
   "scripts": {
     "pretty": "prettier --write \"**/*.ts\"",
-    "test": "pm2 start ts-node  -i 1 --name backmind-train-test -- src/train.ts --test; jest --coverage; pm2 delete backmind-train-test",
+    "test": "pm2 start ts-node --name backmind-train-test -- src/train.ts --test; jest --coverage; pm2 delete backmind-train-test",
     "build": "npx tsc",
-    "server-start": "pm2 start dist/src/server.js -i 1 --name backmind-server",
+    "server-start": "pm2 start dist/src/server.js -i 0 --name backmind-server",
     "server-stop": "pm2 stop backmind-server",
     "server-dev": "nodemon ./src/server.ts --watch ./src",
-    "train-start": "pm2 start dist/src/train.js -i 1 --name backmind-train",
+    "train-start": "pm2 start dist/src/train.js -i 0 --name backmind-train",
     "train-stop": "pm2 stop backmind-train",
     "train-dev": "nodemon ./src/train.ts --watch ./src"
   },

@@ -8,5 +8,5 @@ git checkout developement
 git pull
 npm i
 npm run build
-npm run train-start
+npm run train:start
 pm2 save --force

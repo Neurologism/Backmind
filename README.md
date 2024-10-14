@@ -114,8 +114,8 @@ Use the following npm scripts for developement.
 npm run pretty # formats the code
 npm test # test the code
 
-npm run server-dev # to start an express server
-npm run train-dev # to start a plain training worker
+npm run server:dev # to start an express server
+npm run train:dev # to start a plain training worker
 ```
 
 ### Running for Deployment
@@ -125,11 +125,11 @@ Use the following npm scripts for developement.
 ```bash
 npm run build # nuilds type script into java script code
 
-npm run server-start # starts the express server
-npm run server-stop # stops the express server
+npm run server:start # starts the express server
+npm run server:stop # stops the express server
 
-npm run train-start # starts the training worker
-npm run train-stop # stops the training worker
+npm run train:start # starts the training worker
+npm run train:stop # stops the training worker
 ```
 
 As backmind uses pm2, it is possible to use the full array of pm2 commands. To do so, make sure you've installed pm2 globally `npm i -g pm2` (or use npx). For instance, this would make it possible to use `pm2 start dist/index.js -i 0` to use the pm2 load balancer on all available cores on a dedicated server. You can find more [here](https://github.com/Unitech/pm2).

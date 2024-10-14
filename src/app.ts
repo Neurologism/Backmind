@@ -9,6 +9,7 @@ import morgan from 'morgan';
 import fs from 'fs';
 import path from 'path';
 import { logger, loggingMiddleware } from './middleware/loggingMiddleware';
+import rateLimit from 'express-rate-limit';
 
 const accessLogStream = fs.createWriteStream(path.join('./logs/access.log'), {
   flags: 'a',
@@ -17,6 +18,13 @@ const accessLogStream = fs.createWriteStream(path.join('./logs/access.log'), {
 const app: Express = express();
 app.use(bodyParser.json());
 app.use(cors());
+app.use(
+  rateLimit({
+    windowMs: 5 * 60 * 1000, // 5 min
+    max: 100,
+    message: "You're sending too many requests.",
+  })
+);
 app.use(
   morgan(
     '[:date[web]] :method :url HTTP/:http-version :status :response-time ms - :res[content-length] :user-agent',

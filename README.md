@@ -1,25 +1,25 @@
 # Backmind
 
-Welcome to the backend repository for our innovative educational AI project, [Brainet](https://github.com/Neurologism/brainet)! Our goal is to empower users to build artificial intelligence systems using a visual, block-based interface similar to Scratch or LEGO, making AI development accessible and fun for everyone.
+Welcome to the backend repository for our innovative educational AI project, [Whitemind](https://github.com/Neurologism/whitemind)! Our goal is to empower users to build artificial intelligence systems using a visual, block-based interface similar to Scratch or LEGO, making AI development accessible and fun for everyone.
 
 ## Table of Contents
 
 Already know where you're going? We've got you covered.
 
-- [What is Brainet ?](#what-is-brainet)
+- [What is Whitemind ?](#what-is-whitemind)
 - [Technical Stack](#technical-stack)
 - [Installation](#installation)
-- [Configuration](#configuration)
+- [Configuration](#q)
 - [Documentation](#documentation)
 - [Logging](#logging)
 
-## What is Brainet?
+## What is Whitemind?
 
-[Brainet](https://github.com/Neurologism/brainet) is designed to simplify the process of creating and experimenting with AI models by using a modular, block-based approach. This method enables users to construct complex AI systems intuitively, without needing deep programming knowledge. Our platform provides an engaging and interactive way to learn about AI and machine learning by manipulating blocks that represent different components and functions.
+[Whitemind](https://github.com/Neurologism/whitemind) is designed to simplify the process of creating and experimenting with AI models by using a modular, block-based approach. This method enables users to construct complex AI systems intuitively, without needing deep programming knowledge. Our platform provides an engaging and interactive way to learn about AI and machine learning by manipulating blocks that represent different components and functions.
 
 ## Technical Stack
 
-The backend of Brainet is built using a modern and robust technology stack, ensuring scalability, performance, and ease of development:
+The backend of Whitemind is built using a modern and robust technology stack, ensuring scalability, performance, and ease of development:
 
 ### Node.js
 

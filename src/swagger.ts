@@ -174,6 +174,50 @@ const swaggerDefinition = {
         },
       },
     },
+    '/api/auth/logout': {
+      post: {
+        summary: 'Invalidate the current auth token of a user. ',
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
+        description: 'In development',
+        deprecated: true,
+      },
+    },
+    '/api/auth/check': {
+      get: {
+        summary: 'Check if a user is logged in.',
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
+        description:
+          'This method provides a simple check if the auth token provided is valid. ',
+        responses: {
+          '200': {
+            description: 'Request validated',
+            content: {
+              'application/json': {
+                schema: {
+                  type: 'object',
+                  properties: {
+                    loggedIn: {
+                      type: 'boolean',
+                      description:
+                        'Indicates whether the user is logged in or not. ',
+                      example: 'true | false',
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
     '/api/auth/login': {
       post: {
         summary: 'Login a user.',
@@ -234,18 +278,6 @@ const swaggerDefinition = {
             description: 'Invalid credentials',
           },
         },
-      },
-    },
-    '/api/auth/logout': {
-      post: {
-        summary: 'Invalidate the current auth token of a user. ',
-        security: [
-          {
-            bearerAuth: [],
-          },
-        ],
-        description: 'In development',
-        deprecated: true,
       },
     },
     '/api/auth/logout-all': {

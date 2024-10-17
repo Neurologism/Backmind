@@ -1,7 +1,8 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { User, UserRegister, UserExplicit } from '../types';
+import { User, UserRegister, UserExplicit, RequestExplicit } from '../types';
+import { ObjectId } from 'mongodb';
 
 export const register = async (req: Request, res: Response) => {
   const given_user: UserRegister = req.body['user'];
@@ -66,4 +67,14 @@ export const login = async (req: Request, res: Response) => {
 
 export const logout = async (req: Request, res: Response) => {
   req.logger.error('Not implemented yet.');
+};
+
+export const check = async (req: Request, res: Response) => {
+  const user = await req.dbUsers!.findOne({
+    _id: req.user_id,
+  } as any);
+
+  const userExists = user !== null;
+
+  return res.status(200).json({ loggedIn: userExists });
 };

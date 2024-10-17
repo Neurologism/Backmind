@@ -324,12 +324,6 @@ describe('POST /api/project/update', () => {
           visibility: 'public',
           plain_password: 'test1234',
           camera_position: [1, 1, 1],
-          components: JSON.parse(
-            fs.readFileSync(
-              './src/__tests__/brainetTasks/slowTask.json',
-              'utf8'
-            )
-          ).components,
         },
       });
 

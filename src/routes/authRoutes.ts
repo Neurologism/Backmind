@@ -1,7 +1,8 @@
 import express from 'express';
 import { dbMiddleware } from '../middleware/dbMiddleware';
-import { register, login, logout } from '../controllers/authController';
+import { register, login, logout, check } from '../controllers/authController';
 import { schemaValidationMiddleware } from '../middleware/schemaValidationMiddleware';
+import { authMiddleware } from '../middleware/authMiddleware';
 import {
   registerSchema,
   loginSchema,
@@ -30,5 +31,7 @@ router.post(
   schemaValidationMiddleware(logoutSchema),
   logout
 );
+
+router.get('/check', dbMiddleware, authMiddleware, check);
 
 export default router;

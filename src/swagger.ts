@@ -80,11 +80,11 @@ const swaggerDefinition = {
   },
   servers: [
     {
-      url: 'https://backmind.icinoxis.net',
+      url: 'https://api.whitemind.net',
       description: 'Deployment server',
     },
     {
-      url: 'https://dev-backmind.icinoxis.net',
+      url: 'https://backmind.icinoxis.net',
       description: 'Developement server',
     },
     {

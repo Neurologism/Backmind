@@ -166,6 +166,41 @@ describe('POST /api/user/get', () => {
   });
 });
 
+const authCheckScheme = z
+  .object({
+    loggedIn: z.boolean(),
+  })
+  .strict();
+
+describe('POST /api/auth/check', () => {
+  it('should return loggedIn: true', async () => {
+    const response = await request(app)
+      .get('/api/auth/check')
+      .set(`Authorization`, `Bearer ${authToken}`);
+
+    expect(response.status).toBe(200);
+
+    const validationResult = await authCheckScheme.safeParseAsync(
+      response.body
+    );
+    expect(validationResult.success).toBe(true);
+
+    expect(response.body.loggedIn).toBe(true);
+  });
+  it('should return loggedIn: false', async () => {
+    const response = await request(app).get('/api/auth/check').send();
+
+    expect(response.status).toBe(200);
+
+    const validationResult = await authCheckScheme.safeParseAsync(
+      response.body
+    );
+    expect(validationResult.success).toBe(true);
+
+    expect(response.body.loggedIn).toBe(false);
+  });
+});
+
 describe('POST /api/user/update', () => {
   it('should update the user currently logged in', async () => {
     const response = await request(app)

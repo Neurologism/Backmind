@@ -8,5 +8,5 @@ git checkout developement
 git pull
 npm i
 npm run build
-npm run server:start
+npm run start
 pm2 save --force

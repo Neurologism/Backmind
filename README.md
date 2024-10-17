@@ -74,38 +74,6 @@ npm install
 echo "MONGO_URI='mongodb://user:password@localhost:27017'" >> .env
 ```
 
-### 4. Cloning the Brainet Repository (optional)
-
-This step is optional, as you will only need it, if you want to train a model locally.
-
-#### Install Required Tools
-
-Ensure you have C++ and the g++ compiler installed on your system. If you’re using Linux, you can typically install these using your package manager. For example, on Debian-based systems like Ubuntu, you can use:
-
-```bash
-sudo apt-get install g++ build-essential
-```
-
-#### Installing Brainet
-
-You will also have to install brainet to be able to train models. First, make sure you have c++ and the g++ compiler installed. Then, run the following commands in the backmind directory.
-The `brainet` directory is included in the .gitignore file.
-
-```bash
-git clone https://github.com/Neurologism/brainet.git
-cd brainet/json_interface
-g++ run_json.cpp -std=c++20 -o runJson
-```
-
-If you're not on linux, pick a different compiler than g++. Also, do not set the environment variable `RECOMPILE_BRAINET='true'` if g++ is not available as it will use g++ by default.
-
-#### Running the Training Worker
-
-To run a training worker process for developement parallel to the express server, set the environment variable `START_TRAINING_WORKER_AS_SERVER=true`.
-If you just want to run a training worker without express server, you can use `npm run train-dev`.
-If you want to host a dedicated training worker, use `npm run build` and afterwards `npm run train-start`.
-Don't forget to set the environment variable `BRAINET_PATH=.../brainet/json_interface` depending on your needs.
-
 ### Running for Developement
 
 Use the following npm scripts for developement.
@@ -114,8 +82,7 @@ Use the following npm scripts for developement.
 npm run pretty # formats the code
 npm test # test the code
 
-npm run server:dev # to start an express server
-npm run train:dev # to start a plain training worker
+npm run dev # to start an express server
 ```
 
 ### Running for Deployment
@@ -125,11 +92,8 @@ Use the following npm scripts for developement.
 ```bash
 npm run build # nuilds type script into java script code
 
-npm run server:start # starts the express server
-npm run server:stop # stops the express server
-
-npm run train:start # starts the training worker
-npm run train:stop # stops the training worker
+npm run start # starts the express server
+npm run stop # stops the express server
 ```
 
 As backmind uses pm2, it is possible to use the full array of pm2 commands. To do so, make sure you've installed pm2 globally `npm i -g pm2` (or use npx). For instance, this would make it possible to use `pm2 start dist/index.js -i 0` to use the pm2 load balancer on all available cores on a dedicated server. You can find more [here](https://github.com/Unitech/pm2).

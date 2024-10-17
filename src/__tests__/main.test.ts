@@ -324,12 +324,6 @@ describe('POST /api/project/update', () => {
           visibility: 'public',
           plain_password: 'test1234',
           camera_position: [1, 1, 1],
-          components: JSON.parse(
-            fs.readFileSync(
-              './src/__tests__/brainetTasks/slowTask.json',
-              'utf8'
-            )
-          ).components,
         },
       });
 
@@ -374,106 +368,106 @@ const startTrainingResponseScheme = z
   })
   .strict();
 
-describe('POST /api/project/model/training-start', () => {
-  it('should start a model training', async () => {
-    const response = await request(app)
-      .post('/api/project/model/training-start')
-      .set(`Authorization`, `Bearer ${authToken}`)
-      .send({
-        project: {
-          _id: projectId,
-        },
-      });
+// describe('POST /api/project/model/training-start', () => {
+//   it('should start a model training', async () => {
+//     const response = await request(app)
+//       .post('/api/project/model/training-start')
+//       .set(`Authorization`, `Bearer ${authToken}`)
+//       .send({
+//         project: {
+//           _id: projectId,
+//         },
+//       });
 
-    expect(response.status).toBe(200);
+//     expect(response.status).toBe(200);
 
-    const validationResult = await startTrainingResponseScheme.safeParseAsync(
-      response.body
-    );
-    expect(validationResult.success).toBe(true);
+//     const validationResult = await startTrainingResponseScheme.safeParseAsync(
+//       response.body
+//     );
+//     expect(validationResult.success).toBe(true);
 
-    modelId2 = response.body.model._id;
-  });
-});
+//     modelId2 = response.body.model._id;
+//   });
+// });
 
-const statusTrainingResponseScheme = z
-  .object({
-    model: z
-      .object({
-        status: z.string(),
-        output: z.array(z.any()),
-        queued_at: z.number(),
-        started_at: z.number().nullable(),
-        finished_at: z.number().nullable(),
-        error: z.any(),
-        project_id: z.string(),
-      })
-      .strict(),
-  })
-  .strict();
+// const statusTrainingResponseScheme = z
+//   .object({
+//     model: z
+//       .object({
+//         status: z.string(),
+//         output: z.array(z.any()),
+//         queued_at: z.number(),
+//         started_at: z.number().nullable(),
+//         finished_at: z.number().nullable(),
+//         error: z.any(),
+//         project_id: z.string(),
+//       })
+//       .strict(),
+//   })
+//   .strict();
 
-describe('POST /api/project/model/training-status', () => {
-  it('should return the training status', async () => {
-    const response = await request(app)
-      .post('/api/project/model/training-status')
-      .set(`Authorization`, `Bearer ${authToken}`)
-      .send({
-        model: {
-          _id: modelId2,
-        },
-      });
+// describe('POST /api/project/model/training-status', () => {
+//   it('should return the training status', async () => {
+//     const response = await request(app)
+//       .post('/api/project/model/training-status')
+//       .set(`Authorization`, `Bearer ${authToken}`)
+//       .send({
+//         model: {
+//           _id: modelId2,
+//         },
+//       });
 
-    expect(response.status).toBe(200);
+//     expect(response.status).toBe(200);
 
-    const validationResult = await statusTrainingResponseScheme.safeParseAsync(
-      response.body
-    );
-    expect(validationResult.success).toBe(true);
-  });
-});
+//     const validationResult = await statusTrainingResponseScheme.safeParseAsync(
+//       response.body
+//     );
+//     expect(validationResult.success).toBe(true);
+//   });
+// });
 
-const stopTrainingResponseScheme = z
-  .object({
-    msg: z.string(),
-  })
-  .strict();
+// const stopTrainingResponseScheme = z
+//   .object({
+//     msg: z.string(),
+//   })
+//   .strict();
 
-describe('POST /api/project/model/training-stop', () => {
-  it('should stop the training', async () => {
-    const response = await request(app)
-      .post('/api/project/model/training-stop')
-      .set(`Authorization`, `Bearer ${authToken}`)
-      .send({
-        model: {
-          _id: modelId2,
-        },
-      });
+// describe('POST /api/project/model/training-stop', () => {
+//   it('should stop the training', async () => {
+//     const response = await request(app)
+//       .post('/api/project/model/training-stop')
+//       .set(`Authorization`, `Bearer ${authToken}`)
+//       .send({
+//         model: {
+//           _id: modelId2,
+//         },
+//       });
 
-    expect(response.status).toBe(200);
+//     expect(response.status).toBe(200);
 
-    const validationResult = await stopTrainingResponseScheme.safeParseAsync(
-      response.body
-    );
-    expect(validationResult.success).toBe(true);
-  });
+//     const validationResult = await stopTrainingResponseScheme.safeParseAsync(
+//       response.body
+//     );
+//     expect(validationResult.success).toBe(true);
+//   });
 
-  it('should match the stopped training', async () => {
-    const response = await request(app)
-      .post('/api/project/model/training-status')
-      .set(`Authorization`, `Bearer ${authToken}`)
-      .send({
-        model: {
-          _id: modelId2,
-        },
-      });
+//   it('should match the stopped training', async () => {
+//     const response = await request(app)
+//       .post('/api/project/model/training-status')
+//       .set(`Authorization`, `Bearer ${authToken}`)
+//       .send({
+//         model: {
+//           _id: modelId2,
+//         },
+//       });
 
-    expect(response.status).toBe(200);
+//     expect(response.status).toBe(200);
 
-    const validationResult = await statusTrainingResponseScheme.safeParseAsync(
-      response.body
-    );
-    expect(validationResult.success).toBe(true);
+//     const validationResult = await statusTrainingResponseScheme.safeParseAsync(
+//       response.body
+//     );
+//     expect(validationResult.success).toBe(true);
 
-    expect(response.body.model.status).toBe('stopped');
-  });
-});
+//     expect(response.body.model.status).toBe('stopped');
+//   });
+// });

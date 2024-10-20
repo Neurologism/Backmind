@@ -119,6 +119,7 @@ DB_NAME="backmind-dev"
 JWT_SECRET="qwerty"
 SEND_ERR_TO_CLIENT="true"
 LOG_LEVEL="debug"
+NODE_ENV="developement"
 ```
 
 Example server configuration:
@@ -129,6 +130,7 @@ MONGO_URI='mongodb://user:password@hostname:port'
 JWT_TOKEN_EXPIRE_IN="100h" # for users to keep logged in for a few days via cookies
 DB_NAME="backmind"
 LOG_LEVEL="info"
+NODE_ENV="production"
 ```
 
 ## Documentation

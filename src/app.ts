@@ -52,7 +52,9 @@ app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/project', projectRoutes);
 
-setupSwagger(app);
+if (process.env.NODE_ENV !== 'production') {
+  setupSwagger(app);
+}
 
 app.get('/', async (req: Request, res: Response) => {
   req.logger.debug('GET / worked fine :)');

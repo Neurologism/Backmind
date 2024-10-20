@@ -6,7 +6,10 @@ export const getProjectSchema = z
   .object({
     project: z
       .object({
-        _id: z.string().transform((_id) => new ObjectId(_id)),
+        _id: z
+          .string()
+          .length(24)
+          .transform((_id) => new ObjectId(_id)),
       })
       .strict(),
   })
@@ -16,12 +19,16 @@ export const updateProjectSchema = z
   .object({
     project: z
       .object({
-        _id: z.string().transform((_id) => new ObjectId(_id)),
+        _id: z
+          .string()
+          .length(24)
+          .transform((_id) => new ObjectId(_id)),
         name: z.string().optional(),
         description: z.string().optional(),
         visibility: z.enum(['public', 'private']).optional(),
         owner_id: z
           .string()
+          .length(24)
           .optional()
           .transform((owner_id) => {
             if (owner_id === undefined) {
@@ -30,7 +37,7 @@ export const updateProjectSchema = z
             return new ObjectId(owner_id);
           }),
         contributors: z
-          .array(z.string())
+          .array(z.string().length(24))
           .optional()
           .transform((contributors) => {
             if (contributors === undefined) {

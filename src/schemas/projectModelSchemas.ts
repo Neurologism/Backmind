@@ -1,13 +1,12 @@
 import { z } from 'zod';
 import { ObjectId } from 'mongodb';
-import { componentsSchema } from './componentsSchemas';
 import { connectToDatabase } from '../utility/connectToDatabase';
 
 export const modelStartTrainingSchema = z
   .object({
     project: z
       .object({
-        _id: z.string().transform((_id) => new ObjectId(_id)),
+        _id: z.string().length(24).transform((_id) => new ObjectId(_id)),
       })
       .strict(),
   })
@@ -17,7 +16,7 @@ export const modelStopTrainingSchema = z
   .object({
     model: z
       .object({
-        _id: z.string().transform((_id) => new ObjectId(_id)),
+        _id: z.string().length(24).transform((_id) => new ObjectId(_id)),
       })
       .strict(),
   })
@@ -47,7 +46,7 @@ export const modelStatusTrainingSchema = z
   .object({
     model: z
       .object({
-        _id: z.string().transform((_id) => new ObjectId(_id)),
+        _id: z.string().length(24).transform((_id) => new ObjectId(_id)),
       })
       .strict(),
   })

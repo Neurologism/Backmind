@@ -17,7 +17,7 @@ const accessLogStream = fs.createWriteStream(path.join('./logs/access.log'), {
 
 const app: Express = express();
 app.use(bodyParser.json());
-app.use(cors());
+app.use(cors({origin: true, credentials: true}));
 app.use(
   rateLimit({
     windowMs: 5 * 60 * 1000, // 5 min

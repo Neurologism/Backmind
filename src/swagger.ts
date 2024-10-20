@@ -37,7 +37,7 @@ const swaggerDefinition = {
   servers: [
     {
       url: 'https://api.whitemind.net',
-      description: 'Deployment server',
+      description: 'Production server',
     },
     {
       url: 'https://backmind.icinoxis.net',

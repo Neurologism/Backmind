@@ -22,4 +22,6 @@ export const setEnv = (filename: string = '.env') => {
   process.env.JWT_TOKEN_EXPIRE_IN = process.env.JWT_TOKEN_EXPIRE_IN || '24h';
   process.env.LOG_LEVEL = process.env.LOG_LEVEL || 'info';
   process.env.DB_NAME = process.env.DB_NAME || 'backmind';
+  process.env.RATE_LIMIT_DURATION = process.env.RATE_LIMIT_DURATION || '5';
+  process.env.RATE_LIMIT_REQUESTS = process.env.RATE_LIMIT_REQUESTS || '1000';
 };

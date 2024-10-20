@@ -20,8 +20,8 @@ app.use(bodyParser.json());
 app.use(cors({origin: true, credentials: true}));
 app.use(
   rateLimit({
-    windowMs: 5 * 60 * 1000, // 5 min
-    max: 100,
+    windowMs: 60 * 1000 * Number(process.env.RATE_LIMIT_DURATION), // 5 min
+    max: Number(process.env.RATE_LIMIT_REQUESTS),
     message: "You're sending too many requests.",
   })
 );

@@ -1,6 +1,11 @@
 export const projectIsTaken = {
   post: {
     summary: 'Check if a project name is already taken.',
+    security: [
+      {
+        bearerAuth: [],
+      },
+    ],
     description:
       'This api endpoint is used to check if a certain project name is still available. This is always for the user you provided an auth token for. You need to provide an auth token.',
     requestBody: {

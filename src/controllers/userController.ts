@@ -4,8 +4,6 @@ import bcrypt from 'bcrypt';
 import { isEmptyObject } from '../utility/isEmptyObject';
 
 export const getUser = async (req: Request, res: Response) => {
-  req as RequestExplicit;
-
   let search_params;
 
   if (isEmptyObject(req.body)) {
@@ -47,8 +45,6 @@ export const getUser = async (req: Request, res: Response) => {
 };
 
 export const updateUser = async (req: Request, res: Response) => {
-  req as RequestExplicit;
-
   if (req.user_id === undefined) {
     return res.status(401).json({ msg: 'You are not authenticated.' });
   }
@@ -87,8 +83,6 @@ export const updateUser = async (req: Request, res: Response) => {
 };
 
 export const isTakenUser = async (req: Request, res: Response) => {
-  req as RequestExplicit;
-
   const search_properties: { $or: { email?: any; brainet_tag?: any }[] } = {
     $or: [],
   };
@@ -110,21 +104,17 @@ export const isTakenUser = async (req: Request, res: Response) => {
 };
 
 export const deleteUser = async (req: Request, res: Response) => {
-  req as RequestExplicit;
   req.logger.error('Not implemented yet.');
 };
 
 export const followUser = async (req: Request, res: Response) => {
-  req as RequestExplicit;
   req.logger.error('Not implemented yet.');
 };
 
 export const unfollowUser = async (req: Request, res: Response) => {
-  req as RequestExplicit;
   req.logger.error('Not implemented yet.');
 };
 
 export const searchUser = async (req: Request, res: Response) => {
-  req as RequestExplicit;
   req.logger.error('Not implemented yet.');
 };

@@ -6,6 +6,7 @@ export * from './authRegister';
 export * from './projectCreate';
 export * from './projectDelete';
 export * from './projectGet';
+export * from './projectIsTaken';
 export * from './projectModelDownload';
 export * from './projectModelQuery';
 export * from './projectModelTrainingStart';

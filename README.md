@@ -9,7 +9,7 @@ Already know where you're going? We've got you covered.
 - [What is Whitemind ?](#what-is-whitemind)
 - [Technical Stack](#technical-stack)
 - [Installation](#installation)
-- [Configuration](#q)
+- [Configuration](#configuration)
 - [Documentation](#documentation)
 - [Logging](#logging)
 
@@ -19,7 +19,7 @@ Already know where you're going? We've got you covered.
 
 ## Technical Stack
 
-The backend of Whitemind is built using a modern and robust technology stack, ensuring scalability, performance, and ease of development:
+Backmind is built using a modern and robust technology stack, ensuring scalability, performance, and ease of development:
 
 ### Node.js
 
@@ -68,8 +68,8 @@ To proceed, you need to install MongoDB Community Edition on your local machine.
 Navigate to or create a directory where you want to store backmind and run the following commands. Remember to insert your MongoDB login data into the `MONGO_URI` environment variable.
 
 ```bash
-git clone https://github.com/SirPythonPhoenix/backmind.git
-cd backmind
+git clone https://github.com/Neurologism/Backmind.git
+cd Backmind
 npm install
 echo "MONGO_URI='mongodb://user:password@localhost:27017'" >> .env
 ```

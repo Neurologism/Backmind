@@ -13,6 +13,7 @@ import apiAuthLogin from './main_tests/apiAuthLogin';
 import apiAuthRegister from './main_tests/apiAuthRegister';
 import apiProjectCreate from './main_tests/apiProjectCreate';
 import apiProjectGet from './main_tests/apiProjectGet';
+import apiProjectIsTaken from './main_tests/apiProjectIsTaken';
 import apiProjectModelTrainingStart from './main_tests/apiProjectModelTrainingStart';
 import apiProjectModelTrainingStatus from './main_tests/apiProjectModelTrainingStatus';
 import apiProjectModelTrainingStop from './main_tests/apiProjectModelTrainingStop';
@@ -49,6 +50,10 @@ describe('POST /api/user/update', () => {
 
 describe('POST /api/project/create', () => {
   apiProjectCreate(app, vars);
+});
+
+describe('POST /api/project/is-taken', () => {
+  apiProjectIsTaken(app, vars);
 });
 
 describe('POST /api/project/get', () => {

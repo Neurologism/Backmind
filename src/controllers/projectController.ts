@@ -12,14 +12,10 @@ import { z } from 'zod';
 import { projectNameExists } from '../utility/projectNameExists';
 
 export const getProject = async (req: Request, res: Response) => {
-  req as RequestExplicit;
-
   return res.status(200).json({ project: req.project! });
 };
 
 export const updateProject = async (req: Request, res: Response) => {
-  req as RequestExplicit;
-
   if (
     req.body.project.name !== undefined &&
     req.body.project.name !== req.project!.name
@@ -73,8 +69,6 @@ export const updateProject = async (req: Request, res: Response) => {
 };
 
 export const createProject = async (req: Request, res: Response) => {
-  req as RequestExplicit;
-
   const isLoggedIn = req.user_id !== null;
   if (!isLoggedIn) {
     return res
@@ -114,8 +108,6 @@ export const createProject = async (req: Request, res: Response) => {
 };
 
 export const deleteProject = async (req: Request, res: Response) => {
-  req as RequestExplicit;
-
   if (!req.middlewareParams.isProjectOwner) {
     return res
       .status(401)
@@ -147,8 +139,6 @@ export const deleteProject = async (req: Request, res: Response) => {
 };
 
 export const searchProject = async (req: Request, res: Response) => {
-  req as RequestExplicit;
-
   const projects = (await req
     .dbProjects!.find({
       $and: [
@@ -174,4 +164,23 @@ export const searchProject = async (req: Request, res: Response) => {
   }
 
   return res.status(200).json({ projects: projects });
+};
+
+export const isTakenProject = async (req: Request, res: Response) => {
+  const isLoggedIn = req.user_id !== null;
+  if (!isLoggedIn) {
+    return res.status(401).json({ msg: 'You need to be logged in.' });
+  }
+
+  const nameTaken = await projectNameExists(
+    req.body.project.name,
+    req.user_id!
+  );
+
+  if (nameTaken) {
+    return res
+      .status(409)
+      .json({ msg: 'This project name is already in use.' });
+  }
+  return res.status(200).json({ msg: 'This project name is available.' });
 };

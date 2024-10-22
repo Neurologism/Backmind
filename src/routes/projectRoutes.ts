@@ -7,6 +7,7 @@ import {
   updateProject,
   createProject,
   deleteProject,
+  isTakenProject,
 } from '../controllers/projectController';
 import { schemaValidationMiddleware } from '../middleware/schemaValidationMiddleware';
 import {
@@ -15,6 +16,7 @@ import {
   createProjectSchema,
   deleteProjectSchema,
   searchProjectSchema,
+  isTakenProjectSchema,
 } from '../schemas/projectSchemas';
 import projectModelRoutes from './projectModelRoutes';
 import { getProjectMiddleware } from '../middleware/getProjectMiddleware';
@@ -63,6 +65,14 @@ router.post(
   authMiddleware,
   schemaValidationMiddleware(searchProjectSchema),
   searchProject
+);
+
+router.post(
+  '/is-taken',
+  dbMiddleware,
+  authMiddleware,
+  schemaValidationMiddleware(isTakenProjectSchema),
+  isTakenProject
 );
 
 router.use('/model', projectModelRoutes);

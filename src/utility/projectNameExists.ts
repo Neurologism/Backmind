@@ -5,6 +5,6 @@ export const projectNameExists = async (name: string, owner_id: ObjectId) => {
   const db = await connectToDatabase();
   const project = await db
     .collection('projects')
-    .findOne({ name: name, owner_id: owner_id });
+    .findOne({ name: name, owner_id: owner_id.toString() });
   return project !== null;
 };

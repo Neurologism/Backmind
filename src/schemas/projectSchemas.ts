@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import { ObjectId } from 'mongodb';
 import { componentsSchema } from './componentsSchemas';
+import { isEmptyObject } from '../utility/isEmptyObject';
 
 export const getProjectSchema = z
   .object({
@@ -137,5 +138,15 @@ export const deleteProjectSchema = z.object({}).strict();
 export const searchProjectSchema = z
   .object({
     query: z.object({ q: z.string().min(1) }).strict(),
+  })
+  .strict();
+
+export const isTakenProjectSchema = z
+  .object({
+    project: z
+      .object({
+        name: z.string(),
+      })
+      .strict(),
   })
   .strict();

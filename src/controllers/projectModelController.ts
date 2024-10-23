@@ -1,5 +1,4 @@
 import { Request, Response } from 'express';
-import { RequestExplicit } from '../types';
 import { stripComponents } from '../utility/stripComponents';
 
 export const modelStartTraining = async (req: Request, res: Response) => {

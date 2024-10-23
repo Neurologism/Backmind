@@ -2,7 +2,6 @@ import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { User, UserRegister, UserExplicit, RequestExplicit } from '../types';
-import { ObjectId } from 'mongodb';
 
 export const register = async (req: Request, res: Response) => {
   const given_user: UserRegister = req.body['user'];

@@ -1,10 +1,5 @@
 import { Request, Response } from 'express';
-import {
-  RequestExplicit,
-  Project,
-  UserExplicit,
-  ProjectExplicit,
-} from '../types';
+import { Project, UserExplicit } from '../types';
 import bcrypt from 'bcrypt';
 import { initComponents } from '../utility/initComponents';
 import { updateProjectAsContributorSchema } from '../schemas/projectSchemas';

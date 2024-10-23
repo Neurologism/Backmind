@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { RequestExplicit, UserExplicit } from '../types';
+import { UserExplicit } from '../types';
 import bcrypt from 'bcrypt';
 import { isEmptyObject } from '../utility/isEmptyObject';
 

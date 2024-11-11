@@ -1,62 +1,115 @@
 export const initComponents = () => {
   const components = {
-    add: {
-      modules: [
-        {
-          type: 'dense',
-          position: [10, 50],
-          parameters: [
-            { type: 'object', value: 'relu' },
-            { type: 'parameter', value: 100 },
-            { type: 'parameter', value: 'module1' },
+    operations: [
+      {
+        type: 'dataset',
+        method: 'new',
+        uid: 'dataset1',
+        args: {
+          class: 'mnist',
+          split: 'train',
+          preprocess: ['normalize'],
+          batch_size: 32,
+        },
+      },
+      {
+        type: 'dataset',
+        method: 'new',
+        uid: 'dataset2',
+        args: {
+          class: 'mnist',
+          split: 'test',
+          preprocess: ['normalize'],
+          batch_size: 32,
+        },
+      },
+      {
+        type: 'layer',
+        method: 'new',
+        uid: 'input1',
+        args: {
+          class: 'Input',
+          shape: [28, 28],
+        },
+      },
+      {
+        type: 'layer',
+        method: 'new',
+        uid: 'flatten1',
+        args: {
+          class: 'Flatten',
+        },
+      },
+
+      {
+        type: 'layer',
+        method: 'new',
+        uid: 'layer1',
+        args: {
+          class: 'Dense',
+          units: 10,
+          activation: 'softmax',
+        },
+      },
+      {
+        type: 'model',
+        method: 'new',
+        uid: 'model1',
+        args: {
+          inputs: 'input1',
+          outputs: 'layer1',
+        },
+      },
+      {
+        type: 'model',
+        method: 'compile',
+        uid: 'model1',
+        args: {
+          optimizer: {
+            method: 'adam',
+          },
+          loss: [
+            {
+              method: 'sparse_categorical_crossentropy',
+            },
+          ],
+          metrics: [
+            {
+              method: 'sparse_categorical_accuracy',
+            },
           ],
         },
-        {
-          type: 'dense',
-          position: [100, 200],
-          parameters: [
-            { type: 'object', value: 'softmax' },
-            { type: 'parameter', value: 10 },
-            { type: 'parameter', value: 'module2' },
-          ],
+      },
+      {
+        type: 'model',
+        method: 'fit',
+        uid: 'model1',
+        args: {
+          dataset: 'dataset1',
+          epochs: 1,
         },
-        {
-          type: 'loss',
-          position: [300, 400],
-          parameters: [
-            { type: 'object', value: 'error_rate' },
-            { type: 'parameter', value: 'module3' },
-          ],
+      },
+      {
+        type: 'model',
+        method: 'evaluate',
+        uid: 'model1',
+        args: {
+          dataset: 'dataset2',
         },
-      ],
-      connections: [
-        { from: 'module1', to: 'module2' },
-        { from: 'module2', to: 'module3' },
-      ],
-    },
-    train: {
-      parameters: [
-        { type: 'parameter', value: 'module1' },
-        { type: 'parameter', value: 'module3' },
-        { type: 'parameter', value: 10 },
-        { type: 'parameter', value: 128 },
-        {
-          type: 'object',
-          value: 'sgd',
-          parameters: [
-            { type: 'parameter', value: 0.1 },
-            { type: 'parameter', value: 500 },
-          ],
-        },
-        { type: 'parameter', value: 10 },
-      ],
-    },
-    predict: {
-      parameters: [
-        { type: 'parameter', value: 'module1' },
-        { type: 'parameter', value: 'module3' },
-      ],
-    },
+      },
+    ],
+    links: [
+      {
+        uid: 'link1',
+        source: 'input1',
+        target: 'flatten1',
+      },
+      {
+        uid: 'link2',
+        source: 'flatten1',
+        target: 'layer1',
+      },
+    ],
   };
   return components;
 };

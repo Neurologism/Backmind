@@ -1,7 +1,6 @@
 import request from 'supertest';
 import { z } from 'zod';
 import { Express } from 'express';
-import fs from 'fs';
 import { componentsSchema } from '../../schemas/componentsSchemas';
 
 const updateProjectResponseScheme = z

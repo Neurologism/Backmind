@@ -10,38 +10,26 @@ export const componentParametersSchema = z.array(
     .strict()
 );
 
-export const moduleConnectionSchema = z
+export const operationSchema = z
   .object({
-    from: z.string(),
-    to: z.string(),
+    type: z.string(),
+    method: z.string(),
+    uid: z.string(),
+    args: z.object({}),
   })
   .strict();
 
-export const moduleSchema = z
+export const linkSchema = z
   .object({
-    type: z.string(),
-    parameters: componentParametersSchema,
-    position: z.tuple([z.number(), z.number()]),
+    uid: z.string(),
+    source: z.string(),
+    target: z.string(),
   })
   .strict();
 
 export const componentsSchema = z
   .object({
-    add: z
-      .object({
-        modules: z.array(moduleSchema),
-        connections: z.array(moduleConnectionSchema),
-      })
-      .strict(),
-    train: z
-      .object({
-        parameters: componentParametersSchema,
-      })
-      .strict(),
-    predict: z
-      .object({
-        parameters: componentParametersSchema,
-      })
-      .strict(),
+    operations: z.array(operationSchema),
+    links: z.array(linkSchema),
   })
   .strict();

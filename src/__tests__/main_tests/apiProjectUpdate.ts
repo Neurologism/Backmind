@@ -21,7 +21,6 @@ const getProjectResponseScheme = z
         visibility: z.string(),
         created_on: z.number(),
         last_edited: z.number(),
-        camera_position: z.tuple([z.number(), z.number(), z.number()]),
         components: componentsSchema,
         models: z.array(z.string()),
       })
@@ -41,7 +40,6 @@ export default (app: Express, vars: any) => {
           description: 'changed',
           visibility: 'public',
           plain_password: 'test1234',
-          camera_position: [1, 1, 1],
           // components: JSON.parse(
           //   fs.readFileSync(
           //     '../src/__tests__/brainetTasks/slowTask.json',

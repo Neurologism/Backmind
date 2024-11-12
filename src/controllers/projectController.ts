@@ -87,7 +87,6 @@ export const createProject = async (req: Request, res: Response) => {
     visibility: req.body.project.visibility,
     created_on: Date.now(),
     last_edited: Date.now(),
-    camera_position: [0, 0, 1],
     components: initComponents(),
     models: [],
   };
@@ -153,7 +152,6 @@ export const searchProject = async (req: Request, res: Response) => {
     delete project.contributors;
     delete project.created_on;
     delete project.last_edited;
-    delete project.camera_position;
     delete project.components;
     delete project.models;
   }

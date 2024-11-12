@@ -70,13 +70,6 @@ export const projectGet = {
                     last_edited: {
                       type: 'integer',
                     },
-                    camera_position: {
-                      type: 'array',
-                      items: {
-                        type: 'number',
-                      },
-                      example: [0, 0, 0],
-                    },
                     components: components,
                     models: {
                       type: 'array',

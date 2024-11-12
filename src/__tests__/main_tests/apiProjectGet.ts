@@ -15,7 +15,6 @@ const getProjectResponseScheme = z
         visibility: z.string(),
         created_on: z.number(),
         last_edited: z.number(),
-        camera_position: z.tuple([z.number(), z.number(), z.number()]),
         components: componentsSchema,
         models: z.array(z.string()),
       })

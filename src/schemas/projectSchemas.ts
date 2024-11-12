@@ -53,9 +53,6 @@ export const updateProjectSchema = z
           .min(Number(process.env.MIN_PASS_LENGTH))
           .optional(),
         components: componentsSchema.optional(),
-        camera_position: z
-          .tuple([z.number(), z.number(), z.number()])
-          .optional(),
       })
       .strict(),
   })
@@ -68,8 +65,7 @@ export const updateProjectSchema = z
         !data.project.visibility &&
         !data.project.owner_id &&
         !data.project.contributors &&
-        !data.project.components &&
-        !data.project.camera_position
+        !data.project.components
       ) {
         return false;
       }
@@ -104,9 +100,6 @@ export const updateProjectAsContributorSchema = z
         }),
         description: z.string().optional(),
         components: componentsSchema.optional(),
-        camera_position: z
-          .tuple([z.number(), z.number(), z.number()])
-          .optional(),
       })
       .strict(),
   })

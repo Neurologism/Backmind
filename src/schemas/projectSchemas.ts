@@ -1,7 +1,6 @@
 import { z } from 'zod';
 import { ObjectId } from 'mongodb';
 import { componentsSchema } from './componentsSchemas';
-import { isEmptyObject } from '../utility/isEmptyObject';
 
 export const getProjectSchema = z
   .object({

@@ -34,4 +34,4 @@ import { z } from 'zod';
 //   })
 //   .strict();
 
-export const componentsSchema = z.object({});
+export const componentsSchema = z.any();

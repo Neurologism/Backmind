@@ -120,6 +120,7 @@ JWT_SECRET="qwerty"
 SEND_ERR_TO_CLIENT="true"
 LOG_LEVEL="debug"
 NODE_ENV="developement"
+DISABLE_ACCOUNT_CREATION="true"
 ```
 
 Example server configuration:

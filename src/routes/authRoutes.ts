@@ -8,11 +8,13 @@ import {
   loginSchema,
   logoutSchema,
 } from '../schemas/authSchemas';
+import { isEnabledMiddleware } from '../middleware/isTrueMiddleware';
 
 const router = express.Router();
 
 router.post(
   '/register',
+  isEnabledMiddleware(!Boolean(process.env.DISABLE_ACCOUNT_CREATION as string)),
   dbMiddleware,
   schemaValidationMiddleware(registerSchema),
   register

@@ -46,13 +46,6 @@ export const projectUpdate = {
                   plain_password: {
                     type: 'string',
                   },
-                  camera_position: {
-                    type: 'array',
-                    items: {
-                      type: 'number',
-                    },
-                    example: [0, 0, 0],
-                  },
                   components: components,
                 },
               },

@@ -1,5 +1,4 @@
 import { Request, Response } from 'express';
-import { stripComponents } from '../utility/stripComponents';
 
 export const modelStartTraining = async (req: Request, res: Response) => {
   if (
@@ -11,18 +10,14 @@ export const modelStartTraining = async (req: Request, res: Response) => {
       .send({ msg: 'Training queue is full. Try again later.' });
   }
 
-  console.log(req.project.components);
-  const task = stripComponents(req.project.components);
-  console.log(task);
   const model = {
     status: 'queued',
     output: [],
-    task: task,
+    task: req.project.components,
     last_updated_at: Date.now(),
     queued_at: Date.now(),
     started_at: null,
     finished_at: null,
-    error: null,
     project_id: req.project._id,
   };
 
@@ -67,7 +62,6 @@ export const modelStatusTraining = async (req: Request, res: Response) => {
       queued_at: req.body.model.queued_at,
       started_at: req.body.model.started_at,
       finished_at: req.body.model.finished_at,
-      error: req.body.model.error,
       project_id: req.body.model.project_id,
     },
   });

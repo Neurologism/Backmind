@@ -18,4 +18,9 @@ mongooseTaskSchema.set('toJSON', {
   },
 });
 
+mongooseTaskSchema.pre('save', function (next) {
+  this.last_updated = new Date();
+  next();
+});
+
 export const TaskModel = mongoose.model('tasks', mongooseTaskSchema);

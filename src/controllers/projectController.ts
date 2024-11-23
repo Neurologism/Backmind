@@ -86,8 +86,8 @@ export const createProject = async (req: Request, res: Response) => {
     owner_id: req.user_id!.toString(),
     contributors: [],
     visibility: req.body.project.visibility,
-    created_on: Date.now(),
-    last_edited: Date.now(),
+    created_on: new Date(),
+    last_edited: new Date(),
     components: initComponents(),
     models: [],
   });

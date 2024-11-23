@@ -19,8 +19,8 @@ const getProjectResponseScheme = z
         owner_id: z.string(),
         contributors: z.array(z.string()),
         visibility: z.string(),
-        created_on: z.number(),
-        last_edited: z.number(),
+        created_on: z.string(),
+        last_edited: z.string(),
         components: componentsSchema,
         models: z.array(z.string()),
       })
@@ -68,8 +68,6 @@ export default (app: Express, vars: any) => {
       });
 
     expect(response.status).toBe(200);
-
-    console.log(response.body);
 
     const validationResult = await getProjectResponseScheme.safeParseAsync(
       response.body

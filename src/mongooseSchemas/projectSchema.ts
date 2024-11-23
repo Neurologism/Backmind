@@ -6,8 +6,8 @@ const mongooseProjectSchema = new mongoose.Schema({
   owner_id: mongoose.Types.ObjectId,
   contributors: [mongoose.Types.ObjectId],
   visibility: { type: String, enum: ['public', 'private'], required: true },
-  created_on: Number,
-  last_edited: Number,
+  created_on: Date,
+  last_edited: Date,
   components: Object,
   models: [mongoose.Types.ObjectId],
 });
@@ -17,6 +17,11 @@ mongooseProjectSchema.set('toJSON', {
     delete ret.__v;
     return ret;
   },
+});
+
+mongooseProjectSchema.pre('save', function (next) {
+  this.last_edited = new Date();
+  next();
 });
 
 export const ProjectModel = mongoose.model('projects', mongooseProjectSchema);

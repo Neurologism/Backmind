@@ -83,11 +83,7 @@ export const updateProjectSchema = z
       message:
         'If you are changing the owner of the project, you must provide a password.',
     }
-  )
-  .transform(async (data: any) => {
-    data.project.last_edited = Date.now();
-    return data;
-  });
+  );
 
 export const updateProjectAsContributorSchema = z
   .object({

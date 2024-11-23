@@ -8,7 +8,8 @@ const mongooseUserSchema = new mongoose.Schema({
   password_hash: String,
   date_of_birth: Number,
   visibility: { type: String, enum: ['public', 'private'] },
-  created_on: Number,
+  last_edited: Date,
+  created_on: Date,
   project_ids: [mongoose.Types.ObjectId],
   follower_ids: [mongoose.Types.ObjectId],
   following_ids: [mongoose.Types.ObjectId],
@@ -20,6 +21,11 @@ mongooseUserSchema.set('toJSON', {
     delete ret.password_hash;
     return ret;
   },
+});
+
+mongooseUserSchema.pre('save', function (next) {
+  this.last_edited = new Date();
+  next();
 });
 
 export const UserModel = mongoose.model('users', mongooseUserSchema);

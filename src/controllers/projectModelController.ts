@@ -17,8 +17,8 @@ export const modelStartTraining = async (req: Request, res: Response) => {
     status: 'queued',
     output: [],
     task: req.project.components,
-    last_updated_at: Date.now(),
-    queued_at: Date.now(),
+    last_updated_at: new Date(),
+    queued_at: new Date(),
     started_at: null,
     finished_at: null,
     project_id: req.project._id,
@@ -49,8 +49,8 @@ export const modelStopTraining = async (req: Request, res: Response) => {
     {
       $set: {
         status: 'stopped',
-        last_updated_at: Date.now(),
-        finished_at: Date.now(),
+        last_updated_at: new Date(),
+        finished_at: new Date(),
       },
     }
   );

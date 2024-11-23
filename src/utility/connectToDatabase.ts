@@ -5,11 +5,11 @@ import { TaskModel } from '../mongooseSchemas/taskSchema';
 import { UserModel } from '../mongooseSchemas/userSchema';
 
 export const connectToDatabase = async () => {
-  console.log('Trying to connect to the database...');
+  console.log('Trying to connect to the database');
   mongoose.connect(process.env.MONGO_URI as string);
 
   if (process.env.RESET_DB === 'true') {
-    console.log('Resetting database... ');
+    console.log('Resetting database');
     ProjectModel.deleteMany({});
     QueueItemModel.deleteMany({});
     TaskModel.deleteMany({});
@@ -18,4 +18,9 @@ export const connectToDatabase = async () => {
   }
 
   console.log(`Connected to database: ${process.env.DB_NAME}`);
+};
+
+export const disconnectFromDatabase = async () => {
+  console.log('Disconnecting from database');
+  mongoose.disconnect();
 };

@@ -1,5 +1,4 @@
 import express from 'express';
-import { dbMiddleware } from '../middleware/dbMiddleware';
 import { authMiddleware } from '../middleware/authMiddleware';
 import {
   modelStartTraining,
@@ -15,14 +14,13 @@ import {
   modelStatusTrainingSchema,
   modelQuerySchema,
   modelDownloadSchema,
-} from '../schemas/projectModelSchemas';
+} from '../zodSchemas/projectModelSchemas';
 import { accessProjectMiddleware } from '../middleware/accessProjectMiddleware';
 
 const router = express.Router();
 
 router.post(
   '/training-start',
-  dbMiddleware,
   authMiddleware,
   schemaValidationMiddleware(modelStartTrainingSchema),
   accessProjectMiddleware,
@@ -31,7 +29,6 @@ router.post(
 
 router.post(
   '/training-stop',
-  dbMiddleware,
   authMiddleware,
   schemaValidationMiddleware(modelStopTrainingSchema),
   accessProjectMiddleware,
@@ -40,7 +37,6 @@ router.post(
 
 router.post(
   '/training-status',
-  dbMiddleware,
   authMiddleware,
   schemaValidationMiddleware(modelStatusTrainingSchema),
   accessProjectMiddleware,
@@ -49,7 +45,6 @@ router.post(
 
 router.post(
   '/query',
-  dbMiddleware,
   authMiddleware,
   schemaValidationMiddleware(modelQuerySchema),
   modelQuery
@@ -57,7 +52,6 @@ router.post(
 
 router.post(
   '/download',
-  dbMiddleware,
   authMiddleware,
   schemaValidationMiddleware(modelDownloadSchema),
   modelDownload

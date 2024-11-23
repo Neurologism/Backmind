@@ -1,5 +1,4 @@
 import express from 'express';
-import { dbMiddleware } from '../middleware/dbMiddleware';
 import { authMiddleware } from '../middleware/authMiddleware';
 import {
   getProject,
@@ -17,7 +16,7 @@ import {
   deleteProjectSchema,
   searchProjectSchema,
   isTakenProjectSchema,
-} from '../schemas/projectSchemas';
+} from '../zodSchemas/projectSchemas';
 import projectModelRoutes from './projectModelRoutes';
 import { getProjectMiddleware } from '../middleware/getProjectMiddleware';
 import { accessProjectMiddleware } from '../middleware/accessProjectMiddleware';
@@ -26,7 +25,6 @@ const router = express.Router();
 
 router.post(
   '/get',
-  dbMiddleware,
   authMiddleware,
   schemaValidationMiddleware(getProjectSchema),
   getProjectMiddleware,
@@ -35,7 +33,6 @@ router.post(
 
 router.post(
   '/update',
-  dbMiddleware,
   authMiddleware,
   schemaValidationMiddleware(updateProjectSchema),
   accessProjectMiddleware,
@@ -44,7 +41,6 @@ router.post(
 
 router.post(
   '/create',
-  dbMiddleware,
   authMiddleware,
   schemaValidationMiddleware(createProjectSchema),
   createProject
@@ -52,7 +48,6 @@ router.post(
 
 router.post(
   '/delete',
-  dbMiddleware,
   authMiddleware,
   schemaValidationMiddleware(deleteProjectSchema),
   accessProjectMiddleware,
@@ -61,7 +56,6 @@ router.post(
 
 router.post(
   '/search',
-  dbMiddleware,
   authMiddleware,
   schemaValidationMiddleware(searchProjectSchema),
   searchProject
@@ -69,7 +63,6 @@ router.post(
 
 router.post(
   '/is-taken',
-  dbMiddleware,
   authMiddleware,
   schemaValidationMiddleware(isTakenProjectSchema),
   isTakenProject

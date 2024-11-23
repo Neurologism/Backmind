@@ -8,9 +8,15 @@ const mongooseProjectSchema = new mongoose.Schema({
   visibility: { type: String, enum: ['public', 'private'], required: true },
   created_on: Number,
   last_edited: Number,
-  camera_position: [Number],
   components: Object,
   models: [mongoose.Types.ObjectId],
 });
 
-export const ProjectModel = mongoose.model('Projects', mongooseProjectSchema);
+mongooseProjectSchema.set('toJSON', {
+  transform: (doc, ret) => {
+    delete ret.__v;
+    return ret;
+  },
+});
+
+export const ProjectModel = mongoose.model('projects', mongooseProjectSchema);

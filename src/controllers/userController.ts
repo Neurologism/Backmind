@@ -42,13 +42,13 @@ export const getUser = async (req: Request, res: Response) => {
     });
   }
 
-  delete user.password_hash;
+  const userJson = user.toJSON();
   if (!isUser) {
-    delete user.email;
-    delete user.date_of_birth;
+    delete userJson.email;
+    delete userJson.date_of_birth;
   }
 
-  return res.status(200).json({ user: user });
+  return res.status(200).json({ user: userJson });
 };
 
 export const updateUser = async (req: Request, res: Response) => {
@@ -57,7 +57,7 @@ export const updateUser = async (req: Request, res: Response) => {
   }
 
   const db_user = await UserModel.findOne({
-    _id: req.user_id!,
+    _id: req.user_id,
   });
 
   if (db_user === null) {
@@ -85,7 +85,7 @@ export const updateUser = async (req: Request, res: Response) => {
     delete req.body.user.new_password;
   }
 
-  UserModel.updateOne({ _id: req.user_id! }, { $set: req.body.user });
+  await UserModel.updateOne({ _id: req.user_id! }, { $set: req.body.user });
   return res.status(200).json({ msg: 'User updated successfully.' });
 };
 

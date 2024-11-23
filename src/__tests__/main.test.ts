@@ -4,7 +4,10 @@ setEnv('.env.test');
 setEnv();
 
 import app from '../app';
-import { disconnectFromDatabase } from '../utility/connectToDatabase';
+import {
+  connectToDatabase,
+  disconnectFromDatabase,
+} from '../utility/connectToDatabase';
 
 import apiAuthLogin from './main_tests/apiAuthLogin';
 import apiAuthRegister from './main_tests/apiAuthRegister';
@@ -17,6 +20,10 @@ import apiUserIsTaken from './main_tests/apiUserIsTaken';
 import apiUserUpdate from './main_tests/apiUserUpdate';
 
 const vars = {};
+
+beforeAll(async () => {
+  await connectToDatabase();
+});
 
 afterAll(async () => {
   await disconnectFromDatabase();

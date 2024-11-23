@@ -8,10 +8,10 @@ const getSelfUserResponseScheme = z
       .object({
         _id: z.string(),
         email: z.string(),
+        about_you: z.string(),
         date_of_birth: z.number(),
         brainet_tag: z.string(),
         displayname: z.string(),
-        about_you: z.string(),
         visibility: z.string(),
         created_on: z.number(),
         project_ids: z.array(z.string()),

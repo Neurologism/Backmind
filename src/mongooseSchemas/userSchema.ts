@@ -14,4 +14,12 @@ const mongooseUserSchema = new mongoose.Schema({
   following_ids: [mongoose.Types.ObjectId],
 });
 
-export const UserModel = mongoose.model('Users', mongooseUserSchema);
+mongooseUserSchema.set('toJSON', {
+  transform: (doc, ret) => {
+    delete ret.__v;
+    delete ret.password_hash;
+    return ret;
+  },
+});
+
+export const UserModel = mongoose.model('users', mongooseUserSchema);

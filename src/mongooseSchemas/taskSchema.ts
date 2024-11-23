@@ -11,4 +11,11 @@ const mongooseTaskSchema = new mongoose.Schema({
   project_id: mongoose.Types.ObjectId,
 });
 
-export const TaskModel = mongoose.model('Tasks', mongooseTaskSchema);
+mongooseTaskSchema.set('toJSON', {
+  transform: (doc, ret) => {
+    delete ret.__v;
+    return ret;
+  },
+});
+
+export const TaskModel = mongoose.model('tasks', mongooseTaskSchema);

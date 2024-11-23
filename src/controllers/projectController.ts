@@ -41,9 +41,7 @@ export const updateProject = async (req: Request, res: Response) => {
     }
   }
 
-  const current_user = await UserModel.findOne({
-    _id: req.user_id!,
-  });
+  const current_user = await UserModel.findById(req.user_id);
 
   if (req.body.project.plain_password) {
     const passwordsMatch = bcrypt.compareSync(

@@ -24,13 +24,13 @@ export const modelStartTraining = async (req: Request, res: Response) => {
     project_id: req.project._id,
   }).save();
   const modelId = insertResult._id;
-  new QueueItemModel({ model_id: modelId }).save(); // async
-  ProjectModel.updateOne(
+  await new QueueItemModel({ model_id: modelId }).save();
+  await ProjectModel.updateOne(
     { _id: req.project._id },
     {
       $push: { models: modelId },
     }
-  ); // async
+  );
 
   res
     .status(200)

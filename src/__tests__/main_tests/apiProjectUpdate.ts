@@ -69,6 +69,8 @@ export default (app: Express, vars: any) => {
 
     expect(response.status).toBe(200);
 
+    console.log(response.body);
+
     const validationResult = await getProjectResponseScheme.safeParseAsync(
       response.body
     );

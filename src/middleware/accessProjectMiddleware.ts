@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { ProjectExplicit } from '../types';
+import { ProjectModel } from '../mongooseSchemas/projectSchema';
 
 export const accessProjectMiddleware = async (
   req: Request,
@@ -12,9 +12,9 @@ export const accessProjectMiddleware = async (
     });
   }
 
-  const dbProject = (await req.dbProjects!.findOne({
+  const dbProject = await ProjectModel.findOne({
     _id: req.body.project._id,
-  })) as ProjectExplicit;
+  });
 
   const projectExists = dbProject !== null;
   if (!projectExists) {
@@ -24,9 +24,18 @@ export const accessProjectMiddleware = async (
   }
 
   const isProjectOwner =
-    dbProject.owner_id.toString() === req.user_id!.toString();
+    dbProject.owner_id!.toString() === req.user_id!.toString();
+
   const canUpdateProject =
-    isProjectOwner || dbProject.contributors.includes(req.user_id!);
+    isProjectOwner ||
+    (() => {
+      for (const contributor of dbProject.contributors) {
+        if (contributor._id.toString() === req.user_id?.toString()) {
+          return true;
+        }
+        return false;
+      }
+    })();
   if (!canUpdateProject) {
     return res.status(404).json({
       msg: "There is no project with that id or you don't have access to it.",

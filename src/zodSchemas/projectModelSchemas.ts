@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { ObjectId } from 'mongodb';
+import mongoose from 'mongoose';
 import { TaskModel } from '../mongooseSchemas/taskSchema';
 
 export const modelStartTrainingSchema = z
@@ -9,7 +9,7 @@ export const modelStartTrainingSchema = z
         _id: z
           .string()
           .length(24)
-          .transform((_id) => new ObjectId(_id)),
+          .transform((_id) => new mongoose.Types.ObjectId(_id)),
       })
       .strict(),
   })
@@ -22,7 +22,7 @@ export const modelStopTrainingSchema = z
         _id: z
           .string()
           .length(24)
-          .transform((_id) => new ObjectId(_id)),
+          .transform((_id) => new mongoose.Types.ObjectId(_id)),
       })
       .strict(),
   })
@@ -53,7 +53,7 @@ export const modelStatusTrainingSchema = z
         _id: z
           .string()
           .length(24)
-          .transform((_id) => new ObjectId(_id)),
+          .transform((_id) => new mongoose.Types.ObjectId(_id)),
       })
       .strict(),
   })

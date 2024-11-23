@@ -24,7 +24,7 @@ export const modelStartTraining = async (req: Request, res: Response) => {
     project_id: req.project._id,
   }).save();
   const modelId = insertResult._id;
-  await new QueueItemModel({ model_id: modelId }).save();
+  await new QueueItemModel({ task_id: modelId }).save();
   await ProjectModel.updateOne(
     { _id: req.project._id },
     {
@@ -41,7 +41,7 @@ export const modelStopTraining = async (req: Request, res: Response) => {
   const model = req.body.model;
 
   if (model.status === 'queued') {
-    await QueueItemModel.deleteOne({ model_id: model!._id });
+    await QueueItemModel.deleteOne({ task_id: model!._id });
   }
 
   await TaskModel.updateOne(

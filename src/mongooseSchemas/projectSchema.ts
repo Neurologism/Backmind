@@ -10,7 +10,7 @@ const mongooseProjectSchema = new mongoose.Schema({
   last_edited: Number,
   camera_position: [Number],
   components: Object,
-  models: [mongoose.Types.ObjectId]
+  models: [mongoose.Types.ObjectId],
 });
 
 export const ProjectModel = mongoose.model('Project', mongooseProjectSchema);

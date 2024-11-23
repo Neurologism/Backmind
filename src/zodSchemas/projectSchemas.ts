@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { ObjectId } from 'mongodb';
+import mongoose from 'mongoose';
 import { componentsSchema } from './componentsSchemas';
 
 export const getProjectSchema = z
@@ -9,7 +9,7 @@ export const getProjectSchema = z
         _id: z
           .string()
           .length(24)
-          .transform((_id) => new ObjectId(_id)),
+          .transform((_id) => new mongoose.Types.ObjectId(_id)),
       })
       .strict(),
   })
@@ -22,7 +22,7 @@ export const updateProjectSchema = z
         _id: z
           .string()
           .length(24)
-          .transform((_id) => new ObjectId(_id)),
+          .transform((_id) => new mongoose.Types.ObjectId(_id)),
         name: z.string().optional(),
         description: z.string().optional(),
         visibility: z.enum(['public', 'private']).optional(),
@@ -34,7 +34,7 @@ export const updateProjectSchema = z
             if (owner_id === undefined) {
               return undefined;
             }
-            return new ObjectId(owner_id);
+            return new mongoose.Types.ObjectId(owner_id);
           }),
         contributors: z
           .array(z.string().length(24))
@@ -44,7 +44,7 @@ export const updateProjectSchema = z
               return undefined;
             }
             return contributors!.map(
-              (contributor) => new ObjectId(contributor)
+              (contributor) => new mongoose.Types.ObjectId(contributor)
             );
           }),
         plain_password: z
@@ -83,19 +83,15 @@ export const updateProjectSchema = z
       message:
         'If you are changing the owner of the project, you must provide a password.',
     }
-  )
-  .transform(async (data: any) => {
-    data.project.last_edited = Date.now();
-    return data;
-  });
+  );
 
 export const updateProjectAsContributorSchema = z
   .object({
     project: z
       .object({
-        _id: z.any().refine((_id) => _id instanceof ObjectId, {
+        _id: z.any().refine((_id) => _id instanceof mongoose.Types.ObjectId, {
           message:
-            "Do not parse this schema before _id hasn't been converted to a valid mongodb object id.",
+            "Do not parse this schema before _id hasn't been converted to a valid mongoose object id.",
         }),
         description: z.string().optional(),
         components: componentsSchema.optional(),

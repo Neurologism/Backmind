@@ -1,7 +1,7 @@
 import request from 'supertest';
 import { z } from 'zod';
 import { Express } from 'express';
-import { componentsSchema } from '../../schemas/componentsSchemas';
+import { componentsSchema } from '../../zodSchemas/componentsSchemas';
 
 const updateProjectResponseScheme = z
   .object({
@@ -19,8 +19,8 @@ const getProjectResponseScheme = z
         owner_id: z.string(),
         contributors: z.array(z.string()),
         visibility: z.string(),
-        created_on: z.number(),
-        last_edited: z.number(),
+        created_on: z.string(),
+        last_edited: z.string(),
         components: componentsSchema,
         models: z.array(z.string()),
       })

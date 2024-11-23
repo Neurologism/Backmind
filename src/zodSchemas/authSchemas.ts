@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { connectToDatabase } from '../utility/connectToDatabase';
+import { UserModel } from '../mongooseSchemas/userSchema';
 
 export const registerSchema = z
   .object({
@@ -14,15 +14,14 @@ export const registerSchema = z
   .strict()
   .refine(
     async (data) => {
-      const db = await connectToDatabase();
-      const dbusers = db.collection('users');
-      const userExists = await dbusers.findOne({
-        $or: [
-          { email: data.user.email },
-          { brainet_tag: data.user.brainet_tag },
-        ],
-      });
-      return userExists === null;
+      const userExists =
+        (await UserModel.findOne({
+          $or: [
+            { email: data.user.email },
+            { brainet_tag: data.user.brainet_tag },
+          ],
+        })) === null;
+      return userExists;
     },
     { message: 'User with that email or brainet_tag already exists.' }
   );

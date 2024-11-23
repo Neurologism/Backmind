@@ -1,10 +1,11 @@
 import { Request, Response } from 'express';
-import { Project, UserExplicit } from '../types';
 import bcrypt from 'bcrypt';
 import { initComponents } from '../utility/initComponents';
-import { updateProjectAsContributorSchema } from '../schemas/projectSchemas';
+import { updateProjectAsContributorSchema } from '../zodSchemas/projectSchemas';
 import { z } from 'zod';
-import { projectNameExists } from '../utility/projectNameExists';
+import { UserModel } from '../mongooseSchemas/userSchema';
+import { ProjectModel } from '../mongooseSchemas/projectSchema';
+import { TaskModel } from '../mongooseSchemas/taskSchema';
 
 export const getProject = async (req: Request, res: Response) => {
   return res.status(200).json({ project: req.project! });
@@ -15,10 +16,11 @@ export const updateProject = async (req: Request, res: Response) => {
     req.body.project.name !== undefined &&
     req.body.project.name !== req.project!.name
   ) {
-    const nameTaken = await projectNameExists(
-      req.body.project.name,
-      req.user_id!
-    );
+    const nameTaken =
+      (await ProjectModel.findOne({
+        name: req.body.project.name,
+        owner_id: req.user_id,
+      })) !== null;
     if (nameTaken) {
       return res.status(409).json({ msg: 'Project name already taken.' });
     }
@@ -39,14 +41,12 @@ export const updateProject = async (req: Request, res: Response) => {
     }
   }
 
-  const current_user = (await req.dbUsers!.findOne({
-    _id: req.user_id!,
-  })) as unknown as UserExplicit;
+  const current_user = await UserModel.findById(req.user_id);
 
   if (req.body.project.plain_password) {
     const passwordsMatch = bcrypt.compareSync(
       req.body.project.plain_password,
-      current_user.password_hash
+      current_user?.password_hash!
     );
     if (!passwordsMatch) {
       return res.status(400).json({ msg: 'The password is incorrect.' });
@@ -54,7 +54,7 @@ export const updateProject = async (req: Request, res: Response) => {
   }
 
   delete req.body.project.plain_password;
-  await req.dbProjects!.updateOne(
+  await ProjectModel.updateOne(
     { _id: req.body.project._id },
     {
       $set: req.body.project,
@@ -71,33 +71,37 @@ export const createProject = async (req: Request, res: Response) => {
       .json({ msg: 'You need to be logged in to create a project.' });
   }
 
-  const nameTaken = await projectNameExists(
-    req.body.project.name,
-    req.user_id!
-  );
+  const nameTaken =
+    (await await ProjectModel.findOne({
+      name: req.body.project.name,
+      owner_id: req.user_id,
+    })) !== null;
   if (nameTaken) {
     return res.status(409).json({ msg: 'Project name already taken.' });
   }
 
-  const project = {
+  const project = new ProjectModel({
     name: req.body.project.name,
     description: req.body.project.description,
     owner_id: req.user_id!.toString(),
     contributors: [],
     visibility: req.body.project.visibility,
-    created_on: Date.now(),
-    last_edited: Date.now(),
+    created_on: new Date(),
+    last_edited: new Date(),
     components: initComponents(),
     models: [],
-  };
+  });
 
-  const insertResult = await req.dbProjects!.insertOne(project);
-  await req.dbUsers!.updateOne({ _id: req.user_id! }, {
-    $push: { project_ids: insertResult.insertedId },
-  } as any);
+  const insertResult = await project.save();
+  await UserModel.updateOne(
+    { _id: req.user_id! },
+    {
+      $push: { project_ids: insertResult._id },
+    }
+  );
   return res.status(200).json({
     msg: 'Project created successfully.',
-    project: { _id: insertResult.insertedId },
+    project: { _id: insertResult._id },
   });
 };
 
@@ -109,7 +113,7 @@ export const deleteProject = async (req: Request, res: Response) => {
   }
 
   const activeModels =
-    (await req.dbModels!.findOne({
+    (await TaskModel.findOne({
       $and: [
         { project_id: req.project!._id },
         { $or: [{ status: 'queued' }, { status: 'training' }] },
@@ -121,9 +125,9 @@ export const deleteProject = async (req: Request, res: Response) => {
     });
   }
 
-  await req.dbProjects!.deleteOne({ _id: req.project!._id });
-  await req.dbModels!.deleteMany({ project_id: req.project!._id });
-  await req.dbUsers!.updateOne(
+  await ProjectModel.deleteOne({ _id: req.project!._id });
+  await TaskModel.deleteMany({ project_id: req.project!._id });
+  await UserModel.updateOne(
     { _id: req.user_id! },
     {
       $pull: { project_ids: req.project!._id },
@@ -133,30 +137,7 @@ export const deleteProject = async (req: Request, res: Response) => {
 };
 
 export const searchProject = async (req: Request, res: Response) => {
-  const projects = (await req
-    .dbProjects!.find({
-      $and: [
-        { visibility: 'public' },
-        {
-          $or: [
-            { name: { $regex: req.query.q as string } },
-            { description: { $regex: req.query.q as string } },
-          ],
-        },
-      ],
-    })
-    .limit(30)
-    .toArray()) as Project[];
-
-  for (const project of projects) {
-    delete project.contributors;
-    delete project.created_on;
-    delete project.last_edited;
-    delete project.components;
-    delete project.models;
-  }
-
-  return res.status(200).json({ projects: projects });
+  return res.status(500).json({ msg: 'still in developement' });
 };
 
 export const isTakenProject = async (req: Request, res: Response) => {
@@ -165,10 +146,11 @@ export const isTakenProject = async (req: Request, res: Response) => {
     return res.status(401).json({ msg: 'You need to be logged in.' });
   }
 
-  const nameTaken = await projectNameExists(
-    req.body.project.name,
-    req.user_id!
-  );
+  const nameTaken =
+    (await ProjectModel.findOne({
+      name: req.body.project.name,
+      owner_id: req.user_id,
+    })) !== null;
 
   if (nameTaken) {
     return res

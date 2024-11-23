@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
-import { UserExplicit } from '../types';
 import bcrypt from 'bcrypt';
 import { isEmptyObject } from '../utility/isEmptyObject';
+import { UserModel } from '../mongooseSchemas/userSchema';
 
 export const getUser = async (req: Request, res: Response) => {
   let search_params;
@@ -19,7 +19,7 @@ export const getUser = async (req: Request, res: Response) => {
     search_params = req.body.user;
   }
 
-  const user = await req.dbUsers!.findOne(search_params);
+  const user = await UserModel.findOne(search_params);
   if (user === null) {
     return res
       .status(404)
@@ -27,7 +27,14 @@ export const getUser = async (req: Request, res: Response) => {
   }
 
   const isUser = user._id.toString() === req.user_id?.toString();
-  const isFollowedByUser = user.following_ids.includes(req.user_id!);
+  const isFollowedByUser = (() => {
+    for (const following_id of user.following_ids) {
+      if (following_id._id.toString() === req.user_id?.toString()) {
+        return true;
+      }
+      return false;
+    }
+  })();
 
   if (user.visibility === 'private' && !isUser && !isFollowedByUser) {
     return res.status(403).json({
@@ -35,13 +42,13 @@ export const getUser = async (req: Request, res: Response) => {
     });
   }
 
-  delete user.password_hash;
+  const userJson = user.toJSON();
   if (!isUser) {
-    delete user.email;
-    delete user.date_of_birth;
+    delete userJson.email;
+    delete userJson.date_of_birth;
   }
 
-  return res.status(200).json({ user: user });
+  return res.status(200).json({ user: userJson });
 };
 
 export const updateUser = async (req: Request, res: Response) => {
@@ -49,9 +56,9 @@ export const updateUser = async (req: Request, res: Response) => {
     return res.status(401).json({ msg: 'You are not authenticated.' });
   }
 
-  const db_user = (await req.dbUsers!.findOne({
-    _id: req.user_id!,
-  })) as unknown as UserExplicit;
+  const db_user = await UserModel.findOne({
+    _id: req.user_id,
+  });
 
   if (db_user === null) {
     return res
@@ -62,7 +69,7 @@ export const updateUser = async (req: Request, res: Response) => {
   if (req.body.user.old_password !== undefined) {
     const passwordsMatch = bcrypt.compareSync(
       req.body.user.old_password,
-      db_user.password_hash
+      db_user.password_hash!
     );
     if (!passwordsMatch) {
       return res.status(400).json({ msg: 'The old password is incorrect.' });
@@ -78,7 +85,7 @@ export const updateUser = async (req: Request, res: Response) => {
     delete req.body.user.new_password;
   }
 
-  req.dbUsers!.updateOne({ _id: req.user_id! }, { $set: req.body.user });
+  await UserModel.updateOne({ _id: req.user_id! }, { $set: req.body.user });
   return res.status(200).json({ msg: 'User updated successfully.' });
 };
 
@@ -94,7 +101,7 @@ export const isTakenUser = async (req: Request, res: Response) => {
     search_properties.$or.push({ brainet_tag: req.body.user.brainet_tag });
   }
 
-  const user = await req.dbUsers!.findOne(search_properties);
+  const user = await UserModel.findOne(search_properties);
   if (user !== null) {
     return res
       .status(409)

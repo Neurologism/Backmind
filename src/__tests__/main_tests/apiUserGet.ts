@@ -8,12 +8,13 @@ const getSelfUserResponseScheme = z
       .object({
         _id: z.string(),
         email: z.string(),
+        about_you: z.string(),
         date_of_birth: z.number(),
         brainet_tag: z.string(),
         displayname: z.string(),
-        about_you: z.string(),
         visibility: z.string(),
-        created_on: z.number(),
+        created_on: z.string(),
+        last_edited: z.string(),
         project_ids: z.array(z.string()),
         follower_ids: z.array(z.string()),
         following_ids: z.array(z.string()),
@@ -27,11 +28,12 @@ const getOtherUserResponseScheme = z
     user: z
       .object({
         _id: z.string(),
-        brainet_tag: z.string(),
-        displayname: z.string(),
         about_you: z.string(),
+        displayname: z.string(),
+        brainet_tag: z.string(),
         visibility: z.string(),
-        created_on: z.number(),
+        last_edited: z.string(),
+        created_on: z.string(),
         project_ids: z.array(z.string()),
         follower_ids: z.array(z.string()),
         following_ids: z.array(z.string()),
@@ -61,6 +63,7 @@ export default (app: Express, vars: any) => {
 
     expect(response.status).toBe(200);
 
+    console.log(response.body);
     const validationResult = await getOtherUserResponseScheme.safeParseAsync(
       response.body
     );

@@ -1,15 +1,15 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { User, UserRegister, UserExplicit, RequestExplicit } from '../types';
+import { UserModel } from '../mongooseSchemas/userSchema';
 
 export const register = async (req: Request, res: Response) => {
-  const given_user: UserRegister = req.body['user'];
+  const given_user = req.body['user'];
 
   const salt = await bcrypt.genSalt(Number(process.env.SALT_ROUNDS));
   const hashedPassword = await bcrypt.hash(given_user.plain_password, salt);
 
-  const newUser: User = {
+  const newUser = new UserModel({
     email: given_user.email,
     brainet_tag: given_user.brainet_tag,
     displayname: given_user.brainet_tag,
@@ -17,16 +17,17 @@ export const register = async (req: Request, res: Response) => {
     about_you: '',
     date_of_birth: 0,
     visibility: 'public',
-    created_on: Date.now(),
+    created_on: new Date(),
+    last_edited: new Date(),
     project_ids: [],
     follower_ids: [],
     following_ids: [],
-  };
+  });
 
-  const result = await req.dbUsers!.insertOne(newUser);
+  const savedUser = await newUser.save();
 
   const token = jwt.sign(
-    { _id: '' + result.insertedId },
+    { _id: '' + savedUser._id },
     process.env.JWT_SECRET as string,
     { expiresIn: process.env.JWT_TOKEN_EXPIRE_IN }
   );
@@ -39,11 +40,11 @@ export const login = async (req: Request, res: Response) => {
   if (req.body['user']['email']) given_user.email = req.body['user']['email'];
   if (req.body['user']['brainet_tag'])
     given_user.brainet_tag = req.body['user']['brainet_tag'];
-  const query = await req.dbUsers!.findOne(given_user);
+  const query: any = await UserModel.findOne(given_user);
   if (query === null) {
     return res.status(404).json({ msg: 'User not found' });
   }
-  const query_user = query as UserExplicit;
+  const query_user = query;
 
   const isMatch = await bcrypt.compare(
     req.body['user'].plain_password,
@@ -69,9 +70,9 @@ export const logout = async (req: Request, res: Response) => {
 };
 
 export const check = async (req: Request, res: Response) => {
-  const user = await req.dbUsers!.findOne({
+  const user = await UserModel.findOne({
     _id: req.user_id,
-  } as any);
+  });
 
   const userExists = user !== null;
 

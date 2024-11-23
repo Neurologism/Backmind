@@ -1,8 +1,11 @@
 import { Request, Response } from 'express';
+import { ProjectModel } from '../mongooseSchemas/projectSchema';
+import { QueueItemModel } from '../mongooseSchemas/queueItemSchema';
+import { TaskModel } from '../mongooseSchemas/taskSchema';
 
 export const modelStartTraining = async (req: Request, res: Response) => {
   if (
-    (await req.dbTrainingQueue!.countDocuments()) >
+    (await QueueItemModel.countDocuments()) >
     Number(process.env.MAX_TRAINING_QUEUE_LENGTH)
   ) {
     return res
@@ -10,23 +13,24 @@ export const modelStartTraining = async (req: Request, res: Response) => {
       .send({ msg: 'Training queue is full. Try again later.' });
   }
 
-  const model = {
+  const insertResult = await new TaskModel({
     status: 'queued',
     output: [],
     task: req.project.components,
-    last_updated_at: Date.now(),
-    queued_at: Date.now(),
+    last_updated_at: new Date(),
+    queued_at: new Date(),
     started_at: null,
     finished_at: null,
     project_id: req.project._id,
-  };
-
-  const insertResult = await req.dbModels!.insertOne(model);
-  const modelId = insertResult.insertedId;
-  await req.dbTrainingQueue!.insertOne({ model_id: modelId });
-  await req.dbProjects!.updateOne({ _id: req.project._id }, {
-    $push: { models: modelId },
-  } as any);
+  }).save();
+  const modelId = insertResult._id;
+  await new QueueItemModel({ task_id: modelId }).save();
+  await ProjectModel.updateOne(
+    { _id: req.project._id },
+    {
+      $push: { models: modelId },
+    }
+  );
 
   res
     .status(200)
@@ -37,16 +41,16 @@ export const modelStopTraining = async (req: Request, res: Response) => {
   const model = req.body.model;
 
   if (model.status === 'queued') {
-    await req.dbTrainingQueue!.deleteOne({ model_id: model!._id });
+    await QueueItemModel.deleteOne({ task_id: model!._id });
   }
 
-  await req.dbModels!.updateOne(
+  await TaskModel.updateOne(
     { _id: model._id },
     {
       $set: {
         status: 'stopped',
-        last_updated_at: Date.now(),
-        finished_at: Date.now(),
+        last_updated_at: new Date(),
+        finished_at: new Date(),
       },
     }
   );

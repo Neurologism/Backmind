@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { ObjectId } from 'mongodb';
+import mongoose from 'mongoose';
 import { isEmptyObject } from '../utility/isEmptyObject';
 
 export const getUserSchema = z
@@ -11,7 +11,7 @@ export const getUserSchema = z
           .optional()
           .transform((_id) => {
             if (_id !== undefined) {
-              return new ObjectId(_id);
+              return new mongoose.Types.ObjectId(_id);
             }
           }),
         brainet_tag: z.string().optional(),

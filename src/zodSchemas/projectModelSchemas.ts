@@ -1,6 +1,6 @@
 import { z } from 'zod';
-import { ObjectId } from 'mongodb';
-import { connectToDatabase } from '../utility/connectToDatabase';
+import mongoose from 'mongoose';
+import { TaskModel } from '../mongooseSchemas/taskSchema';
 
 export const modelStartTrainingSchema = z
   .object({
@@ -9,7 +9,7 @@ export const modelStartTrainingSchema = z
         _id: z
           .string()
           .length(24)
-          .transform((_id) => new ObjectId(_id)),
+          .transform((_id) => new mongoose.Types.ObjectId(_id)),
       })
       .strict(),
   })
@@ -22,16 +22,14 @@ export const modelStopTrainingSchema = z
         _id: z
           .string()
           .length(24)
-          .transform((_id) => new ObjectId(_id)),
+          .transform((_id) => new mongoose.Types.ObjectId(_id)),
       })
       .strict(),
   })
   .strict()
   .transform(async (data: any) => {
-    const db = await connectToDatabase();
-    const dbModels = db.collection('models');
-    const model = await dbModels.findOne({ _id: data.model._id });
-    data.model = model;
+    const task = await TaskModel.findOne({ _id: data.model._id });
+    data.model = task;
     return data;
   })
   .refine(
@@ -55,16 +53,14 @@ export const modelStatusTrainingSchema = z
         _id: z
           .string()
           .length(24)
-          .transform((_id) => new ObjectId(_id)),
+          .transform((_id) => new mongoose.Types.ObjectId(_id)),
       })
       .strict(),
   })
   .strict()
   .transform(async (data: any) => {
-    const db = await connectToDatabase();
-    const dbModels = db.collection('models');
-    const model = await dbModels.findOne({ _id: data.model._id });
-    data.model = model;
+    const task = await TaskModel.findOne({ _id: data.model._id });
+    data.model = task;
     return data;
   })
   .refine(

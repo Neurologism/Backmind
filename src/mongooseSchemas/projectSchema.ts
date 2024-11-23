@@ -13,4 +13,4 @@ const mongooseProjectSchema = new mongoose.Schema({
   models: [mongoose.Types.ObjectId],
 });
 
-export const ProjectModel = mongoose.model('Project', mongooseProjectSchema);
+export const ProjectModel = mongoose.model('Projects', mongooseProjectSchema);

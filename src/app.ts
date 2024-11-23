@@ -10,6 +10,7 @@ import fs from 'fs';
 import path from 'path';
 import { logger, loggingMiddleware } from './middleware/loggingMiddleware';
 import rateLimit from 'express-rate-limit';
+import {} from './types';
 
 const accessLogStream = fs.createWriteStream(path.join('./logs/access.log'), {
   flags: 'a',

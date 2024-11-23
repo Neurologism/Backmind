@@ -14,4 +14,4 @@ const mongooseUserSchema = new mongoose.Schema({
   following_ids: [mongoose.Types.ObjectId],
 });
 
-export const UserModel = mongoose.model('User', mongooseUserSchema);
+export const UserModel = mongoose.model('Users', mongooseUserSchema);

@@ -9,6 +9,7 @@ import {
   searchUser,
   isTakenUser,
   uploadPfp,
+  getPfp
 } from '../controllers/userController';
 import { schemaValidationMiddleware } from '../middleware/schemaValidationMiddleware';
 import {
@@ -20,6 +21,7 @@ import {
   searchUserSchema,
   isTakenUserSchema,
   uploadPfpSchema,
+  getPfpSchema
 } from '../zodSchemas/userSchemas';
 import { pfpUploadMulter } from '../multerConfigs/pfpUpload';
 
@@ -80,6 +82,12 @@ router.post(
   schemaValidationMiddleware(uploadPfpSchema),
   pfpUploadMulter.single('pfp'),
   uploadPfp
+);
+
+router.post(
+  '/get-pfp',
+  schemaValidationMiddleware(getPfpSchema),
+  getPfp
 );
 
 export default router;

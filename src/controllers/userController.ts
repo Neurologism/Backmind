@@ -4,6 +4,7 @@ import { isEmptyObject } from '../utility/isEmptyObject';
 import { UserModel } from '../mongooseSchemas/userSchema';
 import sharp from 'sharp';
 import path from 'path';
+import fs from 'fs';
 
 export const getUser = async (req: Request, res: Response) => {
   let search_params;
@@ -144,7 +145,7 @@ export const uploadPfp = async (req: Request, res: Response) => {
     metadata.height > 512
   ) {
     return res.status(400).json({
-      message: 'Invalid image dimensions. Resolution should be below 512x512',
+      msg: 'Invalid image dimensions. Resolution should be below 512x512',
     });
   }
 
@@ -157,5 +158,24 @@ export const uploadPfp = async (req: Request, res: Response) => {
   user!.pfp_path = pfpPath;
   await user!.save();
 
-  return res.status(200).json({ message: 'Profile picture uploaded' });
+  return res.status(200).json({ msg: 'Profile picture uploaded' });
+};
+
+export const getPfp = async (req: Request, res: Response) => {
+  const user = await UserModel.findById(req.body.user._id);
+  const pfpPath = user!.pfp_path;
+
+  if (!pfpPath || !fs.existsSync(pfpPath)) {
+    return res
+      .status(404)
+      .json({ msg: "There's no profile picture for this user." });
+  }
+
+  return res.sendFile(pfpPath, (err) => {
+    if (err) {
+      return res
+        .status(500)
+        .json({ msg: 'There was an error sending the file.' });
+    }
+  });
 };

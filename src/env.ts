@@ -1,5 +1,6 @@
 import crypto from 'crypto';
 import dotenv from 'dotenv';
+import path from 'path';
 
 export const setEnv = (filename: string = '.env') => {
   dotenv.config({ path: filename });
@@ -28,4 +29,8 @@ export const setEnv = (filename: string = '.env') => {
     process.env.NODE_ENV === 'developement' ? 'developement' : 'production';
   process.env.DISABLE_ACCOUNT_CREATION =
     process.env.DISABLE_ACCOUNT_CREATION === 'true' ? 'true' : '';
+  process.env.FILES_DIRECTORY = process.env.FILES_DIRECTORY || './dataStorage';
+  process.env.PFP_DIRECTORY =
+    process.env.PFP_DIRECTORY ||
+    path.join(process.env.FILES_DIRECTORY as string, '/pfp');
 };

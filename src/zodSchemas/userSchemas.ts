@@ -107,3 +107,5 @@ export const followUserSchema = z.object({}).strict();
 export const unfollowUserSchema = z.object({}).strict();
 
 export const searchUserSchema = z.object({}).strict();
+
+export const uploadPfpSchema = z.object({}).strict();

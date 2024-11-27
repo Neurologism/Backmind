@@ -6,7 +6,7 @@ import { UserModel } from '../mongooseSchemas/userSchema';
 
 export const connectToDatabase = async () => {
   console.log('Trying to connect to the database');
-  mongoose.connect(process.env.MONGO_URI as string, {
+  await mongoose.connect(process.env.MONGO_URI as string, {
     dbName: process.env.DB_NAME as string,
   });
 
@@ -24,5 +24,5 @@ export const connectToDatabase = async () => {
 
 export const disconnectFromDatabase = async () => {
   console.log('Disconnecting from database');
-  mongoose.disconnect();
+  await mongoose.disconnect();
 };

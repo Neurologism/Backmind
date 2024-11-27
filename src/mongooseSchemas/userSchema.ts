@@ -13,12 +13,14 @@ const mongooseUserSchema = new mongoose.Schema({
   project_ids: [mongoose.Types.ObjectId],
   follower_ids: [mongoose.Types.ObjectId],
   following_ids: [mongoose.Types.ObjectId],
+  pfp_path: String,
 });
 
 mongooseUserSchema.set('toJSON', {
   transform: (doc, ret) => {
     delete ret.__v;
     delete ret.password_hash;
+    delete ret.pfp_path;
     return ret;
   },
 });

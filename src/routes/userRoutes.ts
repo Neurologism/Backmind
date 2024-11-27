@@ -8,6 +8,7 @@ import {
   unfollowUser,
   searchUser,
   isTakenUser,
+  uploadPfp,
 } from '../controllers/userController';
 import { schemaValidationMiddleware } from '../middleware/schemaValidationMiddleware';
 import {
@@ -18,7 +19,9 @@ import {
   unfollowUserSchema,
   searchUserSchema,
   isTakenUserSchema,
+  uploadPfpSchema,
 } from '../zodSchemas/userSchemas';
+import { pfpUploadMulter } from '../multerConfigs/pfpUpload';
 
 const router = express.Router();
 
@@ -69,6 +72,14 @@ router.post(
   authMiddleware,
   schemaValidationMiddleware(unfollowUserSchema),
   unfollowUser
+);
+
+router.post(
+  '/upload-pfp',
+  authMiddleware,
+  schemaValidationMiddleware(uploadPfpSchema),
+  pfpUploadMulter.single('pfp'),
+  uploadPfp
 );
 
 export default router;

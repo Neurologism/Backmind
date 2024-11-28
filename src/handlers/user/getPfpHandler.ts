@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { UserModel } from '../../mongooseSchemas/userSchema';
 import fs from 'fs';
 
-export const getPfp = async (req: Request, res: Response) => {
+export const getPfpHandler = async (req: Request, res: Response) => {
   const user = await UserModel.findById(req.body.user._id);
   const pfpPath = user!.pfp_path;
 

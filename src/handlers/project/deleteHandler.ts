@@ -3,7 +3,7 @@ import { UserModel } from '../../mongooseSchemas/userSchema';
 import { ProjectModel } from '../../mongooseSchemas/projectSchema';
 import { TaskModel } from '../../mongooseSchemas/taskSchema';
 
-export const deleteProject = async (req: Request, res: Response) => {
+export const deleteHandler = async (req: Request, res: Response) => {
   if (!req.middlewareParams.isProjectOwner) {
     return res
       .status(401)

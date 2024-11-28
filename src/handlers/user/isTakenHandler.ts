@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { UserModel } from '../../mongooseSchemas/userSchema';
 
-export const isTakenUser = async (req: Request, res: Response) => {
+export const isTakenHandler = async (req: Request, res: Response) => {
   const search_properties: { $or: { email?: any; brainet_tag?: any }[] } = {
     $or: [],
   };

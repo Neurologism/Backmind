@@ -5,7 +5,7 @@ import { z } from 'zod';
 import { UserModel } from '../../mongooseSchemas/userSchema';
 import { ProjectModel } from '../../mongooseSchemas/projectSchema';
 
-export const updateProject = async (req: Request, res: Response) => {
+export const updateHandler = async (req: Request, res: Response) => {
   if (
     req.body.project.name !== undefined &&
     req.body.project.name !== req.project!.name

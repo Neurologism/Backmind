@@ -3,7 +3,7 @@ import { ProjectModel } from '../../mongooseSchemas/projectSchema';
 import { QueueItemModel } from '../../mongooseSchemas/queueItemSchema';
 import { TaskModel } from '../../mongooseSchemas/taskSchema';
 
-export const modelStartTraining = async (req: Request, res: Response) => {
+export const trainingStartHandler = async (req: Request, res: Response) => {
   if (
     (await QueueItemModel.countDocuments()) >
     Number(process.env.MAX_TRAINING_QUEUE_LENGTH)

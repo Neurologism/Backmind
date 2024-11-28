@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { UserModel } from '../../mongooseSchemas/userSchema';
 
-export const register = async (req: Request, res: Response) => {
+export const registerHandler = async (req: Request, res: Response) => {
   const given_user = req.body['user'];
 
   const salt = await bcrypt.genSalt(Number(process.env.SALT_ROUNDS));

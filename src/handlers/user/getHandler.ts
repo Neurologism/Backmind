@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { isEmptyObject } from '../../utility/isEmptyObject';
 import { UserModel } from '../../mongooseSchemas/userSchema';
 
-export const getUser = async (req: Request, res: Response) => {
+export const getHandler = async (req: Request, res: Response) => {
   let search_params;
 
   if (isEmptyObject(req.body)) {

@@ -3,7 +3,7 @@ import { UserModel } from '../../mongooseSchemas/userSchema';
 import sharp from 'sharp';
 import path from 'path';
 
-export const uploadPfp = async (req: Request, res: Response) => {
+export const uploadPfpHandler = async (req: Request, res: Response) => {
   if (!req.file) {
     return res.status(400).json({ message: 'No file uploaded' });
   }

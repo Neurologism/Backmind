@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { UserModel } from '../../mongooseSchemas/userSchema';
 
-export const login = async (req: Request, res: Response) => {
+export const loginHandler = async (req: Request, res: Response) => {
   const given_user: any = {};
   if (req.body['user']['email']) given_user.email = req.body['user']['email'];
   if (req.body['user']['brainet_tag'])

@@ -3,7 +3,7 @@ import { initComponents } from '../../utility/initComponents';
 import { UserModel } from '../../mongooseSchemas/userSchema';
 import { ProjectModel } from '../../mongooseSchemas/projectSchema';
 
-export const createProject = async (req: Request, res: Response) => {
+export const createHandler = async (req: Request, res: Response) => {
   const isLoggedIn = req.user_id !== null;
   if (!isLoggedIn) {
     return res

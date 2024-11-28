@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { ProjectModel } from '../../mongooseSchemas/projectSchema';
 
-export const isTakenProject = async (req: Request, res: Response) => {
+export const isTakenHandler = async (req: Request, res: Response) => {
   const isLoggedIn = req.user_id !== null;
   if (!isLoggedIn) {
     return res.status(401).json({ msg: 'You need to be logged in.' });

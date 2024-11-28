@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import { UserModel } from '../../mongooseSchemas/userSchema';
 
-export const updateUser = async (req: Request, res: Response) => {
+export const updateHandler = async (req: Request, res: Response) => {
   if (req.user_id === undefined) {
     return res.status(401).json({ msg: 'You are not authenticated.' });
   }

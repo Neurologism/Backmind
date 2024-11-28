@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { QueueItemModel } from '../../mongooseSchemas/queueItemSchema';
 import { TaskModel } from '../../mongooseSchemas/taskSchema';
 
-export const modelStopTraining = async (req: Request, res: Response) => {
+export const trainingStopHandler = async (req: Request, res: Response) => {
   const model = req.body.model;
 
   if (model.status === 'queued') {

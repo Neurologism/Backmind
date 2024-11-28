@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-export const modelStatusTraining = async (req: Request, res: Response) => {
+export const trainingStatusHandler = async (req: Request, res: Response) => {
   return res.status(200).send({
     model: {
       status: req.body.model.status,

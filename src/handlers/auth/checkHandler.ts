@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { UserModel } from '../../mongooseSchemas/userSchema';
 
-export const check = async (req: Request, res: Response) => {
+export const checkHandler = async (req: Request, res: Response) => {
   const user = await UserModel.findOne({
     _id: req.user_id,
   });

@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
 
-export const followUser = async (req: Request, res: Response) => {
+export const followHandler = async (req: Request, res: Response) => {
   req.logger.error('Not implemented yet.');
 };

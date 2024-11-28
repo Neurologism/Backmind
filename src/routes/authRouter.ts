@@ -1,5 +1,8 @@
 import express from 'express';
-import { register, login, logout, check } from '../controllers/authController';
+import { checkHandler } from '../handlers/auth/checkHandler';
+import { loginHandler } from '../handlers/auth/loginHandler';
+import { logoutHandler } from '../handlers/auth/logoutHandler';
+import { registerHandler } from '../handlers/auth/registerHandler';
 import { schemaValidationMiddleware } from '../middleware/schemaValidationMiddleware';
 import { authMiddleware } from '../middleware/authMiddleware';
 import {
@@ -11,17 +14,17 @@ import { isEnabledMiddleware } from '../middleware/isTrueMiddleware';
 
 const router = express.Router();
 
+router.get('/check', authMiddleware, checkHandler);
+
+router.post('/login', schemaValidationMiddleware(loginSchema), loginHandler);
+
+router.post('/logout', schemaValidationMiddleware(logoutSchema), logoutHandler);
+
 router.post(
   '/register',
   isEnabledMiddleware(!Boolean(process.env.DISABLE_ACCOUNT_CREATION as string)),
   schemaValidationMiddleware(registerSchema),
-  register
+  registerHandler
 );
-
-router.post('/login', schemaValidationMiddleware(loginSchema), login);
-
-router.post('/logout', schemaValidationMiddleware(logoutSchema), logout);
-
-router.get('/check', authMiddleware, check);
 
 export default router;

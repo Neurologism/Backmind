@@ -1,13 +1,12 @@
 import express from 'express';
 import { authMiddleware } from '../middleware/authMiddleware';
-import {
-  getProject,
-  searchProject,
-  updateProject,
-  createProject,
-  deleteProject,
-  isTakenProject,
-} from '../controllers/projectController';
+import { createHandler } from '../handlers/project/createHandler';
+import { deleteHandler } from '../handlers/project/deleteHandler';
+import { getHandler } from '../handlers/project/getHandler';
+import { isTakenHandler } from '../handlers/project/isTakenHandler';
+import { searchHandler } from '../handlers/project/searchHandler';
+import { updateHandler } from '../handlers/project/updateHandler';
+
 import { schemaValidationMiddleware } from '../middleware/schemaValidationMiddleware';
 import {
   getProjectSchema,
@@ -17,33 +16,17 @@ import {
   searchProjectSchema,
   isTakenProjectSchema,
 } from '../zodSchemas/projectSchemas';
-import projectModelRoutes from './projectModelRoutes';
+import projectModelRoutes from './projectModelRouter';
 import { getProjectMiddleware } from '../middleware/getProjectMiddleware';
 import { accessProjectMiddleware } from '../middleware/accessProjectMiddleware';
 
 const router = express.Router();
 
 router.post(
-  '/get',
-  authMiddleware,
-  schemaValidationMiddleware(getProjectSchema),
-  getProjectMiddleware,
-  getProject
-);
-
-router.post(
-  '/update',
-  authMiddleware,
-  schemaValidationMiddleware(updateProjectSchema),
-  accessProjectMiddleware,
-  updateProject
-);
-
-router.post(
   '/create',
   authMiddleware,
   schemaValidationMiddleware(createProjectSchema),
-  createProject
+  createHandler
 );
 
 router.post(
@@ -51,21 +34,37 @@ router.post(
   authMiddleware,
   schemaValidationMiddleware(deleteProjectSchema),
   accessProjectMiddleware,
-  deleteProject
+  deleteHandler
 );
 
 router.post(
-  '/search',
+  '/get',
   authMiddleware,
-  schemaValidationMiddleware(searchProjectSchema),
-  searchProject
+  schemaValidationMiddleware(getProjectSchema),
+  getProjectMiddleware,
+  getHandler
 );
 
 router.post(
   '/is-taken',
   authMiddleware,
   schemaValidationMiddleware(isTakenProjectSchema),
-  isTakenProject
+  isTakenHandler
+);
+
+router.post(
+  '/search',
+  authMiddleware,
+  schemaValidationMiddleware(searchProjectSchema),
+  searchHandler
+);
+
+router.post(
+  '/update',
+  authMiddleware,
+  schemaValidationMiddleware(updateProjectSchema),
+  accessProjectMiddleware,
+  updateHandler
 );
 
 router.use('/model', projectModelRoutes);

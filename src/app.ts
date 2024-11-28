@@ -1,8 +1,8 @@
 import express, { Express, Request, Response, NextFunction } from 'express';
 import bodyParser from 'body-parser';
-import authRoutes from './routes/authRoutes';
-import userRoutes from './routes/userRoutes';
-import projectRoutes from './routes/projectRoutes';
+import authRoutes from './routes/authRouter';
+import userRoutes from './routes/userRouter';
+import projectRoutes from './routes/projectRouter';
 import { setupSwagger } from './swagger';
 import cors from 'cors';
 import morgan from 'morgan';

@@ -3,7 +3,7 @@ PATH="/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games"
 cd /home/brainet/Backmind
 pm2 delete backmind-server
 git reset --hard
-git clean -f
+git clean -fd
 git checkout main
 git pull
 npm i

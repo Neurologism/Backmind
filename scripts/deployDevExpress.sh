@@ -3,7 +3,7 @@ PATH="/home/gh-actions/.nvm/versions/node/v20.18.0/bin:/usr/local/sbin:/usr/loca
 cd /home/gh-actions/Backmind
 pm2 delete backmind-server
 git reset --hard
-git clean -f
+git clean -fd
 git checkout developement
 git pull
 npm i

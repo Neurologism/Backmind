@@ -1,21 +1,21 @@
 import express from 'express';
-import { authMiddleware } from '../middleware/authMiddleware';
+import { authMiddleware } from '../../middleware/authMiddleware';
 import {
   modelStartTraining,
   modelStopTraining,
   modelStatusTraining,
   modelQuery,
   modelDownload,
-} from '../controllers/projectModelController';
-import { schemaValidationMiddleware } from '../middleware/schemaValidationMiddleware';
+} from '../../controllers/projectModelController';
+import { schemaValidationMiddleware } from '../../middleware/schemaValidationMiddleware';
 import {
   modelStartTrainingSchema,
   modelStopTrainingSchema,
   modelStatusTrainingSchema,
   modelQuerySchema,
   modelDownloadSchema,
-} from '../zodSchemas/projectModelSchemas';
-import { accessProjectMiddleware } from '../middleware/accessProjectMiddleware';
+} from '../../zodSchemas/projectModelSchemas';
+import { accessProjectMiddleware } from '../../middleware/accessProjectMiddleware';
 
 const router = express.Router();
 

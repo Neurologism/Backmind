@@ -17,7 +17,7 @@ import {
   searchProjectSchema,
   isTakenProjectSchema,
 } from '../zodSchemas/projectSchemas';
-import projectModelRoutes from './projectModelRoutes';
+import projectModelRoutes from './project/model';
 import { getProjectMiddleware } from '../middleware/getProjectMiddleware';
 import { accessProjectMiddleware } from '../middleware/accessProjectMiddleware';
 

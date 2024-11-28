@@ -1,7 +1,7 @@
 import express, { Express, Request, Response, NextFunction } from 'express';
 import bodyParser from 'body-parser';
 import authRoutes from './routes/authRouter';
-import userRoutes from './routes/user';
+import userRoutes from './routes/userRouter';
 import projectRoutes from './routes/projectRouter';
 import { setupSwagger } from './swagger';
 import cors from 'cors';

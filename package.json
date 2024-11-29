@@ -5,7 +5,7 @@
   "main": "dist/src/server.js",
   "scripts": {
     "pretty": "prettier --write \"**/*.ts\"",
-    "test": "jest --coverage",
+    "test": "jest",
     "build": "npx tsc",
     "start": "pm2 start dist/src/server.js -i 0 --name backmind-server",
     "stop": "pm2 stop backmind-server",

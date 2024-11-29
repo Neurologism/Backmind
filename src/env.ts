@@ -8,6 +8,9 @@ export const setEnv = (filename: string = '.env') => {
   if (!process.env.MONGO_URI) {
     console.warn('WARNING: MONGO_URI must be set in .env file');
   }
+  if (!process.env.SENDGRID_API_KEY) {
+    console.warn('WARNING: SENDGRID_API_KEY should be set');
+  }
   process.env.EXPRESS_PORT = process.env.EXPRESS_PORT || '3000';
   process.env.JWT_SECRET =
     process.env.JWT_SECRET || crypto.randomBytes(32).toString('hex');

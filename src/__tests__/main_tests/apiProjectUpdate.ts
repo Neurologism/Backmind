@@ -16,11 +16,11 @@ const getProjectResponseScheme = z
         _id: z.string(),
         name: z.string(),
         description: z.string(),
-        owner_id: z.string(),
+        ownerId: z.string(),
         contributors: z.array(z.string()),
         visibility: z.string(),
-        created_on: z.string(),
-        last_edited: z.string(),
+        dateCreatedOn: z.string(),
+        dateLastEdited: z.string(),
         components: componentsSchema,
         models: z.array(z.string()),
       })
@@ -39,7 +39,7 @@ export default (app: Express, vars: any) => {
           name: 'changed',
           description: 'changed',
           visibility: 'public',
-          plain_password: 'test1234',
+          plainPassword: 'test1234',
           // components: JSON.parse(
           //   fs.readFileSync(
           //     '../src/__tests__/brainetTasks/slowTask.json',

@@ -7,17 +7,23 @@ const getSelfUserResponseScheme = z
     user: z
       .object({
         _id: z.string(),
-        email: z.string(),
-        about_you: z.string(),
-        date_of_birth: z.number(),
-        brainet_tag: z.string(),
+        aboutYou: z.string(),
+        dateOfBirth: z.string().optional(),
         displayname: z.string(),
+        brainetTag: z.string(),
         visibility: z.string(),
-        created_on: z.string(),
-        last_edited: z.string(),
-        project_ids: z.array(z.string()),
-        follower_ids: z.array(z.string()),
-        following_ids: z.array(z.string()),
+        projectIds: z.array(z.string()),
+        followerIds: z.array(z.string()),
+        followingIds: z.array(z.string()),
+        emails: z.array(
+          z
+            .object({
+              emailType: z.string(),
+              address: z.string(),
+              verified: z.boolean(),
+            })
+            .strict()
+        ),
       })
       .strict(),
   })
@@ -28,15 +34,13 @@ const getOtherUserResponseScheme = z
     user: z
       .object({
         _id: z.string(),
-        about_you: z.string(),
+        aboutYou: z.string(),
         displayname: z.string(),
-        brainet_tag: z.string(),
+        brainetTag: z.string(),
         visibility: z.string(),
-        last_edited: z.string(),
-        created_on: z.string(),
-        project_ids: z.array(z.string()),
-        follower_ids: z.array(z.string()),
-        following_ids: z.array(z.string()),
+        projectIds: z.array(z.string()),
+        followerIds: z.array(z.string()),
+        followingIds: z.array(z.string()),
       })
       .strict(),
   })
@@ -56,10 +60,10 @@ export default (app: Express, vars: any) => {
     );
     expect(validationResult.success).toBe(true);
   });
-  it('should return a user by brainet_tag', async () => {
+  it('should return a user by brainetTag', async () => {
     const response = await request(app)
       .post('/api/user/get')
-      .send({ user: { brainet_tag: 'test' } });
+      .send({ user: { brainetTag: 'test' } });
 
     expect(response.status).toBe(200);
 

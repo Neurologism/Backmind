@@ -13,8 +13,8 @@ export default (app: Express) => {
       .send({
         user: {
           email: 'test@test.com',
-          brainet_tag: 'test',
-          plain_password: 'test1234',
+          brainetTag: 'test',
+          plainPassword: 'test1234',
         },
       });
 

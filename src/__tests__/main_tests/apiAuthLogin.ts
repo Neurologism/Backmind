@@ -15,10 +15,12 @@ export default (app: Express, vars: any) => {
       .send({
         user: {
           email: 'test@test.com',
-          brainet_tag: 'test',
-          plain_password: 'test1234',
+          brainetTag: 'test',
+          plainPassword: 'test1234',
         },
       });
+
+    console.log(response.body);
 
     expect(response.status).toBe(200);
 

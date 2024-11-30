@@ -9,7 +9,7 @@ export default (app: Express) => {
       .send({
         user: {
           email: 'test@test.com',
-          brainet_tag: 'test',
+          brainetTag: 'test',
         },
       });
 
@@ -22,7 +22,7 @@ export default (app: Express) => {
       .send({
         user: {
           email: 'random@random.com',
-          brainet_tag: 'random',
+          brainetTag: 'random',
         },
       });
 

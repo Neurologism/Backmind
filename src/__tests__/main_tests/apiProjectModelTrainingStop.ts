@@ -14,11 +14,11 @@ const statusTrainingResponseScheme = z
       .object({
         status: z.string(),
         output: z.array(z.any()),
-        queued_at: z.number(),
-        started_at: z.number().nullable(),
-        finished_at: z.number().nullable(),
+        dateQueuedAt: z.number(),
+        dateStartedAt: z.number().nullable(),
+        dateFinishedAt: z.number().nullable(),
         error: z.any(),
-        project_id: z.string(),
+        projectId: z.string(),
       })
       .strict(),
   })

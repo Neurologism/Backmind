@@ -17,11 +17,11 @@ export const authLogin = {
                     type: 'string',
                     example: 'max@mustermann.net',
                   },
-                  brainet_tag: {
+                  brainetTag: {
                     type: 'string',
                     example: 'randomuser1234',
                   },
-                  plain_password: {
+                  plainPassword: {
                     type: 'string',
                     example: 'password123',
                   },

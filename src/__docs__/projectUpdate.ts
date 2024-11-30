@@ -29,7 +29,7 @@ export const projectUpdate = {
                   description: {
                     type: 'string',
                   },
-                  owner_id: {
+                  ownerId: {
                     type: 'string',
                   },
                   contributors: {
@@ -43,7 +43,7 @@ export const projectUpdate = {
                     description: 'either private or public',
                     example: 'private or public',
                   },
-                  plain_password: {
+                  plainPassword: {
                     type: 'string',
                   },
                   components: components,

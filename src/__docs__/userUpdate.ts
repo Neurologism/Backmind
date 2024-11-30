@@ -7,7 +7,7 @@ export const userUpdate = {
       },
     ],
     description:
-      "Use this, if you want to change account information, like email, about you, displayname, brainet_tag, password, date_of_birth, visibility. You can only change the account data if you're logged in as the corresponding user. If you want to change the password, you will have to provide the old password. The minimum password length is 6, the minimum brainet tag length is 3.",
+      "Use this, if you want to change account information, like email, about you, displayname, brainetTag, password, dateOfBirth, visibility. You can only change the account data if you're logged in as the corresponding user. If you want to change the password, you will have to provide the old password. The minimum password length is 6, the minimum brainet tag length is 3.",
     requestBody: {
       required: false,
       content: {
@@ -18,7 +18,7 @@ export const userUpdate = {
               user: {
                 type: 'object',
                 properties: {
-                  brainet_tag: {
+                  brainetTag: {
                     type: 'string',
                     description:
                       "Use '/api/user/is-taken' to make sure this brainet tag isn't already taken.",
@@ -28,13 +28,13 @@ export const userUpdate = {
                     description:
                       "Use '/api/user/is-taken' to make sure the email isn't already in use.",
                   },
-                  about_you: {
+                  aboutYou: {
                     type: 'string',
                   },
                   displayname: {
                     type: 'string',
                   },
-                  date_of_birth: {
+                  dateOfBirth: {
                     type: 'integer',
                     description:
                       'This needs to be a valid unix timestamp of the day.',
@@ -44,10 +44,10 @@ export const userUpdate = {
                     description: 'either private or public',
                     example: 'private or public',
                   },
-                  new_password: {
+                  newPassword: {
                     type: 'string',
                   },
-                  old_password: {
+                  oldPassword: {
                     type: 'string',
                   },
                 },

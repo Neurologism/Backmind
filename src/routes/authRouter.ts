@@ -3,6 +3,7 @@ import { checkHandler } from '../handlers/auth/checkHandler';
 import { loginHandler } from '../handlers/auth/loginHandler';
 import { logoutHandler } from '../handlers/auth/logoutHandler';
 import { registerHandler } from '../handlers/auth/registerHandler';
+import { verifyEmailHandler } from '../handlers/auth/verifyEmailHandler';
 import { schemaValidationMiddleware } from '../middleware/schemaValidationMiddleware';
 import { authMiddleware } from '../middleware/authMiddleware';
 import {
@@ -26,5 +27,7 @@ router.post(
   schemaValidationMiddleware(registerSchema),
   registerHandler
 );
+
+router.get('/verify-email', verifyEmailHandler);
 
 export default router;

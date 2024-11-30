@@ -41,10 +41,18 @@ export const getHandler = async (req: Request, res: Response) => {
     });
   }
 
-  const userJson = user.toJSON();
-  if (!isUser) {
-    delete userJson.email;
-    delete userJson.date_of_birth;
+  const userJson = {
+    _id: user._id,
+    about_you: user.about_you,
+    displayname: user.displayname,
+    brainet_tag: user.brainet_tag,
+    visibility: user.visibility,
+    project_ids: user.project_ids,
+    follower_ids: user.follower_ids,
+    following_ids: user.following_ids,
+  } as any;
+  if (isUser) {
+    userJson.emails = user.emails;
   }
 
   return res.status(200).json({ user: userJson });

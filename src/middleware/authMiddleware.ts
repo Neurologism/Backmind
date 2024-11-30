@@ -18,12 +18,12 @@ export const authMiddleware = (
       token!,
       process.env.JWT_SECRET as string
     ) as JwtPayload;
-    const user_id = new mongoose.Types.ObjectId(decoded._id);
-    req.user_id = user_id;
+    const userId = new mongoose.Types.ObjectId(decoded._id);
+    req.userId = userId;
     next();
   } catch (err) {
     if (err instanceof jwt.JsonWebTokenError) {
-      req.user_id = null;
+      req.userId = null;
       next();
     } else {
       req.logger.error(err);

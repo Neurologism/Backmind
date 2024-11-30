@@ -17,15 +17,15 @@ export const getProjectMiddleware = async (
   }
 
   if (project.visibility === 'private') {
-    if (req.user_id === null) {
+    if (req.userId === null) {
       return res.status(404).json({
         msg: 'This project is private. You need to be logged in to access it. ',
       });
     }
-    const isOwner = project.owner_id!.toString() === req.user_id!.toString();
+    const isOwner = project.ownerId!.toString() === req.userId!.toString();
     const isContributor = project.contributors
       .map((contributor) => contributor.toString())
-      .includes(req.user_id!.toString());
+      .includes(req.userId!.toString());
 
     if (!isOwner && !isContributor) {
       return res.status(404).json({

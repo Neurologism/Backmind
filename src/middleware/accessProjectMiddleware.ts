@@ -13,10 +13,23 @@ export const accessProjectMiddleware = async (
   }
 
   const dbProject = await ProjectModel.findOne({
+
+
+
+
+
+
+
+
+
+
+
+    
     _id: req.body.project._id,
   });
 
   const projectExists = dbProject !== null;
+
   if (!projectExists) {
     return res.status(404).json({
       msg: "There is no project with that id or you don't have access to it.",

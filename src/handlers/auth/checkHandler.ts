@@ -3,7 +3,7 @@ import { UserModel } from '../../mongooseSchemas/userSchema';
 
 export const checkHandler = async (req: Request, res: Response) => {
   const user = await UserModel.findOne({
-    _id: req.user_id,
+    _id: req.userId,
   });
 
   const userExists = user !== null;

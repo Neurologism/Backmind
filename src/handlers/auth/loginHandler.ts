@@ -4,29 +4,30 @@ import jwt from 'jsonwebtoken';
 import { UserModel } from '../../mongooseSchemas/userSchema';
 
 export const loginHandler = async (req: Request, res: Response) => {
-  const given_user: any = {};
+  const givenUser: any = {};
   if (req.body['user']['email'])
-    given_user.emails = {
+    givenUser.emails = {
       $elemMatch: {
         address: req.body['user']['email'],
       },
     };
-  if (req.body['user']['brainet_tag'])
-    given_user.brainet_tag = req.body['user']['brainet_tag'];
-  const user: any = await UserModel.findOne(given_user);
+  if (req.body['user']['brainetTag'])
+    givenUser.brainetTag = req.body['user']['brainetTag'];
+  const user: any = await UserModel.findOne(givenUser);
   if (user === null) {
     return res.status(404).json({ msg: 'User not found' });
   }
-  const emailVerified = user.emails.some(
-    (email: any) =>
-      email.address === req.body['user']['email'] && email.verified === true
-  );
-  if (!emailVerified)
-    return res.status(401).json({ msg: 'Email not verified' });
+
+  // const emailVerified = user.emails.some(
+  //   (email: any) =>
+  //     email.address === req.body['user']['email'] && email.verified === true
+  // );
+  // if (!emailVerified)
+  //   return res.status(401).json({ msg: 'Email not verified' });
 
   const isMatch = await bcrypt.compare(
-    req.body['user'].plain_password,
-    user.password_hash
+    req.body['user'].plainPassword,
+    user.passwordHash
   );
 
   if (!isMatch) return res.status(401).json({ msg: 'Invalid credentials' });

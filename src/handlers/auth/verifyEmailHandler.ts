@@ -17,8 +17,8 @@ export const verifyEmailHandler = async (req: Request, res: Response) => {
 
   const email = user.emails.find((email) => email.verificationToken === token);
   if (
-    Date.now() - email!.dateVerificationSent!.getTime() >=
-    Number(process.env.EMAIL_VERIFICATION_TOKEN_VALID_MINUTES) / 60000
+    (new Date().getTime() - email!.dateVerificationSent!.getTime()) / 60000 >=
+    Number(process.env.EMAIL_VERIFICATION_TOKEN_VALID_MINUTES)
   ) {
     return res.status(400).json({ msg: 'Invalid verification token' });
   }

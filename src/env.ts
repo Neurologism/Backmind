@@ -42,4 +42,6 @@ export const setEnv = (filename: string = '.env') => {
     process.env.WHITEMIND_HOSTNAME || 'https://whitemind.net/';
   process.env.VERIFY_ALL_EMAILS =
     process.env.VERIFY_ALL_EMAILS === 'true' ? 'true' : '';
+  process.env.EMAIL_VERIFICATION_TOKEN_VALID_MINUTES =
+    process.env.EMAIL_VERIFICATION_TOKEN_VALID_MINUTES || '60';
 };

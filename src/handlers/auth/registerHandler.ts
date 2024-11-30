@@ -24,7 +24,7 @@ export const registerHandler = async (req: Request, res: Response) => {
       sgMail.send({
         to: givenUser.email,
         from: 'no-reply@whitemind.net',
-        subject: '# Verify your Email',
+        subject: 'Verify your Email',
         text: `Verify your email address \nYou need to verify your email address to create your account. Click the following link to verify your email address: \n\n${verificationLink} \n\nIn case you didn't create an account on whitemind.net, you can safely ignore this email.`,
       });
     } catch (e) {

@@ -2,6 +2,9 @@ import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { UserModel } from '../../mongooseSchemas/userSchema';
+import sgMail from '@sendgrid/mail';
+import crypto from 'crypto';
+import { URL } from 'url';
 
 export const registerHandler = async (req: Request, res: Response) => {
   const given_user = req.body['user'];
@@ -9,19 +12,37 @@ export const registerHandler = async (req: Request, res: Response) => {
   const salt = await bcrypt.genSalt(Number(process.env.SALT_ROUNDS));
   const hashedPassword = await bcrypt.hash(given_user.plain_password, salt);
 
+  const mailVerificationToken = crypto.randomBytes(32).toString('hex');
+  const verificationLink = new URL(
+    `/verify-email?token=${mailVerificationToken}`,
+    process.env.HOSTNAME as string
+  ).toString();
+
+  try {
+    sgMail.send({
+      to: given_user.email,
+      from: 'no-reply@whitemind.net',
+      subject: '# Verify your Email',
+      text: `Verify your email address \nYou need to verify your email address to create your account. Click the following link to verify your email address: \n\n${verificationLink} \n\nIn case you didn't create an account on whitemind.net, you can safely ignore this email.`,
+    });
+  } catch (e) {
+    req.logger.error(e);
+    return res.status(500).json({ msg: 'Error sending verification email.' });
+  }
+
   const newUser = new UserModel({
-    email: given_user.email,
+    emails: [
+      {
+        emailType: 'primary',
+        verified: Boolean(process.env.VERIFY_ALL_EMAILS),
+        address: given_user.email,
+        verificationToken: mailVerificationToken,
+        dateVerificationSent: new Date(),
+      },
+    ],
     brainet_tag: given_user.brainet_tag,
     displayname: given_user.brainet_tag,
     password_hash: hashedPassword,
-    about_you: '',
-    date_of_birth: 0,
-    visibility: 'public',
-    created_on: new Date(),
-    last_edited: new Date(),
-    project_ids: [],
-    follower_ids: [],
-    following_ids: [],
   });
 
   const savedUser = await newUser.save();

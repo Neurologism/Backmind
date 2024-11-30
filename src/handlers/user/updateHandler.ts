@@ -7,11 +7,11 @@ export const updateHandler = async (req: Request, res: Response) => {
     return res.status(401).json({ msg: 'You are not authenticated.' });
   }
 
-  const db_user = await UserModel.findOne({
+  const user = await UserModel.findOne({
     _id: req.userId,
   });
 
-  if (db_user === null) {
+  if (user === null) {
     return res
       .status(404)
       .json({ msg: 'Authentication token invalid. Try relogging.' });
@@ -20,7 +20,7 @@ export const updateHandler = async (req: Request, res: Response) => {
   if (req.body.user.oldPassword !== undefined) {
     const passwordsMatch = bcrypt.compareSync(
       req.body.user.oldPassword,
-      db_user.passwordHash!
+      user.passwordHash!
     );
     if (!passwordsMatch) {
       return res.status(400).json({ msg: 'The old password is incorrect.' });
@@ -36,6 +36,10 @@ export const updateHandler = async (req: Request, res: Response) => {
     delete req.body.user.newPassword;
   }
 
-  await UserModel.updateOne({ _id: req.userId! }, { $set: req.body.user });
+  user.set(req.body.user);
+  user.dateLastEdited = new Date();
+  user.markModified('dateLastEdited');
+  await user.save();
+
   return res.status(200).json({ msg: 'User updated successfully.' });
 };

@@ -4,15 +4,15 @@ const mongooseTaskSchema = new mongoose.Schema({
   status: String,
   output: [],
   task: mongoose.Schema.Types.Mixed,
-  lastUpdated: Date,
-  dateQueuedAt: Date,
-  dateStartedAt: Date,
-  dateFinishedAt: Date,
+  datelastUpdated: Date,
+  dateQueued: Date,
+  dateStarted: Date,
+  dateFinished: Date,
   projectId: mongoose.Types.ObjectId,
 });
 
 mongooseTaskSchema.pre('save', function (next) {
-  this.lastUpdated = new Date();
+  this.datelastUpdated = new Date();
   next();
 });
 

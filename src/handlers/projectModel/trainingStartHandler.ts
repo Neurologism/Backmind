@@ -17,10 +17,10 @@ export const trainingStartHandler = async (req: Request, res: Response) => {
     status: 'queued',
     output: [],
     task: req.project.components,
-    lastUpdated_at: new Date(),
-    dateQueuedAt: new Date(),
-    dateStartedAt: null,
-    dateFinishedAt: null,
+    datelastUpdated: new Date(),
+    dateQueued: new Date(),
+    dateStarted: null,
+    dateFinished: null,
     projectId: req.project._id,
   }).save();
   const modelId = insertResult._id;

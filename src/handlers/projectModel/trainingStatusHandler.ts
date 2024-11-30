@@ -5,9 +5,9 @@ export const trainingStatusHandler = async (req: Request, res: Response) => {
     model: {
       status: req.body.model.status,
       output: req.body.model.output,
-      dateQueuedAt: req.body.model.dateQueuedAt,
-      dateStartedAt: req.body.model.dateStartedAt,
-      dateFinishedAt: req.body.model.dateFinishedAt,
+      dateQueued: req.body.model.dateQueued,
+      dateStarted: req.body.model.dateStarted,
+      dateFinished: req.body.model.dateFinished,
       projectId: req.body.model.projectId,
     },
   });

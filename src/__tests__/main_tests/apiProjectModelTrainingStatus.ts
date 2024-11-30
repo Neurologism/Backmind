@@ -8,9 +8,9 @@ const statusTrainingResponseScheme = z
       .object({
         status: z.string(),
         output: z.array(z.any()),
-        dateQueuedAt: z.number(),
-        dateStartedAt: z.number().nullable(),
-        dateFinishedAt: z.number().nullable(),
+        dateQueued: z.number(),
+        dateStarted: z.number().nullable(),
+        dateFinished: z.number().nullable(),
         error: z.any(),
         projectId: z.string(),
       })

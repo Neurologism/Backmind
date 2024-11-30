@@ -50,15 +50,15 @@ export const projectModelTrainingStatus = {
                     output: {
                       type: 'string',
                     },
-                    dateQueuedAt: {
+                    dateQueued: {
                       type: 'integer',
                       format: 0,
                     },
-                    dateStartedAt: {
+                    dateStarted: {
                       type: 'integer',
                       format: 0,
                     },
-                    dateFinishedAt: {
+                    dateFinished: {
                       type: 'integer',
                       format: 0,
                     },

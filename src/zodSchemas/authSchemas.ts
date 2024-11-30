@@ -17,7 +17,7 @@ export const registerSchema = z
       const userExists =
         (await UserModel.findOne({
           $or: [
-            { email: data.user.email },
+            { 'emails.address': data.user.email },
             { brainet_tag: data.user.brainet_tag },
           ],
         })) === null;

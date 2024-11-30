@@ -41,7 +41,6 @@ export const updateUserSchema = z
           .string()
           .min(Number(process.env.MIN_BRAINET_TAG_LENGTH))
           .optional(),
-        email: z.string().optional(),
         about_you: z.string().optional(),
         displayname: z.string().optional(),
         date_of_birth: z.number().optional(),

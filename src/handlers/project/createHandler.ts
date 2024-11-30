@@ -4,7 +4,7 @@ import { UserModel } from '../../mongooseSchemas/userSchema';
 import { ProjectModel } from '../../mongooseSchemas/projectSchema';
 
 export const createHandler = async (req: Request, res: Response) => {
-  const isLoggedIn = req.user_id !== null;
+  const isLoggedIn = req.userId !== null;
   if (!isLoggedIn) {
     return res
       .status(401)
@@ -14,7 +14,7 @@ export const createHandler = async (req: Request, res: Response) => {
   const nameTaken =
     (await await ProjectModel.findOne({
       name: req.body.project.name,
-      owner_id: req.user_id,
+      ownerId: req.userId,
     })) !== null;
   if (nameTaken) {
     return res.status(409).json({ msg: 'Project name already taken.' });
@@ -23,20 +23,20 @@ export const createHandler = async (req: Request, res: Response) => {
   const project = new ProjectModel({
     name: req.body.project.name,
     description: req.body.project.description,
-    owner_id: req.user_id!.toString(),
+    ownerId: req.userId!.toString(),
     contributors: [],
     visibility: req.body.project.visibility,
-    created_on: new Date(),
-    last_edited: new Date(),
+    dateCreatedOn: new Date(),
+    dateLastEdited: new Date(),
     components: initComponents(),
     models: [],
   });
 
   const insertResult = await project.save();
   await UserModel.updateOne(
-    { _id: req.user_id! },
+    { _id: req.userId! },
     {
-      $push: { project_ids: insertResult._id },
+      $push: { projectIds: insertResult._id },
     }
   );
   return res.status(200).json({

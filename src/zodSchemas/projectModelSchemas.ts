@@ -42,7 +42,7 @@ export const modelStopTrainingSchema = z
     { message: 'Model with that id does not exist.' }
   )
   .transform((data) => {
-    data.project = { _id: data.model.project_id };
+    data.project = { _id: data.model.projectId };
     return data;
   });
 
@@ -73,7 +73,7 @@ export const modelStatusTrainingSchema = z
     { message: 'Model with that id does not exist.' }
   )
   .transform((data) => {
-    data.project = { _id: data.model.project_id };
+    data.project = { _id: data.model.projectId };
     return data;
   });
 

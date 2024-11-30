@@ -26,15 +26,15 @@ export const updateProjectSchema = z
         name: z.string().optional(),
         description: z.string().optional(),
         visibility: z.enum(['public', 'private']).optional(),
-        owner_id: z
+        ownerId: z
           .string()
           .length(24)
           .optional()
-          .transform((owner_id) => {
-            if (owner_id === undefined) {
+          .transform((ownerId) => {
+            if (ownerId === undefined) {
               return undefined;
             }
-            return new mongoose.Types.ObjectId(owner_id);
+            return new mongoose.Types.ObjectId(ownerId);
           }),
         contributors: z
           .array(z.string().length(24))
@@ -47,7 +47,7 @@ export const updateProjectSchema = z
               (contributor) => new mongoose.Types.ObjectId(contributor)
             );
           }),
-        plain_password: z
+        plainPassword: z
           .string()
           .min(Number(process.env.MIN_PASS_LENGTH))
           .optional(),
@@ -62,7 +62,7 @@ export const updateProjectSchema = z
         !data.project.name &&
         !data.project.description &&
         !data.project.visibility &&
-        !data.project.owner_id &&
+        !data.project.ownerId &&
         !data.project.contributors &&
         !data.project.components
       ) {
@@ -74,7 +74,7 @@ export const updateProjectSchema = z
   )
   .refine(
     async (data) => {
-      if (data.project.owner_id && !data.project.plain_password) {
+      if (data.project.ownerId && !data.project.plainPassword) {
         return false;
       }
       return true;

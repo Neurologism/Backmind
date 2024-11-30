@@ -13,6 +13,18 @@ export const accessProjectMiddleware = async (
   }
 
   const dbProject = await ProjectModel.findOne({
+
+
+
+
+
+
+
+
+
+
+
+    
     _id: req.body.project._id,
   });
 
@@ -44,7 +56,6 @@ export const accessProjectMiddleware = async (
   }
 
   req.project = dbProject;
-
   req.middlewareParams = { isProjectOwner, canUpdateProject };
 
   next();

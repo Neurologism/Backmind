@@ -14,7 +14,7 @@ export const getUserSchema = z
               return new mongoose.Types.ObjectId(_id);
             }
           }),
-        brainet_tag: z.string().optional(),
+        brainetTag: z.string().optional(),
       })
       .strict()
       .optional(),
@@ -37,20 +37,19 @@ export const updateUserSchema = z
   .object({
     user: z
       .object({
-        brainet_tag: z
+        brainetTag: z
           .string()
           .min(Number(process.env.MIN_BRAINET_TAG_LENGTH))
           .optional(),
-        email: z.string().optional(),
-        about_you: z.string().optional(),
+        aboutYou: z.string().optional(),
         displayname: z.string().optional(),
-        date_of_birth: z.number().optional(),
+        dateOfBirth: z.string().optional(),
         visibility: z.enum(['private', 'public']).optional(),
-        new_password: z
+        newPassword: z
           .string()
           .min(Number(process.env.MIN_PASS_LENGTH))
           .optional(),
-        old_password: z.string().optional(),
+        oldPassword: z.string().optional(),
       })
       .strict(),
   })
@@ -67,8 +66,8 @@ export const updateUserSchema = z
   .refine(
     (data) => {
       if (
-        data.user.new_password !== undefined &&
-        data.user.old_password === undefined
+        data.user.newPassword !== undefined &&
+        data.user.oldPassword === undefined
       ) {
         return false;
       }
@@ -81,7 +80,7 @@ export const isTakenUserSchema = z
   .object({
     user: z
       .object({
-        brainet_tag: z.string().optional(),
+        brainetTag: z.string().optional(),
         email: z.string().optional(),
       })
       .strict(),

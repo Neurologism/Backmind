@@ -5,7 +5,7 @@ import mongoose from 'mongoose';
 
 declare module 'express-serve-static-core' {
   interface Request {
-    user_id?: mongoose.Types.ObjectId | null;
+    userId?: mongoose.Types.ObjectId | null;
     project?: ProjectExplicit;
     middlewareParams?: any;
     logger: Logger;

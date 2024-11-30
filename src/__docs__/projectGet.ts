@@ -50,7 +50,7 @@ export const projectGet = {
                     description: {
                       type: 'string',
                     },
-                    owner_id: {
+                    ownerId: {
                       type: 'string',
                     },
                     contributors: {
@@ -64,10 +64,10 @@ export const projectGet = {
                       description: 'either private or public',
                       example: 'private or public',
                     },
-                    created_on: {
+                    dateCreatedOn: {
                       type: 'integer',
                     },
-                    last_edited: {
+                    dateLastEdited: {
                       type: 'integer',
                     },
                     components: components,

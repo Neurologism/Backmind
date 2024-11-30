@@ -16,6 +16,9 @@ for (const dir of directories) {
 import { connectToDatabase } from './utility/connectToDatabase';
 import { logger } from './middleware/loggingMiddleware';
 import app from './app';
+import sgMail from '@sendgrid/mail';
+
+sgMail.setApiKey(process.env.SENDGRID_API_KEY as string);
 
 async function main() {
   await connectToDatabase();

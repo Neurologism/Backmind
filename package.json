@@ -5,19 +5,22 @@
   "main": "dist/src/server.js",
   "scripts": {
     "pretty": "prettier --write \"**/*.ts\"",
-    "test": "jest --coverage",
+    "test": "jest",
     "build": "npx tsc",
     "start": "pm2 start dist/src/server.js -i 0 --name backmind-server",
     "stop": "pm2 stop backmind-server",
-    "dev": "nodemon ./src/server.ts --watch ./src"
+    "dev": "nodemon ./src/server.ts --watch ./src",
+    "dropDb": "node scripts/dropDb.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@sendgrid/mail": "^8.1.4",
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
     "bun": "^1.1.27",
     "cors": "^2.8.5",
+    "crypto": "^1.0.1",
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
     "express-rate-limit": "^7.4.1",

@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { ProjectModel } from '../../mongooseSchemas/projectSchema';
 
 export const isTakenHandler = async (req: Request, res: Response) => {
-  const isLoggedIn = req.user_id !== null;
+  const isLoggedIn = req.userId !== null;
   if (!isLoggedIn) {
     return res.status(401).json({ msg: 'You need to be logged in.' });
   }
@@ -10,7 +10,7 @@ export const isTakenHandler = async (req: Request, res: Response) => {
   const nameTaken =
     (await ProjectModel.findOne({
       name: req.body.project.name,
-      owner_id: req.user_id,
+      ownerId: req.userId,
     })) !== null;
 
   if (nameTaken) {

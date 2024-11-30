@@ -52,7 +52,7 @@ export const projectSearch = {
                         description: {
                           type: 'string',
                         },
-                        owner_id: {
+                        ownerId: {
                           type: 'string',
                         },
                         visibility: {

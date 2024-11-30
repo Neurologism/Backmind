@@ -1,32 +1,62 @@
 import mongoose from 'mongoose';
 
-const mongooseUserSchema = new mongoose.Schema({
-  email: String,
-  about_you: String,
-  displayname: String,
-  brainet_tag: String,
-  password_hash: String,
-  date_of_birth: Number,
-  visibility: { type: String, enum: ['public', 'private'] },
-  last_edited: Date,
-  created_on: Date,
-  project_ids: [mongoose.Types.ObjectId],
-  follower_ids: [mongoose.Types.ObjectId],
-  following_ids: [mongoose.Types.ObjectId],
-  pfp_path: String,
-});
-
-mongooseUserSchema.set('toJSON', {
-  transform: (doc, ret) => {
-    delete ret.__v;
-    delete ret.password_hash;
-    delete ret.pfp_path;
-    return ret;
+export const mongooseUserSchema = new mongoose.Schema({
+  emails: {
+    type: [
+      {
+        emailType: {
+          type: String,
+          enum: ['primary', 'secondary'],
+          required: true,
+        },
+        address: { type: String, required: true },
+        verified: { type: Boolean, default: false },
+        verificationToken: { type: String },
+        dateVerificationSent: { type: Date },
+        dateAdded: { type: Date, default: new Date() },
+        dateVerified: { type: Date, required: false },
+      },
+    ],
+    required: true,
   },
+  phone: {
+    type: {
+      number: { type: String },
+      verified: { type: Boolean, default: false },
+      verificationCode: { type: String },
+      dateVerificationSent: { type: Date },
+      dateAdded: { type: Date },
+      dateVerified: { type: Date },
+    },
+    required: false,
+  },
+  aboutYou: { type: String, default: '' },
+  displayname: { type: String, default: '' },
+  brainetTag: { type: String },
+  passwordHash: { type: String, required: true },
+  dateOfBirth: { type: Date },
+  visibility: {
+    type: String,
+    enum: ['public', 'private'],
+    default: 'public',
+    required: true,
+  },
+  dateLastEdited: { type: Date, default: new Date() },
+  dateCreatedOn: { type: Date, default: new Date() },
+  projectIds: { type: [mongoose.Types.ObjectId], default: [] },
+  followerIds: {
+    type: [mongoose.Types.ObjectId],
+    default: [],
+  },
+  followingIds: {
+    type: [mongoose.Types.ObjectId],
+    default: [],
+  },
+  pfpPath: { type: String, default: '' },
 });
 
 mongooseUserSchema.pre('save', function (next) {
-  this.last_edited = new Date();
+  this.dateLastEdited = new Date();
   next();
 });
 

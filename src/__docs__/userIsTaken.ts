@@ -13,7 +13,7 @@ export const userIsTaken = {
               user: {
                 type: 'object',
                 properties: {
-                  brainet_tag: {
+                  brainetTag: {
                     type: 'string',
                   },
                   email: {

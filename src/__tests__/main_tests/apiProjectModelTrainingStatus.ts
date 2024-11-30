@@ -8,11 +8,11 @@ const statusTrainingResponseScheme = z
       .object({
         status: z.string(),
         output: z.array(z.any()),
-        queued_at: z.number(),
-        started_at: z.number().nullable(),
-        finished_at: z.number().nullable(),
+        dateQueued: z.number(),
+        dateStarted: z.number().nullable(),
+        dateFinished: z.number().nullable(),
         error: z.any(),
-        project_id: z.string(),
+        projectId: z.string(),
       })
       .strict(),
   })

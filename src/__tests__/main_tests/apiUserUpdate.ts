@@ -8,11 +8,11 @@ export default (app: Express, vars: any) => {
       .set(`Authorization`, `Bearer ${vars.authToken}`)
       .send({
         user: {
-          about_you: 'changed',
+          aboutYou: 'changed',
           displayname: 'changed',
           visibility: 'private',
-          new_password: 'test1234',
-          old_password: 'test1234',
+          newPassword: 'test1234',
+          oldPassword: 'test1234',
         },
       });
 
@@ -25,7 +25,7 @@ export default (app: Express, vars: any) => {
       .set(`Authorization`, `Bearer ${vars.authToken}`);
 
     expect(response.status).toBe(200);
-    expect(response.body.user.about_you).toBe('changed');
+    expect(response.body.user.aboutYou).toBe('changed');
     expect(response.body.user.displayname).toBe('changed');
     expect(response.body.user.visibility).toBe('private');
   });

@@ -6,7 +6,7 @@ export const accessProjectMiddleware = async (
   res: Response,
   next: NextFunction
 ) => {
-  if (req.user_id === null) {
+  if (req.userId === null) {
     return res.status(400).json({
       msg: 'You need to provide an auth token.',
     });
@@ -24,13 +24,13 @@ export const accessProjectMiddleware = async (
   }
 
   const isProjectOwner =
-    dbProject.owner_id!.toString() === req.user_id!.toString();
+    dbProject.ownerId!.toString() === req.userId!.toString();
 
   const canUpdateProject =
     isProjectOwner ||
     (() => {
       for (const contributor of dbProject.contributors) {
-        if (contributor._id.toString() === req.user_id?.toString()) {
+        if (contributor._id.toString() === req.userId?.toString()) {
           return true;
         }
         return false;

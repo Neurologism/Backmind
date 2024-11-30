@@ -7,7 +7,7 @@ export const userGet = {
       },
     ],
     description:
-      'Use this to get a user by id or brainet_tag. If you want to get the user that is currently logged in, you leave the body empty, but make sure to include your token. If you want to get a user that has the account visibility set to private, the user will have to be a follower of you and you will also have to include your auth token.',
+      'Use this to get a user by id or brainetTag. If you want to get the user that is currently logged in, you leave the body empty, but make sure to include your token. If you want to get a user that has the account visibility set to private, the user will have to be a follower of you and you will also have to include your auth token.',
     requestBody: {
       required: true,
       content: {
@@ -21,7 +21,7 @@ export const userGet = {
                   _id: {
                     type: 'string',
                   },
-                  brainet_tag: {
+                  brainetTag: {
                     type: 'string',
                   },
                 },
@@ -45,19 +45,19 @@ export const userGet = {
                     _id: {
                       type: 'string',
                     },
-                    brainet_tag: {
+                    brainetTag: {
                       type: 'string',
                     },
                     email: {
                       type: 'string',
                     },
-                    about_you: {
+                    aboutYou: {
                       type: 'string',
                     },
                     displayname: {
                       type: 'string',
                     },
-                    date_of_birth: {
+                    dateOfBirth: {
                       type: 'integer',
                     },
                     visibility: {
@@ -77,7 +77,7 @@ export const userGet = {
                         type: 'string',
                       },
                     },
-                    project_ids: {
+                    projectIds: {
                       type: 'array',
                       items: {
                         type: 'string',

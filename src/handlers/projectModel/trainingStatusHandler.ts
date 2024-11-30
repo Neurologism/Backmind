@@ -5,10 +5,10 @@ export const trainingStatusHandler = async (req: Request, res: Response) => {
     model: {
       status: req.body.model.status,
       output: req.body.model.output,
-      queued_at: req.body.model.queued_at,
-      started_at: req.body.model.started_at,
-      finished_at: req.body.model.finished_at,
-      project_id: req.body.model.project_id,
+      dateQueued: req.body.model.dateQueued,
+      dateStarted: req.body.model.dateStarted,
+      dateFinished: req.body.model.dateFinished,
+      projectId: req.body.model.projectId,
     },
   });
 };

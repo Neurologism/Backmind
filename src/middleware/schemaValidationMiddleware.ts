@@ -10,7 +10,7 @@ export const schemaValidationMiddleware = (schema: z.Schema<any>) => {
       if (error instanceof z.ZodError) {
         return res.status(400).json({
           error: JSON.parse(error.message),
-          error_friendly: error.flatten(),
+          errorFriendly: error.flatten(),
         });
       } else {
         if (process.env.SEND_ERR_TO_CLIENT) {

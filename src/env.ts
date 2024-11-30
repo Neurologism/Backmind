@@ -8,6 +8,9 @@ export const setEnv = (filename: string = '.env') => {
   if (!process.env.MONGO_URI) {
     console.warn('WARNING: MONGO_URI must be set in .env file');
   }
+  if (!process.env.SENDGRID_API_KEY) {
+    console.warn('WARNING: SENDGRID_API_KEY should be set');
+  }
   process.env.EXPRESS_PORT = process.env.EXPRESS_PORT || '3000';
   process.env.JWT_SECRET =
     process.env.JWT_SECRET || crypto.randomBytes(32).toString('hex');
@@ -33,4 +36,12 @@ export const setEnv = (filename: string = '.env') => {
   process.env.PFP_DIRECTORY =
     process.env.PFP_DIRECTORY ||
     path.join(process.env.FILES_DIRECTORY as string, '/pfp');
+  process.env.BACKMIND_HOSTNAME =
+    process.env.BACKMIND_HOSTNAME || 'https://api.whitemind.net/';
+  process.env.WHITEMIND_HOSTNAME =
+    process.env.WHITEMIND_HOSTNAME || 'https://whitemind.net/';
+  process.env.VERIFY_ALL_EMAILS =
+    process.env.VERIFY_ALL_EMAILS === 'true' ? 'true' : '';
+  process.env.EMAIL_VERIFICATION_TOKEN_VALID_MINUTES =
+    process.env.EMAIL_VERIFICATION_TOKEN_VALID_MINUTES || '60';
 };

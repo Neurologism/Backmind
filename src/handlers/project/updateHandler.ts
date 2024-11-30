@@ -13,7 +13,7 @@ export const updateHandler = async (req: Request, res: Response) => {
     const nameTaken =
       (await ProjectModel.findOne({
         name: req.body.project.name,
-        owner_id: req.user_id,
+        ownerId: req.userId,
       })) !== null;
     if (nameTaken) {
       return res.status(409).json({ msg: 'Project name already taken.' });
@@ -27,7 +27,7 @@ export const updateHandler = async (req: Request, res: Response) => {
       if (error instanceof z.ZodError) {
         return res.status(400).json({
           error: JSON.parse(error.message),
-          error_friendly: error.flatten(),
+          errorFriendly: error.flatten(),
         });
       } else {
         throw error;
@@ -35,19 +35,19 @@ export const updateHandler = async (req: Request, res: Response) => {
     }
   }
 
-  const current_user = await UserModel.findById(req.user_id);
+  const currentUser = await UserModel.findById(req.userId);
 
-  if (req.body.project.plain_password) {
+  if (req.body.project.plainPassword) {
     const passwordsMatch = bcrypt.compareSync(
-      req.body.project.plain_password,
-      current_user?.password_hash!
+      req.body.project.plainPassword,
+      currentUser!.passwordHash
     );
     if (!passwordsMatch) {
       return res.status(400).json({ msg: 'The password is incorrect.' });
     }
   }
 
-  delete req.body.project.plain_password;
+  delete req.body.project.plainPassword;
   await ProjectModel.updateOne(
     { _id: req.body.project._id },
     {

@@ -23,13 +23,13 @@ export const uploadPfpHandler = async (req: Request, res: Response) => {
     });
   }
 
-  const filename = `${req.user_id}.webp`;
+  const filename = `${req.userId}.webp`;
   const pfpPath = path.join(process.env.PFP_DIRECTORY as string, filename);
 
   await image.resize(128, 128).webp().toFile(pfpPath);
 
-  const user = await UserModel.findById(req.user_id);
-  user!.pfp_path = pfpPath;
+  const user = await UserModel.findById(req.userId);
+  user!.pfpPath = pfpPath;
   await user!.save();
 
   return res.status(200).json({ msg: 'Profile picture uploaded' });

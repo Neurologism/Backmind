@@ -3,32 +3,32 @@ import { isEmptyObject } from '../../utility/isEmptyObject';
 import { UserModel } from '../../mongooseSchemas/userSchema';
 
 export const getHandler = async (req: Request, res: Response) => {
-  let search_params;
+  let searchParams;
 
   if (isEmptyObject(req.body)) {
-    if (req.user_id === undefined) {
+    if (req.userId === undefined) {
       return res
         .status(401)
         .json({ msg: 'You are not authenticated but provided an empty body.' });
     }
-    search_params = {
-      _id: req.user_id,
+    searchParams = {
+      _id: req.userId,
     };
   } else {
-    search_params = req.body.user;
+    searchParams = req.body.user;
   }
 
-  const user = await UserModel.findOne(search_params);
+  const user = await UserModel.findOne(searchParams);
   if (user === null) {
     return res
       .status(404)
       .json({ msg: 'No user found matching the criteria.' });
   }
 
-  const isUser = user._id.toString() === req.user_id?.toString();
+  const isUser = user._id.toString() === req.userId?.toString();
   const isFollowedByUser = (() => {
-    for (const following_id of user.following_ids) {
-      if (following_id._id.toString() === req.user_id?.toString()) {
+    for (const followingId of user.followingIds) {
+      if (followingId._id.toString() === req.userId?.toString()) {
         return true;
       }
       return false;
@@ -43,16 +43,24 @@ export const getHandler = async (req: Request, res: Response) => {
 
   const userJson = {
     _id: user._id,
-    about_you: user.about_you,
+    aboutYou: user.aboutYou,
     displayname: user.displayname,
-    brainet_tag: user.brainet_tag,
+    brainetTag: user.brainetTag,
     visibility: user.visibility,
-    project_ids: user.project_ids,
-    follower_ids: user.follower_ids,
-    following_ids: user.following_ids,
+    projectIds: user.projectIds,
+    followerIds: user.followerIds,
+    followingIds: user.followingIds,
   } as any;
   if (isUser) {
-    userJson.emails = user.emails;
+    userJson.dateOfBirth = user.dateOfBirth;
+    userJson.emails = [];
+    for (const email of user.emails) {
+      userJson.emails.push({
+        emailType: email.emailType,
+        address: email.address,
+        verified: email.verified,
+      });
+    }
   }
 
   return res.status(200).json({ user: userJson });

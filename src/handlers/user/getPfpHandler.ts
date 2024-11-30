@@ -4,7 +4,7 @@ import fs from 'fs';
 
 export const getPfpHandler = async (req: Request, res: Response) => {
   const user = await UserModel.findById(req.body.user._id);
-  const pfpPath = user!.pfp_path;
+  const pfpPath = user!.pfpPath;
 
   if (!pfpPath || !fs.existsSync(pfpPath)) {
     return res

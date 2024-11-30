@@ -14,8 +14,8 @@ export const trainingStopHandler = async (req: Request, res: Response) => {
     {
       $set: {
         status: 'stopped',
-        last_updated_at: new Date(),
-        finished_at: new Date(),
+        lastUpdated_at: new Date(),
+        dateFinishedAt: new Date(),
       },
     }
   );

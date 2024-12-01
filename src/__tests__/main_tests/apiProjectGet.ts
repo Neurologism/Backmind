@@ -13,7 +13,7 @@ const getProjectResponseScheme = z
         ownerId: z.string(),
         contributors: z.array(z.string()),
         visibility: z.string(),
-        dateCreatedOn: z.string(),
+        dateCreatedAt: z.string(),
         dateLastEdited: z.string(),
         components: componentsSchema,
         models: z.array(z.string()),

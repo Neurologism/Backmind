@@ -20,7 +20,7 @@ export const projectModelTrainingStart = {
                   _id: {
                     type: 'string',
                     description:
-                      'The ID of the project for which to start the training.',
+                      'The Id of the project for which to start the training.',
                   },
                 },
               },

@@ -64,7 +64,7 @@ export const projectGet = {
                       description: 'either private or public',
                       example: 'private or public',
                     },
-                    dateCreatedOn: {
+                    dateCreatedAt: {
                       type: 'integer',
                     },
                     dateLastEdited: {

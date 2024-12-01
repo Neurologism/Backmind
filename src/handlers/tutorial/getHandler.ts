@@ -10,8 +10,15 @@ export const getHandler = async (req: Request, res: Response) => {
 
   const tutorialExists = tutorial !== null;
   if (!tutorialExists) {
-    return res.status(404).send('Tutorial not found');
+    return res.status(404).json({ msg: 'Tutorial not found' });
   }
+
+  const loggedIn = req.body.userId !== undefined;
+  if (!loggedIn) {
+    return res.status(401).json({ msg: 'Unauthorized' });
+  }
+
+  const user = await UserModel.findById(req.body.userId);
 
   const responseJson = {
     tutorial: {
@@ -37,13 +44,6 @@ export const getHandler = async (req: Request, res: Response) => {
     tutorialStarted: false,
   } as any;
 
-  const loggedIn = req.body.userId !== undefined;
-  if (!loggedIn) {
-    return res.status(200).send(responseJson);
-  }
-
-  const user = await UserModel.findById(req.body.userId);
-
   const tutorialCompleted = user!.completedTutorials.some(
     (tutorialId) => tutorialId.toString() === tutorial._id.toString()
   );
@@ -58,5 +58,5 @@ export const getHandler = async (req: Request, res: Response) => {
     }
   }
 
-  return res.status(200).send(responseJson);
+  return res.status(200).json(responseJson);
 };

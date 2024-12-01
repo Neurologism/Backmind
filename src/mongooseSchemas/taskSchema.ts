@@ -1,14 +1,18 @@
 import mongoose from 'mongoose';
 
 const mongooseTaskSchema = new mongoose.Schema({
-  status: String,
-  output: [],
-  task: mongoose.Schema.Types.Mixed,
-  datelastUpdated: Date,
+  status: {
+    type: String,
+    enum: ['queued', 'training', 'finished', 'error', 'stopped'],
+    required: true,
+  },
+  output: { type: [], required: true, default: [] },
+  task: { type: mongoose.Schema.Types.Mixed, required: true },
+  datelastUpdated: { type: Date, required: true, default: () => new Date() },
   dateQueued: Date,
   dateStarted: Date,
   dateFinished: Date,
-  projectId: mongoose.Types.ObjectId,
+  projectId: { type: mongoose.Types.ObjectId, required: true },
 });
 
 mongooseTaskSchema.pre('save', function (next) {

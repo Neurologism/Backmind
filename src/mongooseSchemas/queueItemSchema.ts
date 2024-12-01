@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 const mongooseQueueItemSchema = new mongoose.Schema({
-  taskId: mongoose.Types.ObjectId,
+  taskId: { type: mongoose.Types.ObjectId, required: true },
   queuePosition: Number,
 });
 

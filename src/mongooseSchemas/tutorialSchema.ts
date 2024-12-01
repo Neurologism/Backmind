@@ -1,10 +1,24 @@
 import mongoose from 'mongoose';
 
+const unlockNodeSchema = new mongoose.Schema({
+  type: { type: String, required: true },
+  data: { type: [String], required: true, default: [] },
+});
+
+const stepSchema = new mongoose.Schema({
+  text: { type: String, required: true, default: '' },
+  narrator: { type: String, required: true, default: '' },
+  addNodes: { type: [Object], required: true, default: [] },
+  addEdges: { type: [Object], required: true, default: [] },
+  highlightNodeTypes: { type: [String], required: true, default: [] },
+  unlockNodes: { type: [unlockNodeSchema], required: true, default: [] },
+});
+
 const mongooseTutorialSchema = new mongoose.Schema({
   name: { type: String, required: true },
-  summary: { type: String, required: true, default: '' }, // Kurzbeschreibung
-  description: { type: String, required: true, default: '' }, // etwas ausführlichere Beschreibung
-  ownerId: mongoose.Types.ObjectId, // Ersteller des Tutorials
+  summary: { type: String, required: true, default: '' },
+  description: { type: String, required: true, default: '' },
+  ownerId: mongoose.Types.ObjectId,
   visibility: { type: String, enum: ['public', 'private'], required: true },
   dateCreatedAt: { type: Date, required: true, default: () => new Date() },
   dateLastEdited: { type: Date, required: true, default: () => new Date() },
@@ -12,26 +26,17 @@ const mongooseTutorialSchema = new mongoose.Schema({
     type: [mongoose.Types.ObjectId],
     required: true,
     default: [],
-  }, // Tutorials, die abgeschlossen sein müssen bevor dieses Tutorial angefangen wird
+  },
   nextTutorials: {
     type: [mongoose.Types.ObjectId],
     required: true,
     default: [],
-  }, // follow-ups (in der Regel wird dieses Array nur ein einziges weiteres Tutorial enthalten)
-  experienceGain: { type: Number, required: true, default: 100 }, // Erfahrungspunkte, die man für den Abschluss des Tutorials erhält. Wird zwar erstmal noch nicht benutzt, spart aber Zeit beim zukünftigen implementieren, wenn wir schonmal das Attribut definiert haben.
-  startProject: mongoose.Types.ObjectId, // components, die bereits zu Beginn des tutorials platziert sind
-  availableNodes: { type: [], required: true, default: [] }, // nodes, die zu Beginn des Tutorials freigeschaltet sind
+  },
+  experienceGain: { type: Number, required: true, default: 100 },
+  startProject: { type: mongoose.Types.ObjectId, required: true },
+  unlockNodes: { type: [unlockNodeSchema], required: true, default: [] },
   steps: {
-    type: [
-      {
-        text: { type: String, required: true, default: '' }, // Erklärtext des jeweiligen Tutorial-Schritts
-        narrator: { type: String, required: true, default: '' }, // jeder Erzähler bekommt einen String als Identifikation. Im Frontend wird dann auf Basis des Narrators auch ein kleines Bild angezeigt (bei unbekanntem Narrator einfach leeres Bild)
-        addNodes: { type: [], required: true, default: [] }, // alle Components, die der user hinzufügen muss, um zum nächsten Schritt zu gelangen (kann selbstverständlich auch leer sein)
-        addEdges: { type: [], required: true, default: [] }, // alle Verbindungen, die hinzugefügt werden müssen
-        highlightNodeTypes: { type: [], required: true, default: [] }, // enthält uids von den Blocktypen, die eine highlight-Animation erhalten sollen
-        unlockNodes: { type: [], required: true, default: [] }, // nodes, die ab diesem Schritt im tutorial freigeschaltet werden
-      },
-    ],
+    type: [stepSchema],
     required: true,
     default: [],
   },

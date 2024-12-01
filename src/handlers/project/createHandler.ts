@@ -26,7 +26,7 @@ export const createHandler = async (req: Request, res: Response) => {
     ownerId: req.userId!.toString(),
     contributors: [],
     visibility: req.body.project.visibility,
-    dateCreatedOn: new Date(),
+    dateCreatedAt: new Date(),
     dateLastEdited: new Date(),
     components: initComponents(),
     models: [],

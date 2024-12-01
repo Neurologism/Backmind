@@ -9,7 +9,7 @@ export const getHandler = async (req: Request, res: Response) => {
     ownerId: req.project!.ownerId,
     contributors: req.project!.contributors,
     visibility: req.project!.visibility,
-    dateCreatedOn: req.project!.dateCreatedOn,
+    dateCreatedAt: req.project!.dateCreatedAt,
     dateLastEdited: req.project!.dateLastEdited,
     models: req.project!.models,
     components: req.project!.components,

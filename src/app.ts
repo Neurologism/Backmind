@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import authRoutes from './routes/authRouter';
 import userRoutes from './routes/userRouter';
 import projectRoutes from './routes/projectRouter';
+import tutorialRoutes from './routes/tutorialRouter';
 import { setupSwagger } from './swagger';
 import cors from 'cors';
 import morgan from 'morgan';
@@ -52,6 +53,7 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/project', projectRoutes);
+app.use('/api/tutorial', tutorialRoutes);
 
 if (process.env.NODE_ENV !== 'production') {
   setupSwagger(app);

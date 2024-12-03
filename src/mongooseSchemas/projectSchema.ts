@@ -1,8 +1,15 @@
 import mongoose from 'mongoose';
+import { initComponents } from '../utility/initComponents';
 
 const mongooseProjectSchema = new mongoose.Schema({
   name: { type: String, required: true },
-  description: { type: String, required: true, default: '' },
+  description: {
+    type: String,
+    required: function () {
+      return typeof (this as any).pfpPath === 'string';
+    },
+    default: '',
+  },
   ownerId: { type: mongoose.Types.ObjectId, required: true },
   contributors: {
     type: [mongoose.Types.ObjectId],
@@ -15,10 +22,12 @@ const mongooseProjectSchema = new mongoose.Schema({
   components: {
     type: mongoose.Schema.Types.Mixed,
     required: true,
-    default: {},
+    default: initComponents(),
   },
   models: { type: [mongoose.Types.ObjectId], required: true, default: [] },
-  isTutorialProject: { type: Boolean, required: true, default: false }, // mean that this tutorial is used to save the current state of a user following a tutorial; if true, should not be shown in the users project list
+  isTutorialProject: { type: Boolean, required: true, default: false },
+  tutorialId: mongoose.Types.ObjectId,
+  tutorialStep: { type: Number, required: false },
 });
 
 mongooseProjectSchema.pre('save', function (next) {

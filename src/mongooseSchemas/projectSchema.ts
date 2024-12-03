@@ -6,7 +6,7 @@ const mongooseProjectSchema = new mongoose.Schema({
   description: {
     type: String,
     required: function () {
-      return typeof (this as any).pfpPath === 'string';
+      return typeof (this as any).description !== 'string';
     },
     default: '',
   },

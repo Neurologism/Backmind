@@ -10,13 +10,13 @@ const stepSchema = new mongoose.Schema({
   text: {
     type: String,
     required: function () {
-      return typeof (this as any).pfpPath === 'string';
+      return typeof (this as any).text !== 'string';
     },
   },
   narrator: {
     type: String,
     required: function () {
-      return typeof (this as any).pfpPath === 'string';
+      return typeof (this as any).narrator !== 'string';
     },
     default: '',
   },
@@ -35,14 +35,14 @@ const mongooseTutorialSchema = new mongoose.Schema({
   summary: {
     type: String,
     required: function () {
-      return typeof (this as any).pfpPath === 'string';
+      return typeof (this as any).summary !== 'string';
     },
     default: '',
   },
   description: {
     type: String,
     required: function () {
-      return typeof (this as any).pfpPath === 'string';
+      return typeof (this as any).description !== 'string';
     },
     default: '',
   },

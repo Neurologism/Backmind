@@ -33,14 +33,14 @@ export const mongooseUserSchema = new mongoose.Schema({
   aboutYou: {
     type: String,
     required: function () {
-      return typeof (this as any).pfpPath === 'string';
+      return typeof (this as any).aboutYou !== 'string';
     },
     default: '',
   },
   displayname: {
     type: String,
     required: function () {
-      return typeof (this as any).pfpPath === 'string';
+      return typeof (this as any).displayname !== 'string';
     },
     default: '',
   },
@@ -70,7 +70,7 @@ export const mongooseUserSchema = new mongoose.Schema({
   pfpPath: {
     type: String,
     required: function () {
-      return typeof (this as any).pfpPath === 'string';
+      return typeof (this as any).pfpPath !== 'string';
     },
     default: '',
   },

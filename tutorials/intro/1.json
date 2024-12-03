@@ -1,0 +1,166 @@
+{
+  "name": "Your first neural network",
+  "summary": "",
+  "description": "",
+  "ownerId": "to_be_filled",
+  "visibility": "public",
+  "dateCreatedAt": "to_be_filled",
+  "dateLastEdited": "to_be_filled",
+  "requiredTutorials": [],
+  "nextTutorials": ["Datasets and Configuration"],
+  "experienceGain": 100,
+  "startProject": {
+    "nodes": [],
+    "edges": [],
+    "position": [0, 0],
+    "zoom": 1,
+    "viewport": {
+      "x": 0,
+      "y": 0,
+      "zoom": 1
+    }
+  },
+  "unlockNodes": [],
+  "steps": [
+    {
+      "text": "Hey and welcome to WhiteMind! I'm LeNet-5, your guide for today. Ready to dive into the exciting world of AI? Let's get started!",
+      "narrator": "LeNet-5",
+      "addNodes": [],
+      "addEdges": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    },
+    {
+      "text": "You're in the WhiteMind Editor. On the left, you’ll see the Toolbar, which is organized into different sections, each offering unique tools. First, let's select the Layers section.",
+      "narrator": "LeNet-5",
+      "addNodes": [],
+      "addEdges": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    },
+    {
+      "text": "Great! Here, you’ll find a variety of layers that will form the building blocks of your networks. Let's start simple. Select the Dense layer and drag it onto the Canvas area to the right.",
+      "narrator": "LeNet-5",
+      "addNodes": [
+        {
+          "id": "0.rjprcijyi19",
+          "data": {
+            "units": null,
+            "activation": null,
+            "use_bias": true,
+            "lora_rank": null
+          },
+          "identifier": "dense",
+          "group_identifier": "layer"
+        }
+      ],
+      "addEdges": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": ["dense"],
+      "unlockNodes": [
+        {
+          "type": "dense",
+          "data": []
+        }
+      ]
+    },
+    {
+      "text": "Now that we have a Dense layer, let's add an Input layer. Head back to the Toolbar, grab the Input layer and drag it above the Dense layer.",
+      "narrator": "LeNet-5",
+      "addNodes": [
+        {
+          "id": "0.0atma5spa9l",
+          "data": {
+            "shape": [0],
+            "batch_size": null,
+            "dtype": "float32",
+            "sparse": false,
+            "optional": false
+          },
+          "identifier": "input",
+          "group_identifier": "layer"
+        }
+      ],
+      "addEdges": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": ["input"],
+      "unlockNodes": [
+        {
+          "type": "input",
+          "id": "input-1",
+          "data": []
+        }
+      ]
+    },
+    {
+      "text": "Next, we need to connect the layers. The Input layer provides the data, and the Dense layer processes it. Simply click on the small square at the bottom of the Input layer and drag a line to the top of the Dense layer.",
+      "narrator": "LeNet-5",
+      "addNodes": [],
+      "addEdges": [
+        {
+          "id": "vueflow__edge-0.0atma5spa9lout-0.0atma5spa9l-0.rjprcijyi19in-0.rjprcijyi19",
+          "type": "smoothstep",
+          "source": "0.0atma5spa9l",
+          "target": "0.rjprcijyi19",
+          "sourceHandle": "out-0.0atma5spa9l",
+          "targetHandle": "in-0.rjprcijyi19",
+          "data": {},
+          "label": ""
+        }
+      ],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    },
+    {
+      "text": "Great Job! We'll need one more Dense layer. Drag and drop it below the first one, then connect them.",
+      "narrator": "LeNet-5",
+      "addNodes": [
+        {
+          "id": "0.kc9iafnk32m",
+          "data": {
+            "units": null,
+            "activation": null,
+            "use_bias": true,
+            "lora_rank": null
+          },
+          "identifier": "dense",
+          "group_identifier": "layer"
+        }
+      ],
+      "addEdges": [
+        {
+          "id": "vueflow__edge-0.rjprcijyi19out-0.rjprcijyi19-0.kc9iafnk32min-0.kc9iafnk32m",
+          "type": "smoothstep",
+          "source": "0.rjprcijyi19",
+          "target": "0.kc9iafnk32m",
+          "sourceHandle": "out-0.rjprcijyi19",
+          "targetHandle": "in-0.kc9iafnk32m",
+          "data": {},
+          "label": ""
+        }
+      ],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": ["dense"],
+      "unlockNodes": []
+    },
+    {
+      "text": "Awesome! You've just built your first neural network! In the next lesson, we'll dive into configuring your network and introducing MNIST.",
+      "narrator": "LeNet-5",
+      "addNodes": [],
+      "addEdges": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    }
+  ]
+}

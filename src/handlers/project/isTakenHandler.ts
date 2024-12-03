@@ -11,6 +11,7 @@ export const isTakenHandler = async (req: Request, res: Response) => {
     (await ProjectModel.findOne({
       name: req.body.project.name,
       ownerId: req.userId,
+      isTutorialProject: false,
     })) !== null;
 
   if (nameTaken) {

@@ -15,6 +15,7 @@ const mongooseProjectSchema = new mongoose.Schema({
     type: [mongoose.Types.ObjectId],
     required: true,
     default: [],
+    ref: 'users',
   },
   visibility: { type: String, enum: ['public', 'private'], required: true },
   dateCreatedAt: { type: Date, required: true, default: () => new Date() },

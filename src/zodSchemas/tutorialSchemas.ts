@@ -16,7 +16,7 @@ export const setStateSchema = z
       .string()
       .length(24)
       .transform((_id) => new mongoose.Types.ObjectId(_id)),
-    setStep: z.number(),
-    setCompleted: z.boolean().optional(),
+    setStep: z.number().optional().default(0),
+    setCompleted: z.boolean().optional().default(false),
   })
   .strict();

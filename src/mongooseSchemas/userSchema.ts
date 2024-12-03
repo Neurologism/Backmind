@@ -30,8 +30,20 @@ export const mongooseUserSchema = new mongoose.Schema({
     },
     required: false,
   },
-  aboutYou: { type: String, required: true, default: '' },
-  displayname: { type: String, required: true, default: '' },
+  aboutYou: {
+    type: String,
+    required: function () {
+      return typeof (this as any).pfpPath === 'string';
+    },
+    default: '',
+  },
+  displayname: {
+    type: String,
+    required: function () {
+      return typeof (this as any).pfpPath === 'string';
+    },
+    default: '',
+  },
   brainetTag: { type: String, required: true },
   passwordHash: { type: String, required: true },
   dateOfBirth: { type: Date },
@@ -41,9 +53,10 @@ export const mongooseUserSchema = new mongoose.Schema({
     default: 'public',
     required: true,
   },
+  premium: { type: Boolean, required: true, default: false },
   dateLastEdited: { type: Date, required: true, default: () => new Date() },
   dateCreatedAt: { type: Date, required: true, default: () => new Date() },
-  projectIds: { type: [mongoose.Types.ObjectId], default: [] },
+  projectIds: { type: [mongoose.Types.ObjectId], default: [] }, // doesn't contain tutorial projects
   followerIds: {
     type: [mongoose.Types.ObjectId],
     required: true,
@@ -54,20 +67,15 @@ export const mongooseUserSchema = new mongoose.Schema({
     required: true,
     default: [],
   },
-  pfpPath: { type: String, required: true, default: '' },
+  pfpPath: {
+    type: String,
+    required: function () {
+      return typeof (this as any).pfpPath === 'string';
+    },
+    default: '',
+  },
   completedTutorials: {
     type: [mongoose.Types.ObjectId],
-    required: true,
-    default: [],
-  },
-  startedTutorials: {
-    type: [
-      {
-        tutorialId: { type: mongoose.Types.ObjectId, required: true },
-        step: { type: Number, required: true },
-        projectId: { type: mongoose.Types.ObjectId, required: true },
-      },
-    ],
     required: true,
     default: [],
   },

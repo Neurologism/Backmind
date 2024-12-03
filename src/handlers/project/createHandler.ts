@@ -1,5 +1,4 @@
 import { Request, Response } from 'express';
-import { initComponents } from '../../utility/initComponents';
 import { UserModel } from '../../mongooseSchemas/userSchema';
 import { ProjectModel } from '../../mongooseSchemas/projectSchema';
 
@@ -15,6 +14,7 @@ export const createHandler = async (req: Request, res: Response) => {
     (await await ProjectModel.findOne({
       name: req.body.project.name,
       ownerId: req.userId,
+      isTutorialProject: false,
     })) !== null;
   if (nameTaken) {
     return res.status(409).json({ msg: 'Project name already taken.' });
@@ -23,13 +23,8 @@ export const createHandler = async (req: Request, res: Response) => {
   const project = new ProjectModel({
     name: req.body.project.name,
     description: req.body.project.description,
-    ownerId: req.userId!.toString(),
-    contributors: [],
+    ownerId: req.userId,
     visibility: req.body.project.visibility,
-    dateCreatedOn: new Date(),
-    dateLastEdited: new Date(),
-    components: initComponents(),
-    models: [],
   });
 
   const insertResult = await project.save();

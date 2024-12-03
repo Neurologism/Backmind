@@ -1,15 +1,33 @@
 import mongoose from 'mongoose';
+import { initComponents } from '../utility/initComponents';
 
 const mongooseProjectSchema = new mongoose.Schema({
-  name: String,
-  description: String,
-  ownerId: mongoose.Types.ObjectId,
-  contributors: [mongoose.Types.ObjectId],
+  name: { type: String, required: true },
+  description: {
+    type: String,
+    required: function () {
+      return typeof (this as any).description !== 'string';
+    },
+    default: '',
+  },
+  ownerId: { type: mongoose.Types.ObjectId, required: true },
+  contributors: {
+    type: [mongoose.Types.ObjectId],
+    required: true,
+    default: [],
+  },
   visibility: { type: String, enum: ['public', 'private'], required: true },
-  dateCreatedOn: Date,
-  dateLastEdited: Date,
-  components: Object,
-  models: [mongoose.Types.ObjectId],
+  dateCreatedAt: { type: Date, required: true, default: () => new Date() },
+  dateLastEdited: { type: Date, required: true, default: () => new Date() },
+  components: {
+    type: mongoose.Schema.Types.Mixed,
+    required: true,
+    default: initComponents(),
+  },
+  models: { type: [mongoose.Types.ObjectId], required: true, default: [] },
+  isTutorialProject: { type: Boolean, required: true, default: false },
+  tutorialId: mongoose.Types.ObjectId,
+  tutorialStep: { type: Number, required: false },
 });
 
 mongooseProjectSchema.pre('save', function (next) {

@@ -14,6 +14,7 @@ export const updateHandler = async (req: Request, res: Response) => {
       (await ProjectModel.findOne({
         name: req.body.project.name,
         ownerId: req.userId,
+        isTutorialProject: false,
       })) !== null;
     if (nameTaken) {
       return res.status(409).json({ msg: 'Project name already taken.' });

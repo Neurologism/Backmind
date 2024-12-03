@@ -20,7 +20,7 @@ export const projectModelTrainingStop = {
                   _id: {
                     type: 'string',
                     description:
-                      'The ID of the model for which to stop the training.',
+                      'The Id of the model for which to stop the training.',
                   },
                 },
               },

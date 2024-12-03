@@ -20,7 +20,7 @@ export const projectModelTrainingStatus = {
                   _id: {
                     type: 'string',
                     description:
-                      'The ID of the model for which to get the training status.',
+                      'The Id of the model for which to get the training status.',
                   },
                 },
               },
@@ -66,7 +66,7 @@ export const projectModelTrainingStatus = {
                       type: 'any',
                       example: 'any',
                     },
-                    projectID: {
+                    projectId: {
                       type: 'string',
                     },
                   },

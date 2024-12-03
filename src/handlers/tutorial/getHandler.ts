@@ -1,8 +1,14 @@
-import { Request, response, Response } from 'express';
+import { Request, Response } from 'express';
 import { TutorialModel } from '../../mongooseSchemas/tutorialSchema';
 import { UserModel } from '../../mongooseSchemas/userSchema';
+import { ProjectModel } from '../../mongooseSchemas/projectSchema';
 
 export const getHandler = async (req: Request, res: Response) => {
+  const loggedIn = req.body.userId !== undefined;
+  if (!loggedIn) {
+    return res.status(401).json({ msg: 'Unauthorized' });
+  }
+
   const tutorial = await TutorialModel.findOne({
     _id: req.body.tutorialId,
     visibility: 'public',
@@ -13,12 +19,11 @@ export const getHandler = async (req: Request, res: Response) => {
     return res.status(404).json({ msg: 'Tutorial not found' });
   }
 
-  const loggedIn = req.body.userId !== undefined;
-  if (!loggedIn) {
-    return res.status(401).json({ msg: 'Unauthorized' });
-  }
-
   const user = await UserModel.findById(req.body.userId);
+
+  if (tutorial.premiumRequired && !user!.premium) {
+    return res.status(403).json({ msg: 'Premium required' });
+  }
 
   const responseJson = {
     tutorial: {
@@ -36,8 +41,12 @@ export const getHandler = async (req: Request, res: Response) => {
         narrator: step.narrator,
         addNodes: step.addNodes,
         addEdges: step.addEdges,
+        removeNodes: step.removeNodes,
+        removeEdges: step.removeEdges,
         highlightNodeTypes: step.highlightNodeTypes,
         unlockNodes: step.unlockNodes,
+        trainingEnabled: step.trainingEnabled,
+        trainedModel: step.trainedModel,
       })),
     },
     tutorialCompleted: false,
@@ -49,13 +58,17 @@ export const getHandler = async (req: Request, res: Response) => {
   );
   responseJson.tutorialCompleted = tutorialCompleted;
 
-  for (const startedTutorial of user!.startedTutorials) {
-    if (startedTutorial.tutorialId.toString() === tutorial._id.toString()) {
-      responseJson.tutorialStarted = false;
-      responseJson.currentStep = startedTutorial.step;
-      responseJson.projectId = startedTutorial.projectId;
-      break;
-    }
+  const project = await ProjectModel.findOne({
+    ownerId: user!._id,
+    isTutorialProject: true,
+    tutorialId: tutorial._id,
+  });
+
+  const tutorialStarted = project !== null;
+  if (tutorialStarted) {
+    responseJson.tutorialStarted = true;
+    responseJson.currentStep = project.tutorialStep;
+    responseJson.projectId = project._id;
   }
 
   return res.status(200).json(responseJson);

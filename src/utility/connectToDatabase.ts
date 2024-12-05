@@ -6,9 +6,14 @@ import { UserModel } from '../mongooseSchemas/userSchema';
 
 export const connectToDatabase = async () => {
   console.log('Trying to connect to the database');
-  await mongoose.connect(process.env.MONGO_URI as string, {
-    dbName: process.env.DB_NAME as string,
-  });
+  try {
+    await mongoose.connect(process.env.MONGO_URI as string, {
+      dbName: process.env.DB_NAME as string,
+    });
+  } catch (error: any) {
+    console.log(`Error connecting to the database: ${error.name}`);
+    process.exit(1);
+  }
 
   if (process.env.RESET_DB === 'true') {
     console.log('Resetting database');

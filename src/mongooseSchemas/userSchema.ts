@@ -56,16 +56,18 @@ export const mongooseUserSchema = new mongoose.Schema({
   premium: { type: Boolean, required: true, default: false },
   dateLastEdited: { type: Date, required: true, default: () => new Date() },
   dateCreatedAt: { type: Date, required: true, default: () => new Date() },
-  projectIds: { type: [mongoose.Types.ObjectId], default: [] }, // doesn't contain tutorial projects
+  projectIds: { type: [mongoose.Types.ObjectId], default: [], ref: 'projects' }, // doesn't contain tutorial projects
   followerIds: {
     type: [mongoose.Types.ObjectId],
     required: true,
     default: [],
+    ref: 'users',
   },
   followingIds: {
     type: [mongoose.Types.ObjectId],
     required: true,
     default: [],
+    ref: 'users',
   },
   pfpPath: {
     type: String,
@@ -78,6 +80,7 @@ export const mongooseUserSchema = new mongoose.Schema({
     type: [mongoose.Types.ObjectId],
     required: true,
     default: [],
+    ref: 'tutorials',
   },
   experience: { type: Number, required: true, default: 0 },
   admin: { type: Boolean, required: true, default: false },

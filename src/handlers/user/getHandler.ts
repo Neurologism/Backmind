@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { isEmptyObject } from '../../utility/isEmptyObject';
 import { UserModel } from '../../mongooseSchemas/userSchema';
+import { ProjectModel } from '../../mongooseSchemas/projectSchema';
 
 export const getHandler = async (req: Request, res: Response) => {
   let searchParams;
@@ -41,13 +42,19 @@ export const getHandler = async (req: Request, res: Response) => {
     });
   }
 
+  await user.populate({
+    path: 'projectIds',
+    match: { visibility: "public", isTutorialProject: false },
+    select: '_id',
+  });
+
   const userJson = {
     _id: user._id,
     aboutYou: user.aboutYou,
     displayname: user.displayname,
     brainetTag: user.brainetTag,
     visibility: user.visibility,
-    projectIds: user.projectIds,
+    projectIds: user.projectIds.map(project => project._id),
     followerIds: user.followerIds,
     followingIds: user.followingIds,
   } as any;

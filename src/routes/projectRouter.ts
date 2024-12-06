@@ -16,7 +16,6 @@ import {
   searchProjectSchema,
   isTakenProjectSchema,
 } from '../zodSchemas/projectSchemas';
-import projectModelRoutes from './projectModelRouter';
 import { getProjectMiddleware } from '../middleware/getProjectMiddleware';
 import { accessProjectMiddleware } from '../middleware/accessProjectMiddleware';
 
@@ -66,7 +65,5 @@ router.post(
   accessProjectMiddleware,
   updateHandler
 );
-
-router.use('/model', projectModelRoutes);
 
 export default router;

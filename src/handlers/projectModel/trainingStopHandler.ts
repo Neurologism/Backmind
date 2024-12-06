@@ -6,7 +6,7 @@ export const trainingStopHandler = async (req: Request, res: Response) => {
   const model = req.body.model;
 
   if (model.status === 'queued') {
-    await QueueItemModel.deleteOne({ task_id: model!._id });
+    await QueueItemModel.deleteOne({ taskId: model!._id });
   }
 
   await TaskModel.updateOne(

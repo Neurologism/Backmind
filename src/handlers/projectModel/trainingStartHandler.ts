@@ -24,7 +24,7 @@ export const trainingStartHandler = async (req: Request, res: Response) => {
     projectId: req.project._id,
   }).save();
   const modelId = insertResult._id;
-  await new QueueItemModel({ task_id: modelId }).save();
+  await new QueueItemModel({ taskId: modelId }).save();
   await ProjectModel.updateOne(
     { _id: req.project._id },
     {

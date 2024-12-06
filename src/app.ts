@@ -19,7 +19,14 @@ const accessLogStream = fs.createWriteStream(path.join('./logs/access.log'), {
 
 const app: Express = express();
 app.use(bodyParser.json());
-app.use(cors({ origin: 'https://whitemind.icinoxis.net', credentials: true }));
+app.use(
+  cors({
+    origin: 'https://whitemind.icinoxis.net',
+    methods: ['GET', 'POST'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true,
+  })
+);
 app.use(
   rateLimit({
     windowMs: 60 * 1000 * Number(process.env.RATE_LIMIT_DURATION), // 5 min

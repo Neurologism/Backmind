@@ -14,7 +14,7 @@ export const deleteHandler = async (req: Request, res: Response) => {
     (await TaskModel.findOne({
       $and: [
         { projectId: req.project!._id },
-        { $or: [{ status: 'queued' }, { status: 'training' }] },
+        { status: { $or: ['queued', 'training'] } },
       ],
     })) !== null;
   if (activeModels) {
@@ -23,13 +23,19 @@ export const deleteHandler = async (req: Request, res: Response) => {
     });
   }
 
-  await ProjectModel.deleteOne({ _id: req.project!._id });
-  await TaskModel.deleteMany({ projectId: req.project!._id });
-  await UserModel.updateOne(
-    { _id: req.userId! },
-    {
-      $pull: { projectIds: req.project!._id },
-    }
+  const promises = [];
+
+  promises.push(ProjectModel.deleteOne({ _id: req.project!._id }));
+  promises.push(TaskModel.deleteMany({ projectId: req.project!._id }));
+  promises.push(
+    UserModel.updateOne(
+      { _id: req.userId! },
+      {
+        $pull: { projectIds: req.project!._id },
+      }
+    )
   );
+  await Promise.all(promises);
+
   return res.status(200).json({ msg: 'Project deleted successfully.' });
 };

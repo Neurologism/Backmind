@@ -33,7 +33,7 @@
       "unlockNodes": []
     },
     {
-      "text": "You're in the WhiteMind Editor. On the left, you’ll see the Toolbar, which is organized into different sections, each offering unique tools. First, let's select the Layers section.",
+      "text": "You're in the WhiteMind Editor. On the left, you'll see the Toolbar, which is organized into different sections, each offering unique tools. First, let's select the Layers section.",
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],
@@ -43,7 +43,7 @@
       "unlockNodes": []
     },
     {
-      "text": "Great! Here, you’ll find a variety of layers that will form the building blocks of your networks. Let's start simple. Select the Dense layer and drag it onto the Canvas area to the right.",
+      "text": "Great! Here, you'll find a variety of layers that will form the building blocks of your networks. Let's start simple. Select the Dense layer and drag it onto the Canvas area to the right.",
       "narrator": "LeNet-5",
       "addNodes": [
         {

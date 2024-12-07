@@ -36,15 +36,23 @@ export const getHandler = async (req: Request, res: Response) => {
     }
   })();
 
-  if (user.visibility === 'private' && !isUser && !isFollowedByUser) {
+  if (user.visibility === 'private' && !isUser) {
     return res.status(403).json({
       msg: 'This user is private. You can only access private users if they follow you.',
     });
   }
 
+  const query = {
+    isTutorialProject: false,
+  } as any;
+
+  if (!isUser) {
+    query['visibility'] = 'public';
+  }
+
   await user.populate({
     path: 'projectIds',
-    match: { visibility: "public", isTutorialProject: false },
+    match: query,
     select: '_id',
   });
 
@@ -54,7 +62,7 @@ export const getHandler = async (req: Request, res: Response) => {
     displayname: user.displayname,
     brainetTag: user.brainetTag,
     visibility: user.visibility,
-    projectIds: user.projectIds.map(project => project._id),
+    projectIds: user.projectIds.map((project) => project._id),
     followerIds: user.followerIds,
     followingIds: user.followingIds,
   } as any;

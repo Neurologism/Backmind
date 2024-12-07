@@ -8,15 +8,67 @@ export const deleteHandler = async (req: Request, res: Response) => {
     return res.status(401).send('Unauthorized');
   }
 
-  const user = UserModel.findById(req.userId);
+  const user = await UserModel.findById(req.userId);
 
   if (user === null) {
     return res.status(404).send('User not found');
   }
 
-  const projects = await ProjectModel.find({ ownerId: req.userId });
+  const runningTask = await TaskModel.findOne({
+    ownerId: req.userId,
+    status: { $in: ['queued', 'training'] },
+  });
+  if (runningTask !== null) {
+    return res.status(409).send('Cannot delete user with running tasks');
+  }
 
-  projects.forEach((project) => {
-    TaskModel.deleteMany({ projectId: project._id });
+  let promises = [];
+
+  promises.push(
+    ProjectModel.deleteMany({
+      ownerId: req.userId,
+    })
+  );
+
+  promises.push(
+    TaskModel.deleteMany({
+      ownerId: req.userId,
+    })
+  );
+
+  promises.push(
+    Promise.all(
+      user.followerIds.map((followerId) =>
+        UserModel.updateOne(
+          { _id: followerId },
+          { $pull: { followingIds: req.userId } }
+        )
+      )
+    )
+  );
+
+  promises.push(
+    Promise.all(
+      user.followerIds.map((followerId) =>
+        UserModel.updateOne(
+          { _id: followerId },
+          { $pull: { followingIds: req.userId } }
+        )
+      )
+    )
+  );
+
+  promises.push(
+    UserModel.deleteOne({
+      _id: req.userId,
+    })
+  );
+
+  await Promise.all(promises);
+
+  console.log('test');
+
+  return res.status(200).json({
+    msg: 'User deleted',
   });
 };

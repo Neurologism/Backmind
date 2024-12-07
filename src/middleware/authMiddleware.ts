@@ -23,7 +23,7 @@ export const authMiddleware = (
     next();
   } catch (err) {
     if (err instanceof jwt.JsonWebTokenError) {
-      req.userId = null;
+      req.userId = undefined;
       next();
     } else {
       req.logger.error(err);

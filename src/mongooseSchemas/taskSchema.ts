@@ -13,6 +13,7 @@ const mongooseTaskSchema = new mongoose.Schema({
   dateStarted: Date,
   dateFinished: Date,
   projectId: { type: mongoose.Types.ObjectId, required: true },
+  ownerId: { type: mongoose.Types.ObjectId, required: true },
 });
 
 mongooseTaskSchema.pre('save', function (next) {

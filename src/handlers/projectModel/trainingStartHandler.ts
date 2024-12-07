@@ -4,15 +4,6 @@ import { QueueItemModel } from '../../mongooseSchemas/queueItemSchema';
 import { TaskModel } from '../../mongooseSchemas/taskSchema';
 
 export const trainingStartHandler = async (req: Request, res: Response) => {
-  if (
-    (await QueueItemModel.countDocuments()) >
-    Number(process.env.MAX_TRAINING_QUEUE_LENGTH)
-  ) {
-    return res
-      .status(403)
-      .send({ msg: 'Training queue is full. Try again later.' });
-  }
-
   const insertResult = await new TaskModel({
     status: 'queued',
     output: [],
@@ -22,6 +13,7 @@ export const trainingStartHandler = async (req: Request, res: Response) => {
     dateStarted: null,
     dateFinished: null,
     projectId: req.project._id,
+    ownerId: req.userId,
   }).save();
   const modelId = insertResult._id;
   await new QueueItemModel({ taskId: modelId }).save();

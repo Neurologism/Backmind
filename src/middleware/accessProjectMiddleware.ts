@@ -6,9 +6,9 @@ export const accessProjectMiddleware = async (
   res: Response,
   next: NextFunction
 ) => {
-  if (req.userId === null) {
+  if (req.userId === undefined) {
     return res.status(400).json({
-      msg: 'You need to provide an auth token.',
+      msg: 'You need to be authenticated to access this resource.',
     });
   }
 

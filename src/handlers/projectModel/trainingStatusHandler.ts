@@ -9,6 +9,7 @@ export const trainingStatusHandler = async (req: Request, res: Response) => {
       dateStarted: req.body.model.dateStarted,
       dateFinished: req.body.model.dateFinished,
       projectId: req.body.model.projectId,
+      ownerId: req.body.model.ownerId,
     },
   });
 };

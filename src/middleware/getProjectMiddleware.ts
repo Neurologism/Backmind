@@ -6,9 +6,7 @@ export const getProjectMiddleware = async (
   res: Response,
   next: NextFunction
 ) => {
-  const project = await ProjectModel.findOne({
-    _id: req.body.project._id,
-  });
+  const project = await ProjectModel.findById(req.body.project._id);
 
   if (project === null) {
     return res.status(404).json({
@@ -17,7 +15,7 @@ export const getProjectMiddleware = async (
   }
 
   if (project.visibility === 'private') {
-    if (req.userId === null) {
+    if (req.userId === undefined) {
       return res.status(404).json({
         msg: 'This project is private. You need to be logged in to access it. ',
       });

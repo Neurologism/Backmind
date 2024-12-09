@@ -11,6 +11,7 @@
     "stop": "pm2 stop backmind-server",
     "dev": "nodemon ./src/server.ts --watch ./src",
     "dropDb": "node scripts/dropDb.js",
+    "createTutorials": "ts-node scripts/createTutorials.ts",
     "prepare": "husky"
   },
   "author": "",

@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 const unlockNodeSchema = new mongoose.Schema({
   type: { type: String, required: true },
-  id: { type: String, required: true },
+  id: { type: String, required: false },
   data: { type: [String], required: true, default: [] },
 });
 

@@ -121,7 +121,15 @@ export const createProjectSchema = z
   })
   .strict();
 
-export const deleteProjectSchema = z.object({}).strict();
+export const deleteProjectSchema = z
+  .object({
+    project: z
+      .object({
+        _id: z.string().length(24),
+      })
+      .strict(),
+  })
+  .strict();
 
 export const searchProjectSchema = z
   .object({

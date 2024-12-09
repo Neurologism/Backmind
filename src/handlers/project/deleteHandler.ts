@@ -14,7 +14,7 @@ export const deleteHandler = async (req: Request, res: Response) => {
     (await TaskModel.findOne({
       $and: [
         { projectId: req.project!._id },
-        { status: { $or: ['queued', 'training'] } },
+        { status: { $in: ['queued', 'training'] } },
       ],
     })) !== null;
   if (activeModels) {

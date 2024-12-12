@@ -20,7 +20,7 @@
   "unlockNodes": [],
   "steps": [
     {
-      "text": "Hey and welcome to WhiteMind! I'm LeNet-5, your guide for today. Ready to dive into the exciting world of AI? Let's get started!",
+      "text": "Welcome to WhiteMind! I'm LeNet-5, and I'll be your guide through the exciting world of neural networks. Let's get started!",
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],
@@ -30,7 +30,7 @@
       "unlockNodes": []
     },
     {
-      "text": "You're in the WhiteMind Editor. On the left, you'll see the Toolbar, which is organized into different sections, each offering unique tools. First, let's select the Layers section.",
+      "text": "You’re in the WhiteMind Editor. Here, you'll create and configure your own neural networks. The toolbar on the left contains all the building blocks you'll need. Go ahead and click on LAYERS in the toolbar.",
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],
@@ -40,7 +40,17 @@
       "unlockNodes": []
     },
     {
-      "text": "Great! Here, you'll find a variety of layers that will form the building blocks of your networks. Let's start simple. Select the Dense layer and drag it onto the Canvas area to the right.",
+      "text": "Layers are the core components of your network. Think of each layer as a team of workers trying to solve a specific problem.",
+      "narrator": "LeNet-5",
+      "addNodes": [],
+      "addEdges": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    },
+    {
+      "text": "To get started, drag a Dense layer from the LAYERS section onto the Canvas area on the right. This is where you'll build your network.",
       "narrator": "LeNet-5",
       "addNodes": [
         {
@@ -67,7 +77,17 @@
       ]
     },
     {
-      "text": "Now that we have a Dense layer, let's add an Input layer. Head back to the Toolbar, grab the Input layer and drag it above the Dense layer.",
+      "text": "A Dense layer is versatile and can be used for many different tasks. It’s a great option when you don’t have a specialized layer for the job. It’s like a team that can handle various tasks with ease.",
+      "narrator": "LeNet-5",
+      "addNodes": [],
+      "addEdges": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    },
+    {
+      "text": "Now let’s add another layer. Go back to the Toolbar, find the Input layer, and drag it above the Dense layer you just placed.",
       "narrator": "LeNet-5",
       "addNodes": [
         {
@@ -96,7 +116,7 @@
       ]
     },
     {
-      "text": "Next, we need to connect the layers. The Input layer provides the data, and the Dense layer processes it. Simply click on the small square at the bottom of the Input layer and drag a line to the top of the Dense layer.",
+      "text": "The Input layer is crucial as it serves as the entry point for data into the network. It’s like the first team that\ncollects the raw data before passing it on. To connect the Input layer to the Dense layer, simply drag the output of\nthe Input layer to the input of the Dense layer.",
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [
@@ -117,7 +137,7 @@
       "unlockNodes": []
     },
     {
-      "text": "Great Job! We'll need one more Dense layer. Drag and drop it below the first one, then connect them.",
+      "text": "Great work! Next, we’ll add another Dense layer. Head back to the Toolbar and grab a Dense layer,\nthen drag it below the first one.",
       "narrator": "LeNet-5",
       "addNodes": [
         {
@@ -132,6 +152,16 @@
           "group_identifier": "layer"
         }
       ],
+      "addEdges": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": ["dense"],
+      "unlockNodes": []
+    },
+    {
+      "text": "This second Dense layer will handle the final output of the network. To link the layers together, connect the output from the first Dense layer to the input of this new Dense layer.",
+      "narrator": "LeNet-5",
+      "addNodes": [],
       "addEdges": [
         {
           "id": "vueflow__edge-0.rjprcijyi19out-0.rjprcijyi19-0.kc9iafnk32min-0.kc9iafnk32m",
@@ -146,11 +176,11 @@
       ],
       "removeNodes": [],
       "removeEdges": [],
-      "highlightNodeTypes": ["dense"],
+      "highlightNodeTypes": [],
       "unlockNodes": []
     },
     {
-      "text": "Awesome! You've just built your first neural network! In the next lesson, we'll dive into configuring your network and introducing MNIST.",
+      "text": "Fantastic! You’ve just created a simple neural network! In the next lesson, we’ll explore the settings of each layer. We'll also introduce you to the MNIST dataset, a collection of handwritten digits. Stay tuned!",
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],

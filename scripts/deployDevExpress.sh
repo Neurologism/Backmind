@@ -6,7 +6,7 @@ pm2 update
 pm2 delete backmind-server
 git reset --hard
 git clean -fd
-git checkout developement
+git checkout development
 git pull
 npm i
 npm run build

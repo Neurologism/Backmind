@@ -29,7 +29,7 @@ export const setEnv = (filename: string = '.env') => {
   process.env.RATE_LIMIT_DURATION = process.env.RATE_LIMIT_DURATION || '5';
   process.env.RATE_LIMIT_REQUESTS = process.env.RATE_LIMIT_REQUESTS || '1000';
   process.env.NODE_ENV =
-    process.env.NODE_ENV === 'developement' ? 'developement' : 'production';
+    process.env.NODE_ENV === 'development' ? 'development' : 'production';
   process.env.DISABLE_ACCOUNT_CREATION =
     process.env.DISABLE_ACCOUNT_CREATION === 'true' ? 'true' : '';
   process.env.FILES_DIRECTORY = process.env.FILES_DIRECTORY || './dataStorage';

@@ -46,7 +46,6 @@ export const getHandler = async (req: Request, res: Response) => {
         highlightNodeTypes: step.highlightNodeTypes,
         unlockNodes: step.unlockNodes,
         trainingEnabled: step.trainingEnabled,
-        trainedModel: step.trainedModel,
       })),
     },
     tutorialCompleted: false,

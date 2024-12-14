@@ -37,9 +37,9 @@ export const setEnv = (filename: string = '.env') => {
     process.env.PFP_DIRECTORY ||
     path.join(process.env.FILES_DIRECTORY as string, '/pfp');
   process.env.BACKMIND_HOSTNAME =
-    process.env.BACKMIND_HOSTNAME || 'https://api.whitemind.net/';
+    process.env.BACKMIND_HOSTNAME || 'https://backmind.icinoxis.net/';
   process.env.WHITEMIND_HOSTNAME =
-    process.env.WHITEMIND_HOSTNAME || 'https://whitemind.net/';
+    process.env.WHITEMIND_HOSTNAME || 'https://whitemind.icinoxis.net/';
   process.env.VERIFY_ALL_EMAILS =
     process.env.VERIFY_ALL_EMAILS === 'true' ? 'true' : '';
   process.env.EMAIL_VERIFICATION_TOKEN_VALID_MINUTES =

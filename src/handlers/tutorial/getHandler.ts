@@ -4,9 +4,10 @@ import { UserModel } from '../../mongooseSchemas/userSchema';
 import { ProjectModel } from '../../mongooseSchemas/projectSchema';
 
 export const getHandler = async (req: Request, res: Response) => {
-  const loggedIn = req.body.userId !== undefined;
-  if (!loggedIn) {
-    return res.status(401).json({ msg: 'Unauthorized' });
+  if (req.userId === undefined) {
+    return res.status(403).json({
+      msg: 'You need to be authenticated to access this resource.',
+    });
   }
 
   const tutorial = await TutorialModel.findOne({
@@ -19,7 +20,7 @@ export const getHandler = async (req: Request, res: Response) => {
     return res.status(404).json({ msg: 'Tutorial not found' });
   }
 
-  const user = await UserModel.findById(req.body.userId);
+  const user = await UserModel.findById(req.userId);
 
   if (tutorial.premiumRequired && !user!.premium) {
     return res.status(403).json({ msg: 'Premium required' });
@@ -34,7 +35,6 @@ export const getHandler = async (req: Request, res: Response) => {
       requiredTutorials: tutorial.requiredTutorials,
       nextTutorials: tutorial.nextTutorials,
       experienceGain: tutorial.experienceGain,
-      startProject: tutorial.startProject,
       unlockNodes: tutorial.unlockNodes,
       steps: tutorial.steps.map((step) => ({
         text: step.text,
@@ -50,6 +50,8 @@ export const getHandler = async (req: Request, res: Response) => {
     },
     tutorialCompleted: false,
     tutorialStarted: false,
+    currentStep: 0,
+    projectId: null,
   } as any;
 
   const tutorialCompleted = user!.completedTutorials.some(

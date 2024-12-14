@@ -5,7 +5,9 @@ import { ProjectModel } from '../../mongooseSchemas/projectSchema';
 
 export const setStateHandler = async (req: Request, res: Response) => {
   if (req.userId === undefined) {
-    return res.status(401).json({ msg: 'Unauthorized' });
+    return res.status(403).json({
+      msg: 'You need to be authenticated to access this resource.',
+    });
   }
 
   const user = await UserModel.findById(req.userId);
@@ -28,11 +30,13 @@ export const setStateHandler = async (req: Request, res: Response) => {
     return res.status(403).json({ msg: 'Premium required' });
   }
 
-  let project = await await ProjectModel.findOne({
+  let project = await ProjectModel.findOne({
     ownerId: user._id,
     isTutorialProject: true,
     tutorialId: tutorial._id,
   });
+
+  const startProject = await ProjectModel.findById(tutorial.startProject);
 
   if (project === null) {
     project = new ProjectModel({
@@ -42,7 +46,7 @@ export const setStateHandler = async (req: Request, res: Response) => {
       visibility: 'private',
       isTutorialProject: true,
       tutorialId: tutorial._id,
-      components: tutorial.startProject,
+      components: startProject?.components,
     });
   }
 
@@ -61,5 +65,5 @@ export const setStateHandler = async (req: Request, res: Response) => {
 
   return res
     .status(200)
-    .json({ msg: 'Tutorial state updated', tutorialId: tutorial._id });
+    .json({ msg: 'Tutorial state updated', projectId: project._id });
 };

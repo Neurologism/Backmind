@@ -110,7 +110,6 @@
       "unlockNodes": [
         {
           "type": "input",
-          "id": "input-1",
           "data": []
         }
       ]

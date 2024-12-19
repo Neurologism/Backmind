@@ -211,7 +211,11 @@
       "addNodes": [],
       "addEdges": [],
       "removeNodes": [],
-      "removeEdges": [],
+      "removeEdges": [
+        {
+          "id": "vueflow__edge-0.x65scbd309aout-0.x65scbd309a-0.chj63w1q2u6in-0.chj63w1q2u6"
+        }
+      ],
       "highlightNodeTypes": [],
       "unlockNodes": []
     },
@@ -219,14 +223,67 @@
       "text": "Next, connect the Input layer to the Normalization layer.",
       "narrator": "LeNet-5",
       "addNodes": [],
-      "addEdges": [],
+      "addEdges": [
+        {
+          "id": "vueflow__edge-0.x65scbd309aout-0.x65scbd309a-0.8h6rp4fo12qin-0.8h6rp4fo12q",
+          "type": "smoothstep",
+          "source": "0.x65scbd309a",
+          "target": "0.8h6rp4fo12q",
+          "sourceHandle": "out-0.x65scbd309a",
+          "targetHandle": "in-0.8h6rp4fo12q",
+          "data": {},
+          "label": ""
+        }
+      ],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
       "unlockNodes": []
     },
     {
-      "text": "",
+      "text": "Then, connect the Normalization layer to the Flatten layer.",
+      "narrator": "LeNet-5",
+      "addNodes": [],
+      "addEdges": [
+        {
+          "id": "vueflow__edge-0.8h6rp4fo12qout-0.8h6rp4fo12q-0.v0xhroyxofin-0.v0xhroyxof",
+          "type": "smoothstep",
+          "source": "0.8h6rp4fo12q",
+          "target": "0.v0xhroyxof",
+          "sourceHandle": "out-0.8h6rp4fo12q",
+          "targetHandle": "in-0.v0xhroyxof",
+          "data": {},
+          "label": ""
+        }
+      ],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    },
+    {
+      "text": "Finally, connect the Flatten layer to the first Dense layer.",
+      "narrator": "LeNet-5",
+      "addNodes": [],
+      "addEdges": [
+        {
+          "id": "vueflow__edge-0.v0xhroyxofout-0.v0xhroyxof-0.chj63w1q2uin-0.chj63w1q2u6",
+          "type": "smoothstep",
+          "source": "0.v0xhroyxof",
+          "target": "0.chj63w1q2u6",
+          "sourceHandle": "out-0.v0xhroyxof",
+          "targetHandle": "in-0.chj63w1q2u6",
+          "data": {},
+          "label": ""
+        }
+      ],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    },
+    {
+      "text": "Your network is complete! The process now goes like this: The input images go through the Normalization layer, then the Flatten layer, and finally the Dense layers, which will recognize the digit.",
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],
@@ -236,37 +293,7 @@
       "unlockNodes": []
     },
     {
-      "text": "",
-      "narrator": "LeNet-5",
-      "addNodes": [],
-      "addEdges": [],
-      "removeNodes": [],
-      "removeEdges": [],
-      "highlightNodeTypes": [],
-      "unlockNodes": []
-    },
-    {
-      "text": "",
-      "narrator": "LeNet-5",
-      "addNodes": [],
-      "addEdges": [],
-      "removeNodes": [],
-      "removeEdges": [],
-      "highlightNodeTypes": [],
-      "unlockNodes": []
-    },
-    {
-      "text": "",
-      "narrator": "LeNet-5",
-      "addNodes": [],
-      "addEdges": [],
-      "removeNodes": [],
-      "removeEdges": [],
-      "highlightNodeTypes": [],
-      "unlockNodes": []
-    },
-    {
-      "text": "",
+      "text": "Well done! The only thing left is to train the network, which we'll cover in the next tutorial. See you there!",
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],

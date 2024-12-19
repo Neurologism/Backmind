@@ -1,10 +1,10 @@
 {
-  "name": "Normalization and Flatten",
+  "name": "Normalization and Flatten Layer",
   "summary": "",
   "description": "",
   "visibility": "public",
   "requiredTutorials": ["Datasets and Settings"],
-  "nextTutorials": [],
+  "nextTutorials": ["Training a Neural Network"],
   "experienceGain": 100,
   "startProject": {
     "nodes": [

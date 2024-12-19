@@ -4,7 +4,7 @@
   "description": "",
   "visibility": "public",
   "requiredTutorials": ["Your first neural network"],
-  "nextTutorials": ["Normalization and Flatten"],
+  "nextTutorials": ["Normalization and Flatten Layer"],
   "experienceGain": 100,
   "startProject": {
     "nodes": [

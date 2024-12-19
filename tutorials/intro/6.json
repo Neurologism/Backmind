@@ -1,0 +1,300 @@
+{
+  "name": "Wine Quality",
+  "summary": "",
+  "description": "",
+  "visibility": "public",
+  "requiredTutorials": [],
+  "nextTutorials": [],
+  "experienceGain": 100,
+  "startProject": {
+    "nodes": [],
+    "edges": [],
+    "position": [0, 0],
+    "zoom": 1,
+    "viewport": {
+      "x": 0,
+      "y": 0,
+      "zoom": 1
+    }
+  },
+  "unlockNodes": [],
+  "steps": [
+    {
+      "text": "Bzzt... Bzzzzt... Oh, hey there! Happy to see you again! You've finished your work on MNIST, and now it's time to move on. I'll introduce you to a new dataset called Wine Quality. Very fancy, right?",
+      "narrator": "LeNet-5",
+      "addNodes": [],
+      "addEdges": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    },
+    {
+      "text": "The Wine Quality dataset focuses on white variants of Portuguese Vinho Verde wine. It includes features like acidity, pH levels, and alcohol content. Our goal? To predict the quality of the wine based on these characteristics. Intriguing, right?",
+      "narrator": "LeNet-5",
+      "addNodes": [],
+      "addEdges": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    },
+    {
+      "text": "To begin, add the Wine Quality node from the DATASETS section.",
+      "narrator": "LeNet-5",
+      "addNodes": [
+        {
+          "id": "0.c9agnbfq30p",
+          "type": "wine_quality",
+          "data": {
+            "batch_size": 32
+          },
+          "identifier": "dataset_wine_quality",
+          "group_identifier": "dataset"
+        }
+      ],
+      "addEdges": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": ["wine_quality"],
+      "unlockNodes": [
+        {
+          "type": "wine_quality",
+          "data": []
+        }
+      ]
+    },
+    {
+      "text": "Next, let’s design a neural network tailored for this dataset. Start by adding an Input layer to accept the wine features and two Dense layers to process the data and predict the output.",
+      "narrator": "LeNet-5",
+      "addNodes": [
+        {
+          "id": "0.nkcq9um7vfj",
+          "type": "input_layer",
+          "data": {
+            "shape": [0],
+            "batch_size": null,
+            "dtype": "float32",
+            "sparse": false,
+            "optional": false
+          },
+          "identifier": "input",
+          "group_identifier": "layer"
+        },
+        {
+          "id": "0.am1l3dlgtq6",
+          "type": "dense",
+          "data": {
+            "activation": null,
+            "use_bias": true,
+            "lora_rank": null
+          },
+          "identifier": "dense",
+          "group_identifier": "layer"
+        },
+        {
+          "id": "0.p4ub0g4qlln",
+          "type": "dense",
+          "data": {
+            "activation": null,
+            "use_bias": true,
+            "lora_rank": null
+          },
+          "identifier": "dense",
+          "group_identifier": "layer"
+        }
+      ],
+      "addEdges": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    },
+    {
+      "text": "Link the Input layer to the first Dense layer. Then, link the first Dense layer to the second Dense layer.",
+      "narrator": "LeNet-5",
+      "addNodes": [],
+      "addEdges": [
+        {
+          "id": "vueflow__edge-0.nkcq9um7vfjout-0.nkcq9um7vfj-0.am1l3dlgtq6in-0.am1l3dlgtq6",
+          "type": "smoothstep",
+          "source": "0.nkcq9um7vfj",
+          "target": "0.am1l3dlgtq6",
+          "sourceHandle": "out-0.nkcq9um7vfj",
+          "targetHandle": "in-0.am1l3dlgtq6",
+          "data": {},
+          "label": ""
+        },
+        {
+          "id": "vueflow__edge-0.am1l3dlgtq6out-0.am1l3dlgtq6-0.p4ub0g4qllnin-0.p4ub0g4qlln",
+          "type": "smoothstep",
+          "source": "0.am1l3dlgtq6",
+          "target": "0.p4ub0g4qlln",
+          "sourceHandle": "out-0.am1l3dlgtq6",
+          "targetHandle": "in-0.p4ub0g4qlln",
+          "data": {},
+          "label": ""
+        }
+      ],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    },
+    {
+      "text": "Awesome! Now our network has the basic structure it needs. It takes inputs, processes them through two layers, and generates an output. But hold on—we’re not quite done yet. We need to configure some settings to make it work effectively.",
+      "narrator": "LeNet-5",
+      "addNodes": [],
+      "addEdges": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    },
+    {
+      "text": "First, let’s configure the number of units in the first Dense layer. This determines how well the layer can handle complexity. Since this task isn’t as complex as recognizing handwritten digits, set the number of units to 32.",
+      "narrator": "LeNet-5",
+      "addNodes": [
+        {
+          "id": "0.am1l3dlgtq6",
+          "type": "dense",
+          "data": {
+            "activation": null,
+            "use_bias": true,
+            "lora_rank": null,
+            "units": 32
+          },
+          "identifier": "dense",
+          "group_identifier": "layer"
+        }
+      ],
+      "addEdges": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    },
+    {
+      "text": "Next, let’s choose an activation function for the first Dense layer. Recall that the activation function determines how the layer processes data. This time, try the Tanh activation function, a great alternative to ReLU for certain tasks.",
+      "narrator": "LeNet-5",
+      "addNodes": [
+        {
+          "id": "0.am1l3dlgtq6",
+          "type": "dense",
+          "data": {
+            "activation": "tanh",
+            "use_bias": true,
+            "lora_rank": null,
+            "units": 32
+          },
+          "identifier": "dense",
+          "group_identifier": "layer"
+        }
+      ],
+      "addEdges": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    },
+    {
+      "text": "Moving on to the Input layer… The Wine Quality dataset has 11 features, including acidity, pH, alcohol content, and others. Set the shape of the Input layer to [11] to match the number of features.",
+      "narrator": "LeNet-5",
+      "addNodes": [
+        {
+          "id": "0.nkcq9um7vfj",
+          "type": "input_layer",
+          "data": {
+            "shape": [11],
+            "batch_size": null,
+            "dtype": "float32",
+            "sparse": false,
+            "optional": false
+          },
+          "identifier": "input",
+          "group_identifier": "layer"
+        }
+      ],
+      "addEdges": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    },
+    {
+      "text": "Now let’s configure the output layer (the second Dense layer). Think back to MNIST—we had 10 classes (digits 0-9) and used the network to classify images. That was a classification task.",
+      "narrator": "LeNet-5",
+      "addNodes": [],
+      "addEdges": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    },
+    {
+      "text": "In the Wine Quality dataset, however, we’re predicting a continuous value (wine quality) that ranges from 0 to 10. This makes it a regression task.",
+      "narrator": "LeNet-5",
+      "addNodes": [],
+      "addEdges": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    },
+    {
+      "text": "The task determines the output layer structure. For regression, a linear activation function gives the layer freedom to work without constraints, like a team that can decide how to tackle a problem. Set the second Dense layer's activation to Linear.",
+      "narrator": "LeNet-5",
+      "addNodes": [
+        {
+          "id": "0.p4ub0g4qlln",
+          "type": "dense",
+          "data": {
+            "activation": "linear",
+            "use_bias": true,
+            "lora_rank": null
+          },
+          "identifier": "dense",
+          "group_identifier": "layer"
+        }
+      ],
+      "addEdges": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    },
+    {
+      "text": "Lastly, set the number of units in the output layer to 1 because we’re predicting a single value: the quality of the wine.",
+      "narrator": "LeNet-5",
+      "addNodes": [
+        {
+          "id": "0.p4ub0g4qlln",
+          "type": "dense",
+          "data": {
+            "activation": "linear",
+            "use_bias": true,
+            "lora_rank": null,
+            "units": 1
+          },
+          "identifier": "dense",
+          "group_identifier": "layer"
+        }
+      ],
+      "addEdges": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    },
+    {
+      "text": "And that’s it for now! Your neural network is ready. Next time, we’ll explore how to train the model and talk about more accurate predictions. See you in the next tutorial!",
+      "narrator": "LeNet-5",
+      "addNodes": [],
+      "addEdges": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    }
+  ]
+}

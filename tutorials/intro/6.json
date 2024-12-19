@@ -3,8 +3,8 @@
   "summary": "",
   "description": "",
   "visibility": "public",
-  "requiredTutorials": [],
-  "nextTutorials": [],
+  "requiredTutorials": ["Visualizing and Training"],
+  "nextTutorials": ["Training on Wine Quality Dataset"],
   "experienceGain": 100,
   "startProject": {
     "nodes": [],

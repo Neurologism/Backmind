@@ -1,0 +1,294 @@
+{
+  "name": "Visualizing and Training",
+  "summary": "",
+  "description": "",
+  "visibility": "public",
+  "requiredTutorials": ["Training a Neural Network"],
+  "nextTutorials": ["Wine Quality"],
+  "experienceGain": 100,
+  "startProject": {
+    "nodes": [
+      {
+        "id": "0.x65scbd309a",
+        "type": "input_layer",
+        "initialized": false,
+        "position": {
+          "x": 608,
+          "y": 22
+        },
+        "data": {
+          "shape": [28, 28, 1],
+          "batch_size": null,
+          "dtype": "float32",
+          "sparse": false,
+          "optional": false
+        },
+        "identifier": "input",
+        "group_identifier": "layer"
+      },
+      {
+        "id": "0.chj63w1q2u6",
+        "type": "dense",
+        "initialized": false,
+        "position": {
+          "x": 605,
+          "y": 460
+        },
+        "data": {
+          "activation": "relu",
+          "use_bias": true,
+          "lora_rank": null,
+          "units": 128
+        },
+        "identifier": "dense",
+        "group_identifier": "layer"
+      },
+      {
+        "id": "0.h9ht3sxzctp",
+        "type": "dense",
+        "initialized": false,
+        "position": {
+          "x": 605,
+          "y": 566
+        },
+        "data": {
+          "activation": "softmax",
+          "use_bias": true,
+          "lora_rank": null,
+          "units": 10
+        },
+        "identifier": "dense",
+        "group_identifier": "layer"
+      },
+      {
+        "id": "0.xq22qq3n1qj",
+        "type": "mnist",
+        "initialized": false,
+        "position": {
+          "x": 769.5769256842311,
+          "y": 564.5506002567699
+        },
+        "data": {
+          "batch_size": 32
+        },
+        "identifier": "dataset_mnist",
+        "group_identifier": "dataset"
+      },
+      {
+        "id": "0.accmpdnxgzm",
+        "type": "normalization",
+        "initialized": false,
+        "position": {
+          "x": 576.3978602448208,
+          "y": 131.80641926553776
+        },
+        "data": {
+          "axis": -1,
+          "invert": false
+        },
+        "identifier": "normalization",
+        "group_identifier": "layer"
+      },
+      {
+        "id": "0.dq08q9e87ch",
+        "type": "flatten",
+        "initialized": false,
+        "position": {
+          "x": 601.3978602448208,
+          "y": 330.8064192655378
+        },
+        "data": {
+          "data_format": "channels_last"
+        },
+        "identifier": "flatten",
+        "group_identifier": "layer"
+      },
+      {
+        "id": "0.8bszg84j0ww",
+        "type": "Model",
+        "initialized": false,
+        "position": {
+          "x": 386.3978602448208,
+          "y": 240.80641926553778
+        },
+        "data": {
+          "optimizer": "adam",
+          "loss": "sparse_categorical_crossentropy",
+          "metrics": ["accuracy"],
+          "name": "model"
+        },
+        "identifier": "Model",
+        "group_identifier": "model"
+      },
+      {
+        "id": "0.7uxn1yptkb4",
+        "type": "fit",
+        "initialized": false,
+        "position": {
+          "x": 352.76678633936467,
+          "y": 668.7387165778972
+        },
+        "data": {
+          "epochs": 1,
+          "name": "model"
+        },
+        "identifier": "fit",
+        "group_identifier": "model"
+      }
+    ],
+    "edges": [
+      {
+        "id": "vueflow__edge-0.chj63w1q2u6out-0.chj63w1q2u6-0.h9ht3sxzctpin-0.h9ht3sxzctp",
+        "type": "smoothstep",
+        "source": "0.chj63w1q2u6",
+        "target": "0.h9ht3sxzctp",
+        "sourceHandle": "out-0.chj63w1q2u6",
+        "targetHandle": "in-0.h9ht3sxzctp",
+        "data": {},
+        "label": "",
+        "sourceX": 666.8284277335616,
+        "sourceY": 508.9887492247004,
+        "targetX": 666.8284277335616,
+        "targetY": 560.9951909412963
+      },
+      {
+        "id": "vueflow__edge-0.x65scbd309aout-0.x65scbd309a-0.accmpdnxgzmin-0.accmpdnxgzm",
+        "type": "smoothstep",
+        "source": "0.x65scbd309a",
+        "target": "0.accmpdnxgzm",
+        "sourceHandle": "out-0.x65scbd309a",
+        "targetHandle": "in-0.accmpdnxgzm",
+        "data": {},
+        "label": "",
+        "sourceX": 666.3169837558406,
+        "sourceY": 70.98880465221615,
+        "targetX": 666.2772668586225,
+        "targetY": 126.80164715851126
+      },
+      {
+        "id": "vueflow__edge-0.accmpdnxgzmval-adapt-0.accmpdnxgzm-0.xq22qq3n1qjval-train-0.xq22qq3n1qj",
+        "type": "smoothstep",
+        "source": "0.accmpdnxgzm",
+        "target": "0.xq22qq3n1qj",
+        "sourceHandle": "val-adapt-0.accmpdnxgzm",
+        "targetHandle": "val-train-0.xq22qq3n1qj",
+        "data": {
+          "key": "adapt"
+        },
+        "label": "",
+        "sourceX": 757.666418394708,
+        "sourceY": 201.8079298096844,
+        "targetX": 853.7567996645778,
+        "targetY": 634.5521477525938
+      },
+      {
+        "id": "vueflow__edge-0.accmpdnxgzmout-0.accmpdnxgzm-0.dq08q9e87chin-0.dq08q9e87ch",
+        "type": "smoothstep",
+        "source": "0.accmpdnxgzm",
+        "target": "0.dq08q9e87ch",
+        "sourceHandle": "out-0.accmpdnxgzm",
+        "targetHandle": "in-0.dq08q9e87ch",
+        "data": {},
+        "label": "",
+        "sourceX": 666.2772668586225,
+        "sourceY": 236.81638683611078,
+        "targetX": 666.3744230662084,
+        "targetY": 325.80161020683414
+      },
+      {
+        "id": "vueflow__edge-0.dq08q9e87chout-0.dq08q9e87ch-0.chj63w1q2u6in-0.chj63w1q2u6",
+        "type": "smoothstep",
+        "source": "0.dq08q9e87ch",
+        "target": "0.chj63w1q2u6",
+        "sourceHandle": "out-0.dq08q9e87ch",
+        "targetHandle": "in-0.chj63w1q2u6",
+        "data": {},
+        "label": "",
+        "sourceX": 666.3744230662084,
+        "sourceY": 379.8154180093251,
+        "targetX": 666.8284277335616,
+        "targetY": 454.99519094129636
+      },
+      {
+        "id": "vueflow__edge-0.8bszg84j0wwval-inputs-0.8bszg84j0ww-0.x65scbd309ain-0.x65scbd309a",
+        "type": "smoothstep",
+        "source": "0.8bszg84j0ww",
+        "target": "0.x65scbd309a",
+        "sourceHandle": "val-inputs-0.8bszg84j0ww",
+        "targetHandle": "in-0.x65scbd309a",
+        "data": {
+          "key": "inputs"
+        },
+        "label": "",
+        "sourceX": 486.68194026425505,
+        "sourceY": 310.8079298096844,
+        "targetX": 666.3169837558406,
+        "targetY": 16.99522789297351
+      },
+      {
+        "id": "vueflow__edge-0.h9ht3sxzctpout-0.h9ht3sxzctp-0.8bszg84j0wwval-outputs-0.8bszg84j0ww",
+        "type": "smoothstep",
+        "source": "0.h9ht3sxzctp",
+        "target": "0.8bszg84j0ww",
+        "sourceHandle": "out-0.h9ht3sxzctp",
+        "targetHandle": "val-outputs-0.8bszg84j0ww",
+        "data": {},
+        "label": "",
+        "sourceX": 666.8284277335616,
+        "sourceY": 614.9888231280547,
+        "targetX": 486.68194026425505,
+        "targetY": 354.8217006604982
+      },
+      {
+        "id": "vueflow__edge-0.8bszg84j0wwout-0.8bszg84j0ww-0.7uxn1yptkb4in-0.7uxn1yptkb4",
+        "type": "smoothstep",
+        "source": "0.8bszg84j0ww",
+        "target": "0.7uxn1yptkb4",
+        "sourceHandle": "out-0.8bszg84j0ww",
+        "targetHandle": "in-0.7uxn1yptkb4",
+        "data": {},
+        "label": "",
+        "sourceX": 435.7950786495851,
+        "sourceY": 389.8100190228692,
+        "targetX": 435.76460821120673,
+        "targetY": 663.7541570382805
+      },
+      {
+        "id": "vueflow__edge-0.xq22qq3n1qjval-train-0.xq22qq3n1qj-0.7uxn1yptkb4val-x-0.7uxn1yptkb4",
+        "type": "smoothstep",
+        "source": "0.xq22qq3n1qj",
+        "target": "0.7uxn1yptkb4",
+        "sourceHandle": "val-train-0.xq22qq3n1qj",
+        "targetHandle": "val-x-0.7uxn1yptkb4",
+        "data": {
+          "key": "train"
+        },
+        "label": "",
+        "sourceX": 853.7567996645778,
+        "sourceY": 634.5521477525938,
+        "targetX": 520.272248908687,
+        "targetY": 738.740264073721
+      }
+    ],
+    "position": [398.47760036122645, 96.99525915646518],
+    "zoom": 0.8258776649357199,
+    "viewport": {
+      "x": 398.47760036122645,
+      "y": 96.99525915646518,
+      "zoom": 0.8258776649357199
+    }
+  },
+  "unlockNodes": [],
+  "steps": [
+    {
+      "text": "",
+      "narrator": "LeNet-5",
+      "addNodes": [],
+      "addEdges": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    }
+  ]
+}

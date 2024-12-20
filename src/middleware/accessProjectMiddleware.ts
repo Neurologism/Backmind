@@ -33,8 +33,8 @@ export const accessProjectMiddleware = async (
         if (contributor._id.toString() === req.userId?.toString()) {
           return true;
         }
-        return false;
       }
+      return false;
     })();
   if (!canUpdateProject) {
     return res.status(404).json({

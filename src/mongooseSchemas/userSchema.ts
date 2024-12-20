@@ -54,6 +54,7 @@ export const mongooseUserSchema = new mongoose.Schema({
     required: true,
   },
   premium: { type: Boolean, required: true, default: false },
+  remainingCredits: { type: Number, required: true, default: 600 },
   dateLastEdited: { type: Date, required: true, default: () => new Date() },
   dateCreatedAt: { type: Date, required: true, default: () => new Date() },
   projectIds: { type: [mongoose.Types.ObjectId], default: [], ref: 'projects' }, // doesn't contain tutorial projects

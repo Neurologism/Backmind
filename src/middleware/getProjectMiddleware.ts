@@ -1,14 +1,12 @@
 import { Response, Request, NextFunction } from 'express';
-import { ProjectExplicit } from '../types';
+import { ProjectModel } from '../mongooseSchemas/projectSchema';
 
 export const getProjectMiddleware = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  const project = (await req.dbProjects!.findOne({
-    _id: req.body.project._id,
-  })) as ProjectExplicit;
+  const project = await ProjectModel.findById(req.body.project._id);
 
   if (project === null) {
     return res.status(404).json({
@@ -17,15 +15,15 @@ export const getProjectMiddleware = async (
   }
 
   if (project.visibility === 'private') {
-    if (req.user_id === null) {
+    if (req.userId === undefined) {
       return res.status(404).json({
         msg: 'This project is private. You need to be logged in to access it. ',
       });
     }
-    const isOwner = project.owner_id.toString() === req.user_id!.toString();
+    const isOwner = project.ownerId!.toString() === req.userId!.toString();
     const isContributor = project.contributors
       .map((contributor) => contributor.toString())
-      .includes(req.user_id!.toString());
+      .includes(req.userId!.toString());
 
     if (!isOwner && !isContributor) {
       return res.status(404).json({

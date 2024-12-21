@@ -1,11 +1,15 @@
 import crypto from 'crypto';
 import dotenv from 'dotenv';
+import path from 'path';
 
 export const setEnv = (filename: string = '.env') => {
   dotenv.config({ path: filename });
 
   if (!process.env.MONGO_URI) {
     console.warn('WARNING: MONGO_URI must be set in .env file');
+  }
+  if (!process.env.SENDGRID_API_KEY) {
+    console.warn('WARNING: SENDGRID_API_KEY should be set');
   }
   process.env.EXPRESS_PORT = process.env.EXPRESS_PORT || '3000';
   process.env.JWT_SECRET =
@@ -22,19 +26,22 @@ export const setEnv = (filename: string = '.env') => {
   process.env.JWT_TOKEN_EXPIRE_IN = process.env.JWT_TOKEN_EXPIRE_IN || '24h';
   process.env.LOG_LEVEL = process.env.LOG_LEVEL || 'info';
   process.env.DB_NAME = process.env.DB_NAME || 'backmind';
-  process.env.RECOMPILE_BRAINET =
-    process.env.RECOMPILE_BRAINET === 'true' ? 'true' : '';
-  process.env.BRAINET_PATH =
-    process.env.BRAINET_PATH || 'brainet/json_interface/';
-  process.env.BRAINET_RUN_JSON_FILENAME =
-    process.env.BRAINET_RUN_JSON_FILENAME || 'runJson';
-  process.env.BRAINET_CPP_FILENAME =
-    process.env.BRAINET_CPP_FILENAME || 'run_json.cpp';
-  process.env.BRAINET_TASK_JSON_FILENAME =
-    process.env.BRAINET_TASK_JSON_FILENAME || 'task.json';
-  process.env.CPP_VERSION = process.env.CPP_VERSION || 'c++20';
-  process.env.MAX_TRAINING_QUEUE_LENGTH =
-    process.env.MAX_TRAINING_QUEUE_LENGTH || '30';
-  process.env.START_TRAINING_WORKER_AS_SERVER =
-    process.env.START_TRAINING_WORKER_AS_SERVER === 'true' ? 'true' : '';
+  process.env.RATE_LIMIT_DURATION = process.env.RATE_LIMIT_DURATION || '5';
+  process.env.RATE_LIMIT_REQUESTS = process.env.RATE_LIMIT_REQUESTS || '1000';
+  process.env.NODE_ENV =
+    process.env.NODE_ENV === 'development' ? 'development' : 'production';
+  process.env.DISABLE_ACCOUNT_CREATION =
+    process.env.DISABLE_ACCOUNT_CREATION === 'true' ? 'true' : '';
+  process.env.FILES_DIRECTORY = process.env.FILES_DIRECTORY || './dataStorage';
+  process.env.PFP_DIRECTORY =
+    process.env.PFP_DIRECTORY ||
+    path.join(process.env.FILES_DIRECTORY as string, '/pfp');
+  process.env.BACKMIND_HOSTNAME =
+    process.env.BACKMIND_HOSTNAME || 'https://backmind.icinoxis.net/';
+  process.env.WHITEMIND_HOSTNAME =
+    process.env.WHITEMIND_HOSTNAME || 'https://whitemind.icinoxis.net/';
+  process.env.VERIFY_ALL_EMAILS =
+    process.env.VERIFY_ALL_EMAILS === 'true' ? 'true' : '';
+  process.env.EMAIL_VERIFICATION_TOKEN_VALID_MINUTES =
+    process.env.EMAIL_VERIFICATION_TOKEN_VALID_MINUTES || '60';
 };

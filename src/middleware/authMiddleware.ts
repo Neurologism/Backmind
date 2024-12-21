@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
-import { ObjectId } from 'mongodb';
+import mongoose from 'mongoose';
 
 interface JwtPayload {
   _id: string;
@@ -18,12 +18,12 @@ export const authMiddleware = (
       token!,
       process.env.JWT_SECRET as string
     ) as JwtPayload;
-    const user_id = new ObjectId(decoded._id);
-    req.user_id = user_id;
+    const userId = new mongoose.Types.ObjectId(decoded._id);
+    req.userId = userId;
     next();
   } catch (err) {
     if (err instanceof jwt.JsonWebTokenError) {
-      req.user_id = null;
+      req.userId = undefined;
       next();
     } else {
       req.logger.error(err);

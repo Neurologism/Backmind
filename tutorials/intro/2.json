@@ -1,0 +1,328 @@
+{
+  "name": "Datasets and Settings",
+  "summary": "",
+  "description": "",
+  "visibility": "public",
+  "requiredTutorials": ["Your first neural network"],
+  "nextTutorials": ["Normalization and Flatten Layer"],
+  "experienceGain": 100,
+  "startProject": {
+    "nodes": [
+      {
+        "id": "0.0atma5spa9l",
+        "type": "input_layer",
+        "initialized": false,
+        "position": {
+          "x": 791,
+          "y": 205
+        },
+        "data": {
+          "shape": [0],
+          "batch_size": null,
+          "dtype": "float32",
+          "sparse": false,
+          "optional": false
+        },
+        "identifier": "input",
+        "group_identifier": "layer"
+      },
+      {
+        "id": "0.rjprcijyi19",
+        "type": "dense",
+        "initialized": false,
+        "position": {
+          "x": 791,
+          "y": 334
+        },
+        "data": {
+          "activation": null,
+          "use_bias": true,
+          "lora_rank": null
+        },
+        "identifier": "dense",
+        "group_identifier": "layer"
+      },
+      {
+        "id": "0.kc9iafnk32m",
+        "type": "dense",
+        "initialized": false,
+        "position": {
+          "x": 791,
+          "y": 474
+        },
+        "data": {
+          "activation": null,
+          "use_bias": true,
+          "lora_rank": null
+        },
+        "identifier": "dense",
+        "group_identifier": "layer"
+      }
+    ],
+    "edges": [
+      {
+        "id": "vueflow__edge-0.0atma5spa9lout-0.0atma5spa9l-0.rjprcijyi19in-0.rjprcijyi19",
+        "type": "smoothstep",
+        "source": "0.0atma5spa9l",
+        "target": "0.rjprcijyi19",
+        "sourceHandle": "out-0.0atma5spa9l",
+        "targetHandle": "in-0.rjprcijyi19",
+        "data": {},
+        "label": "",
+        "sourceX": 854,
+        "sourceY": 254,
+        "targetX": 854.36669921875,
+        "targetY": 329
+      },
+      {
+        "id": "vueflow__edge-0.rjprcijyi19out-0.rjprcijyi19-0.kc9iafnk32min-0.kc9iafnk32m",
+        "type": "smoothstep",
+        "source": "0.rjprcijyi19",
+        "target": "0.kc9iafnk32m",
+        "sourceHandle": "out-0.rjprcijyi19",
+        "targetHandle": "in-0.kc9iafnk32m",
+        "data": {},
+        "label": "",
+        "sourceX": 854.36669921875,
+        "sourceY": 383,
+        "targetX": 854.36669921875,
+        "targetY": 469
+      }
+    ],
+    "position": [0, 0],
+    "zoom": 1,
+    "viewport": {
+      "x": 0,
+      "y": 0,
+      "zoom": 1
+    }
+  },
+  "unlockNodes": [],
+  "steps": [
+    {
+      "text": "Welcome to round two! In the previous session, we laid the groundwork for your neural network. Now, we’ll take a closer look at the settings of the layers and dive into the MNIST dataset.",
+      "narrator": "LeNet-5",
+      "addNodes": [],
+      "addEdges": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    },
+    {
+      "text": "Each node has several settings that control its behavior. You can access these by clicking on the node. For example, a Dense layer has two important parameters: the number of units and the activation function.",
+      "narrator": "LeNet-5",
+      "addNodes": [],
+      "addEdges": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": [
+        {
+          "type": "dense",
+          "data": ["activation", "units"]
+        }
+      ]
+    },
+    {
+      "text": "The number of units in a layer determines the complexity of the task that the layer can handle. Think of each layer as a team of workers. The units represent the size or capability of that team. Bigger teams are better equipped to tackle complex tasks.",
+      "narrator": "LeNet-5",
+      "addNodes": [],
+      "addEdges": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    },
+    {
+      "text": "However, be cautious! Having too many units is like assembling too large of a team. This can lead to inefficiency, higher costs, and reduced performance. We’ll discuss this more as we move forward, but for now, set the number of units in the first Dense layer to 128.",
+      "narrator": "LeNet-5",
+      "addNodes": [
+        {
+          "id": "0.rjprcijyi19",
+          "data": {
+            "units": 128,
+            "activation": null,
+            "use_bias": true,
+            "lora_rank": null
+          },
+          "identifier": "dense",
+          "group_identifier": "layer"
+        }
+      ],
+      "addEdges": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    },
+    {
+      "text": "Next, let’s look at the activation function. Think of it like assigning tasks to the team. The activation function dictates how the layer processes the data it receives. We'll cover various activation functions in more detail later. For now, set the activation function of the first Dense layer to ReLU.",
+      "narrator": "LeNet-5",
+      "addNodes": [
+        {
+          "id": "0.rjprcijyi19",
+          "data": {
+            "units": 128,
+            "activation": "relu",
+            "use_bias": true,
+            "lora_rank": null
+          },
+          "identifier": "dense",
+          "group_identifier": "layer"
+        }
+      ],
+      "addEdges": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    },
+    {
+      "text": "Awesome! ReLU is one of the most popular activation functions. It encourages the network to focus on the important aspects of the data and is highly effective in many cases.",
+      "narrator": "LeNet-5",
+      "addNodes": [],
+      "addEdges": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    },
+    {
+      "text": "To understand the impact of the input and the second Dense layer, let’s first talk about datasets. Think of a dataset like a group of advisors, each with a unique piece of knowledge. Your network is like a person trying to find the best path through a maze. Before each move, the network asks the advisors (the data) for guidance.",
+      "narrator": "LeNet-5",
+      "addNodes": [],
+      "addEdges": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    },
+    {
+      "text": "Today, we’ll use the MNIST dataset. This dataset contains 70,000 images of handwritten digits, each labeled with a digit from 0 to 9. The goal of our network is to learn to recognize and classify these digits.",
+      "narrator": "LeNet-5",
+      "addNodes": [],
+      "addEdges": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    },
+    {
+      "text": "You can find the MNIST dataset in the DATASETS section of the toolbar. Simply drag it onto the canvas to begin using it.",
+      "narrator": "LeNet-5",
+      "addNodes": [
+        {
+          "id": "0.c8bshg756v",
+          "data": {
+            "batch_size": 32
+          },
+          "identifier": "dataset_mnist",
+          "group_identifier": "dataset"
+        }
+      ],
+      "addEdges": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": ["mnist"],
+      "unlockNodes": [
+        {
+          "type": "mnist",
+          "data": ["train", "test"]
+        }
+      ]
+    },
+    {
+      "text": "Great! Now that you have the MNIST dataset, let’s adjust the network to handle this input. The input layer needs to know\nhow the images are structured. Set the shape of the Input layer to [28, 28, 1].",
+      "narrator": "LeNet-5",
+      "addNodes": [
+        {
+          "id": "0.0atma5spa9l",
+          "data": {
+            "shape": [28, 28, 1],
+            "batch_size": null,
+            "dtype": "float32",
+            "sparse": false,
+            "optional": false
+          },
+          "identifier": "input",
+          "group_identifier": "layer"
+        }
+      ],
+      "addEdges": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": [
+        {
+          "type": "input",
+          "data": ["shape"]
+        }
+      ]
+    },
+    {
+      "text": "Perfect! This shape ensures that the network will correctly interpret each image as a 28x28 pixel image with 1 color channel (for grayscale).",
+      "narrator": "LeNet-5",
+      "addNodes": [],
+      "addEdges": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    },
+    {
+      "text": "Now, let’s turn our attention to the second Dense layer, also known as the output layer. This layer will generate the final predictions of the network. Set the number of units in this layer to 10, as we need to recognize 10 different digits (from 0 to 9).",
+      "narrator": "LeNet-5",
+      "addNodes": [
+        {
+          "id": "0.kc9iafnk32m",
+          "data": {
+            "units": 10,
+            "activation": null,
+            "use_bias": true,
+            "lora_rank": null
+          },
+          "identifier": "dense",
+          "group_identifier": "layer"
+        }
+      ],
+      "addEdges": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    },
+    {
+      "text": "Excellent! Finally, set the activation function of the second Dense layer to Softmax. Softmax is ideal for classification tasks like this one, as it converts the output of the layer into probabilities, showing how likely each possible digit is for the given input.",
+      "narrator": "LeNet-5",
+      "addNodes": [
+        {
+          "id": "0.kc9iafnk32m",
+          "data": {
+            "units": 10,
+            "activation": "softmax",
+            "use_bias": true,
+            "lora_rank": null
+          },
+          "identifier": "dense",
+          "group_identifier": "layer"
+        }
+      ],
+      "addEdges": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    },
+    {
+      "text": "Well done! You've now set up your network to work with the MNIST dataset and configured the key components. In the next session, we'll move forward by incorporating the dataset into the model and adding two more layers to enhance its ability to classify the images effectively.",
+      "narrator": "LeNet-5",
+      "addNodes": [],
+      "addEdges": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    }
+  ]
+}

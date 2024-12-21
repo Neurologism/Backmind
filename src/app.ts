@@ -1,14 +1,18 @@
 import express, { Express, Request, Response, NextFunction } from 'express';
 import bodyParser from 'body-parser';
-import authRoutes from './routes/authRoutes';
-import userRoutes from './routes/userRoutes';
-import projectRoutes from './routes/projectRoutes';
+import authRoutes from './routes/authRouter';
+import userRoutes from './routes/userRouter';
+import projectRoutes from './routes/projectRouter';
+import projectModelRoutes from './routes/projectModelRouter';
+import tutorialRoutes from './routes/tutorialRouter';
 import { setupSwagger } from './swagger';
 import cors from 'cors';
 import morgan from 'morgan';
 import fs from 'fs';
 import path from 'path';
 import { logger, loggingMiddleware } from './middleware/loggingMiddleware';
+import rateLimit from 'express-rate-limit';
+import {} from './types';
 
 const accessLogStream = fs.createWriteStream(path.join('./logs/access.log'), {
   flags: 'a',
@@ -16,7 +20,22 @@ const accessLogStream = fs.createWriteStream(path.join('./logs/access.log'), {
 
 const app: Express = express();
 app.use(bodyParser.json());
-app.use(cors());
+app.use(
+  cors({
+    origin:
+      process.env.NODE_ENV === 'development'
+        ? '*'
+        : (process.env.WHITEMIND_HOSTNAME as string),
+    credentials: true,
+  })
+);
+app.use(
+  rateLimit({
+    windowMs: 60 * 1000 * Number(process.env.RATE_LIMIT_DURATION), // 5 min
+    max: Number(process.env.RATE_LIMIT_REQUESTS),
+    message: "You're sending too many requests.",
+  })
+);
 app.use(
   morgan(
     '[:date[web]] :method :url HTTP/:http-version :status :response-time ms - :res[content-length] :user-agent',
@@ -42,9 +61,13 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
 
 app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes);
+app.use('/api/project/model', projectModelRoutes);
 app.use('/api/project', projectRoutes);
+app.use('/api/tutorial', tutorialRoutes);
 
-setupSwagger(app);
+if (process.env.NODE_ENV !== 'production') {
+  setupSwagger(app);
+}
 
 app.get('/', async (req: Request, res: Response) => {
   req.logger.debug('GET / worked fine :)');

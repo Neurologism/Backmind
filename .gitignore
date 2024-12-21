@@ -1,7 +1,5 @@
 # custom
 .vscode/
-/brainet/
-/Brainet/
 
 # Logs
 logs
@@ -133,3 +131,4 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+sendgrid.env

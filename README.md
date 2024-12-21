@@ -1,25 +1,25 @@
 # Backmind
 
-Welcome to the backend repository for our innovative educational AI project, [Brainet](https://github.com/Neurologism/brainet)! Our goal is to empower users to build artificial intelligence systems using a visual, block-based interface similar to Scratch or LEGO, making AI development accessible and fun for everyone.
+Welcome to the backend repository for our innovative educational AI project, [Whitemind](https://github.com/Neurologism/whitemind)! Our goal is to empower users to build artificial intelligence systems using a visual, block-based interface similar to Scratch or LEGO, making AI development accessible and fun for everyone.
 
 ## Table of Contents
 
 Already know where you're going? We've got you covered.
 
-- [What is Brainet ?](#what-is-brainet)
+- [What is Whitemind ?](#what-is-whitemind)
 - [Technical Stack](#technical-stack)
 - [Installation](#installation)
 - [Configuration](#configuration)
 - [Documentation](#documentation)
 - [Logging](#logging)
 
-## What is Brainet?
+## What is Whitemind?
 
-[Brainet](https://github.com/Neurologism/brainet) is designed to simplify the process of creating and experimenting with AI models by using a modular, block-based approach. This method enables users to construct complex AI systems intuitively, without needing deep programming knowledge. Our platform provides an engaging and interactive way to learn about AI and machine learning by manipulating blocks that represent different components and functions.
+[Whitemind](https://github.com/Neurologism/whitemind) is designed to simplify the process of creating and experimenting with AI models by using a modular, block-based approach. This method enables users to construct complex AI systems intuitively, without needing deep programming knowledge. Our platform provides an engaging and interactive way to learn about AI and machine learning by manipulating blocks that represent different components and functions.
 
 ## Technical Stack
 
-The backend of Brainet is built using a modern and robust technology stack, ensuring scalability, performance, and ease of development:
+Backmind is built using a modern and robust technology stack, ensuring scalability, performance, and ease of development:
 
 ### Node.js
 
@@ -68,68 +68,32 @@ To proceed, you need to install MongoDB Community Edition on your local machine.
 Navigate to or create a directory where you want to store backmind and run the following commands. Remember to insert your MongoDB login data into the `MONGO_URI` environment variable.
 
 ```bash
-git clone https://github.com/SirPythonPhoenix/backmind.git
-cd backmind
+git clone https://github.com/Neurologism/Backmind.git
+cd Backmind
 npm install
 echo "MONGO_URI='mongodb://user:password@localhost:27017'" >> .env
 ```
 
-### 4. Cloning the Brainet Repository (optional)
+### Running for Development
 
-This step is optional, as you will only need it, if you want to train a model locally.
-
-#### Install Required Tools
-
-Ensure you have C++ and the g++ compiler installed on your system. If you’re using Linux, you can typically install these using your package manager. For example, on Debian-based systems like Ubuntu, you can use:
-
-```bash
-sudo apt-get install g++ build-essential
-```
-
-#### Installing Brainet
-
-You will also have to install brainet to be able to train models. First, make sure you have c++ and the g++ compiler installed. Then, run the following commands in the backmind directory.
-The `brainet` directory is included in the .gitignore file.
-
-```bash
-git clone https://github.com/Neurologism/brainet.git
-cd brainet/json_interface
-g++ run_json.cpp -std=c++20 -o runJson
-```
-
-If you're not on linux, pick a different compiler than g++. Also, do not set the environment variable `RECOMPILE_BRAINET='true'` if g++ is not available as it will use g++ by default.
-
-#### Running the Training Worker
-
-To run a training worker process for developement parallel to the express server, set the environment variable `START_TRAINING_WORKER_AS_SERVER=true`.
-If you just want to run a training worker without express server, you can use `npm run train-dev`.
-If you want to host a dedicated training worker, use `npm run build` and afterwards `npm run train-start`.
-Don't forget to set the environment variable `BRAINET_PATH=.../brainet/json_interface` depending on your needs.
-
-### Running for Developement
-
-Use the following npm scripts for developement.
+Use the following npm scripts for development.
 
 ```bash
 npm run pretty # formats the code
 npm test # test the code
 
-npm run server-dev # to start an express server
-npm run train-dev # to start a plain training worker
+npm run dev # to start an express server
 ```
 
 ### Running for Deployment
 
-Use the following npm scripts for developement.
+Use the following npm scripts for development.
 
 ```bash
 npm run build # nuilds type script into java script code
 
-npm run server-start # starts the express server
-npm run server-stop # stops the express server
-
-npm run train-start # starts the training worker
-npm run train-stop # stops the training worker
+npm run start # starts the express server
+npm run stop # stops the express server
 ```
 
 As backmind uses pm2, it is possible to use the full array of pm2 commands. To do so, make sure you've installed pm2 globally `npm i -g pm2` (or use npx). For instance, this would make it possible to use `pm2 start dist/index.js -i 0` to use the pm2 load balancer on all available cores on a dedicated server. You can find more [here](https://github.com/Unitech/pm2).
@@ -144,7 +108,7 @@ Below, you can find an example configuration utilizing some environment variable
 
 ### Examples
 
-Example developement configuration:
+Example development configuration:
 
 ```bash
 # /.env
@@ -155,6 +119,8 @@ DB_NAME="backmind-dev"
 JWT_SECRET="qwerty"
 SEND_ERR_TO_CLIENT="true"
 LOG_LEVEL="debug"
+NODE_ENV="development"
+DISABLE_ACCOUNT_CREATION="true"
 ```
 
 Example server configuration:
@@ -165,6 +131,7 @@ MONGO_URI='mongodb://user:password@hostname:port'
 JWT_TOKEN_EXPIRE_IN="100h" # for users to keep logged in for a few days via cookies
 DB_NAME="backmind"
 LOG_LEVEL="info"
+NODE_ENV="production"
 ```
 
 ## Documentation

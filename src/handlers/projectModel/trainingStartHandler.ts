@@ -2,8 +2,17 @@ import { Request, Response } from 'express';
 import { ProjectModel } from '../../mongooseSchemas/projectSchema';
 import { QueueItemModel } from '../../mongooseSchemas/queueItemSchema';
 import { TaskModel } from '../../mongooseSchemas/taskSchema';
+import { UserModel } from '../../mongooseSchemas/userSchema';
 
 export const trainingStartHandler = async (req: Request, res: Response) => {
+  let priority = 0;
+  let user = await UserModel.findOne({ _id: req.userId });
+  if (user != null && user.admin) {
+    priority = 2;
+  }
+  if (user != null && user.premium) {
+    priority = 1;
+  }
   const insertResult = await new TaskModel({
     status: 'queued',
     output: [],
@@ -16,7 +25,7 @@ export const trainingStartHandler = async (req: Request, res: Response) => {
     ownerId: req.userId,
   }).save();
   const modelId = insertResult._id;
-  await new QueueItemModel({ taskId: modelId }).save();
+  await new QueueItemModel({ taskId: modelId, priority: priority }).save();
   await ProjectModel.updateOne(
     { _id: req.project._id },
     {

@@ -118,3 +118,5 @@ export const getPfpSchema = z
       .strict(),
   })
   .strict();
+
+export const getCreditsSchema = z.object({}).strict();

@@ -20,8 +20,10 @@ import {
   isTakenUserSchema,
   uploadPfpSchema,
   getPfpSchema,
+  getCreditsSchema,
 } from '../zodSchemas/userSchemas';
 import { pfpUploadMulter } from '../multerConfigs/pfpUpload';
+import { getCredits } from '../handlers/user/getCredits';
 
 const router = express.Router();
 
@@ -86,6 +88,13 @@ router.post(
   schemaValidationMiddleware(uploadPfpSchema),
   pfpUploadMulter.single('pfp'),
   uploadPfpHandler
+);
+
+router.post(
+  '/get-credits',
+  authMiddleware,
+  schemaValidationMiddleware(getCreditsSchema),
+  getCredits
 );
 
 export default router;

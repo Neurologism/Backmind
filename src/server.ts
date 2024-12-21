@@ -5,7 +5,7 @@ setEnv();
 try {
   fs.mkdirSync('./logs');
 } catch (err: any) {
-  if (err.code !== 'EEXIST') throw err;
+  if (err.code !== 'EEXIST') throw logger.error(err);
 }
 
 const directories = ['./logs', './dataStorage', './dataStorage/pfp'];
@@ -24,7 +24,7 @@ async function main() {
   await connectToDatabase();
   app.listen(Number(process.env.EXPRESS_PORT), () => {
     logger.info(
-      `Express server is running at http://localhost:${process.env.EXPRESS_PORT}`
+      `Express server is running on port ${process.env.EXPRESS_PORT}`
     );
   });
 }

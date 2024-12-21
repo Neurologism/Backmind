@@ -14,14 +14,14 @@ export const registerSchema = z
   .strict()
   .refine(
     async (data) => {
-      const userExists =
+      return (
         (await UserModel.findOne({
           $or: [
             { 'emails.address': data.user.email },
             { brainetTag: data.user.brainetTag },
           ],
-        })) === null;
-      return userExists;
+        })) === null
+      );
     },
     { message: 'User with that email or brainetTag already exists.' }
   );
@@ -42,10 +42,7 @@ export const loginSchema = z
   .strict()
   .refine(
     async (data) => {
-      if (!data.user.email && !data.user.brainetTag) {
-        return false;
-      }
-      return true;
+      return !(!data.user.email && !data.user.brainetTag);
     },
     { message: 'Either email or brainetTag must be provided' }
   );

@@ -26,14 +26,13 @@ export const updateHandler = async (req: Request, res: Response) => {
       return res.status(400).json({ msg: 'The old password is incorrect.' });
     }
     delete req.body.user.oldPassword;
-  }
-
-  if (req.body.user.newPassword !== undefined) {
-    req.body.passwordHash = bcrypt.hashSync(
-      req.body.user.newPassword,
-      Number(process.env.SALT_ROUNDS)
-    );
-    delete req.body.user.newPassword;
+    if (req.body.user.newPassword !== undefined) {
+      req.body.passwordHash = bcrypt.hashSync(
+        req.body.user.newPassword,
+        Number(process.env.SALT_ROUNDS)
+      );
+      delete req.body.user.newPassword;
+    }
   }
 
   user.set(req.body.user);

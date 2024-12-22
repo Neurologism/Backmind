@@ -46,6 +46,37 @@ export const modelStopTrainingSchema = z
     return data;
   });
 
+export const modelDeleteTaskSchema = z
+  .object({
+    model: z
+      .object({
+        _id: z
+          .string()
+          .length(24)
+          .transform((_id) => new mongoose.Types.ObjectId(_id)),
+      })
+      .strict(),
+  })
+  .strict()
+  .transform(async (data: any) => {
+    const task = await TaskModel.findOne({ _id: data.model._id });
+    data.model = task;
+    return data;
+  })
+  .refine(
+    (data) => {
+      if (data.model === null) {
+        return false;
+      }
+      return true;
+    },
+    { message: 'Model with that id does not exist.' }
+  )
+  .transform((data) => {
+    data.project = { _id: data.model.projectId };
+    return data;
+  });
+
 export const modelStatusTrainingSchema = z
   .object({
     model: z

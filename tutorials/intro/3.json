@@ -185,27 +185,6 @@
       ]
     },
     {
-      "text": "The Normalization layer needs to understand the dataset before it can be helpful. To do this, connect the adapt connection from the MNIST dataset to the train connection.",
-      "narrator": "LeNet-5",
-      "addNodes": [],
-      "addEdges": [
-        {
-          "id": "vueflow__edge-0.8h6rp4fo12qval-adapt-0.8h6rp4fo12q-0.xq22qq3n1qjval-train-0.xq22qq3n1qj",
-          "type": "smoothstep",
-          "source": "0.8h6rp4fo12q",
-          "target": "0.xq22qq3n1qj",
-          "sourceHandle": "val-adapt-0.8h6rp4fo12q",
-          "targetHandle": "val-train-0.xq22qq3n1qj",
-          "data": {},
-          "label": ""
-        }
-      ],
-      "removeNodes": [],
-      "removeEdges": [],
-      "highlightNodeTypes": [],
-      "unlockNodes": []
-    },
-    {
       "text": "Now, let's integrate these layers into the network. First, remove the connection between the Input layer and the first Dense layer by selecting it and pressing Delete/Backspace.",
       "narrator": "LeNet-5",
       "addNodes": [],

@@ -5,9 +5,6 @@ import { TaskModel } from '../../mongooseSchemas/taskSchema';
 
 export const deleteTaskHandler = async (req: Request, res: Response) => {
   const model = req.body.model;
-  const dbProject = await ProjectModel.findOne({
-    _id: req.body.project._id,
-  });
 
   if (model.status === 'queued') {
     await QueueItemModel.deleteOne({ taskId: model!._id });
@@ -21,4 +18,6 @@ export const deleteTaskHandler = async (req: Request, res: Response) => {
   );
 
   await TaskModel.deleteOne({ _id: model._id });
+
+  res.status(200).send({ msg: 'Task deleted successfully.' });
 };

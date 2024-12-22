@@ -118,3 +118,5 @@ export const updateSecondaryEmailSchema = z.object({
     })
     .strict(),
 });
+
+export const deleteSecondaryEmailSchema = z.object({}).strict();

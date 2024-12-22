@@ -12,6 +12,7 @@ import { uploadPfpHandler } from '../handlers/user/uploadPfpHandler';
 import { swapPrimaryEmailHandler } from '../handlers/user/swapPrimaryEmailHandler';
 import { schemaValidationMiddleware } from '../middleware/schemaValidationMiddleware';
 import { updateSecondaryEmailHandler } from '../handlers/user/updateSecondaryEmailHandler';
+import { deleteSecondaryEmailHandler } from '../handlers/user/deleteSecondaryEmailHandler';
 import {
   getUserSchema,
   updateUserSchema,
@@ -25,6 +26,7 @@ import {
   getCreditsSchema,
   swapPrimaryEmailSchema,
   updateSecondaryEmailSchema,
+  deleteSecondaryEmailSchema,
 } from '../zodSchemas/userSchemas';
 import { pfpUploadMulter } from '../multerConfigs/pfpUpload';
 import { getCredits } from '../handlers/user/getCredits';
@@ -113,6 +115,13 @@ router.post(
   authMiddleware,
   schemaValidationMiddleware(updateSecondaryEmailSchema),
   updateSecondaryEmailHandler
+);
+
+router.post(
+  '/delete-secondary-email',
+  authMiddleware,
+  schemaValidationMiddleware(deleteSecondaryEmailSchema),
+  deleteSecondaryEmailHandler
 );
 
 export default router;

@@ -46,8 +46,8 @@ router.post(
   getHandler
 );
 
-router.post(
-  '/get-pfp',
+router.get(
+  '/get-pfp/:brainetTag',
   schemaValidationMiddleware(getPfpSchema),
   getPfpHandler
 );

@@ -9,6 +9,7 @@ import { searchHandler } from '../handlers/user/searchHandler';
 import { unfollowHandler } from '../handlers/user/unfollowHandler';
 import { updateHandler } from '../handlers/user/updateHandler';
 import { uploadPfpHandler } from '../handlers/user/uploadPfpHandler';
+import { swapPrimaryEmailHandler } from '../handlers/user/swapPrimaryEmailHandler';
 import { schemaValidationMiddleware } from '../middleware/schemaValidationMiddleware';
 import {
   getUserSchema,
@@ -21,6 +22,7 @@ import {
   uploadPfpSchema,
   getPfpSchema,
   getCreditsSchema,
+  swapPrimaryEmailSchema,
 } from '../zodSchemas/userSchemas';
 import { pfpUploadMulter } from '../multerConfigs/pfpUpload';
 import { getCredits } from '../handlers/user/getCredits';
@@ -95,6 +97,13 @@ router.post(
   authMiddleware,
   schemaValidationMiddleware(getCreditsSchema),
   getCredits
+);
+
+router.post(
+  '/swap-primary-email',
+  authMiddleware,
+  schemaValidationMiddleware(swapPrimaryEmailSchema),
+  swapPrimaryEmailHandler
 );
 
 export default router;

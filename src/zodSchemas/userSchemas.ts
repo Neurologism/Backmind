@@ -22,10 +22,7 @@ export const getUserSchema = z
   .strict()
   .refine(
     async (data) => {
-      if (data.user !== undefined && Object.keys(data.user).length === 0) {
-        return false;
-      }
-      return true;
+      return !(data.user !== undefined && Object.keys(data.user).length === 0);
     },
     {
       message:
@@ -56,22 +53,16 @@ export const updateUserSchema = z
   .strict()
   .refine(
     (data) => {
-      if (isEmptyObject(data.user)) {
-        return false;
-      }
-      return true;
+      return !isEmptyObject(data.user);
     },
     { message: 'Provide at least one field to update.' }
   )
   .refine(
     (data) => {
-      if (
+      return !(
         data.user.newPassword !== undefined &&
         data.user.oldPassword === undefined
-      ) {
-        return false;
-      }
-      return true;
+      );
     },
     { message: 'You need to provide the old password for a password change.' }
   );
@@ -88,10 +79,7 @@ export const isTakenUserSchema = z
   .strict()
   .refine(
     (data) => {
-      if (isEmptyObject(data.user)) {
-        return false;
-      }
-      return true;
+      return !isEmptyObject(data.user);
     },
     {
       message:
@@ -120,3 +108,5 @@ export const getPfpSchema = z
   .strict();
 
 export const getCreditsSchema = z.object({}).strict();
+
+export const swapPrimaryEmailSchema = z.object({}).strict();

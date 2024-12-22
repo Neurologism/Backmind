@@ -17,7 +17,6 @@
           "y": 22
         },
         "data": {
-          "shape": [28, 28, 1],
           "batch_size": null,
           "dtype": "float32",
           "sparse": false,
@@ -166,22 +165,6 @@
         "targetY": 126.80164715851126
       },
       {
-        "id": "vueflow__edge-0.accmpdnxgzmval-adapt-0.accmpdnxgzm-0.xq22qq3n1qjval-train-0.xq22qq3n1qj",
-        "type": "smoothstep",
-        "source": "0.accmpdnxgzm",
-        "target": "0.xq22qq3n1qj",
-        "sourceHandle": "val-adapt-0.accmpdnxgzm",
-        "targetHandle": "val-train-0.xq22qq3n1qj",
-        "data": {
-          "key": "adapt"
-        },
-        "label": "",
-        "sourceX": 757.666418394708,
-        "sourceY": 201.8079298096844,
-        "targetX": 853.7567996645778,
-        "targetY": 634.5521477525938
-      },
-      {
         "id": "vueflow__edge-0.accmpdnxgzmout-0.accmpdnxgzm-0.dq08q9e87chin-0.dq08q9e87ch",
         "type": "smoothstep",
         "source": "0.accmpdnxgzm",
@@ -281,8 +264,175 @@
   "unlockNodes": [],
   "steps": [
     {
-      "text": "",
+      "text": "Hi there! Welcome back! Did you know that artificial intelligence has been around for over 60 years? However, the incredible breakthroughs we’ve seen in AI only started in the last decade. Enough history—let’s dive back into your project!",
       "narrator": "LeNet-5",
+      "addNodes": [],
+      "addEdges": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    },
+    {
+      "text": "Click the Start Training button at the top of the screen to finally train your model!",
+      "narrator": "LeNet-5",
+      "addNodes": [],
+      "addEdges": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    },
+    {
+      "text": "Once you start training, results will appear just to the right of the Start Training button. These results include several values, but let’s focus on the most important one: accuracy.",
+      "narrator": "LeNet-5",
+      "addNodes": [],
+      "addEdges": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    },
+    {
+      "text": "Accuracy tells you how well your model is performing. It’s the percentage of images that your model correctly identifies. Your model should achieve an accuracy of around 85% to 95%. That means it can correctly identify 85 to 95 out of 100 digits in the MNIST dataset.",
+      "narrator": "LeNet-5",
+      "addNodes": [],
+      "addEdges": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    },
+    {
+      "text": "Want to make your model even better? You can improve its accuracy by giving it more time to learn. This is where epochs come into play. Think of your model like a team of employees. Each epoch represents a full day of work for the team. The more days (epochs) they work, the better they become at their job!",
+      "narrator": "LeNet-5",
+      "addNodes": [],
+      "addEdges": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    },
+    {
+      "text": "To adjust the number of epochs, click on the Fit node and set the epochs to 10.",
+      "narrator": "LeNet-5",
+      "addNodes": [
+        {
+          "id": "0.7uxn1yptkb4",
+          "type": "fit",
+          "data": {
+            "epochs": 10,
+            "name": "model"
+          },
+          "identifier": "fit",
+          "group_identifier": "model"
+        }
+      ],
+      "addEdges": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    },
+    {
+      "text": "Now, hit the Start Training button again and pay attention to how the accuracy improves over time. After each epoch, your model will get better at recognizing digits.",
+      "narrator": "LeNet-5",
+      "addNodes": [],
+      "addEdges": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    },
+    {
+      "text": "By the end of training, your accuracy should climb to around 99%. That means your model can correctly identify 99 out of 100 digits in the MNIST dataset! Incredible, isn’t it? But wait—there’s more! Let’s take a look at how your model’s accuracy improves visually.",
+      "narrator": "LeNet-5",
+      "addNodes": [],
+      "addEdges": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    },
+    {
+      "text": "To see this, head over to the VISUALIZER section on the toolbar on the left-hand side.",
+      "narrator": "LeNet-5",
+      "addNodes": [
+        {
+          "id": "0.1x1z1z1z1z1",
+          "type": "line-chart",
+          "data": {
+            "x_label": "epoch",
+            "y_label": "accuracy"
+          },
+          "identifier": "line-chart",
+          "group_identifier": "visualizer"
+        }
+      ],
+      "addEdges": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": ["line-chart"],
+      "unlockNodes": [
+        {
+          "type": "line-chart",
+          "data": ["x_label", "y_label"]
+        }
+      ]
+    },
+    {
+      "text": "Drag the Line Chart node onto the canvas. Then, go to its settings, find the y_label, and set it to accuracy.",
+      "narrator": "LeNet-5",
+      "addNodes": [],
+      "addEdges": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    },
+    {
+      "text": "Great job! Now hit the Start Training button again, and watch the line chart come to life.",
+      "narrator": "LeNet-5",
+      "addNodes": [],
+      "addEdges": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    },
+    {
+      "text": "As training progresses, you’ll see the accuracy line steadily rise. This shows how your model learns more about the digits in the MNIST dataset with each epoch.",
+      "narrator": "LeNet-5",
+      "addNodes": [],
+      "addEdges": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    },
+    {
+      "text": "Congratulations! You’ve successfully built, trained, and visualized your very own neural network. Fantastic work!",
+      "narrator": "LeNet-5",
+      "addNodes": [],
+      "addEdges": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    },
+    {
+      "text": "Thanks for sticking around until the end! This is just the beginning of your journey into AI. We’d love to hear your feedback and suggestions so we can keep improving these tutorials. If you’re interested, check out additional tutorials predicting wine quality. Or, explore the WhiteMind Editor to experiment and create your own projects.",
+      "narrator": "WhiteMind Team",
+      "addNodes": [],
+      "addEdges": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    },
+    {
+      "text": "Have an amazing day, and we can’t wait to see you again! ",
+      "narrator": "WhiteMind Team",
       "addNodes": [],
       "addEdges": [],
       "removeNodes": [],

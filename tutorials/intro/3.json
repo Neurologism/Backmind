@@ -17,7 +17,6 @@
           "y": 157
         },
         "data": {
-          "shape": [28, 28, 1],
           "batch_size": null,
           "dtype": "float32",
           "sparse": false,

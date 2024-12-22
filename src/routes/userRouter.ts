@@ -19,7 +19,6 @@ import {
   searchUserSchema,
   isTakenUserSchema,
   uploadPfpSchema,
-  getPfpSchema,
 } from '../zodSchemas/userSchemas';
 import { pfpUploadMulter } from '../multerConfigs/pfpUpload';
 
@@ -46,11 +45,7 @@ router.post(
   getHandler
 );
 
-router.get(
-  '/get-pfp/:brainetTag',
-  schemaValidationMiddleware(getPfpSchema),
-  getPfpHandler
-);
+router.get('/get-pfp/:userId', getPfpHandler);
 
 router.post(
   '/is-taken',

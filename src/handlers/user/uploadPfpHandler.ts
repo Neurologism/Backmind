@@ -23,10 +23,10 @@ export const uploadPfpHandler = async (req: Request, res: Response) => {
     });
   }
 
-  const filename = `${req.userId}.webp`;
+  const filename = `${req.userId}.png`;
   const pfpPath = path.join(process.env.PFP_DIRECTORY as string, filename);
 
-  await image.resize(128, 128).webp().toFile(pfpPath);
+  await image.resize(128, 128).png().toFile(pfpPath);
 
   const user = await UserModel.findById(req.userId);
   user!.pfpPath = pfpPath;

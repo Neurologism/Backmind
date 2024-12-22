@@ -108,13 +108,3 @@ export const unfollowUserSchema = z.object({}).strict();
 export const searchUserSchema = z.object({}).strict();
 
 export const uploadPfpSchema = z.object({}).strict();
-
-export const getPfpSchema = z
-  .object({
-    user: z
-      .object({
-        _id: z.string().transform((_id) => new mongoose.Types.ObjectId(_id)),
-      })
-      .strict(),
-  })
-  .strict();

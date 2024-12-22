@@ -20,10 +20,6 @@ export const swapPrimaryEmailHandler = async (req: Request, res: Response) => {
       .json({ msg: 'User does not have a primary or secondary email' });
   }
 
-  if (!primaryEmail.verified) {
-    return res.status(400).json({ msg: 'Primary email is not verified' });
-  }
-
   if (!secondaryEmail.verified) {
     return res.status(400).json({ msg: 'Secondary email is not verified' });
   }

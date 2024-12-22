@@ -110,3 +110,11 @@ export const getPfpSchema = z
 export const getCreditsSchema = z.object({}).strict();
 
 export const swapPrimaryEmailSchema = z.object({}).strict();
+
+export const updateSecondaryEmailSchema = z.object({
+  user: z
+    .object({
+      email: z.string().email(),
+    })
+    .strict(),
+});

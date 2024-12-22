@@ -21,6 +21,7 @@ router.post(
   '/download',
   authMiddleware,
   schemaValidationMiddleware(modelDownloadSchema),
+  accessProjectMiddleware,
   downloadHandler
 );
 
@@ -28,6 +29,7 @@ router.post(
   '/query',
   authMiddleware,
   schemaValidationMiddleware(modelQuerySchema),
+  accessProjectMiddleware,
   queryHandler
 );
 

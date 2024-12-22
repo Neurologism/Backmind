@@ -19,7 +19,7 @@ router.get('/check', authMiddleware, checkHandler);
 
 router.post('/login', schemaValidationMiddleware(loginSchema), loginHandler);
 
-router.post('/logout', schemaValidationMiddleware(logoutSchema), logoutHandler);
+//router.post('/logout', schemaValidationMiddleware(logoutSchema), logoutHandler); carefull with this one
 
 router.post(
   '/register',
@@ -28,6 +28,6 @@ router.post(
   registerHandler
 );
 
-router.get('/verify-email', verifyEmailHandler);
+router.get('/verify-email', verifyEmailHandler); // possible to verify other users ???
 
 export default router;

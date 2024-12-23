@@ -74,9 +74,9 @@ npm install
 echo "MONGO_URI='mongodb://user:password@localhost:27017'" >> .env
 ```
 
-### Running for Developement
+### Running for Development
 
-Use the following npm scripts for developement.
+Use the following npm scripts for development.
 
 ```bash
 npm run pretty # formats the code
@@ -87,7 +87,7 @@ npm run dev # to start an express server
 
 ### Running for Deployment
 
-Use the following npm scripts for developement.
+Use the following npm scripts for development.
 
 ```bash
 npm run build # nuilds type script into java script code
@@ -108,7 +108,7 @@ Below, you can find an example configuration utilizing some environment variable
 
 ### Examples
 
-Example developement configuration:
+Example development configuration:
 
 ```bash
 # /.env
@@ -119,7 +119,7 @@ DB_NAME="backmind-dev"
 JWT_SECRET="qwerty"
 SEND_ERR_TO_CLIENT="true"
 LOG_LEVEL="debug"
-NODE_ENV="developement"
+NODE_ENV="development"
 DISABLE_ACCOUNT_CREATION="true"
 ```
 

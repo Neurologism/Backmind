@@ -79,6 +79,7 @@ async function main() {
   for (const tutorialPath of tutorials) {
     await createTutorial(tutorialPath);
   }
+  console.log('Tutorials created');
 
   await mongoose.disconnect();
 }

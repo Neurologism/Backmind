@@ -42,7 +42,7 @@ const swaggerDefinition = {
     },
     {
       url: 'https://backmind.icinoxis.net',
-      description: 'Developement server',
+      description: 'Development server',
     },
     {
       url: 'http://localhost:3000',

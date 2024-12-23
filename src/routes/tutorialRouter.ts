@@ -8,14 +8,14 @@ import { getSchema, setStateSchema } from '../zodSchemas/tutorialSchemas';
 const router = express.Router();
 
 router.post(
-  '/api/tutorial/get',
+  '/get',
   authMiddleware,
   schemaValidationMiddleware(getSchema),
   getHandler
 );
 
 router.post(
-  '/api/tutorial/set-state',
+  '/set-state',
   authMiddleware,
   schemaValidationMiddleware(setStateSchema),
   setStateHandler

@@ -1,12 +1,21 @@
 import { Request, Response } from 'express';
 import { UserModel } from '../../mongooseSchemas/userSchema';
 import fs from 'fs';
+import path from 'path';
 
 export const getPfpHandler = async (req: Request, res: Response) => {
-  const user = await UserModel.findById(req.body.user._id);
-  const pfpPath = user!.pfpPath;
+  const user = await UserModel.findById(req.params.userId);
 
-  if (!pfpPath || !fs.existsSync(pfpPath)) {
+  if (user === null) {
+    return res.status(404).json({ msg: 'User not found.' });
+  }
+
+  const pfpPath = path.join(
+    process.env.PFP_DIRECTORY as string,
+    user._id.toString() + '.png'
+  );
+  console.log(pfpPath);
+  if (!fs.existsSync(pfpPath)) {
     return res
       .status(404)
       .json({ msg: "There's no profile picture for this user." });

@@ -32,7 +32,8 @@ export const setEnv = (filename: string = '.env') => {
     process.env.NODE_ENV === 'development' ? 'development' : 'production';
   process.env.DISABLE_ACCOUNT_CREATION =
     process.env.DISABLE_ACCOUNT_CREATION === 'true' ? 'true' : '';
-  process.env.FILES_DIRECTORY = process.env.FILES_DIRECTORY || './dataStorage';
+  process.env.FILES_DIRECTORY =
+    process.env.FILES_DIRECTORY || path.join(process.cwd(), './dataStorage');
   process.env.PFP_DIRECTORY =
     process.env.PFP_DIRECTORY ||
     path.join(process.env.FILES_DIRECTORY as string, '/pfp');

@@ -54,11 +54,7 @@ router.post(
   getHandler
 );
 
-router.post(
-  '/get-pfp',
-  schemaValidationMiddleware(getPfpSchema),
-  getPfpHandler
-);
+router.get('/get-pfp/:userId', getPfpHandler);
 
 router.post(
   '/is-taken',

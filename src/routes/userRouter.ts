@@ -9,7 +9,10 @@ import { searchHandler } from '../handlers/user/searchHandler';
 import { unfollowHandler } from '../handlers/user/unfollowHandler';
 import { updateHandler } from '../handlers/user/updateHandler';
 import { uploadPfpHandler } from '../handlers/user/uploadPfpHandler';
+import { swapPrimaryEmailHandler } from '../handlers/user/swapPrimaryEmailHandler';
 import { schemaValidationMiddleware } from '../middleware/schemaValidationMiddleware';
+import { updateSecondaryEmailHandler } from '../handlers/user/updateSecondaryEmailHandler';
+import { deleteSecondaryEmailHandler } from '../handlers/user/deleteSecondaryEmailHandler';
 import {
   getUserSchema,
   updateUserSchema,
@@ -19,8 +22,14 @@ import {
   searchUserSchema,
   isTakenUserSchema,
   uploadPfpSchema,
+  getPfpSchema,
+  getCreditsSchema,
+  swapPrimaryEmailSchema,
+  updateSecondaryEmailSchema,
+  deleteSecondaryEmailSchema,
 } from '../zodSchemas/userSchemas';
 import { pfpUploadMulter } from '../multerConfigs/pfpUpload';
+import { getCredits } from '../handlers/user/getCredits';
 
 const router = express.Router();
 
@@ -81,6 +90,34 @@ router.post(
   schemaValidationMiddleware(uploadPfpSchema),
   pfpUploadMulter.single('pfp'),
   uploadPfpHandler
+);
+
+router.post(
+  '/get-credits',
+  authMiddleware,
+  schemaValidationMiddleware(getCreditsSchema),
+  getCredits
+);
+
+router.post(
+  '/swap-primary-email',
+  authMiddleware,
+  schemaValidationMiddleware(swapPrimaryEmailSchema),
+  swapPrimaryEmailHandler
+);
+
+router.post(
+  '/update-secondary-email',
+  authMiddleware,
+  schemaValidationMiddleware(updateSecondaryEmailSchema),
+  updateSecondaryEmailHandler
+);
+
+router.post(
+  '/delete-secondary-email',
+  authMiddleware,
+  schemaValidationMiddleware(deleteSecondaryEmailSchema),
+  deleteSecondaryEmailHandler
 );
 
 export default router;

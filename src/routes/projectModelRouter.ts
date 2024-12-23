@@ -5,6 +5,7 @@ import { queryHandler } from '../handlers/projectModel/queryHandler';
 import { trainingStartHandler } from '../handlers/projectModel/trainingStartHandler';
 import { trainingStatusHandler } from '../handlers/projectModel/trainingStatusHandler';
 import { trainingStopHandler } from '../handlers/projectModel/trainingStopHandler';
+import { deleteTaskHandler } from '../handlers/projectModel/deleteTaskHandler';
 import { schemaValidationMiddleware } from '../middleware/schemaValidationMiddleware';
 import {
   modelStartTrainingSchema,
@@ -12,6 +13,7 @@ import {
   modelStatusTrainingSchema,
   modelQuerySchema,
   modelDownloadSchema,
+  modelDeleteTaskSchema,
 } from '../zodSchemas/projectModelSchemas';
 import { accessProjectMiddleware } from '../middleware/accessProjectMiddleware';
 
@@ -21,6 +23,7 @@ router.post(
   '/download',
   authMiddleware,
   schemaValidationMiddleware(modelDownloadSchema),
+  accessProjectMiddleware,
   downloadHandler
 );
 
@@ -28,6 +31,7 @@ router.post(
   '/query',
   authMiddleware,
   schemaValidationMiddleware(modelQuerySchema),
+  accessProjectMiddleware,
   queryHandler
 );
 
@@ -53,6 +57,14 @@ router.post(
   schemaValidationMiddleware(modelStopTrainingSchema),
   accessProjectMiddleware,
   trainingStopHandler
+);
+
+router.post(
+  '/delete-task',
+  authMiddleware,
+  schemaValidationMiddleware(modelDeleteTaskSchema),
+  accessProjectMiddleware,
+  deleteTaskHandler
 );
 
 export default router;

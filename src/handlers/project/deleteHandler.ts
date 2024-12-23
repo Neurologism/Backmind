@@ -10,21 +10,9 @@ export const deleteHandler = async (req: Request, res: Response) => {
       .json({ msg: 'You are not the owner of this project.' });
   }
 
-  const activeModels =
-    (await TaskModel.findOne({
-      $and: [
-        { projectId: req.project!._id },
-        { status: { $in: ['queued', 'training'] } },
-      ],
-    })) !== null;
-  if (activeModels) {
-    return res.status(400).json({
-      msg: 'You cannot delete a project with training in queue or in progress.',
-    });
-  }
-
   const promises = [];
 
+  // currently not deleting queued tasks, but worker handles this
   promises.push(ProjectModel.deleteOne({ _id: req.project!._id }));
   promises.push(TaskModel.deleteMany({ projectId: req.project!._id }));
   promises.push(

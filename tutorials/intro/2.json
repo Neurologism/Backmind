@@ -233,35 +233,7 @@
       ]
     },
     {
-      "text": "Great! Now that you have the MNIST dataset, let’s adjust the network to handle this input. The input layer needs to know\nhow the images are structured. Set the shape of the Input layer to [28, 28, 1].",
-      "narrator": "LeNet-5",
-      "addNodes": [
-        {
-          "id": "0.0atma5spa9l",
-          "data": {
-            "shape": [28, 28, 1],
-            "batch_size": null,
-            "dtype": "float32",
-            "sparse": false,
-            "optional": false
-          },
-          "identifier": "input",
-          "group_identifier": "layer"
-        }
-      ],
-      "addEdges": [],
-      "removeNodes": [],
-      "removeEdges": [],
-      "highlightNodeTypes": [],
-      "unlockNodes": [
-        {
-          "type": "input",
-          "data": ["shape"]
-        }
-      ]
-    },
-    {
-      "text": "Perfect! This shape ensures that the network will correctly interpret each image as a 28x28 pixel image with 1 color channel (for grayscale).",
+      "text": "Great! Now that you have the MNIST dataset, let’s adjust the second Dense layer, also known as the output layer. The output layer is responsible for generating the final predictions of the network and thus depends on the task at hand.",
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],
@@ -271,7 +243,7 @@
       "unlockNodes": []
     },
     {
-      "text": "Now, let’s turn our attention to the second Dense layer, also known as the output layer. This layer will generate the final predictions of the network. Set the number of units in this layer to 10, as we need to recognize 10 different digits (from 0 to 9).",
+      "text": "Set the number of units in the output layer to 10, as we need to recognize 10 different digits (from 0 to 9).",
       "narrator": "LeNet-5",
       "addNodes": [
         {
@@ -293,7 +265,7 @@
       "unlockNodes": []
     },
     {
-      "text": "Excellent! Finally, set the activation function of the second Dense layer to Softmax. Softmax is ideal for classification tasks like this one, as it converts the output of the layer into probabilities, showing how likely each possible digit is for the given input.",
+      "text": "Excellent! Finally, set the activation function to Softmax. Softmax is ideal for classification tasks like this one. It converts the output of the layer into probabilities, showing how likely the network thinks each digit is the correct answer.",
       "narrator": "LeNet-5",
       "addNodes": [
         {

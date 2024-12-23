@@ -17,7 +17,6 @@
           "y": 22
         },
         "data": {
-          "shape": [28, 28, 1],
           "batch_size": null,
           "dtype": "float32",
           "sparse": false,
@@ -132,22 +131,6 @@
         "sourceY": 71,
         "targetX": 666.2811610260708,
         "targetY": 126.80641926553776
-      },
-      {
-        "id": "vueflow__edge-0.accmpdnxgzmval-adapt-0.accmpdnxgzm-0.xq22qq3n1qjval-train-0.xq22qq3n1qj",
-        "type": "smoothstep",
-        "source": "0.accmpdnxgzm",
-        "target": "0.xq22qq3n1qj",
-        "sourceHandle": "val-adapt-0.accmpdnxgzm",
-        "targetHandle": "val-train-0.xq22qq3n1qj",
-        "data": {
-          "key": "adapt"
-        },
-        "label": "",
-        "sourceX": 757.6811854401333,
-        "sourceY": 201.80641926553776,
-        "targetX": 897.1666870117188,
-        "targetY": 306
       },
       {
         "id": "vueflow__edge-0.accmpdnxgzmout-0.accmpdnxgzm-0.dq08q9e87chin-0.dq08q9e87ch",

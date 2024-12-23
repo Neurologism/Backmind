@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { isEmptyObject } from '../../utility/isEmptyObject';
 import { UserModel } from '../../mongooseSchemas/userSchema';
-import { ProjectModel } from '../../mongooseSchemas/projectSchema';
+// import { ProjectModel } from '../../mongooseSchemas/projectSchema';
 
 export const getHandler = async (req: Request, res: Response) => {
   let searchParams;
@@ -10,7 +10,7 @@ export const getHandler = async (req: Request, res: Response) => {
     if (req.userId === undefined) {
       return res
         .status(401)
-        .json({ msg: 'You are not authenticated but provided an empty body.' });
+        .json({ msg: 'You are not authenticated and provided an empty body.' });
     }
     searchParams = {
       _id: req.userId,
@@ -26,17 +26,9 @@ export const getHandler = async (req: Request, res: Response) => {
       .json({ msg: 'No user found matching the criteria.' });
   }
 
-  const isUser = user._id.toString() === req.userId?.toString();
-  const isFollowedByUser = (() => {
-    for (const followingId of user.followingIds) {
-      if (followingId._id.toString() === req.userId?.toString()) {
-        return true;
-      }
-      return false;
-    }
-  })();
+  const ownsProfile = user._id.toString() === req.userId?.toString();
 
-  if (user.visibility === 'private' && !isUser) {
+  if (user.visibility === 'private' && !ownsProfile) {
     return res.status(403).json({
       msg: 'This user is private. You can only access private users if they follow you.',
     });
@@ -46,7 +38,7 @@ export const getHandler = async (req: Request, res: Response) => {
     isTutorialProject: false,
   } as any;
 
-  if (!isUser) {
+  if (!ownsProfile) {
     query['visibility'] = 'public';
   }
 
@@ -66,9 +58,10 @@ export const getHandler = async (req: Request, res: Response) => {
     followerIds: user.followerIds,
     followingIds: user.followingIds,
   } as any;
-  if (isUser) {
+  if (ownsProfile) {
     userJson.dateOfBirth = user.dateOfBirth;
     userJson.emails = [];
+    userJson.remainingCredits = user.remainingCredits;
     for (const email of user.emails) {
       userJson.emails.push({
         emailType: email.emailType,

@@ -24,6 +24,7 @@ const getSelfUserResponseScheme = z
             })
             .strict()
         ),
+        remainingCredits: z.number(),
       })
       .strict(),
   })

@@ -15,8 +15,8 @@ export const uploadPfpHandler = async (req: Request, res: Response) => {
   if (
     !metadata.width ||
     !metadata.height ||
-    metadata.width > 512 ||
-    metadata.height > 512
+    metadata.width > Number(process.env.MAX_PFP_SIZE) ||
+    metadata.height > Number(process.env.MAX_PFP_SIZE)
   ) {
     return res.status(400).json({
       msg: 'Invalid image dimensions. Resolution should be below 512x512',

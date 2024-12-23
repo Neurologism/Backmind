@@ -357,18 +357,7 @@
     {
       "text": "To see this, head over to the VISUALIZER section on the toolbar on the left-hand side.",
       "narrator": "LeNet-5",
-      "addNodes": [
-        {
-          "id": "0.1x1z1z1z1z1",
-          "type": "line-chart",
-          "data": {
-            "x_label": "epoch",
-            "y_label": "accuracy"
-          },
-          "identifier": "line-chart",
-          "group_identifier": "visualizer"
-        }
-      ],
+      "addNodes": [],
       "addEdges": [],
       "removeNodes": [],
       "removeEdges": [],
@@ -383,7 +372,18 @@
     {
       "text": "Drag the Line Chart node onto the canvas. Then, go to its settings, find the y_label, and set it to accuracy.",
       "narrator": "LeNet-5",
-      "addNodes": [],
+      "addNodes": [
+        {
+          "id": "0.1x1z1z1z1z1",
+          "type": "line-chart",
+          "data": {
+            "x_label": "epoch",
+            "y_label": "accuracy"
+          },
+          "identifier": "line-chart",
+          "group_identifier": "visualizer"
+        }
+      ],
       "addEdges": [],
       "removeNodes": [],
       "removeEdges": [],

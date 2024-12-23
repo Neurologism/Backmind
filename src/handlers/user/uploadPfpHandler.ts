@@ -26,7 +26,13 @@ export const uploadPfpHandler = async (req: Request, res: Response) => {
   const filename = `${req.userId}.png`;
   const pfpPath = path.join(process.env.PFP_DIRECTORY as string, filename);
 
-  await image.resize(128, 128).png().toFile(pfpPath);
+  await image
+    .resize(
+      Number(process.env.PFP_SAVE_SIZE),
+      Number(process.env.PFP_SAVE_SIZE)
+    )
+    .png()
+    .toFile(pfpPath);
 
   const user = await UserModel.findById(req.userId);
   user!.pfpPath = pfpPath;

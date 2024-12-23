@@ -14,6 +14,7 @@ const tutorials = [
   'intro/5.json',
   'intro/6.json',
   'intro/7.json',
+  'intro/8.json',
 ];
 
 async function createTutorial(tutorialPath: string) {

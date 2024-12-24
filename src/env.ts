@@ -46,4 +46,6 @@ export const setEnv = (filename: string = '.env') => {
   process.env.EMAIL_VERIFICATION_TOKEN_VALID_MINUTES =
     process.env.EMAIL_VERIFICATION_TOKEN_VALID_MINUTES || '60';
   process.env.MAX_TOKENS = process.env.MAX_TOKENS || '5';
+  process.env.MAX_PFP_SIZE = process.env.MAX_PFP_SIZE || '512';
+  process.env.PFP_SAVE_SIZE = process.env.PFP_SAVE_SIZE || '128';
 };

@@ -29,21 +29,17 @@ export const authMiddleware = async (
       return res.status(404).json({ msg: 'User matching token not found' });
     }
 
-    const userTokens = user.tokens;
-
     const oneMonthAgo = new Date();
     oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
 
-    const updatedTokens = userTokens.filter((token: any) => {
-      return new Date(token.createdAt) > oneMonthAgo;
-    });
-
-    user.tokens = updatedTokens as any;
+    user.tokens = user.tokens.filter((t) => {
+      return t.dateAdded > oneMonthAgo;
+    }) as any;
 
     await user.save();
 
-    if (!userTokens.find((token: any) => token.token === token)) {
-      return res.status(401).json({ msg: 'Invalid token' });
+    if (!user.tokens.find((t) => t.token === token)) {
+      return res.status(401).json({ msg: 'Token not found' });
     }
 
     req.userId = userId;

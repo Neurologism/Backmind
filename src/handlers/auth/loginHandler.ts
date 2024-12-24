@@ -46,6 +46,5 @@ export const loginHandler = async (req: Request, res: Response) => {
     user.tokens.shift();
   }
   await user.save();
-
   return res.status(200).json({ token: token });
 };

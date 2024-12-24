@@ -304,7 +304,17 @@
       "unlockNodes": []
     },
     {
-      "text": "Want to make your model even better? You can improve its accuracy by giving it more time to learn. This is where epochs come into play. Think of your model like a team of employees. Each epoch represents a full day of work for the team. The more days (epochs) they work, the better they become at their job!",
+      "text": "Want to make your model even better? You can improve its accuracy by giving it more time to learn. This is where epochs come into play.",
+      "narrator": "LeNet-5",
+      "addNodes": [],
+      "addEdges": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    },
+    {
+      "text": "Training a model is like navigating a maze, with each move guided by advisors (the dataset). An epoch is one round of consulting all the advisors. Revisiting them multiple times deepens your understanding of the maze, increasing your chances of finding the best path.",
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],

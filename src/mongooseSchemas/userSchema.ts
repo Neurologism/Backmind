@@ -30,6 +30,16 @@ export const mongooseUserSchema = new mongoose.Schema({
     },
     required: false,
   },
+  tokens: {
+    type: [
+      {
+        token: { type: String, required: true },
+        dateAdded: { type: Date, required: true, default: () => new Date() },
+      },
+    ],
+    required: true,
+    default: [],
+  },
   aboutYou: {
     type: String,
     required: function () {

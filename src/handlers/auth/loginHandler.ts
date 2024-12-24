@@ -38,5 +38,14 @@ export const loginHandler = async (req: Request, res: Response) => {
     { expiresIn: process.env.JWT_TOKEN_EXPIRE_IN }
   );
 
+  user.tokens.push({ token: token });
+  const maxTokens = process.env.MAX_TOKENS
+    ? parseInt(process.env.MAX_TOKENS)
+    : 10;
+  if (user.tokens.length > maxTokens) {
+    user.tokens.shift();
+  }
+  await user.save();
+
   return res.status(200).json({ token: token });
 };

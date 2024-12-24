@@ -304,7 +304,17 @@
       "unlockNodes": []
     },
     {
-      "text": "Want to make your model even better? You can improve its accuracy by giving it more time to learn. This is where epochs come into play. Think of your model like a team of employees. Each epoch represents a full day of work for the team. The more days (epochs) they work, the better they become at their job!",
+      "text": "Want to make your model even better? You can improve its accuracy by giving it more time to learn. This is where epochs come into play.",
+      "narrator": "LeNet-5",
+      "addNodes": [],
+      "addEdges": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    },
+    {
+      "text": "Training a model is like navigating a maze, with each move guided by advisors (the dataset). An epoch is one round of consulting all the advisors. Revisiting them multiple times deepens your understanding of the maze, increasing your chances of finding the best path.",
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],
@@ -357,18 +367,7 @@
     {
       "text": "To see this, head over to the VISUALIZER section on the toolbar on the left-hand side.",
       "narrator": "LeNet-5",
-      "addNodes": [
-        {
-          "id": "0.1x1z1z1z1z1",
-          "type": "line-chart",
-          "data": {
-            "x_label": "epoch",
-            "y_label": "accuracy"
-          },
-          "identifier": "line-chart",
-          "group_identifier": "visualizer"
-        }
-      ],
+      "addNodes": [],
       "addEdges": [],
       "removeNodes": [],
       "removeEdges": [],
@@ -383,7 +382,18 @@
     {
       "text": "Drag the Line Chart node onto the canvas. Then, go to its settings, find the y_label, and set it to accuracy.",
       "narrator": "LeNet-5",
-      "addNodes": [],
+      "addNodes": [
+        {
+          "id": "0.1x1z1z1z1z1",
+          "type": "line-chart",
+          "data": {
+            "x_label": "epoch",
+            "y_label": "accuracy"
+          },
+          "identifier": "line-chart",
+          "group_identifier": "visualizer"
+        }
+      ],
       "addEdges": [],
       "removeNodes": [],
       "removeEdges": [],

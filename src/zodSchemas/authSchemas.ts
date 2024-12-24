@@ -48,3 +48,5 @@ export const loginSchema = z
   );
 
 export const logoutSchema = z.object({}).strict();
+
+export const logoutAllSchema = z.object({}).strict();

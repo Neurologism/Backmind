@@ -6,9 +6,13 @@ export const getSchema = z
     tutorialId: z
       .string()
       .length(24)
-      .transform((_id) => new mongoose.Types.ObjectId(_id)),
+      .transform((_id) => new mongoose.Types.ObjectId(_id))
+      .optional(),
+    tutorialName: z.string().optional(),
   })
-  .strict();
+  .refine((data) => data.tutorialId || data.tutorialName, {
+    message: 'Either tutorialId or tutorialName must be set',
+  });
 
 export const setStateSchema = z
   .object({

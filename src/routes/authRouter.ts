@@ -10,8 +10,10 @@ import {
   registerSchema,
   loginSchema,
   logoutSchema,
+  logoutAllSchema,
 } from '../zodSchemas/authSchemas';
 import { isEnabledMiddleware } from '../middleware/isTrueMiddleware';
+import { logoutAllHandler } from '../handlers/auth/logoutAllHandler';
 
 const router = express.Router();
 
@@ -29,5 +31,19 @@ router.post(
 );
 
 router.get('/verify-email', verifyEmailHandler); // possible to verify other users ???
+
+router.get(
+  '/logout',
+  authMiddleware,
+  schemaValidationMiddleware(logoutSchema),
+  logoutHandler
+);
+
+router.get(
+  '/logout-all',
+  authMiddleware,
+  schemaValidationMiddleware(logoutAllSchema),
+  logoutAllHandler
+);
 
 export default router;

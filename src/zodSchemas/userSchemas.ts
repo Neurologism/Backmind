@@ -89,9 +89,25 @@ export const isTakenUserSchema = z
 
 export const deleteUserSchema = z.object({}).strict();
 
-export const followUserSchema = z.object({}).strict();
+export const followUserSchema = z
+  .object({
+    user: z
+      .object({
+        _id: z.string().transform((_id) => new mongoose.Types.ObjectId(_id)),
+      })
+      .strict(),
+  })
+  .strict();
 
-export const unfollowUserSchema = z.object({}).strict();
+export const unfollowUserSchema = z
+  .object({
+    user: z
+      .object({
+        _id: z.string().transform((_id) => new mongoose.Types.ObjectId(_id)),
+      })
+      .strict(),
+  })
+  .strict();
 
 export const searchUserSchema = z.object({}).strict();
 

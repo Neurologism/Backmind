@@ -19,6 +19,9 @@ export const authMiddleware = (
       process.env.JWT_SECRET as string
     ) as JwtPayload;
     const userId = new mongoose.Types.ObjectId(decoded._id);
+    if (!userId) {
+      return res.status(401).json({ msg: 'Invalid token' });
+    }
     req.userId = userId;
     next();
   } catch (err) {

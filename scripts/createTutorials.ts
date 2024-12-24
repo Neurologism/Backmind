@@ -19,7 +19,7 @@ const tutorials = [
 
 async function createTutorial(tutorialPath: string) {
   const tutorialJson = JSON.parse(
-    fs.readFileSync(`../tutorials/${tutorialPath}`, 'utf8')
+    fs.readFileSync(`./tutorials/${tutorialPath}`, 'utf8')
   ) as any;
 
   if (await TutorialModel.findOne({ name: tutorialJson.name })) {
@@ -32,14 +32,12 @@ async function createTutorial(tutorialPath: string) {
         ownerId: new mongoose.Types.ObjectId(ownerId),
       }
     );
-    await TutorialModel.updateOne(
-      { name: tutorialJson.name },
-      {
-        ...tutorialJson,
-        ownerId: new mongoose.Types.ObjectId(ownerId),
-        startProject: startProjectId,
-      }
-    );
+    tutorialJson.ownerId = new mongoose.Types.ObjectId(ownerId);
+    tutorialJson.startProject = startProjectId;
+    tutorialJson.nextTutorials = tutorial?.nextTutorials;
+    tutorialJson.requiredTutorials = tutorial?.requiredTutorials;
+
+    await TutorialModel.updateOne({ name: tutorialJson.name }, tutorialJson);
     if (process.env.DELETE_PROJECTS === 'true') {
       await ProjectModel.deleteMany({
         tutorialId: tutorial?._id,

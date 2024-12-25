@@ -7,14 +7,12 @@ import { trainingStatusHandler } from '../handlers/projectModel/trainingStatusHa
 import { trainingStopHandler } from '../handlers/projectModel/trainingStopHandler';
 import { deleteTaskHandler } from '../handlers/projectModel/deleteTaskHandler';
 import { schemaValidationMiddleware } from '../middleware/schemaValidationMiddleware';
-import {
-  modelStartTrainingSchema,
-  modelStopTrainingSchema,
-  modelStatusTrainingSchema,
-  modelQuerySchema,
-  modelDownloadSchema,
-  modelDeleteTaskSchema,
-} from '../zodSchemas/projectModelSchemas';
+import { trainingStartSchema } from '../zodSchemas/projectModel/trainingStartSchema';
+import { trainingStopSchema } from '../zodSchemas/projectModel/trainingStopSchema';
+import { trainingStatusSchema } from '../zodSchemas/projectModel/trainingStatus';
+import { querySchema } from '../zodSchemas/projectModel/querySchema';
+import { downloadSchema } from '../zodSchemas/projectModel/downloadSchema';
+import { deleteTaskSchema } from '../zodSchemas/projectModel/deleteTaskSchema';
 import { accessProjectMiddleware } from '../middleware/accessProjectMiddleware';
 
 const router = express.Router();
@@ -22,7 +20,7 @@ const router = express.Router();
 router.post(
   '/download',
   authMiddleware,
-  schemaValidationMiddleware(modelDownloadSchema),
+  schemaValidationMiddleware(downloadSchema),
   accessProjectMiddleware,
   downloadHandler
 );
@@ -30,7 +28,7 @@ router.post(
 router.post(
   '/query',
   authMiddleware,
-  schemaValidationMiddleware(modelQuerySchema),
+  schemaValidationMiddleware(querySchema),
   accessProjectMiddleware,
   queryHandler
 );
@@ -38,7 +36,7 @@ router.post(
 router.post(
   '/training-start',
   authMiddleware,
-  schemaValidationMiddleware(modelStartTrainingSchema),
+  schemaValidationMiddleware(trainingStartSchema),
   accessProjectMiddleware,
   trainingStartHandler
 );
@@ -46,7 +44,7 @@ router.post(
 router.post(
   '/training-status',
   authMiddleware,
-  schemaValidationMiddleware(modelStatusTrainingSchema),
+  schemaValidationMiddleware(trainingStatusSchema),
   accessProjectMiddleware,
   trainingStatusHandler
 );
@@ -54,7 +52,7 @@ router.post(
 router.post(
   '/training-stop',
   authMiddleware,
-  schemaValidationMiddleware(modelStopTrainingSchema),
+  schemaValidationMiddleware(trainingStopSchema),
   accessProjectMiddleware,
   trainingStopHandler
 );
@@ -62,7 +60,7 @@ router.post(
 router.post(
   '/delete-task',
   authMiddleware,
-  schemaValidationMiddleware(modelDeleteTaskSchema),
+  schemaValidationMiddleware(deleteTaskSchema),
   accessProjectMiddleware,
   deleteTaskHandler
 );

@@ -6,12 +6,10 @@ import { registerHandler } from '../handlers/auth/registerHandler';
 import { verifyEmailHandler } from '../handlers/auth/verifyEmailHandler';
 import { schemaValidationMiddleware } from '../middleware/schemaValidationMiddleware';
 import { authMiddleware } from '../middleware/authMiddleware';
-import {
-  registerSchema,
-  loginSchema,
-  logoutSchema,
-  logoutAllSchema,
-} from '../zodSchemas/authSchemas';
+import { registerSchema } from '../zodSchemas/auth/registerSchema';
+import { loginSchema } from '../zodSchemas/auth/loginSchema';
+import { logoutSchema } from '../zodSchemas/auth/logoutSchema';
+import { logoutAllSchema } from '../zodSchemas/auth/logoutAllSchema';
 import { isEnabledMiddleware } from '../middleware/isTrueMiddleware';
 import { logoutAllHandler } from '../handlers/auth/logoutAllHandler';
 

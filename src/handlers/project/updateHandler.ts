@@ -4,6 +4,7 @@ import { updateAsContributorSchema } from '../../zodSchemas/project/updateAsCont
 import { z } from 'zod';
 import { UserModel } from '../../mongooseSchemas/userSchema';
 import { ProjectModel } from '../../mongooseSchemas/projectSchema';
+// import fs from 'fs';
 
 export const updateHandler = async (req: Request, res: Response) => {
   if (

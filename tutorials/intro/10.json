@@ -1,0 +1,703 @@
+{
+  "name": "Validation and Early Stopping",
+  "summary": "",
+  "description": "",
+  "visibility": "public",
+  "requiredTutorials": [""],
+  "nextTutorials": [],
+  "experienceGain": 100,
+  "startProject": {
+    "nodes": [
+      {
+        "id": "0.c9agnbfq30p",
+        "type": "wine_quality",
+        "initialized": false,
+        "position": {
+          "x": 1448.7789088386617,
+          "y": 273.02985577855696
+        },
+        "data": {
+          "batch_size": 128
+        },
+        "identifier": "dataset_wine_quality",
+        "group_identifier": "dataset"
+      },
+      {
+        "id": "0.nkcq9um7vfj",
+        "type": "input_layer",
+        "initialized": false,
+        "position": {
+          "x": 1507.700101366182,
+          "y": 10.62330197960523
+        },
+        "data": {
+          "shape": [11],
+          "batch_size": null,
+          "dtype": "float32",
+          "sparse": false,
+          "optional": false
+        },
+        "identifier": "input",
+        "group_identifier": "layer"
+      },
+      {
+        "id": "0.am1l3dlgtq6",
+        "type": "dense",
+        "initialized": false,
+        "position": {
+          "x": 1302.3539500295353,
+          "y": 242.4287539461197
+        },
+        "data": {
+          "activation": "tanh",
+          "use_bias": true,
+          "lora_rank": null,
+          "units": 32
+        },
+        "identifier": "dense",
+        "group_identifier": "layer"
+      },
+      {
+        "id": "0.p4ub0g4qlln",
+        "type": "dense",
+        "initialized": false,
+        "position": {
+          "x": 1302.3539500295353,
+          "y": 342.58128083057346
+        },
+        "data": {
+          "activation": "linear",
+          "use_bias": true,
+          "lora_rank": null,
+          "units": 1
+        },
+        "identifier": "dense",
+        "group_identifier": "layer"
+      },
+      {
+        "id": "0.nahx3v1j4m",
+        "type": "Model",
+        "initialized": false,
+        "position": {
+          "x": 1040.6161829660875,
+          "y": 127.22858352664059
+        },
+        "data": {
+          "optimizer": "adam",
+          "loss": "mean_squared_error",
+          "metrics": ["mean_absolute_error"],
+          "name": "model"
+        },
+        "identifier": "Model",
+        "group_identifier": "model"
+      },
+      {
+        "id": "0.ul4abqqi88",
+        "type": "fit",
+        "initialized": false,
+        "position": {
+          "x": 938.0548961888461,
+          "y": 427.0497639086009
+        },
+        "data": {
+          "epochs": 1000,
+          "name": "model",
+          "early_stopping": null
+        },
+        "identifier": "fit",
+        "group_identifier": "model"
+      },
+      {
+        "id": "0.nn9zxdi69v",
+        "type": "normalization",
+        "initialized": false,
+        "position": {
+          "x": 1475.0899793805308,
+          "y": 154.00316645227582
+        },
+        "data": {
+          "axis": -1,
+          "invert": false
+        },
+        "identifier": "normalization",
+        "group_identifier": "layer"
+      },
+      {
+        "id": "0.re2h2ep1ana",
+        "type": "dense",
+        "initialized": false,
+        "position": {
+          "x": 1302.1117996537048,
+          "y": 42.28567118743095
+        },
+        "data": {
+          "activation": "tanh",
+          "use_bias": true,
+          "lora_rank": null,
+          "units": 1024
+        },
+        "identifier": "dense",
+        "group_identifier": "layer"
+      },
+      {
+        "id": "0.204m974f3qs",
+        "type": "dense",
+        "initialized": false,
+        "position": {
+          "x": 1302.522055606496,
+          "y": 140.56832477043721
+        },
+        "data": {
+          "activation": "tanh",
+          "use_bias": true,
+          "lora_rank": null,
+          "units": 512
+        },
+        "identifier": "dense",
+        "group_identifier": "layer"
+      },
+      {
+        "id": "0.annjuj561nc",
+        "type": "line-chart",
+        "initialized": false,
+        "position": {
+          "x": 460.20264983535094,
+          "y": 351.8326568924205
+        },
+        "data": {
+          "x_label": "epoch",
+          "y_label": "loss"
+        },
+        "identifier": "line-chart",
+        "group_identifier": "visualizer",
+        "height": 300,
+        "width": 450,
+        "style": {
+          "width": "450px",
+          "height": "300px"
+        }
+      },
+      {
+        "id": "0.vjnimptoz",
+        "type": "split",
+        "initialized": false,
+        "position": {
+          "x": 1386.0578342031372,
+          "y": 504.3998724822887
+        },
+        "data": {
+          "ratio": 0.8
+        },
+        "identifier": "split",
+        "group_identifier": "dataset"
+      },
+      {
+        "id": "0.pt6nate748",
+        "type": "evaluate",
+        "initialized": false,
+        "position": {
+          "x": 1030.369948081115,
+          "y": 642.5076647327953
+        },
+        "data": {
+          "name": "model"
+        },
+        "identifier": "evaluate",
+        "group_identifier": "model"
+      }
+    ],
+    "edges": [
+      {
+        "id": "vueflow__edge-0.nahx3v1j4mval-inputs-0.nahx3v1j4m-0.nkcq9um7vfjin-0.nkcq9um7vfj",
+        "type": "smoothstep",
+        "source": "0.nahx3v1j4m",
+        "target": "0.nkcq9um7vfj",
+        "sourceHandle": "val-inputs-0.nahx3v1j4m",
+        "targetHandle": "in-0.nkcq9um7vfj",
+        "data": {},
+        "label": "",
+        "animated": false,
+        "animationSpeed": 0.5,
+        "style": {
+          "stroke": "green",
+          "strokeWidth": 2
+        },
+        "sourceX": 1171.0176267251395,
+        "sourceY": 185.22850844829998,
+        "targetX": 1566.0224705926207,
+        "targetY": 4.622610515775534
+      },
+      {
+        "id": "vueflow__edge-0.nn9zxdi69vout-0.nn9zxdi69v-0.re2h2ep1anain-0.re2h2ep1ana",
+        "type": "smoothstep",
+        "source": "0.nn9zxdi69v",
+        "target": "0.re2h2ep1ana",
+        "sourceHandle": "out-0.nn9zxdi69v",
+        "targetHandle": "in-0.re2h2ep1ana",
+        "data": {},
+        "label": "",
+        "animated": false,
+        "animationSpeed": 0.5,
+        "style": {
+          "stroke": "green",
+          "strokeWidth": 2
+        },
+        "sourceX": 1564.9741719370002,
+        "sourceY": 204.01341669568788,
+        "targetX": 1363.9449448320897,
+        "targetY": 36.28497972360125
+      },
+      {
+        "id": "vueflow__edge-0.nkcq9um7vfjout-0.nkcq9um7vfj-0.nn9zxdi69vin-0.nn9zxdi69v",
+        "type": "smoothstep",
+        "source": "0.nkcq9um7vfj",
+        "target": "0.nn9zxdi69v",
+        "sourceHandle": "out-0.nkcq9um7vfj",
+        "targetHandle": "in-0.nn9zxdi69v",
+        "data": {},
+        "label": "",
+        "animated": false,
+        "animationSpeed": 0.5,
+        "style": {
+          "stroke": "green",
+          "strokeWidth": 2
+        },
+        "sourceX": 1566.0224705926207,
+        "sourceY": 60.615660516348875,
+        "targetX": 1564.9741719370002,
+        "targetY": 148.00247498844612
+      },
+      {
+        "id": "vueflow__edge-0.re2h2ep1anaout-0.re2h2ep1ana-0.204m974f3qsin-0.204m974f3qs",
+        "type": "smoothstep",
+        "source": "0.re2h2ep1ana",
+        "target": "0.204m974f3qs",
+        "sourceHandle": "out-0.re2h2ep1ana",
+        "targetHandle": "in-0.204m974f3qs",
+        "data": {},
+        "label": "",
+        "animated": false,
+        "animationSpeed": 0.5,
+        "style": {
+          "stroke": "green",
+          "strokeWidth": 2
+        },
+        "sourceX": 1363.9449448320897,
+        "sourceY": 92.295954229572,
+        "targetX": 1364.355200784881,
+        "targetY": 134.56763330660752
+      },
+      {
+        "id": "vueflow__edge-0.204m974f3qsout-0.204m974f3qs-0.am1l3dlgtq6in-0.am1l3dlgtq6",
+        "type": "smoothstep",
+        "source": "0.204m974f3qs",
+        "target": "0.am1l3dlgtq6",
+        "sourceHandle": "out-0.204m974f3qs",
+        "targetHandle": "in-0.am1l3dlgtq6",
+        "data": {},
+        "label": "",
+        "animated": false,
+        "animationSpeed": 0.5,
+        "style": {
+          "stroke": "green",
+          "strokeWidth": 2
+        },
+        "sourceX": 1364.355200784881,
+        "sourceY": 190.56066690781637,
+        "targetX": 1364.1870952079203,
+        "targetY": 236.42806248229002
+      },
+      {
+        "id": "vueflow__edge-0.am1l3dlgtq6out-0.am1l3dlgtq6-0.p4ub0g4qllnin-0.p4ub0g4qlln",
+        "type": "smoothstep",
+        "source": "0.am1l3dlgtq6",
+        "target": "0.p4ub0g4qlln",
+        "sourceHandle": "out-0.am1l3dlgtq6",
+        "targetHandle": "in-0.p4ub0g4qlln",
+        "data": {},
+        "label": "",
+        "animated": false,
+        "animationSpeed": 0.5,
+        "style": {
+          "stroke": "green",
+          "strokeWidth": 2
+        },
+        "sourceX": 1364.1870952079203,
+        "sourceY": 292.42109608349887,
+        "targetX": 1364.1870952079203,
+        "targetY": 336.58058936674377
+      },
+      {
+        "id": "vueflow__edge-0.nahx3v1j4mout-0.nahx3v1j4m-0.ul4abqqi88in-0.ul4abqqi88",
+        "type": "smoothstep",
+        "source": "0.nahx3v1j4m",
+        "target": "0.ul4abqqi88",
+        "sourceHandle": "out-0.nahx3v1j4m",
+        "targetHandle": "in-0.ul4abqqi88",
+        "data": {},
+        "label": "",
+        "animated": false,
+        "animationSpeed": 0.5,
+        "style": {
+          "stroke": "teal",
+          "strokeWidth": 2
+        },
+        "sourceX": 1103.8107377877218,
+        "sourceY": 297.23455814823967,
+        "targetX": 1018.0513215117454,
+        "targetY": 421.0491052435002
+      },
+      {
+        "id": "vueflow__edge-0.ul4abqqi88out-0.ul4abqqi88-0.pt6nate748in-0.pt6nate748",
+        "type": "smoothstep",
+        "source": "0.ul4abqqi88",
+        "target": "0.pt6nate748",
+        "sourceHandle": "out-0.ul4abqqi88",
+        "targetHandle": "in-0.pt6nate748",
+        "data": {},
+        "label": "",
+        "animated": false,
+        "animationSpeed": 0.5,
+        "style": {
+          "stroke": "teal",
+          "strokeWidth": 2
+        },
+        "sourceX": 1018.0513215117454,
+        "sourceY": 557.057163737471,
+        "targetX": 1079.109119071459,
+        "targetY": 636.5069404702366
+      },
+      {
+        "id": "vueflow__edge-0.vjnimptozval-split2-0.vjnimptoz-0.pt6nate748val-x-0.pt6nate748",
+        "type": "smoothstep",
+        "source": "0.vjnimptoz",
+        "target": "0.pt6nate748",
+        "sourceHandle": "val-split2-0.vjnimptoz",
+        "targetHandle": "val-x-0.pt6nate748",
+        "data": {},
+        "label": "",
+        "animated": false,
+        "animationSpeed": 0.5,
+        "style": {
+          "stroke": "#ff5722",
+          "strokeWidth": 2
+        },
+        "sourceX": 1474.4546017090263,
+        "sourceY": 602.3983393979481,
+        "targetX": 1131.8606897750449,
+        "targetY": 700.5075568557257
+      },
+      {
+        "id": "vueflow__edge-0.p4ub0g4qllnout-0.p4ub0g4qlln-0.nahx3v1j4mval-outputs-0.nahx3v1j4m",
+        "type": "smoothstep",
+        "source": "0.p4ub0g4qlln",
+        "target": "0.nahx3v1j4m",
+        "sourceHandle": "out-0.p4ub0g4qlln",
+        "targetHandle": "val-outputs-0.nahx3v1j4m",
+        "data": {},
+        "label": "",
+        "animated": false,
+        "animationSpeed": 0.5,
+        "style": {
+          "stroke": "green",
+          "strokeWidth": 2
+        },
+        "sourceX": 1364.1870952079203,
+        "sourceY": 392.5736557666816,
+        "targetX": 1171.0176267251395,
+        "targetY": 225.227083241029
+      },
+      {
+        "id": "vueflow__edge-0.nahx3v1j4mval-visualizers-0.nahx3v1j4m-0.annjuj561ncin-0.annjuj561nc",
+        "type": "smoothstep",
+        "source": "0.nahx3v1j4m",
+        "target": "0.annjuj561nc",
+        "sourceHandle": "val-visualizers-0.nahx3v1j4m",
+        "targetHandle": "in-0.annjuj561nc",
+        "data": {},
+        "label": "",
+        "animated": false,
+        "animationSpeed": 0.5,
+        "style": {
+          "stroke": "purple",
+          "strokeWidth": 2
+        },
+        "sourceX": 1171.0176267251395,
+        "sourceY": 265.2435661397909,
+        "targetX": 685.200648920702,
+        "targetY": 345.83199822731984
+      },
+      {
+        "id": "vueflow__edge-0.c9agnbfq30pval-train-0.c9agnbfq30p-0.vjnimptozin-0.vjnimptoz",
+        "type": "smoothstep",
+        "source": "0.c9agnbfq30p",
+        "target": "0.vjnimptoz",
+        "sourceHandle": "val-train-0.c9agnbfq30p",
+        "targetHandle": "in-0.vjnimptoz",
+        "data": {},
+        "label": "",
+        "animated": false,
+        "animationSpeed": 0.5,
+        "style": {
+          "stroke": "#ff5722",
+          "strokeWidth": 2
+        },
+        "sourceX": 1581.2941650841772,
+        "sourceY": 331.0297479014874,
+        "targetX": 1428.2589721524773,
+        "targetY": 498.39914821972997
+      },
+      {
+        "id": "vueflow__edge-0.vjnimptozval-split1-0.vjnimptoz-0.ul4abqqi88val-x-0.ul4abqqi88",
+        "type": "smoothstep",
+        "source": "0.vjnimptoz",
+        "target": "0.ul4abqqi88",
+        "sourceHandle": "val-split1-0.vjnimptoz",
+        "targetHandle": "val-x-0.ul4abqqi88",
+        "data": {},
+        "label": "",
+        "animated": false,
+        "animationSpeed": 0.5,
+        "style": {
+          "stroke": "#ff5722",
+          "strokeWidth": 2
+        },
+        "sourceX": 1474.4546017090263,
+        "sourceY": 562.399764605219,
+        "targetX": 1102.0602121453444,
+        "targetY": 485.0497216289893
+      }
+    ],
+    "position": [-58.058374145374955, 149.39266202940325],
+    "zoom": 0.9304496577030151,
+    "viewport": {
+      "x": -58.058374145374955,
+      "y": 149.39266202940325,
+      "zoom": 0.9304496577030151
+    }
+  },
+  "unlockNodes": [],
+  "steps": [
+    {
+      "text": "They say winners never quit, but in machine learning, knowing when to quit can be the key to success. In this tutorial, we’ll explore two essential techniques: validation and early stopping. Together, they help your model achieve optimal performance by monitoring its progress and halting training at the right time.",
+      "narrator": "LeNet-5",
+      "addNodes": [],
+      "addEdges": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    },
+    {
+      "text": "In the last tutorial, we discussed the issue of overfitting. The question is, how do we prevent it?",
+      "narrator": "LeNet-5",
+      "addNodes": [],
+      "addEdges": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    },
+    {
+      "text": "To tackle overfitting, we need to keep an eye on how well our model is doing. This involves running small tests after each training cycle, or epoch, in a process called validation. Validation gives us an estimate of the test error, much like checking your answers after solving each question on a practice exam.",
+      "narrator": "LeNet-5",
+      "addNodes": [],
+      "addEdges": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    },
+    {
+      "text": "Let’s add validation to your model. First, we need to split the training data into two parts: one for training and one for validation.",
+      "narrator": "LeNet-5",
+      "addNodes": [],
+      "addEdges": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    },
+    {
+      "text": "Add a split node to your canvas.",
+      "narrator": "LeNet-5",
+      "addNodes": [
+        {
+          "id": "0.07kkpovup2mr",
+          "type": "split",
+          "data": {},
+          "identifier": "split",
+          "group_identifier": "dataset"
+        }
+      ],
+      "addEdges": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": ["split"],
+      "unlockNodes": []
+    },
+    {
+      "text": "Great! Now, connect the split1 output of the first split node to the input of the new split node. Then, remove the connection between the first split node and the fit node.",
+      "narrator": "LeNet-5",
+      "addNodes": [],
+      "addEdges": [
+        {
+          "id": "vueflow__edge-0.vjnimptozval-split1-0.vjnimptoz-0.07kkpovup2mrin-0.07kkpovup2mr",
+          "type": "smoothstep",
+          "source": "0.vjnimptoz",
+          "target": "0.07kkpovup2mr",
+          "sourceHandle": "val-split1-0.vjnimptoz",
+          "targetHandle": "in-0.07kkpovup2mr",
+          "data": {},
+          "label": "",
+          "animated": false,
+          "animationSpeed": 0.5,
+          "style": {
+            "stroke": "#ff5722",
+            "strokeWidth": 2
+          }
+        }
+      ],
+      "removeNodes": [],
+      "removeEdges": [
+        {
+          "id": "vueflow__edge-0.vjnimptozval-split1-0.vjnimptoz-0.ul4abqqi88val-x-0.ul4abqqi88"
+        }
+      ],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    },
+    {
+      "text": "In the settings of the new split node, set the ratio to 0.8. This means 80% of the training data will be used for training, and 20% will be used for validation.",
+      "narrator": "LeNet-5",
+      "addNodes": [
+        {
+          "id": "0.07kkpovup2mr",
+          "data": {
+            "ratio": 0.8
+          }
+        }
+      ],
+      "addEdges": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    },
+    {
+      "text": "Now connect the split1 output of the new split node to the training input and the split2 output to the validation input of the fit node.",
+      "narrator": "LeNet-5",
+      "addNodes": [],
+      "addEdges": [
+        {
+          "id": "vueflow__edge-0.07kkpovup2mrval-split1-0.07kkpovup2mr-0.ul4abqqi88val-x-0.ul4abqqi88",
+          "type": "smoothstep",
+          "source": "0.07kkpovup2mr",
+          "target": "0.ul4abqqi88",
+          "sourceHandle": "val-split1-0.07kkpovup2mr",
+          "targetHandle": "val-x-0.ul4abqqi88",
+          "data": {},
+          "label": "",
+          "animated": false,
+          "animationSpeed": 0.5,
+          "style": {
+            "stroke": "#ff5722",
+            "strokeWidth": 2
+          }
+        },
+        {
+          "id": "vueflow__edge-0.07kkpovup2mrval-split2-0.07kkpovup2mr-0.ul4abqqi88val-validation_data-0.ul4abqqi88",
+          "type": "smoothstep",
+          "source": "0.07kkpovup2mr",
+          "target": "0.ul4abqqi88",
+          "sourceHandle": "val-split2-0.07kkpovup2mr",
+          "targetHandle": "val-validation_data-0.ul4abqqi88",
+          "data": {},
+          "label": "",
+          "animated": false,
+          "animationSpeed": 0.5,
+          "style": {
+            "stroke": "#ff5722",
+            "strokeWidth": 2
+          }
+        }
+      ],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    },
+    {
+      "text": "Awesome! Your validation setup is complete. Hit the train button and observe the line chart. The chart shows the Mean Absolute Error (MAE) for both the training and validation data.",
+      "narrator": "LeNet-5",
+      "addNodes": [],
+      "addEdges": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    },
+    {
+      "text": "You’ll observe a common pattern in the graph: while the training MAE keeps decreasing, the validation MAE starts increasing after a certain point. This indicates that the model is starting to overfit. Ideally, training should stop at this point.",
+      "narrator": "LeNet-5",
+      "addNodes": [],
+      "addEdges": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    },
+    {
+      "text": "This is where early stopping becomes useful. It’s a technique that stops training when the validation error starts increasing and automatically restores the model to the state where the validation error was at its lowest.",
+      "narrator": "LeNet-5",
+      "addNodes": [],
+      "addEdges": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    },
+    {
+      "text": "How do we enable early stopping? Look for the Early Stopping Patience setting in the fit node. Go ahead and set it to 5. This means training will stop if the validation error doesn’t decrease for 5 consecutive epochs.",
+      "narrator": "LeNet-5",
+      "addNodes": [
+        {
+          "id": "0.ul4abqqi88",
+          "data": {
+            "early_stopping": 5
+          }
+        }
+      ],
+      "addEdges": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": [
+        {
+          "id": "0.ul4abqqi88",
+          "data": ["early_stopping"]
+        }
+      ]
+    },
+    {
+      "text": "Great! Now hit the train button again and watch the magic happen. The training will stop automatically when early stopping is triggered.",
+      "narrator": "LeNet-5",
+      "addNodes": [],
+      "addEdges": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    },
+    {
+      "text": "Congratulations! By using early stopping, you’ve reduced overfitting and decreased training time. This is a powerful technique that helps achieve better results in less time. Keep experimenting, and stay tuned for more exciting tutorials!",
+      "narrator": "LeNet-5",
+      "addNodes": [],
+      "addEdges": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    }
+  ]
+}

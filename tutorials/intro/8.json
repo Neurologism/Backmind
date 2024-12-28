@@ -4,7 +4,7 @@
   "description": "",
   "visibility": "public",
   "requiredTutorials": ["Training on Wine Quality Dataset"],
-  "nextTutorials": [],
+  "nextTutorials": ["How Reliable Is Your Model?"],
   "experienceGain": 100,
   "startProject": {
     "nodes": [

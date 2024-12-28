@@ -3,8 +3,8 @@
   "summary": "",
   "description": "",
   "visibility": "public",
-  "requiredTutorials": [""],
-  "nextTutorials": [],
+  "requiredTutorials": ["Improving the performance of a neural network"],
+  "nextTutorials": ["Validation and Early Stopping"],
   "experienceGain": 100,
   "startProject": {
     "nodes": [

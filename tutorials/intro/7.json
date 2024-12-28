@@ -3,8 +3,8 @@
   "summary": "",
   "description": "",
   "visibility": "public",
-  "requiredTutorials": [""],
-  "nextTutorials": [],
+  "requiredTutorials": ["Wine Quality"],
+  "nextTutorials": ["Improving the performance of a neural network"],
   "experienceGain": 100,
   "startProject": {
     "nodes": [

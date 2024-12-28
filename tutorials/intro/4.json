@@ -4,7 +4,7 @@
   "description": "",
   "visibility": "public",
   "requiredTutorials": ["Normalization and Flatten Layer"],
-  "nextTutorials": [],
+  "nextTutorials": ["Visualizing and Training"],
   "experienceGain": 100,
   "startProject": {
     "nodes": [

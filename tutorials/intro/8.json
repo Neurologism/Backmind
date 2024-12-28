@@ -400,7 +400,7 @@
       "unlockNodes": []
     },
     {
-      "text": "Add a Line Chart node to monitor your progress. Set the y label to MAE and train your model again. Ready? Let’s go!",
+      "text": "Add a Line Chart node to monitor your progress. Set the y label to MAE and connect it to the Fit node. Now, hit Train and observe the model’s performance.",
       "narrator": "LeNet-5",
       "addNodes": [
         {
@@ -414,7 +414,18 @@
           "group_identifier": "visualizer"
         }
       ],
-      "addEdges": [],
+      "addEdges": [
+        {
+          "id": "vueflow__edge-0.ul4abqqi88val-visualizers-0.ul4abqqi88-0.1x1z1z1z1z1in-0.1x1z1z1z1z1",
+          "type": "smoothstep",
+          "source": "0.ul4abqqi88",
+          "target": "0.1x1z1z1z1z1",
+          "sourceHandle": "val-visualizers-0.ul4abqqi88",
+          "targetHandle": "in-0.1x1z1z1z1z1",
+          "data": {},
+          "label": ""
+        }
+      ],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],

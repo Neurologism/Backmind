@@ -13,21 +13,19 @@ import { swapPrimaryEmailHandler } from '../handlers/user/swapPrimaryEmailHandle
 import { schemaValidationMiddleware } from '../middleware/schemaValidationMiddleware';
 import { updateSecondaryEmailHandler } from '../handlers/user/updateSecondaryEmailHandler';
 import { deleteSecondaryEmailHandler } from '../handlers/user/deleteSecondaryEmailHandler';
-import {
-  getUserSchema,
-  updateUserSchema,
-  deleteUserSchema,
-  followUserSchema,
-  unfollowUserSchema,
-  searchUserSchema,
-  isTakenUserSchema,
-  uploadPfpSchema,
-  getPfpSchema,
-  getCreditsSchema,
-  swapPrimaryEmailSchema,
-  updateSecondaryEmailSchema,
-  deleteSecondaryEmailSchema,
-} from '../zodSchemas/userSchemas';
+import { getSchema } from '../zodSchemas/user/getSchema';
+import { updateSchema } from '../zodSchemas/user/updateSchema';
+import { deleteSchema } from '../zodSchemas/user/deleteSchema';
+import { followSchema } from '../zodSchemas/user/followSchema';
+import { unfollowSchema } from '../zodSchemas/user/unfollowSchema';
+import { searchSchema } from '../zodSchemas/user/searchSchema';
+import { isTakenSchema } from '../zodSchemas/user/isTakenSchema';
+import { uploadPfpSchema } from '../zodSchemas/user/uploadPfpSchema';
+// import { getPfpSchema } from '../zodSchemas/user/getPfpSchema';
+import { getCreditsSchema } from '../zodSchemas/user/getCreditsSchema';
+import { swapPrimaryEmailSchema } from '../zodSchemas/user/swapPrimaryEmailSchema';
+import { updateSecondaryEmailSchema } from '../zodSchemas/user/updateSecondaryEmailSchema';
+import { deleteSecondaryEmailSchema } from '../zodSchemas/user/deleteSecondaryEmailSchema';
 import { pfpUploadMulter } from '../multerConfigs/pfpUpload';
 import { getCredits } from '../handlers/user/getCredits';
 
@@ -36,21 +34,21 @@ const router = express.Router();
 router.post(
   '/delete',
   authMiddleware,
-  schemaValidationMiddleware(deleteUserSchema),
+  schemaValidationMiddleware(deleteSchema),
   deleteHandler
 );
 
 router.post(
   '/follow',
   authMiddleware,
-  schemaValidationMiddleware(followUserSchema),
+  schemaValidationMiddleware(followSchema),
   followHandler
 );
 
 router.post(
   '/get',
   authMiddleware,
-  schemaValidationMiddleware(getUserSchema),
+  schemaValidationMiddleware(getSchema),
   getHandler
 );
 
@@ -59,28 +57,28 @@ router.get('/get-pfp/:userId', getPfpHandler);
 router.post(
   '/is-taken',
   authMiddleware,
-  schemaValidationMiddleware(isTakenUserSchema),
+  schemaValidationMiddleware(isTakenSchema),
   isTakenHandler
 );
 
 router.post(
   '/search',
   authMiddleware,
-  schemaValidationMiddleware(searchUserSchema),
+  schemaValidationMiddleware(searchSchema),
   searchHandler
 );
 
 router.post(
   '/unfollow',
   authMiddleware,
-  schemaValidationMiddleware(unfollowUserSchema),
+  schemaValidationMiddleware(unfollowSchema),
   unfollowHandler
 );
 
 router.post(
   '/update',
   authMiddleware,
-  schemaValidationMiddleware(updateUserSchema),
+  schemaValidationMiddleware(updateSchema),
   updateHandler
 );
 

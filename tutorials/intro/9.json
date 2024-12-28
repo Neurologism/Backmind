@@ -1,16 +1,532 @@
 {
-  "name": "",
+  "name": "How Reliable Is Your Model?",
   "summary": "",
   "description": "",
   "visibility": "public",
-  "requiredTutorials": [""],
-  "nextTutorials": [],
+  "requiredTutorials": ["Improving the performance of a neural network"],
+  "nextTutorials": ["Validation and Early Stopping"],
   "experienceGain": 100,
-  "startProject": {},
+  "startProject": {
+    "nodes": [
+      {
+        "id": "0.c9agnbfq30p",
+        "type": "wine_quality",
+        "initialized": false,
+        "position": {
+          "x": 1327,
+          "y": 577
+        },
+        "data": {
+          "batch_size": 128
+        },
+        "identifier": "dataset_wine_quality",
+        "group_identifier": "dataset"
+      },
+      {
+        "id": "0.nkcq9um7vfj",
+        "type": "input_layer",
+        "initialized": false,
+        "position": {
+          "x": 1305.482460604073,
+          "y": -153.25030631865883
+        },
+        "data": {
+          "batch_size": null,
+          "dtype": "float32",
+          "sparse": false,
+          "optional": false
+        },
+        "identifier": "input",
+        "group_identifier": "layer"
+      },
+      {
+        "id": "0.am1l3dlgtq6",
+        "type": "dense",
+        "initialized": false,
+        "position": {
+          "x": 1302.3539500295353,
+          "y": 242.4287539461197
+        },
+        "data": {
+          "activation": "tanh",
+          "use_bias": true,
+          "lora_rank": null,
+          "units": 32
+        },
+        "identifier": "dense",
+        "group_identifier": "layer"
+      },
+      {
+        "id": "0.p4ub0g4qlln",
+        "type": "dense",
+        "initialized": false,
+        "position": {
+          "x": 1302.3539500295353,
+          "y": 352.58128083057346
+        },
+        "data": {
+          "activation": "linear",
+          "use_bias": true,
+          "lora_rank": null,
+          "units": 1
+        },
+        "identifier": "dense",
+        "group_identifier": "layer"
+      },
+      {
+        "id": "0.nahx3v1j4m",
+        "type": "Model",
+        "initialized": false,
+        "position": {
+          "x": 1114,
+          "y": 171
+        },
+        "data": {
+          "optimizer": "adam",
+          "loss": "mean_squared_error",
+          "metrics": ["mean_absolute_error"],
+          "name": "model"
+        },
+        "identifier": "Model",
+        "group_identifier": "model"
+      },
+      {
+        "id": "0.ul4abqqi88",
+        "type": "fit",
+        "initialized": false,
+        "position": {
+          "x": 911,
+          "y": 483
+        },
+        "data": {
+          "epochs": 100,
+          "name": "model"
+        },
+        "identifier": "fit",
+        "group_identifier": "model"
+      },
+      {
+        "id": "0.nn9zxdi69v",
+        "type": "normalization",
+        "initialized": false,
+        "position": {
+          "x": 1274.4480463905206,
+          "y": -56.46414432405316
+        },
+        "data": {
+          "axis": -1,
+          "invert": false
+        },
+        "identifier": "normalization",
+        "group_identifier": "layer"
+      },
+      {
+        "id": "0.re2h2ep1ana",
+        "type": "dense",
+        "initialized": false,
+        "position": {
+          "x": 1302.1117996537048,
+          "y": 42.28567118743095
+        },
+        "data": {
+          "activation": "tanh",
+          "use_bias": true,
+          "lora_rank": null,
+          "units": 1024
+        },
+        "identifier": "dense",
+        "group_identifier": "layer"
+      },
+      {
+        "id": "0.204m974f3qs",
+        "type": "dense",
+        "initialized": false,
+        "position": {
+          "x": 1302.522055606496,
+          "y": 140.56832477043721
+        },
+        "data": {
+          "activation": "tanh",
+          "use_bias": true,
+          "lora_rank": null,
+          "units": 512
+        },
+        "identifier": "dense",
+        "group_identifier": "layer"
+      },
+      {
+        "id": "0.annjuj561nc",
+        "type": "line-chart",
+        "initialized": false,
+        "position": {
+          "x": 605.6351387769994,
+          "y": -14.35737627832441
+        },
+        "data": {
+          "x_label": "epoch",
+          "y_label": "loss"
+        },
+        "identifier": "line-chart",
+        "group_identifier": "visualizer",
+        "height": 300,
+        "width": 450
+      }
+    ],
+    "edges": [
+      {
+        "id": "vueflow__edge-0.am1l3dlgtq6out-0.am1l3dlgtq6-0.p4ub0g4qllnin-0.p4ub0g4qlln",
+        "type": "smoothstep",
+        "source": "0.am1l3dlgtq6",
+        "target": "0.p4ub0g4qlln",
+        "sourceHandle": "out-0.am1l3dlgtq6",
+        "targetHandle": "in-0.p4ub0g4qlln",
+        "data": {},
+        "label": "",
+        "sourceX": 1364.1780107895281,
+        "sourceY": 292.4146237370984,
+        "targetX": 1364.1780107895281,
+        "targetY": 346.5726653932284
+      },
+      {
+        "id": "vueflow__edge-0.nahx3v1j4mval-inputs-0.nahx3v1j4m-0.nkcq9um7vfjin-0.nkcq9um7vfj",
+        "type": "smoothstep",
+        "source": "0.nahx3v1j4m",
+        "target": "0.nkcq9um7vfj",
+        "sourceHandle": "val-inputs-0.nahx3v1j4m",
+        "targetHandle": "in-0.nkcq9um7vfj",
+        "data": {
+          "key": "inputs"
+        },
+        "label": "",
+        "sourceX": 1210.7969042498405,
+        "sourceY": 228.99352630109738,
+        "targetX": 1363.79518664951,
+        "targetY": -159.2589389468561
+      },
+      {
+        "id": "vueflow__edge-0.p4ub0g4qllnout-0.p4ub0g4qlln-0.nahx3v1j4mval-outputs-0.nahx3v1j4m",
+        "type": "smoothstep",
+        "source": "0.p4ub0g4qlln",
+        "target": "0.nahx3v1j4m",
+        "sourceHandle": "out-0.p4ub0g4qlln",
+        "targetHandle": "val-outputs-0.nahx3v1j4m",
+        "data": {},
+        "label": "",
+        "sourceX": 1364.1780107895281,
+        "sourceY": 402.5859230321952,
+        "targetX": 1210.7969042498405,
+        "targetY": 268.98852537473874
+      },
+      {
+        "id": "vueflow__edge-0.nahx3v1j4mout-0.nahx3v1j4m-0.ul4abqqi88in-0.ul4abqqi88",
+        "type": "smoothstep",
+        "source": "0.nahx3v1j4m",
+        "target": "0.ul4abqqi88",
+        "sourceHandle": "out-0.nahx3v1j4m",
+        "targetHandle": "in-0.ul4abqqi88",
+        "data": {},
+        "label": "",
+        "sourceX": 1160.3893572239622,
+        "sourceY": 300.99464034890445,
+        "targetX": 991.0001551205808,
+        "targetY": 476.991315799246
+      },
+      {
+        "id": "vueflow__edge-0.nn9zxdi69vout-0.nn9zxdi69v-0.re2h2ep1anain-0.re2h2ep1ana",
+        "type": "smoothstep",
+        "source": "0.nn9zxdi69v",
+        "target": "0.re2h2ep1ana",
+        "sourceHandle": "out-0.nn9zxdi69v",
+        "targetHandle": "in-0.re2h2ep1ana",
+        "data": {},
+        "label": "",
+        "sourceX": 1364.3248274652187,
+        "sourceY": -6.478274533074448,
+        "targetX": 1363.9545640609317,
+        "targetY": 36.277055750085935
+      },
+      {
+        "id": "vueflow__edge-0.re2h2ep1anaout-0.re2h2ep1ana-0.204m974f3qsin-0.204m974f3qs",
+        "type": "smoothstep",
+        "source": "0.re2h2ep1ana",
+        "target": "0.204m974f3qs",
+        "sourceHandle": "out-0.re2h2ep1ana",
+        "targetHandle": "in-0.204m974f3qs",
+        "data": {},
+        "label": "",
+        "sourceX": 1363.9545640609317,
+        "sourceY": 92.27154097840966,
+        "targetX": 1364.3461163664888,
+        "targetY": 134.5597093330922
+      },
+      {
+        "id": "vueflow__edge-0.204m974f3qsout-0.204m974f3qs-0.am1l3dlgtq6in-0.am1l3dlgtq6",
+        "type": "smoothstep",
+        "source": "0.204m974f3qs",
+        "target": "0.am1l3dlgtq6",
+        "sourceHandle": "out-0.204m974f3qs",
+        "targetHandle": "in-0.am1l3dlgtq6",
+        "data": {},
+        "label": "",
+        "sourceX": 1364.3461163664888,
+        "sourceY": 190.5729669720589,
+        "targetX": 1364.1780107895281,
+        "targetY": 236.42010412707023
+      },
+      {
+        "id": "vueflow__edge-0.nkcq9um7vfjout-0.nkcq9um7vfj-0.nn9zxdi69vin-0.nn9zxdi69v",
+        "type": "smoothstep",
+        "source": "0.nkcq9um7vfj",
+        "target": "0.nn9zxdi69v",
+        "sourceHandle": "out-0.nkcq9um7vfj",
+        "targetHandle": "in-0.nn9zxdi69v",
+        "data": {},
+        "label": "",
+        "sourceX": 1363.79518664951,
+        "sourceY": -103.24566411703714,
+        "targetX": 1364.3248274652187,
+        "targetY": -62.47277695225041
+      },
+      {
+        "id": "vueflow__edge-0.c9agnbfq30pval-train-0.c9agnbfq30p-0.ul4abqqi88val-x-0.ul4abqqi88",
+        "type": "smoothstep",
+        "source": "0.c9agnbfq30p",
+        "target": "0.ul4abqqi88",
+        "sourceHandle": "val-train-0.c9agnbfq30p",
+        "targetHandle": "val-x-0.ul4abqqi88",
+        "data": {
+          "key": "train"
+        },
+        "label": "",
+        "sourceX": 1459.491921071694,
+        "sourceY": 634.9934575376884,
+        "targetX": 1074.9997963958438,
+        "targetY": 540.9935263010974
+      }
+    ],
+    "position": [20.43138457274972, 267.74376995808484],
+    "zoom": 0.8876113372694977,
+    "viewport": {
+      "x": 20.43138457274972,
+      "y": 267.74376995808484,
+      "zoom": 0.8876113372694977
+    }
+  },
   "unlockNodes": [],
   "steps": [
     {
-      "text": "",
+      "text": "Have you ever felt confident about a test, only to realize you don’t know the answer to the first question? Neural networks can experience something similar. They might perform well during training but struggle in real-world scenarios.",
+      "narrator": "LeNet-5",
+      "addNodes": [],
+      "addEdges": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    },
+    {
+      "text": "In this tutorial, we’ll learn how to test your neural network to ensure it performs well on new, unseen data. Testing is essential to ensure your network doesn’t just memorize the training data but generalizes to real-world situations.",
+      "narrator": "LeNet-5",
+      "addNodes": [],
+      "addEdges": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    },
+    {
+      "text": "To test a neural network, we need data it hasn’t seen before. Before training, we typically split the dataset into two parts: one for training and one for testing.",
+      "narrator": "LeNet-5",
+      "addNodes": [],
+      "addEdges": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    },
+    {
+      "text": "To split the wine quality dataset, we’ll use the split node. You can find it in the dataset section.",
+      "narrator": "LeNet-5",
+      "addNodes": [
+        {
+          "id": "0.vjnimptoz",
+          "type": "split",
+          "data": {
+            "ratio": null
+          },
+          "identifier": "split",
+          "group_identifier": "dataset"
+        }
+      ],
+      "addEdges": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": ["split"],
+      "unlockNodes": [
+        {
+          "type": "split",
+          "data": ["ratio"]
+        }
+      ]
+    },
+    {
+      "text": "Next, we need to connect our dataset to the split node. Start by removing the connection between the dataset and the fit node. Then, connect the dataset to the input of the split node.",
+      "narrator": "LeNet-5",
+      "addNodes": [],
+      "addEdges": [
+        {
+          "id": "vueflow__edge-0.c9agnbfq30pval-train-0.c9agnbfq30p-0.vjnimptozval-x-0.vjnimptoz",
+          "type": "smoothstep",
+          "source": "0.c9agnbfq30p",
+          "target": "0.vjnimptoz",
+          "sourceHandle": "val-train-0.c9agnbfq30p",
+          "targetHandle": "val-x-0.vjnimptoz",
+          "data": {
+            "key": "train"
+          },
+          "label": ""
+        }
+      ],
+      "removeNodes": [],
+      "removeEdges": [
+        {
+          "id": "vueflow__edge-0.c9agnbfq30pval-train-0.c9agnbfq30p-0.ul4abqqi88val-x-0.ul4abqqi88"
+        }
+      ],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    },
+    {
+      "text": "The split node has two outputs: one for each part of the data. Connect the first output of the split node to the fit node. This will be the training data.",
+      "narrator": "LeNet-5",
+      "addNodes": [],
+      "addEdges": [
+        {
+          "id": "vueflow__edge-0.vjnimptozout-0.vjnimptoz-0.ul4abqqi88val-x-0.ul4abqqi88",
+          "type": "smoothstep",
+          "source": "0.vjnimptoz",
+          "target": "0.ul4abqqi88",
+          "sourceHandle": "out-0.vjnimptoz",
+          "targetHandle": "val-x-0.ul4abqqi88",
+          "data": {
+            "key": "x"
+          },
+          "label": ""
+        }
+      ],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    },
+    {
+      "text": "We also need to specify how much data should go to training and testing. In the ratio setting of the split node, set the value to 0.8.",
+      "narrator": "LeNet-5",
+      "addNodes": [
+        {
+          "id": "0.vjnimptoz",
+          "type": "split",
+          "data": {
+            "ratio": 0.8
+          },
+          "identifier": "split",
+          "group_identifier": "dataset"
+        }
+      ],
+      "addEdges": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    },
+    {
+      "text": "Now, the fit node will receive 80% of the data for training. The remaining 20% will automatically be reserved for testing.",
+      "narrator": "LeNet-5",
+      "addNodes": [],
+      "addEdges": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    },
+    {
+      "text": "How do we test the model? We need another node called the evaluate node. This node will measure how well the model performs on the test data. You can find the evaluate node in the model section.",
+      "narrator": "LeNet-5",
+      "addNodes": [
+        {
+          "id": "0.8h6rp4fo12q",
+          "type": "evaluate",
+          "data": {},
+          "identifier": "evaluate",
+          "group_identifier": "model"
+        }
+      ],
+      "addEdges": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": ["evaluate"],
+      "unlockNodes": [
+        {
+          "type": "evaluate",
+          "data": []
+        }
+      ]
+    },
+    {
+      "text": "Connect the second output of the split node to the x connection of the evaluate node. Then, connect the fit node to the input of the evaluate node.",
+      "narrator": "LeNet-5",
+      "addNodes": [],
+      "addEdges": [
+        {
+          "id": "vueflow__edge-0.vjnimptozval-split2-0.vjnimptoz-0.8h6rp4fo12qval-x-0.8h6rp4fo12q",
+          "type": "smoothstep",
+          "source": "0.vjnimptoz",
+          "target": "0.8h6rp4fo12q",
+          "sourceHandle": "val-split2-0.vjnimptoz",
+          "targetHandle": "val-x-0.8h6rp4fo12q",
+          "data": {
+            "key": "x"
+          },
+          "label": ""
+        },
+        {
+          "id": "vueflow__edge-0.ul4abqqi88out-0.ul4abqqi88-0.8h6rp4fo12qin-0.8h6rp4fo12q",
+          "type": "smoothstep",
+          "source": "0.ul4abqqi88",
+          "target": "0.8h6rp4fo12q",
+          "sourceHandle": "out-0.ul4abqqi88",
+          "targetHandle": "in-0.8h6rp4fo12q",
+          "data": {},
+          "label": ""
+        }
+      ],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    },
+    {
+      "text": "Great! We’re ready to go. When you hit the start training button, the model will be trained on 80% of the data as usual. After training, the evaluate node will test the model on the remaining 20%. Go ahead and start training!",
+      "narrator": "LeNet-5",
+      "addNodes": [],
+      "addEdges": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    },
+    {
+      "text": "Once training is done, check the evaluate node for results. You’ll see that the Mean Absolute Error (MAE) on the test data is around 0.5, while the MAE on the training data is about 0.3. This gap indicates that the model isn’t performing as well on test data.",
+      "narrator": "LeNet-5",
+      "addNodes": [],
+      "addEdges": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    },
+    {
+      "text": "This problem is called overfitting. It happens when the model learns the training data too well but fails to generalize to new data. Don’t worry—overfitting is common in neural networks. There are many ways to address it, and we’ll explore one of them in the next tutorial. Stay tuned!",
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],

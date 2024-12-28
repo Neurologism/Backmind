@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
-import { updateProjectAsContributorSchema } from '../../zodSchemas/projectSchemas';
+import { updateAsContributorSchema } from '../../zodSchemas/project/updateAsContributor';
 import { z } from 'zod';
 import { UserModel } from '../../mongooseSchemas/userSchema';
 import { ProjectModel } from '../../mongooseSchemas/projectSchema';
-import fs from 'fs';
+// import fs from 'fs';
 
 export const updateHandler = async (req: Request, res: Response) => {
   if (
@@ -24,7 +24,7 @@ export const updateHandler = async (req: Request, res: Response) => {
 
   if (!req.middlewareParams.isProjectOwner) {
     try {
-      req.body = await updateProjectAsContributorSchema.parseAsync(req.body);
+      req.body = await updateAsContributorSchema.parseAsync(req.body);
     } catch (error: any) {
       if (error instanceof z.ZodError) {
         return res.status(400).json({

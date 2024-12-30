@@ -332,7 +332,8 @@
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
-      "unlockNodes": []
+      "unlockNodes": [],
+      "trainingEnabled": true
     },
     {
       "text": "You may notice that the model is not performing as well as expected. The MAE is quite high, meaning the model is consistently making predictions that are far off from the true values. But don't worry! We'll look at ways to improve the model's performance in the next tutorial.",

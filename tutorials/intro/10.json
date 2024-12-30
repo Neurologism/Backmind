@@ -635,7 +635,8 @@
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
-      "unlockNodes": []
+      "unlockNodes": [],
+      "trainingEnabled": true
     },
     {
       "text": "You’ll observe a common pattern in the graph: while the training MAE keeps decreasing, the validation MAE starts increasing after a certain point. This indicates that the model is starting to overfit. Ideally, training should stop at this point.",
@@ -687,7 +688,8 @@
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
-      "unlockNodes": []
+      "unlockNodes": [],
+      "trainingEnabled": true
     },
     {
       "text": "Congratulations! By using early stopping, you’ve reduced overfitting and decreased training time. This is a powerful technique that helps achieve better results in less time. Keep experimenting, and stay tuned for more exciting tutorials!",

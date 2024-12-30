@@ -73,6 +73,26 @@ async function createTutorial(tutorialPath: string) {
   }
 }
 
+async function createNextTutorials(tutorialPath: string) {
+  const tutorialJson = JSON.parse(
+    fs.readFileSync(
+      `./
+    tutorials/${tutorialPath}`,
+      'utf8'
+    )
+  ) as any;
+
+  const nextTutorials = [];
+  for (const tutorialName of tutorialJson.nextTutorials) {
+    const tutorial = await TutorialModel.findOne({ name: tutorialName });
+    nextTutorials.push(tutorial?._id);
+  }
+  await TutorialModel.updateOne(
+    { name: tutorialJson.name },
+    { nextTutorials: nextTutorials }
+  );
+}
+
 async function main() {
   await mongoose.connect(process.env.MONGO_URI as string, {
     dbName: process.env.DB_NAME,
@@ -83,6 +103,11 @@ async function main() {
     await createTutorial(tutorialPath);
   }
   console.log('Tutorials created');
+
+  for (const tutorialPath of tutorials) {
+    await createNextTutorials(tutorialPath);
+  }
+  console.log('Next tutorials set');
 
   await mongoose.disconnect();
 }

@@ -35,11 +35,12 @@ async function createTutorial(tutorialPath: string) {
     tutorialJson.ownerId = new mongoose.Types.ObjectId(ownerId);
     tutorialJson.startProject = startProjectId;
     tutorialJson.nextTutorials = tutorial?.nextTutorials;
-    tutorialJson.requiredTutorials = [];
+    const requiredTutorialIds = [];
     for (const tutorialName of tutorialJson.requiredTutorials) {
       const tutorial = await TutorialModel.findOne({ name: tutorialName });
-      tutorialJson.requiredTutorials.push(tutorial?._id);
+      requiredTutorialIds.push(tutorial?._id);
     }
+    tutorialJson.requiredTutorials = requiredTutorialIds;
 
     await TutorialModel.updateOne({ name: tutorialJson.name }, tutorialJson);
     if (process.env.DELETE_PROJECTS === 'true') {
@@ -75,11 +76,7 @@ async function createTutorial(tutorialPath: string) {
 
 async function createNextTutorials(tutorialPath: string) {
   const tutorialJson = JSON.parse(
-    fs.readFileSync(
-      `./
-    tutorials/${tutorialPath}`,
-      'utf8'
-    )
+    fs.readFileSync(`./tutorials/${tutorialPath}`, 'utf8')
   ) as any;
 
   const nextTutorials = [];

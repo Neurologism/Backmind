@@ -367,7 +367,8 @@
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
-      "unlockNodes": []
+      "unlockNodes": [],
+      "trainingEnabled": true
     },
     {
       "text": "Amazing work! Your model’s performance has improved significantly. Previously, the Mean Absolute Error (MAE) was around 4.5, but now it’s down to 2.5. Great progress!",
@@ -429,7 +430,8 @@
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
-      "unlockNodes": []
+      "unlockNodes": [],
+      "trainingEnabled": true
     },
     {
       "text": "Wow! Your model’s MAE is now down to 0.2. That’s a huge improvement! However, you might have noticed that training took a bit longer this time. This is a trade-off when increasing the number of epochs.",
@@ -458,7 +460,8 @@
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
-      "unlockNodes": []
+      "unlockNodes": [],
+      "trainingEnabled": true
     },
     {
       "text": "Good news! Training time was significantly reduced. The MAE increased slightly to around 0.3, but that’s still a strong performance. Why does this happen?",

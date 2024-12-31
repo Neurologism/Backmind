@@ -281,7 +281,8 @@
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
-      "unlockNodes": []
+      "unlockNodes": [],
+      "trainingEnabled": true
     },
     {
       "text": "Once you start training, results will appear just to the right of the Start Training button. These results include several values, but let’s focus on the most important one: accuracy.",
@@ -291,7 +292,8 @@
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
-      "unlockNodes": []
+      "unlockNodes": [],
+      "trainingEnabled": true
     },
     {
       "text": "Accuracy tells you how well your model is performing. It’s the percentage of images that your model correctly identifies. Your model should achieve an accuracy of around 85% to 95%. That means it can correctly identify 85 to 95 out of 100 digits in the MNIST dataset.",
@@ -352,7 +354,8 @@
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
-      "unlockNodes": []
+      "unlockNodes": [],
+      "trainingEnabled": true
     },
     {
       "text": "By the end of training, your accuracy should climb to around 99%. That means your model can correctly identify 99 out of 100 digits in the MNIST dataset! Incredible, isn’t it? But wait—there’s more! Let’s take a look at how your model’s accuracy improves visually.",
@@ -408,7 +411,8 @@
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
-      "unlockNodes": []
+      "unlockNodes": [],
+      "trainingEnabled": true
     },
     {
       "text": "As training progresses, you’ll see the accuracy line steadily rise. This shows how your model learns more about the digits in the MNIST dataset with each epoch.",

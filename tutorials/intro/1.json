@@ -24,6 +24,7 @@
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
@@ -34,6 +35,7 @@
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
@@ -44,6 +46,7 @@
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
@@ -66,6 +69,7 @@
         }
       ],
       "addEdges": [],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": ["dense"],
@@ -81,6 +85,7 @@
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
@@ -93,7 +98,6 @@
         {
           "id": "0.0atma5spa9l",
           "data": {
-            "shape": [0],
             "batch_size": null,
             "dtype": "float32",
             "sparse": false,
@@ -104,6 +108,7 @@
         }
       ],
       "addEdges": [],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": ["input"],
@@ -130,6 +135,7 @@
           "label": ""
         }
       ],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
@@ -152,6 +158,7 @@
         }
       ],
       "addEdges": [],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": ["dense"],
@@ -173,6 +180,7 @@
           "label": ""
         }
       ],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
@@ -183,6 +191,7 @@
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],

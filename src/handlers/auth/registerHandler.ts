@@ -9,6 +9,14 @@ import { URL } from 'url';
 export const registerHandler = async (req: Request, res: Response) => {
   const givenUser = req.body['user'];
 
+  if (!req.body.agreedToTermsOfServiceAndPrivacyPolicy) {
+    return res
+      .status(400)
+      .json({
+        msg: 'You need to agree to the terms of service and privacy policy.',
+      });
+  }
+
   const salt = await bcrypt.genSalt(Number(process.env.SALT_ROUNDS));
   const hashedPassword = await bcrypt.hash(givenUser.plainPassword, salt);
 

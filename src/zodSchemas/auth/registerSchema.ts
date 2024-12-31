@@ -10,6 +10,7 @@ export const registerSchema = z
         plainPassword: z.string().min(Number(process.env.MIN_PASS_LENGTH)),
       })
       .strict(),
+    agreedToTermsOfServiceAndPrivacyPolicy: z.boolean(),
   })
   .strict()
   .refine(

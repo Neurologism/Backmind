@@ -100,7 +100,7 @@
           "y": 427.0497639086009
         },
         "data": {
-          "epochs": 1000,
+          "epochs": 100,
           "name": "model",
           "early_stopping": null
         },
@@ -166,7 +166,7 @@
         },
         "data": {
           "x_label": "epoch",
-          "y_label": "loss"
+          "y_label": "mean_absolute_error"
         },
         "identifier": "line-chart",
         "group_identifier": "visualizer",

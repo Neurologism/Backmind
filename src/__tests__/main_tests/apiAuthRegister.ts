@@ -16,6 +16,7 @@ export default (app: Express) => {
           brainetTag: 'test',
           plainPassword: 'test1234',
         },
+        agreedToTermsOfServiceAndPrivacyPolicy: true,
       });
 
     expect(response.status).toBe(201);

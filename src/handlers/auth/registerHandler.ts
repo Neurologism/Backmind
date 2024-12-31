@@ -9,6 +9,14 @@ import { URL } from 'url';
 export const registerHandler = async (req: Request, res: Response) => {
   const givenUser = req.body['user'];
 
+  if (!req.body.agreedToTermsOfServiceAndPrivacyPolicy) {
+    return res
+      .status(400)
+      .json({
+        msg: 'You need to agree to the terms of service and privacy policy.',
+      });
+  }
+
   const salt = await bcrypt.genSalt(Number(process.env.SALT_ROUNDS));
   const hashedPassword = await bcrypt.hash(givenUser.plainPassword, salt);
 
@@ -47,7 +55,6 @@ export const registerHandler = async (req: Request, res: Response) => {
     displayname: givenUser.brainetTag,
     passwordHash: hashedPassword,
   });
-
   const savedUser = await newUser.save();
 
   const token = jwt.sign(
@@ -56,5 +63,8 @@ export const registerHandler = async (req: Request, res: Response) => {
     { expiresIn: process.env.JWT_TOKEN_EXPIRE_IN }
   );
 
+  savedUser.tokens.push({ token: token });
+
+  await savedUser.save();
   res.status(201).json({ msg: 'User registered successfully', token: token });
 };

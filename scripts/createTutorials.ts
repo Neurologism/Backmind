@@ -35,11 +35,12 @@ async function createTutorial(tutorialPath: string) {
     tutorialJson.ownerId = new mongoose.Types.ObjectId(ownerId);
     tutorialJson.startProject = startProjectId;
     tutorialJson.nextTutorials = tutorial?.nextTutorials;
-    tutorialJson.requiredTutorials = [];
+    const requiredTutorialIds = [];
     for (const tutorialName of tutorialJson.requiredTutorials) {
       const tutorial = await TutorialModel.findOne({ name: tutorialName });
-      tutorialJson.requiredTutorials.push(tutorial?._id);
+      requiredTutorialIds.push(tutorial?._id);
     }
+    tutorialJson.requiredTutorials = requiredTutorialIds;
 
     await TutorialModel.updateOne({ name: tutorialJson.name }, tutorialJson);
     if (process.env.DELETE_PROJECTS === 'true') {
@@ -73,6 +74,22 @@ async function createTutorial(tutorialPath: string) {
   }
 }
 
+async function createNextTutorials(tutorialPath: string) {
+  const tutorialJson = JSON.parse(
+    fs.readFileSync(`./tutorials/${tutorialPath}`, 'utf8')
+  ) as any;
+
+  const nextTutorials = [];
+  for (const tutorialName of tutorialJson.nextTutorials) {
+    const tutorial = await TutorialModel.findOne({ name: tutorialName });
+    nextTutorials.push(tutorial?._id);
+  }
+  await TutorialModel.updateOne(
+    { name: tutorialJson.name },
+    { nextTutorials: nextTutorials }
+  );
+}
+
 async function main() {
   await mongoose.connect(process.env.MONGO_URI as string, {
     dbName: process.env.DB_NAME,
@@ -83,6 +100,11 @@ async function main() {
     await createTutorial(tutorialPath);
   }
   console.log('Tutorials created');
+
+  for (const tutorialPath of tutorials) {
+    await createNextTutorials(tutorialPath);
+  }
+  console.log('Next tutorials set');
 
   await mongoose.disconnect();
 }

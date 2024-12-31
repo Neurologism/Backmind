@@ -227,7 +227,11 @@
           "sourceHandle": "out-0.xi6v6n52txb",
           "targetHandle": "in-0.8h6rp4fo12q",
           "data": {},
-          "label": ""
+          "label": "",
+          "style": {
+            "stroke": "green",
+            "strokeWidth": 2
+          }
         }
       ],
       "modifyNodes": [],
@@ -249,7 +253,11 @@
           "sourceHandle": "out-0.8h6rp4fo12q",
           "targetHandle": "in-0.v0xhroyxof",
           "data": {},
-          "label": ""
+          "label": "",
+          "style": {
+            "stroke": "green",
+            "strokeWidth": 2
+          }
         }
       ],
       "modifyNodes": [],
@@ -271,7 +279,11 @@
           "sourceHandle": "out-0.v0xhroyxof",
           "targetHandle": "in-0.4zl1fq0ycco",
           "data": {},
-          "label": ""
+          "label": "",
+          "style": {
+            "stroke": "green",
+            "strokeWidth": 2
+          }
         }
       ],
       "modifyNodes": [],

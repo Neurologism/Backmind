@@ -481,7 +481,13 @@
           "sourceHandle": "val-visualizers-0.7uxn1yptkb4",
           "targetHandle": "in-0.1x1z1z1z1z1",
           "data": {},
-          "label": ""
+          "label": "",
+          "animated": false,
+          "animationSpeed": 0.5,
+          "style": {
+            "stroke": "purple",
+            "strokeWidth": 2
+          }
         }
       ],
       "modifyNodes": [],

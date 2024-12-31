@@ -132,7 +132,11 @@
           "sourceHandle": "out-0.0atma5spa9l",
           "targetHandle": "in-0.rjprcijyi19",
           "data": {},
-          "label": ""
+          "label": "",
+          "style": {
+            "stroke": "green",
+            "strokeWidth": 2
+          }
         }
       ],
       "modifyNodes": [],
@@ -177,7 +181,11 @@
           "sourceHandle": "out-0.rjprcijyi19",
           "targetHandle": "in-0.kc9iafnk32m",
           "data": {},
-          "label": ""
+          "label": "",
+          "style": {
+            "stroke": "green",
+            "strokeWidth": 2
+          }
         }
       ],
       "modifyNodes": [],

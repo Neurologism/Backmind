@@ -9,12 +9,12 @@
   "startProject": {
     "nodes": [
       {
-        "id": "0.0atma5spa9l",
+        "id": "0.zqznlwntwvn",
         "type": "input_layer",
         "initialized": false,
         "position": {
-          "x": 791,
-          "y": 205
+          "x": 639,
+          "y": 252
         },
         "data": {
           "batch_size": null,
@@ -26,12 +26,12 @@
         "group_identifier": "layer"
       },
       {
-        "id": "0.rjprcijyi19",
+        "id": "0.my0x9fzb0c9",
         "type": "dense",
         "initialized": false,
         "position": {
-          "x": 791,
-          "y": 334
+          "x": 636,
+          "y": 394
         },
         "data": {
           "activation": null,
@@ -42,12 +42,12 @@
         "group_identifier": "layer"
       },
       {
-        "id": "0.kc9iafnk32m",
+        "id": "0.irsc5oohp8",
         "type": "dense",
         "initialized": false,
         "position": {
-          "x": 791,
-          "y": 474
+          "x": 636,
+          "y": 540
         },
         "data": {
           "activation": null,
@@ -60,32 +60,44 @@
     ],
     "edges": [
       {
-        "id": "vueflow__edge-0.0atma5spa9lout-0.0atma5spa9l-0.rjprcijyi19in-0.rjprcijyi19",
+        "id": "vueflow__edge-0.zqznlwntwvnout-0.zqznlwntwvn-0.my0x9fzb0c9in-0.my0x9fzb0c9",
         "type": "smoothstep",
-        "source": "0.0atma5spa9l",
-        "target": "0.rjprcijyi19",
-        "sourceHandle": "out-0.0atma5spa9l",
-        "targetHandle": "in-0.rjprcijyi19",
+        "source": "0.zqznlwntwvn",
+        "target": "0.my0x9fzb0c9",
+        "sourceHandle": "out-0.zqznlwntwvn",
+        "targetHandle": "in-0.my0x9fzb0c9",
         "data": {},
         "label": "",
-        "sourceX": 854,
-        "sourceY": 254,
-        "targetX": 854.36669921875,
-        "targetY": 329
+        "animated": false,
+        "animationSpeed": 0.5,
+        "style": {
+          "stroke": "green",
+          "strokeWidth": 2
+        },
+        "sourceX": 697.316650390625,
+        "sourceY": 302,
+        "targetX": 697.8333129882812,
+        "targetY": 388
       },
       {
-        "id": "vueflow__edge-0.rjprcijyi19out-0.rjprcijyi19-0.kc9iafnk32min-0.kc9iafnk32m",
+        "id": "vueflow__edge-0.my0x9fzb0c9out-0.my0x9fzb0c9-0.irsc5oohp8in-0.irsc5oohp8",
         "type": "smoothstep",
-        "source": "0.rjprcijyi19",
-        "target": "0.kc9iafnk32m",
-        "sourceHandle": "out-0.rjprcijyi19",
-        "targetHandle": "in-0.kc9iafnk32m",
+        "source": "0.my0x9fzb0c9",
+        "target": "0.irsc5oohp8",
+        "sourceHandle": "out-0.my0x9fzb0c9",
+        "targetHandle": "in-0.irsc5oohp8",
         "data": {},
         "label": "",
-        "sourceX": 854.36669921875,
-        "sourceY": 383,
-        "targetX": 854.36669921875,
-        "targetY": 469
+        "animated": false,
+        "animationSpeed": 0.5,
+        "style": {
+          "stroke": "green",
+          "strokeWidth": 2
+        },
+        "sourceX": 697.8333129882812,
+        "sourceY": 444,
+        "targetX": 697.8333129882812,
+        "targetY": 534
       }
     ],
     "position": [0, 0],
@@ -103,6 +115,7 @@
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
@@ -113,6 +126,7 @@
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
@@ -128,6 +142,7 @@
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
@@ -136,20 +151,16 @@
     {
       "text": "However, be cautious! Having too many units is like assembling too large of a team. This can lead to inefficiency, higher costs, and reduced performance. We’ll discuss this more as we move forward, but for now, set the number of units in the first Dense layer to 128.",
       "narrator": "LeNet-5",
-      "addNodes": [
+      "addNodes": [],
+      "addEdges": [],
+      "modifyNodes": [
         {
-          "id": "0.rjprcijyi19",
+          "id": "0.my0x9fzb0c9",
           "data": {
-            "units": 128,
-            "activation": null,
-            "use_bias": true,
-            "lora_rank": null
-          },
-          "identifier": "dense",
-          "group_identifier": "layer"
+            "units": 128
+          }
         }
       ],
-      "addEdges": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
@@ -158,20 +169,16 @@
     {
       "text": "Next, let’s look at the activation function. Think of it like assigning tasks to the team. The activation function dictates how the layer processes the data it receives. We'll cover various activation functions in more detail later. For now, set the activation function of the first Dense layer to ReLU.",
       "narrator": "LeNet-5",
-      "addNodes": [
+      "addNodes": [],
+      "addEdges": [],
+      "modifyNodes": [
         {
-          "id": "0.rjprcijyi19",
+          "id": "0.my0x9fzb0c9",
           "data": {
-            "units": 128,
-            "activation": "relu",
-            "use_bias": true,
-            "lora_rank": null
-          },
-          "identifier": "dense",
-          "group_identifier": "layer"
+            "activation": "relu"
+          }
         }
       ],
-      "addEdges": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
@@ -182,6 +189,7 @@
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
@@ -192,6 +200,7 @@
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
@@ -202,6 +211,7 @@
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
@@ -221,13 +231,14 @@
         }
       ],
       "addEdges": [],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": ["mnist"],
       "unlockNodes": [
         {
           "type": "mnist",
-          "data": ["train", "test"]
+          "data": []
         }
       ]
     },
@@ -236,6 +247,7 @@
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
@@ -244,20 +256,16 @@
     {
       "text": "Set the number of units in the output layer to 10, as we need to recognize 10 different digits (from 0 to 9).",
       "narrator": "LeNet-5",
-      "addNodes": [
+      "addNodes": [],
+      "addEdges": [],
+      "modifyNodes": [
         {
-          "id": "0.kc9iafnk32m",
+          "id": "0.irsc5oohp8",
           "data": {
-            "units": 10,
-            "activation": null,
-            "use_bias": true,
-            "lora_rank": null
-          },
-          "identifier": "dense",
-          "group_identifier": "layer"
+            "units": 10
+          }
         }
       ],
-      "addEdges": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
@@ -266,20 +274,16 @@
     {
       "text": "Excellent! Finally, set the activation function to Softmax. Softmax is ideal for classification tasks like this one. It converts the output of the layer into probabilities, showing how likely the network thinks each digit is the correct answer.",
       "narrator": "LeNet-5",
-      "addNodes": [
+      "addNodes": [],
+      "addEdges": [],
+      "modifyNodes": [
         {
-          "id": "0.kc9iafnk32m",
+          "id": "0.irsc5oohp8",
           "data": {
-            "units": 10,
-            "activation": "softmax",
-            "use_bias": true,
-            "lora_rank": null
-          },
-          "identifier": "dense",
-          "group_identifier": "layer"
+            "activation": "softmax"
+          }
         }
       ],
-      "addEdges": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
@@ -290,6 +294,7 @@
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],

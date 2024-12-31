@@ -120,7 +120,7 @@
       ]
     },
     {
-      "text": "The Input layer is crucial as it serves as the entry point for data into the network. It’s like the first team that\ncollects the raw data before passing it on. To connect the Input layer to the Dense layer, simply drag the output of\nthe Input layer to the input of the Dense layer.",
+      "text": "The Input layer is crucial as it serves as the entry point for data into the network. It’s like the first team that collects the raw data before passing it on. To connect the Input layer to the Dense layer, simply drag the output of the Input layer to the input of the Dense layer.",
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [
@@ -142,7 +142,7 @@
       "unlockNodes": []
     },
     {
-      "text": "Great work! Next, we’ll add another Dense layer. Head back to the Toolbar and grab a Dense layer,\nthen drag it below the first one.",
+      "text": "Great work! Next, we’ll add another Dense layer. Head back to the Toolbar and grab a Dense layer, then drag it below the first one.",
       "narrator": "LeNet-5",
       "addNodes": [
         {

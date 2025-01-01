@@ -52,7 +52,7 @@ export const setStateHandler = async (req: Request, res: Response) => {
 
   project.tutorialStep = req.body.setStep;
   if (
-    req.body.setCompleted ||
+    req.body.setCompleted &&
     !user.completedTutorials.some(
       (tutorialId) => tutorialId.toString() === tutorial._id.toString()
     )

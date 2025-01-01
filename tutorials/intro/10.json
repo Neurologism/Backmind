@@ -99,7 +99,7 @@
           "y": 757.7255870525338
         },
         "data": {
-          "epochs": 1,
+          "epochs": 100,
           "early_stopping": null,
           "name": "model"
         },
@@ -165,7 +165,7 @@
         },
         "data": {
           "x_label": "epoch",
-          "y_label": "loss"
+          "y_label": "mean_absolute_error"
         },
         "identifier": "line-chart",
         "group_identifier": "visualizer",
@@ -181,7 +181,7 @@
           "y": 831.9342859719363
         },
         "data": {
-          "ratio": null
+          "ratio": 0.8
         },
         "identifier": "split",
         "group_identifier": "dataset"

@@ -99,7 +99,7 @@
           "y": 757.7255870525338
         },
         "data": {
-          "epochs": 1,
+          "epochs": 100,
           "early_stopping": null,
           "name": "model"
         },

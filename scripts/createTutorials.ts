@@ -15,6 +15,8 @@ const tutorials = [
   'intro/6.json',
   'intro/7.json',
   'intro/8.json',
+  'intro/9.json',
+  'intro/10.json',
 ];
 
 const resetProjects = true;

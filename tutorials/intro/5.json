@@ -383,7 +383,7 @@
       "addEdges": [],
       "modifyNodes": [
         {
-          "id": "0.7uxn1yptkb4",
+          "id": "0.lq5n7lqjfxf",
           "data": {
             "epochs": 10,
             "name": "model"
@@ -474,11 +474,11 @@
       "addNodes": [],
       "addEdges": [
         {
-          "id": "vueflow__edge-0.7uxn1yptkb4val-visualizers-0.7uxn1yptkb4-0.1x1z1z1z1z1in-0.1x1z1z1z1z1",
+          "id": "vueflow__edge-0.lq5n7lqjfxfval-visualizers-0.lq5n7lqjfxf-0.1x1z1z1z1z1in-0.1x1z1z1z1z1",
           "type": "smoothstep",
-          "source": "0.7uxn1yptkb4",
+          "source": "0.lq5n7lqjfxf",
           "target": "0.1x1z1z1z1z1",
-          "sourceHandle": "val-visualizers-0.7uxn1yptkb4",
+          "sourceHandle": "val-visualizers-0.lq5n7lqjfxf",
           "targetHandle": "in-0.1x1z1z1z1z1",
           "data": {},
           "label": "",

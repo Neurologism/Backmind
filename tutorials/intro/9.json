@@ -9,26 +9,26 @@
   "startProject": {
     "nodes": [
       {
-        "id": "0.c9agnbfq30p",
+        "id": "0.c9agnbfq324",
         "type": "wine_quality",
         "initialized": false,
         "position": {
-          "x": 1327,
-          "y": 577
+          "x": 1410.0282607528784,
+          "y": 691.0710721639327
         },
         "data": {
-          "batch_size": 128
+          "batch_size": 32
         },
         "identifier": "dataset_wine_quality",
         "group_identifier": "dataset"
       },
       {
-        "id": "0.nkcq9um7vfj",
+        "id": "0.nkcq9um7v74",
         "type": "input_layer",
         "initialized": false,
         "position": {
-          "x": 1305.482460604073,
-          "y": -153.25030631865883
+          "x": 1309.752508271445,
+          "y": 115.6413037643924
         },
         "data": {
           "batch_size": null,
@@ -40,12 +40,12 @@
         "group_identifier": "layer"
       },
       {
-        "id": "0.am1l3dlgtq6",
+        "id": "0.am1l3dlgt74",
         "type": "dense",
         "initialized": false,
         "position": {
-          "x": 1302.3539500295353,
-          "y": 242.4287539461197
+          "x": 1305.1777590985896,
+          "y": 442.46488419977015
         },
         "data": {
           "activation": "tanh",
@@ -57,12 +57,12 @@
         "group_identifier": "layer"
       },
       {
-        "id": "0.p4ub0g4qlln",
+        "id": "0.p4ub0g4qll4",
         "type": "dense",
         "initialized": false,
         "position": {
-          "x": 1302.3539500295353,
-          "y": 352.58128083057346
+          "x": 1305.1777590985896,
+          "y": 521.6426432983599
         },
         "data": {
           "activation": "linear",
@@ -74,15 +74,15 @@
         "group_identifier": "layer"
       },
       {
-        "id": "0.nahx3v1j4m",
+        "id": "0.nahx3v1644",
         "type": "Model",
         "initialized": false,
         "position": {
-          "x": 1114,
-          "y": 171
+          "x": 1152.551504962867,
+          "y": 274.4566896184516
         },
         "data": {
-          "optimizer": "adam",
+          "optimizer": "rmsprop",
           "loss": "mean_squared_error",
           "metrics": ["mean_absolute_error"],
           "name": "model"
@@ -91,27 +91,28 @@
         "group_identifier": "model"
       },
       {
-        "id": "0.ul4abqqi88",
+        "id": "0.nahx3v1j44",
         "type": "fit",
         "initialized": false,
         "position": {
-          "x": 911,
-          "y": 483
+          "x": 1114.4767557900116,
+          "y": 757.7255870525338
         },
         "data": {
-          "epochs": 100,
+          "epochs": 1,
+          "early_stopping": null,
           "name": "model"
         },
         "identifier": "fit",
         "group_identifier": "model"
       },
       {
-        "id": "0.nn9zxdi69v",
+        "id": "0.8h6rp4fo124",
         "type": "normalization",
         "initialized": false,
         "position": {
-          "x": 1274.4480463905206,
-          "y": -56.46414432405316
+          "x": 1278.5319377618014,
+          "y": 202.13127067861248
         },
         "data": {
           "axis": -1,
@@ -121,12 +122,12 @@
         "group_identifier": "layer"
       },
       {
-        "id": "0.re2h2ep1ana",
+        "id": "0.1v5q1v5q1v4",
         "type": "dense",
         "initialized": false,
         "position": {
-          "x": 1302.1117996537048,
-          "y": 42.28567118743095
+          "x": 1306.4754162560444,
+          "y": 281.6627094699196
         },
         "data": {
           "activation": "tanh",
@@ -138,12 +139,12 @@
         "group_identifier": "layer"
       },
       {
-        "id": "0.204m974f3qs",
+        "id": "0.1v5q1v5q146",
         "type": "dense",
         "initialized": false,
         "position": {
-          "x": 1302.522055606496,
-          "y": 140.56832477043721
+          "x": 1305.4006670831886,
+          "y": 361.1941482612267
         },
         "data": {
           "activation": "tanh",
@@ -155,12 +156,12 @@
         "group_identifier": "layer"
       },
       {
-        "id": "0.annjuj561nc",
+        "id": "0.1x1z1z1z1z4",
         "type": "line-chart",
         "initialized": false,
         "position": {
-          "x": 605.6351387769994,
-          "y": -14.35737627832441
+          "x": 1621.3769239027058,
+          "y": 658.8996691422008
         },
         "data": {
           "x_label": "epoch",
@@ -174,142 +175,212 @@
     ],
     "edges": [
       {
-        "id": "vueflow__edge-0.am1l3dlgtq6out-0.am1l3dlgtq6-0.p4ub0g4qllnin-0.p4ub0g4qlln",
+        "id": "vueflow__edge-0.am1l3dlgt74out-0.am1l3dlgt74-0.p4ub0g4qll4in-0.p4ub0g4qll4",
         "type": "smoothstep",
-        "source": "0.am1l3dlgtq6",
-        "target": "0.p4ub0g4qlln",
-        "sourceHandle": "out-0.am1l3dlgtq6",
-        "targetHandle": "in-0.p4ub0g4qlln",
+        "source": "0.am1l3dlgt74",
+        "target": "0.p4ub0g4qll4",
+        "sourceHandle": "out-0.am1l3dlgt74",
+        "targetHandle": "in-0.p4ub0g4qll4",
         "data": {},
         "label": "",
-        "sourceX": 1364.1780107895281,
-        "sourceY": 292.4146237370984,
-        "targetX": 1364.1780107895281,
-        "targetY": 346.5726653932284
-      },
-      {
-        "id": "vueflow__edge-0.nahx3v1j4mval-inputs-0.nahx3v1j4m-0.nkcq9um7vfjin-0.nkcq9um7vfj",
-        "type": "smoothstep",
-        "source": "0.nahx3v1j4m",
-        "target": "0.nkcq9um7vfj",
-        "sourceHandle": "val-inputs-0.nahx3v1j4m",
-        "targetHandle": "in-0.nkcq9um7vfj",
-        "data": {
-          "key": "inputs"
+        "animated": false,
+        "animationSpeed": 0.5,
+        "style": {
+          "stroke": "green",
+          "strokeWidth": 2
         },
-        "label": "",
-        "sourceX": 1210.7969042498405,
-        "sourceY": 228.99352630109738,
-        "targetX": 1363.79518664951,
-        "targetY": -159.2589389468561
+        "sourceX": 1367.0109698744327,
+        "sourceY": 492.4751672419112,
+        "targetX": 1367.0109698744327,
+        "targetY": 515.6419846332592
       },
       {
-        "id": "vueflow__edge-0.p4ub0g4qllnout-0.p4ub0g4qlln-0.nahx3v1j4mval-outputs-0.nahx3v1j4m",
+        "id": "vueflow__edge-0.nahx3v1644val-input-0.nahx3v1644-0.nkcq9um7v74in-0.nkcq9um7v74",
         "type": "smoothstep",
-        "source": "0.p4ub0g4qlln",
-        "target": "0.nahx3v1j4m",
-        "sourceHandle": "out-0.p4ub0g4qlln",
-        "targetHandle": "val-outputs-0.nahx3v1j4m",
+        "source": "0.nahx3v1644",
+        "target": "0.nkcq9um7v74",
+        "sourceHandle": "val-input-0.nahx3v1644",
+        "targetHandle": "in-0.nkcq9um7v74",
         "data": {},
         "label": "",
-        "sourceX": 1364.1780107895281,
-        "sourceY": 402.5859230321952,
-        "targetX": 1210.7969042498405,
-        "targetY": 268.98852537473874
-      },
-      {
-        "id": "vueflow__edge-0.nahx3v1j4mout-0.nahx3v1j4m-0.ul4abqqi88in-0.ul4abqqi88",
-        "type": "smoothstep",
-        "source": "0.nahx3v1j4m",
-        "target": "0.ul4abqqi88",
-        "sourceHandle": "out-0.nahx3v1j4m",
-        "targetHandle": "in-0.ul4abqqi88",
-        "data": {},
-        "label": "",
-        "sourceX": 1160.3893572239622,
-        "sourceY": 300.99464034890445,
-        "targetX": 991.0001551205808,
-        "targetY": 476.991315799246
-      },
-      {
-        "id": "vueflow__edge-0.nn9zxdi69vout-0.nn9zxdi69v-0.re2h2ep1anain-0.re2h2ep1ana",
-        "type": "smoothstep",
-        "source": "0.nn9zxdi69v",
-        "target": "0.re2h2ep1ana",
-        "sourceHandle": "out-0.nn9zxdi69v",
-        "targetHandle": "in-0.re2h2ep1ana",
-        "data": {},
-        "label": "",
-        "sourceX": 1364.3248274652187,
-        "sourceY": -6.478274533074448,
-        "targetX": 1363.9545640609317,
-        "targetY": 36.277055750085935
-      },
-      {
-        "id": "vueflow__edge-0.re2h2ep1anaout-0.re2h2ep1ana-0.204m974f3qsin-0.204m974f3qs",
-        "type": "smoothstep",
-        "source": "0.re2h2ep1ana",
-        "target": "0.204m974f3qs",
-        "sourceHandle": "out-0.re2h2ep1ana",
-        "targetHandle": "in-0.204m974f3qs",
-        "data": {},
-        "label": "",
-        "sourceX": 1363.9545640609317,
-        "sourceY": 92.27154097840966,
-        "targetX": 1364.3461163664888,
-        "targetY": 134.5597093330922
-      },
-      {
-        "id": "vueflow__edge-0.204m974f3qsout-0.204m974f3qs-0.am1l3dlgtq6in-0.am1l3dlgtq6",
-        "type": "smoothstep",
-        "source": "0.204m974f3qs",
-        "target": "0.am1l3dlgtq6",
-        "sourceHandle": "out-0.204m974f3qs",
-        "targetHandle": "in-0.am1l3dlgtq6",
-        "data": {},
-        "label": "",
-        "sourceX": 1364.3461163664888,
-        "sourceY": 190.5729669720589,
-        "targetX": 1364.1780107895281,
-        "targetY": 236.42010412707023
-      },
-      {
-        "id": "vueflow__edge-0.nkcq9um7vfjout-0.nkcq9um7vfj-0.nn9zxdi69vin-0.nn9zxdi69v",
-        "type": "smoothstep",
-        "source": "0.nkcq9um7vfj",
-        "target": "0.nn9zxdi69v",
-        "sourceHandle": "out-0.nkcq9um7vfj",
-        "targetHandle": "in-0.nn9zxdi69v",
-        "data": {},
-        "label": "",
-        "sourceX": 1363.79518664951,
-        "sourceY": -103.24566411703714,
-        "targetX": 1364.3248274652187,
-        "targetY": -62.47277695225041
-      },
-      {
-        "id": "vueflow__edge-0.c9agnbfq30pval-train-0.c9agnbfq30p-0.ul4abqqi88val-x-0.ul4abqqi88",
-        "type": "smoothstep",
-        "source": "0.c9agnbfq30p",
-        "target": "0.ul4abqqi88",
-        "sourceHandle": "val-train-0.c9agnbfq30p",
-        "targetHandle": "val-x-0.ul4abqqi88",
-        "data": {
-          "key": "train"
+        "animated": false,
+        "animationSpeed": 0.5,
+        "style": {
+          "stroke": "green",
+          "strokeWidth": 2
         },
+        "sourceX": 1240.9482396700273,
+        "sourceY": 332.456614540111,
+        "targetX": 1368.0748774978838,
+        "targetY": 109.64061230056271
+      },
+      {
+        "id": "vueflow__edge-0.p4ub0g4qll4out-0.p4ub0g4qll4-0.nahx3v1644val-output-0.nahx3v1644",
+        "type": "smoothstep",
+        "source": "0.p4ub0g4qll4",
+        "target": "0.nahx3v1644",
+        "sourceHandle": "out-0.p4ub0g4qll4",
+        "targetHandle": "val-output-0.nahx3v1644",
+        "data": {},
         "label": "",
-        "sourceX": 1459.491921071694,
-        "sourceY": 634.9934575376884,
-        "targetX": 1074.9997963958438,
-        "targetY": 540.9935263010974
+        "animated": false,
+        "animationSpeed": 0.5,
+        "style": {
+          "stroke": "green",
+          "strokeWidth": 2
+        },
+        "sourceX": 1367.0109698744327,
+        "sourceY": 571.6529263405009,
+        "targetX": 1240.9482396700273,
+        "targetY": 372.4551729334755
+      },
+      {
+        "id": "vueflow__edge-0.nahx3v1644out-0.nahx3v1644-0.nahx3v1j44in-0.nahx3v1j44",
+        "type": "smoothstep",
+        "source": "0.nahx3v1644",
+        "target": "0.nahx3v1j44",
+        "sourceHandle": "out-0.nahx3v1644",
+        "targetHandle": "in-0.nahx3v1j44",
+        "data": {},
+        "label": "",
+        "animated": false,
+        "animationSpeed": 0.5,
+        "style": {
+          "stroke": "teal",
+          "strokeWidth": 2
+        },
+        "sourceX": 1194.7526429122072,
+        "sourceY": 404.4461649419243,
+        "targetX": 1194.47321391164,
+        "targetY": 751.7249283874331
+      },
+      {
+        "id": "vueflow__edge-0.c9agnbfq324val-train-0.c9agnbfq324-0.nahx3v1j44val-data-0.nahx3v1j44",
+        "type": "smoothstep",
+        "source": "0.c9agnbfq324",
+        "target": "0.nahx3v1j44",
+        "sourceHandle": "val-train-0.c9agnbfq324",
+        "targetHandle": "val-data-0.nahx3v1j44",
+        "data": {},
+        "label": "",
+        "animated": false,
+        "animationSpeed": 0.5,
+        "style": {
+          "stroke": "#ff5722",
+          "strokeWidth": 2
+        },
+        "sourceX": 1542.525543294903,
+        "sourceY": 749.0709642868632,
+        "targetX": 1278.482038947781,
+        "targetY": 815.7254791754642
+      },
+      {
+        "id": "vueflow__edge-0.nkcq9um7v74out-0.nkcq9um7v74-0.8h6rp4fo124in-0.8h6rp4fo124",
+        "type": "smoothstep",
+        "source": "0.nkcq9um7v74",
+        "target": "0.8h6rp4fo124",
+        "sourceHandle": "out-0.nkcq9um7v74",
+        "targetHandle": "in-0.8h6rp4fo124",
+        "data": {},
+        "label": "",
+        "animated": false,
+        "animationSpeed": 0.5,
+        "style": {
+          "stroke": "green",
+          "strokeWidth": 2
+        },
+        "sourceX": 1368.0748774978838,
+        "sourceY": 165.63366230113604,
+        "targetX": 1368.4161303182707,
+        "targetY": 196.1305956141473
+      },
+      {
+        "id": "vueflow__edge-0.8h6rp4fo124out-0.8h6rp4fo124-0.1v5q1v5q1v4in-0.1v5q1v5q1v4",
+        "type": "smoothstep",
+        "source": "0.8h6rp4fo124",
+        "target": "0.1v5q1v5q1v4",
+        "sourceHandle": "out-0.8h6rp4fo124",
+        "targetHandle": "in-0.1v5q1v5q1v4",
+        "data": {},
+        "label": "",
+        "animated": false,
+        "animationSpeed": 0.5,
+        "style": {
+          "stroke": "green",
+          "strokeWidth": 2
+        },
+        "sourceX": 1368.4161303182707,
+        "sourceY": 252.12364561472063,
+        "targetX": 1368.3085614344293,
+        "targetY": 275.66205080481893
+      },
+      {
+        "id": "vueflow__edge-0.1v5q1v5q1v4out-0.1v5q1v5q1v4-0.1v5q1v5q146in-0.1v5q1v5q146",
+        "type": "smoothstep",
+        "source": "0.1v5q1v5q1v4",
+        "target": "0.1v5q1v5q146",
+        "sourceHandle": "out-0.1v5q1v5q1v4",
+        "targetHandle": "in-0.1v5q1v5q146",
+        "data": {},
+        "label": "",
+        "animated": false,
+        "animationSpeed": 0.5,
+        "style": {
+          "stroke": "green",
+          "strokeWidth": 2
+        },
+        "sourceX": 1368.3085614344293,
+        "sourceY": 331.65508440602775,
+        "targetX": 1367.2338122615736,
+        "targetY": 355.193489596126
+      },
+      {
+        "id": "vueflow__edge-0.1v5q1v5q146out-0.1v5q1v5q146-0.am1l3dlgt74in-0.am1l3dlgt74",
+        "type": "smoothstep",
+        "source": "0.1v5q1v5q146",
+        "target": "0.am1l3dlgt74",
+        "sourceHandle": "out-0.1v5q1v5q146",
+        "targetHandle": "in-0.am1l3dlgt74",
+        "data": {},
+        "label": "",
+        "animated": false,
+        "animationSpeed": 0.5,
+        "style": {
+          "stroke": "green",
+          "strokeWidth": 2
+        },
+        "sourceX": 1367.2338122615736,
+        "sourceY": 411.1864903986058,
+        "targetX": 1367.0109698744327,
+        "targetY": 436.46419273594046
+      },
+      {
+        "id": "vueflow__edge-0.nahx3v1j44val-visualizers-0.nahx3v1j44-0.1x1z1z1z1z4in-0.1x1z1z1z1z4",
+        "type": "smoothstep",
+        "source": "0.nahx3v1j44",
+        "target": "0.1x1z1z1z1z4",
+        "sourceHandle": "val-visualizers-0.nahx3v1j44",
+        "targetHandle": "in-0.1x1z1z1z1z4",
+        "data": {},
+        "label": "",
+        "animated": false,
+        "animationSpeed": 0.5,
+        "style": {
+          "stroke": "purple",
+          "strokeWidth": 2
+        },
+        "sourceX": 1278.482038947781,
+        "sourceY": 895.7226287609222,
+        "targetX": 1846.3748245918698,
+        "targetY": 652.8990104771001
       }
     ],
-    "position": [20.43138457274972, 267.74376995808484],
-    "zoom": 0.8876113372694977,
+    "position": [-544.6096038528406, -13.07297161399049],
+    "zoom": 0.9304496577030151,
     "viewport": {
-      "x": 20.43138457274972,
-      "y": 267.74376995808484,
-      "zoom": 0.8876113372694977
+      "x": -544.6096038528406,
+      "y": -13.07297161399049,
+      "zoom": 0.9304496577030151
     }
   },
   "unlockNodes": [],
@@ -319,6 +390,7 @@
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
@@ -329,6 +401,7 @@
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
@@ -339,6 +412,7 @@
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
@@ -359,6 +433,7 @@
         }
       ],
       "addEdges": [],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": ["split"],
@@ -375,22 +450,23 @@
       "addNodes": [],
       "addEdges": [
         {
-          "id": "vueflow__edge-0.c9agnbfq30pval-train-0.c9agnbfq30p-0.vjnimptozval-x-0.vjnimptoz",
+          "id": "vueflow__edge-0.c9agnbfq324val-train-0.c9agnbfq324-0.vjnimptozin-0.vjnimptoz",
           "type": "smoothstep",
-          "source": "0.c9agnbfq30p",
+          "source": "0.c9agnbfq324",
           "target": "0.vjnimptoz",
-          "sourceHandle": "val-train-0.c9agnbfq30p",
-          "targetHandle": "val-x-0.vjnimptoz",
+          "sourceHandle": "val-train-0.c9agnbfq324",
+          "targetHandle": "in-0.vjnimptoz",
           "data": {
             "key": "train"
           },
           "label": ""
         }
       ],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [
         {
-          "id": "vueflow__edge-0.c9agnbfq30pval-train-0.c9agnbfq30p-0.ul4abqqi88val-x-0.ul4abqqi88"
+          "id": "vueflow__edge-0.c9agnbfq324val-train-0.c9agnbfq324-0.nahx3v1j44val-data-0.nahx3v1j44"
         }
       ],
       "highlightNodeTypes": [],
@@ -402,18 +478,15 @@
       "addNodes": [],
       "addEdges": [
         {
-          "id": "vueflow__edge-0.vjnimptozout-0.vjnimptoz-0.ul4abqqi88val-x-0.ul4abqqi88",
+          "id": "vueflow__edge-0.vjnimptozval-split1-0.vjnimptoz-0.nahx3v1j44val-data-0.nahx3v1j44",
           "type": "smoothstep",
           "source": "0.vjnimptoz",
-          "target": "0.ul4abqqi88",
-          "sourceHandle": "out-0.vjnimptoz",
-          "targetHandle": "val-x-0.ul4abqqi88",
-          "data": {
-            "key": "x"
-          },
-          "label": ""
+          "target": "0.nahx3v1j44",
+          "sourceHandle": "val-split1-0.vjnimptoz",
+          "targetHandle": "val-data-0.nahx3v1j44"
         }
       ],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
@@ -422,18 +495,16 @@
     {
       "text": "We also need to specify how much data should go to training and testing. In the ratio setting of the split node, set the value to 0.8.",
       "narrator": "LeNet-5",
-      "addNodes": [
+      "addNodes": [],
+      "addEdges": [],
+      "modifyNodes": [
         {
           "id": "0.vjnimptoz",
-          "type": "split",
           "data": {
             "ratio": 0.8
-          },
-          "identifier": "split",
-          "group_identifier": "dataset"
+          }
         }
       ],
-      "addEdges": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
@@ -444,6 +515,7 @@
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
@@ -454,7 +526,7 @@
       "narrator": "LeNet-5",
       "addNodes": [
         {
-          "id": "0.8h6rp4fo12q",
+          "id": "0.8h6rp4foe24",
           "type": "evaluate",
           "data": {},
           "identifier": "evaluate",
@@ -462,6 +534,7 @@
         }
       ],
       "addEdges": [],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": ["evaluate"],
@@ -473,33 +546,30 @@
       ]
     },
     {
-      "text": "Connect the second output of the split node to the x connection of the evaluate node. Then, connect the fit node to the input of the evaluate node.",
+      "text": "Connect the second output of the split node to the data connection of the evaluate node. Then, connect the fit node to the input of the evaluate node.",
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [
         {
-          "id": "vueflow__edge-0.vjnimptozval-split2-0.vjnimptoz-0.8h6rp4fo12qval-x-0.8h6rp4fo12q",
+          "id": "vueflow__edge-0.vjnimptozval-split2-0.vjnimptoz-0.8h6rp4foe24val-data-0.8h6rp4foe24",
           "type": "smoothstep",
           "source": "0.vjnimptoz",
-          "target": "0.8h6rp4fo12q",
+          "target": "0.8h6rp4foe24",
           "sourceHandle": "val-split2-0.vjnimptoz",
-          "targetHandle": "val-x-0.8h6rp4fo12q",
-          "data": {
-            "key": "x"
-          },
-          "label": ""
+          "targetHandle": "val-data-0.8h6rp4foe24"
         },
         {
-          "id": "vueflow__edge-0.ul4abqqi88out-0.ul4abqqi88-0.8h6rp4fo12qin-0.8h6rp4fo12q",
+          "id": "vueflow__edge-0.nahx3v1j44out-0.nahx3v1j44-0.8h6rp4foe24in-0.8h6rp4foe24",
           "type": "smoothstep",
-          "source": "0.ul4abqqi88",
-          "target": "0.8h6rp4fo12q",
-          "sourceHandle": "out-0.ul4abqqi88",
-          "targetHandle": "in-0.8h6rp4fo12q",
+          "source": "0.nahx3v1j44",
+          "target": "0.8h6rp4foe24",
+          "sourceHandle": "out-0.nahx3v1j44",
+          "targetHandle": "in-0.8h6rp4foe24",
           "data": {},
           "label": ""
         }
       ],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
@@ -510,6 +580,7 @@
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
@@ -521,6 +592,7 @@
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
@@ -531,6 +603,7 @@
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],

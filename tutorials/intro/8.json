@@ -82,9 +82,9 @@
           "y": 196
         },
         "data": {
-          "optimizer": "adam",
-          "loss": "categorical_crossentropy",
-          "metrics": ["accuracy"],
+          "optimizer": "rmsprop",
+          "loss": "mean_squared_error",
+          "metrics": ["mean_absolute_error"],
           "name": "model"
         },
         "identifier": "Model",

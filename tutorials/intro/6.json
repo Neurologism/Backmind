@@ -206,30 +206,6 @@
       "unlockNodes": []
     },
     {
-      "text": "Moving on to the Input layer… The Wine Quality dataset has 11 features, including acidity, pH, alcohol content, and others. Set the shape of the Input layer to [11] to match the number of features.",
-      "narrator": "LeNet-5",
-      "addNodes": [
-        {
-          "id": "0.nkcq9um7vfj",
-          "type": "input_layer",
-          "data": {
-            "batch_size": null,
-            "dtype": "float32",
-            "sparse": false,
-            "optional": false
-          },
-          "identifier": "input",
-          "group_identifier": "layer"
-        }
-      ],
-      "addEdges": [],
-      "modifyNodes": [],
-      "removeNodes": [],
-      "removeEdges": [],
-      "highlightNodeTypes": [],
-      "unlockNodes": []
-    },
-    {
       "text": "Now let’s configure the output layer (the second Dense layer). Think back to MNIST—we had 10 classes (digits 0-9) and used the network to classify images. That was a classification task.",
       "narrator": "LeNet-5",
       "addNodes": [],

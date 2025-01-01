@@ -62,7 +62,20 @@ export const getHandler = async (req: Request, res: Response) => {
     tutorialStarted: false,
     currentStep: 0,
     projectId: null,
+    isUnlocked: true,
   } as any;
+
+  for (const requiredTutorialId of tutorial.requiredTutorials) {
+    if (
+      !user!.completedTutorials.some(
+        (completedTutorialId) =>
+          completedTutorialId.toString() === requiredTutorialId.toString()
+      )
+    ) {
+      responseJson.isUnlocked = false;
+      break;
+    }
+  }
 
   responseJson.tutorialCompleted = user!.completedTutorials.some(
     (tutorialId) => tutorialId.toString() === tutorial._id.toString()

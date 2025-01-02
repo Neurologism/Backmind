@@ -3,7 +3,7 @@ import { z } from 'zod';
 import { Express } from 'express';
 
 const registerResponseSchema = z.object({
-  token: z.string(),
+  token: z.string().optional(),
 });
 
 export default (app: Express) => {

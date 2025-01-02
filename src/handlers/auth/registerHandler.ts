@@ -10,11 +10,9 @@ export const registerHandler = async (req: Request, res: Response) => {
   const givenUser = req.body['user'];
 
   if (!req.body.agreedToTermsOfServiceAndPrivacyPolicy) {
-    return res
-      .status(400)
-      .json({
-        msg: 'You need to agree to the terms of service and privacy policy.',
-      });
+    return res.status(400).json({
+      msg: 'You need to agree to the terms of service and privacy policy.',
+    });
   }
 
   const salt = await bcrypt.genSalt(Number(process.env.SALT_ROUNDS));
@@ -57,6 +55,13 @@ export const registerHandler = async (req: Request, res: Response) => {
   });
   const savedUser = await newUser.save();
 
+  if (process.env.VERIFY_ALL_EMAILS === 'true') {
+    return res
+      .status(201)
+      .json({
+        msg: 'User registered successfully. Please verify your email address',
+      });
+  }
   const token = jwt.sign(
     { _id: '' + savedUser._id },
     process.env.JWT_SECRET as string,

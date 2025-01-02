@@ -9,12 +9,12 @@
   "startProject": {
     "nodes": [
       {
-        "id": "0.c9agnbfq30p",
+        "id": "0.c9agnbfq327",
         "type": "wine_quality",
         "initialized": false,
         "position": {
-          "x": 1327,
-          "y": 577
+          "x": 1424,
+          "y": 460
         },
         "data": {
           "batch_size": 32
@@ -23,15 +23,14 @@
         "group_identifier": "dataset"
       },
       {
-        "id": "0.nkcq9um7vfj",
+        "id": "0.nkcq9um7v77",
         "type": "input_layer",
         "initialized": false,
         "position": {
-          "x": 1317,
-          "y": 173
+          "x": 1320,
+          "y": 204
         },
         "data": {
-          "shape": [11],
           "batch_size": null,
           "dtype": "float32",
           "sparse": false,
@@ -41,7 +40,7 @@
         "group_identifier": "layer"
       },
       {
-        "id": "0.am1l3dlgtq6",
+        "id": "0.am1l3dlgt77",
         "type": "dense",
         "initialized": false,
         "position": {
@@ -58,7 +57,7 @@
         "group_identifier": "layer"
       },
       {
-        "id": "0.p4ub0g4qlln",
+        "id": "0.p4ub0g4qll6",
         "type": "dense",
         "initialized": false,
         "position": {
@@ -75,15 +74,15 @@
         "group_identifier": "layer"
       },
       {
-        "id": "0.nahx3v1j4m",
+        "id": "0.nahx3v1j47",
         "type": "Model",
         "initialized": false,
         "position": {
-          "x": 1114,
-          "y": 171
+          "x": 1159,
+          "y": 196
         },
         "data": {
-          "optimizer": "adam",
+          "optimizer": "rmsprop",
           "loss": "mean_squared_error",
           "metrics": ["mean_absolute_error"],
           "name": "model"
@@ -92,15 +91,16 @@
         "group_identifier": "model"
       },
       {
-        "id": "0.ul4abqqi88",
+        "id": "0.ul4abqqi87",
         "type": "fit",
         "initialized": false,
         "position": {
-          "x": 911,
-          "y": 483
+          "x": 1122,
+          "y": 546
         },
         "data": {
           "epochs": 1,
+          "early_stopping": null,
           "name": "model"
         },
         "identifier": "fit",
@@ -109,109 +109,142 @@
     ],
     "edges": [
       {
-        "id": "vueflow__edge-0.nkcq9um7vfjout-0.nkcq9um7vfj-0.am1l3dlgtq6in-0.am1l3dlgtq6",
+        "id": "vueflow__edge-0.nkcq9um7v77out-0.nkcq9um7v77-0.am1l3dlgt77in-0.am1l3dlgt77",
         "type": "smoothstep",
-        "source": "0.nkcq9um7vfj",
-        "target": "0.am1l3dlgtq6",
-        "sourceHandle": "out-0.nkcq9um7vfj",
-        "targetHandle": "in-0.am1l3dlgtq6",
+        "source": "0.nkcq9um7v77",
+        "target": "0.am1l3dlgt77",
+        "sourceHandle": "out-0.nkcq9um7v77",
+        "targetHandle": "in-0.am1l3dlgt77",
         "data": {},
         "label": "",
-        "sourceX": 1375.316650390625,
-        "sourceY": 223,
+        "animated": false,
+        "animationSpeed": 0.5,
+        "style": {
+          "stroke": "green",
+          "strokeWidth": 2
+        },
+        "sourceX": 1378.316650390625,
+        "sourceY": 254,
         "targetX": 1378.8333129882812,
         "targetY": 286
       },
       {
-        "id": "vueflow__edge-0.am1l3dlgtq6out-0.am1l3dlgtq6-0.p4ub0g4qllnin-0.p4ub0g4qlln",
+        "id": "vueflow__edge-0.am1l3dlgt77out-0.am1l3dlgt77-0.p4ub0g4qll6in-0.p4ub0g4qll6",
         "type": "smoothstep",
-        "source": "0.am1l3dlgtq6",
-        "target": "0.p4ub0g4qlln",
-        "sourceHandle": "out-0.am1l3dlgtq6",
-        "targetHandle": "in-0.p4ub0g4qlln",
+        "source": "0.am1l3dlgt77",
+        "target": "0.p4ub0g4qll6",
+        "sourceHandle": "out-0.am1l3dlgt77",
+        "targetHandle": "in-0.p4ub0g4qll6",
         "data": {},
         "label": "",
+        "animated": false,
+        "animationSpeed": 0.5,
+        "style": {
+          "stroke": "green",
+          "strokeWidth": 2
+        },
         "sourceX": 1378.8333129882812,
         "sourceY": 342,
         "targetX": 1378.8333129882812,
         "targetY": 377
       },
       {
-        "id": "vueflow__edge-0.nahx3v1j4mval-inputs-0.nahx3v1j4m-0.nkcq9um7vfjin-0.nkcq9um7vfj",
+        "id": "vueflow__edge-0.nahx3v1j47val-input-0.nahx3v1j47-0.nkcq9um7v77in-0.nkcq9um7v77",
         "type": "smoothstep",
-        "source": "0.nahx3v1j4m",
-        "target": "0.nkcq9um7vfj",
-        "sourceHandle": "val-inputs-0.nahx3v1j4m",
-        "targetHandle": "in-0.nkcq9um7vfj",
-        "data": {
-          "key": "inputs"
-        },
-        "label": "",
-        "sourceX": 1210.7999877929688,
-        "sourceY": 229,
-        "targetX": 1375.316650390625,
-        "targetY": 167
-      },
-      {
-        "id": "vueflow__edge-0.p4ub0g4qllnout-0.p4ub0g4qlln-0.nahx3v1j4mval-outputs-0.nahx3v1j4m",
-        "type": "smoothstep",
-        "source": "0.p4ub0g4qlln",
-        "target": "0.nahx3v1j4m",
-        "sourceHandle": "out-0.p4ub0g4qlln",
-        "targetHandle": "val-outputs-0.nahx3v1j4m",
+        "source": "0.nahx3v1j47",
+        "target": "0.nkcq9um7v77",
+        "sourceHandle": "val-input-0.nahx3v1j47",
+        "targetHandle": "in-0.nkcq9um7v77",
         "data": {},
         "label": "",
+        "animated": false,
+        "animationSpeed": 0.5,
+        "style": {
+          "stroke": "green",
+          "strokeWidth": 2
+        },
+        "sourceX": 1247.3999938964844,
+        "sourceY": 254,
+        "targetX": 1378.316650390625,
+        "targetY": 198
+      },
+      {
+        "id": "vueflow__edge-0.p4ub0g4qll6out-0.p4ub0g4qll6-0.nahx3v1j47val-output-0.nahx3v1j47",
+        "type": "smoothstep",
+        "source": "0.p4ub0g4qll6",
+        "target": "0.nahx3v1j47",
+        "sourceHandle": "out-0.p4ub0g4qll6",
+        "targetHandle": "val-output-0.nahx3v1j47",
+        "data": {},
+        "label": "",
+        "animated": false,
+        "animationSpeed": 0.5,
+        "style": {
+          "stroke": "green",
+          "strokeWidth": 2
+        },
         "sourceX": 1378.8333129882812,
         "sourceY": 433,
-        "targetX": 1210.7999877929688,
-        "targetY": 269
+        "targetX": 1247.3999938964844,
+        "targetY": 294
       },
       {
-        "id": "vueflow__edge-0.c9agnbfq30pval-train-0.c9agnbfq30p-0.ul4abqqi88val-x-0.ul4abqqi88",
+        "id": "vueflow__edge-0.nahx3v1j47out-0.nahx3v1j47-0.ul4abqqi87in-0.ul4abqqi87",
         "type": "smoothstep",
-        "source": "0.c9agnbfq30p",
-        "target": "0.ul4abqqi88",
-        "sourceHandle": "val-train-0.c9agnbfq30p",
-        "targetHandle": "val-x-0.ul4abqqi88",
-        "data": {
-          "key": "train"
-        },
-        "label": "",
-        "sourceX": 1459.5,
-        "sourceY": 635,
-        "targetX": 1075,
-        "targetY": 541
-      },
-      {
-        "id": "vueflow__edge-0.nahx3v1j4mout-0.nahx3v1j4m-0.ul4abqqi88in-0.ul4abqqi88",
-        "type": "smoothstep",
-        "source": "0.nahx3v1j4m",
-        "target": "0.ul4abqqi88",
-        "sourceHandle": "out-0.nahx3v1j4m",
-        "targetHandle": "in-0.ul4abqqi88",
+        "source": "0.nahx3v1j47",
+        "target": "0.ul4abqqi87",
+        "sourceHandle": "out-0.nahx3v1j47",
+        "targetHandle": "in-0.ul4abqqi87",
         "data": {},
         "label": "",
-        "sourceX": 1160.4000244140625,
-        "sourceY": 301,
-        "targetX": 991,
-        "targetY": 477
+        "animated": false,
+        "animationSpeed": 0.5,
+        "style": {
+          "stroke": "teal",
+          "strokeWidth": 2
+        },
+        "sourceX": 1201.2000122070312,
+        "sourceY": 326,
+        "targetX": 1202,
+        "targetY": 540
+      },
+      {
+        "id": "vueflow__edge-0.c9agnbfq327val-train-0.c9agnbfq327-0.ul4abqqi87val-data-0.ul4abqqi87",
+        "type": "smoothstep",
+        "source": "0.c9agnbfq327",
+        "target": "0.ul4abqqi87",
+        "sourceHandle": "val-train-0.c9agnbfq327",
+        "targetHandle": "val-data-0.ul4abqqi87",
+        "data": {},
+        "label": "",
+        "animated": false,
+        "animationSpeed": 0.5,
+        "style": {
+          "stroke": "#ff5722",
+          "strokeWidth": 2
+        },
+        "sourceX": 1556.5,
+        "sourceY": 518,
+        "targetX": 1286,
+        "targetY": 604
       }
     ],
-    "position": [-390, 53],
-    "zoom": 1,
+    "position": [36.29326597392583, 178.84924115727563],
+    "zoom": 0.5241312377584643,
     "viewport": {
-      "x": -390,
-      "y": 53,
-      "zoom": 1
+      "x": 36.29326597392583,
+      "y": 178.84924115727563,
+      "zoom": 0.5241312377584643
     }
   },
   "unlockNodes": [],
   "steps": [
     {
-      "text": "GPT! GPT! GPT! Generative Pretrained Transformer! ............. Oh, sorry, I got carried away. We'll talk more about this exciting topic in the future, I promise! For now, let's focus on optimizing your model, shall we?",
+      "text": "GPT! GPT! GPT! Generative Pretrained Transformer! ............. We'll talk more about this exciting topic in the future, I promise! For now, let's focus on optimizing your model, shall we?",
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
@@ -233,20 +266,18 @@
       ],
       "addEdges": [
         {
-          "id": "vueflow__edge-0.nkcq9um7vfjout-0.nkcq9um7vfj-0.8h6rp4fo12qin-0.8h6rp4fo12q",
-          "type": "smoothstep",
-          "source": "0.nkcq9um7vfj",
+          "id": "vueflow__edge-0.nkcq9um7v77out-0.nkcq9um7v77-0.8h6rp4fo12qin-0.8h6rp4fo12q",
+          "source": "0.nkcq9um7v77",
           "target": "0.8h6rp4fo12q",
-          "sourceHandle": "out-0.nkcq9um7vfj",
-          "targetHandle": "in-0.8h6rp4fo12q",
-          "data": {},
-          "label": ""
+          "sourceHandle": "out-0.nkcq9um7v77",
+          "targetHandle": "in-0.8h6rp4fo12q"
         }
       ],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [
         {
-          "id": "vueflow__edge-0.nkcq9um7vfjout-0.nkcq9um7vfj-0.am1l3dlgtq6in-0.am1l3dlgtq6"
+          "id": "vueflow__edge-0.nkcq9um7v77out-0.nkcq9um7v77-0.am1l3dlgt77in-0.am1l3dlgt77"
         }
       ],
       "highlightNodeTypes": ["normalization"],
@@ -258,28 +289,30 @@
       "addNodes": [
         {
           "id": "0.1v5q1v5q1v5",
-          "data": {
-            "activation": null,
-            "use_bias": true,
-            "lora_rank": null,
-            "units": 1024
-          },
           "identifier": "dense",
           "group_identifier": "layer"
         },
         {
           "id": "0.1v5q1v5q1v6",
-          "data": {
-            "activation": null,
-            "use_bias": true,
-            "lora_rank": null,
-            "units": 512
-          },
           "identifier": "dense",
           "group_identifier": "layer"
         }
       ],
       "addEdges": [],
+      "modifyNodes": [
+        {
+          "id": "0.1v5q1v5q1v5",
+          "data": {
+            "units": 1024
+          }
+        },
+        {
+          "id": "0.1v5q1v5q1v6",
+          "data": {
+            "units": 512
+          }
+        }
+      ],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": ["dense"],
@@ -288,31 +321,22 @@
     {
       "text": "For both of the new Dense layers, select the Tanh activation function. ",
       "narrator": "LeNet-5",
-      "addNodes": [
+      "addNodes": [],
+      "addEdges": [],
+      "modifyNodes": [
         {
           "id": "0.1v5q1v5q1v5",
           "data": {
-            "activation": "tanh",
-            "use_bias": true,
-            "lora_rank": null,
-            "units": 1024
-          },
-          "identifier": "dense",
-          "group_identifier": "layer"
+            "activation": "tanh"
+          }
         },
         {
           "id": "0.1v5q1v5q1v6",
           "data": {
-            "activation": "tanh",
-            "use_bias": true,
-            "lora_rank": null,
-            "units": 512
-          },
-          "identifier": "dense",
-          "group_identifier": "layer"
+            "activation": "tanh"
+          }
         }
       ],
-      "addEdges": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
@@ -329,9 +353,7 @@
           "source": "0.8h6rp4fo12q",
           "target": "0.1v5q1v5q1v5",
           "sourceHandle": "out-0.8h6rp4fo12q",
-          "targetHandle": "in-0.1v5q1v5q1v5",
-          "data": {},
-          "label": ""
+          "targetHandle": "in-0.1v5q1v5q1v5"
         },
         {
           "id": "vueflow__edge-0.1v5q1v5q1v5out-0.1v5q1v5q1v5-0.1v5q1v5q1v6in-0.1v5q1v5q1v6",
@@ -339,21 +361,18 @@
           "source": "0.1v5q1v5q1v5",
           "target": "0.1v5q1v5q1v6",
           "sourceHandle": "out-0.1v5q1v5q1v5",
-          "targetHandle": "in-0.1v5q1v5q1v6",
-          "data": {},
-          "label": ""
+          "targetHandle": "in-0.1v5q1v5q1v6"
         },
         {
-          "id": "vueflow__edge-0.1v5q1v5q1v6out-0.1v5q1v5q1v6-0.am1l3dlgtq6in-0.am1l3dlgtq6",
+          "id": "vueflow__edge-0.1v5q1v5q1v6out-0.1v5q1v5q1v6-0.am1l3dlgt77in-0.am1l3dlgt77",
           "type": "smoothstep",
           "source": "0.1v5q1v5q1v6",
-          "target": "0.am1l3dlgtq6",
+          "target": "0.am1l3dlgt77",
           "sourceHandle": "out-0.1v5q1v5q1v6",
-          "targetHandle": "in-0.am1l3dlgtq6",
-          "data": {},
-          "label": ""
+          "targetHandle": "in-0.am1l3dlgt77"
         }
       ],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
@@ -364,6 +383,7 @@
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
@@ -375,6 +395,7 @@
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
@@ -383,18 +404,16 @@
     {
       "text": "We can do even better. In Tutorial 5, we discussed how the number of epochs can affect performance. Let’s increase the number of epochs to 100. You can set this in the Fit node.",
       "narrator": "LeNet-5",
-      "addNodes": [
+      "addNodes": [],
+      "addEdges": [],
+      "modifyNodes": [
         {
-          "id": "0.ul4abqqi88",
+          "id": "0.ul4abqqi87",
           "data": {
-            "epochs": 100,
-            "name": "model"
-          },
-          "identifier": "fit",
-          "group_identifier": "model"
+            "epochs": 100
+          }
         }
       ],
-      "addEdges": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
@@ -407,24 +426,26 @@
         {
           "id": "0.1x1z1z1z1z1",
           "type": "line-chart",
-          "data": {
-            "x_label": "epoch",
-            "y_label": "mae"
-          },
           "identifier": "line-chart",
           "group_identifier": "visualizer"
         }
       ],
       "addEdges": [
         {
-          "id": "vueflow__edge-0.ul4abqqi88val-visualizers-0.ul4abqqi88-0.1x1z1z1z1z1in-0.1x1z1z1z1z1",
+          "id": "vueflow__edge-0.ul4abqqi87val-visualizers-0.ul4abqqi87-0.1x1z1z1z1z1in-0.1x1z1z1z1z1",
           "type": "smoothstep",
-          "source": "0.ul4abqqi88",
+          "source": "0.ul4abqqi87",
           "target": "0.1x1z1z1z1z1",
-          "sourceHandle": "val-visualizers-0.ul4abqqi88",
-          "targetHandle": "in-0.1x1z1z1z1z1",
-          "data": {},
-          "label": ""
+          "sourceHandle": "val-visualizers-0.ul4abqqi87",
+          "targetHandle": "in-0.1x1z1z1z1z1"
+        }
+      ],
+      "modifyNodes": [
+        {
+          "id": "0.1x1z1z1z1z1",
+          "data": {
+            "y_label": "mean_absolute_error"
+          }
         }
       ],
       "removeNodes": [],
@@ -441,22 +462,22 @@
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
-      "unlockNodes": []
+      "unlockNodes": [],
+      "trainingEnabled": true
     },
     {
       "text": "There’s a simple trick to reduce training time: increase the batch size. Remember our example with the maze and advisors? The batch size is like the number of advisors you consult before making each move. Let’s set the batch size to 128 in the Wine Quality dataset and train the model again.",
       "narrator": "LeNet-5",
-      "addNodes": [
+      "addNodes": [],
+      "addEdges": [],
+      "modifyNodes": [
         {
-          "id": "0.c9agnbfq30p",
+          "id": "0.c9agnbfq327",
           "data": {
             "batch_size": 128
-          },
-          "identifier": "dataset_wine_quality",
-          "group_identifier": "dataset"
+          }
         }
       ],
-      "addEdges": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
@@ -468,6 +489,7 @@
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
@@ -478,6 +500,7 @@
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
@@ -488,16 +511,18 @@
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
       "unlockNodes": []
     },
     {
-      "text": "Fantastic work! You’ve learned how to add layers to increase model capacity, adjust the number of epochs for better performance, and optimize training time by modifying the batch size. Keep experimenting, and keep improving. Great job!",
+      "text": "Fantastic work! Keep experimenting, and keep improving.",
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],

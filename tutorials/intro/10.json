@@ -9,29 +9,28 @@
   "startProject": {
     "nodes": [
       {
-        "id": "0.c9agnbfq30p",
+        "id": "0.c9agnbfq324",
         "type": "wine_quality",
         "initialized": false,
         "position": {
-          "x": 1448.7789088386617,
-          "y": 273.02985577855696
+          "x": 1444.4202342842545,
+          "y": 689.9963229910772
         },
         "data": {
-          "batch_size": 128
+          "batch_size": 32
         },
         "identifier": "dataset_wine_quality",
         "group_identifier": "dataset"
       },
       {
-        "id": "0.nkcq9um7vfj",
+        "id": "0.nkcq9um7v74",
         "type": "input_layer",
         "initialized": false,
         "position": {
-          "x": 1507.700101366182,
-          "y": 10.62330197960523
+          "x": 1309.752508271445,
+          "y": 115.6413037643924
         },
         "data": {
-          "shape": [11],
           "batch_size": null,
           "dtype": "float32",
           "sparse": false,
@@ -41,12 +40,12 @@
         "group_identifier": "layer"
       },
       {
-        "id": "0.am1l3dlgtq6",
+        "id": "0.am1l3dlgt74",
         "type": "dense",
         "initialized": false,
         "position": {
-          "x": 1302.3539500295353,
-          "y": 242.4287539461197
+          "x": 1305.1777590985896,
+          "y": 442.46488419977015
         },
         "data": {
           "activation": "tanh",
@@ -58,12 +57,12 @@
         "group_identifier": "layer"
       },
       {
-        "id": "0.p4ub0g4qlln",
+        "id": "0.p4ub0g4qll4",
         "type": "dense",
         "initialized": false,
         "position": {
-          "x": 1302.3539500295353,
-          "y": 342.58128083057346
+          "x": 1305.1777590985896,
+          "y": 521.6426432983599
         },
         "data": {
           "activation": "linear",
@@ -75,15 +74,15 @@
         "group_identifier": "layer"
       },
       {
-        "id": "0.nahx3v1j4m",
+        "id": "0.nahx3v1644",
         "type": "Model",
         "initialized": false,
         "position": {
-          "x": 1040.6161829660875,
-          "y": 127.22858352664059
+          "x": 1152.551504962867,
+          "y": 274.4566896184516
         },
         "data": {
-          "optimizer": "adam",
+          "optimizer": "rmsprop",
           "loss": "mean_squared_error",
           "metrics": ["mean_absolute_error"],
           "name": "model"
@@ -92,28 +91,28 @@
         "group_identifier": "model"
       },
       {
-        "id": "0.ul4abqqi88",
+        "id": "0.nahx3v1j44",
         "type": "fit",
         "initialized": false,
         "position": {
-          "x": 938.0548961888461,
-          "y": 427.0497639086009
+          "x": 1114.4767557900116,
+          "y": 757.7255870525338
         },
         "data": {
           "epochs": 100,
-          "name": "model",
-          "early_stopping": null
+          "early_stopping": null,
+          "name": "model"
         },
         "identifier": "fit",
         "group_identifier": "model"
       },
       {
-        "id": "0.nn9zxdi69v",
+        "id": "0.8h6rp4fo124",
         "type": "normalization",
         "initialized": false,
         "position": {
-          "x": 1475.0899793805308,
-          "y": 154.00316645227582
+          "x": 1278.5319377618014,
+          "y": 202.13127067861248
         },
         "data": {
           "axis": -1,
@@ -123,12 +122,12 @@
         "group_identifier": "layer"
       },
       {
-        "id": "0.re2h2ep1ana",
+        "id": "0.1v5q1v5q1v4",
         "type": "dense",
         "initialized": false,
         "position": {
-          "x": 1302.1117996537048,
-          "y": 42.28567118743095
+          "x": 1306.4754162560444,
+          "y": 281.6627094699196
         },
         "data": {
           "activation": "tanh",
@@ -140,12 +139,12 @@
         "group_identifier": "layer"
       },
       {
-        "id": "0.204m974f3qs",
+        "id": "0.1v5q1v5q146",
         "type": "dense",
         "initialized": false,
         "position": {
-          "x": 1302.522055606496,
-          "y": 140.56832477043721
+          "x": 1305.4006670831886,
+          "y": 361.1941482612267
         },
         "data": {
           "activation": "tanh",
@@ -157,12 +156,12 @@
         "group_identifier": "layer"
       },
       {
-        "id": "0.annjuj561nc",
+        "id": "0.1x1z1z1z1z4",
         "type": "line-chart",
         "initialized": false,
         "position": {
-          "x": 460.20264983535094,
-          "y": 351.8326568924205
+          "x": 1621.3769239027058,
+          "y": 658.8996691422008
         },
         "data": {
           "x_label": "epoch",
@@ -171,19 +170,15 @@
         "identifier": "line-chart",
         "group_identifier": "visualizer",
         "height": 300,
-        "width": 450,
-        "style": {
-          "width": "450px",
-          "height": "300px"
-        }
+        "width": 450
       },
       {
         "id": "0.vjnimptoz",
         "type": "split",
         "initialized": false,
         "position": {
-          "x": 1386.0578342031372,
-          "y": 504.3998724822887
+          "x": 1453.7160529372477,
+          "y": 831.9342859719363
         },
         "data": {
           "ratio": 0.8
@@ -192,12 +187,12 @@
         "group_identifier": "dataset"
       },
       {
-        "id": "0.pt6nate748",
+        "id": "0.8h6rp4foe24",
         "type": "evaluate",
         "initialized": false,
         "position": {
-          "x": 1030.369948081115,
-          "y": 642.5076647327953
+          "x": 1145.263040327719,
+          "y": 955.5304408503189
         },
         "data": {
           "name": "model"
@@ -208,12 +203,12 @@
     ],
     "edges": [
       {
-        "id": "vueflow__edge-0.nahx3v1j4mval-inputs-0.nahx3v1j4m-0.nkcq9um7vfjin-0.nkcq9um7vfj",
+        "id": "vueflow__edge-0.am1l3dlgt74out-0.am1l3dlgt74-0.p4ub0g4qll4in-0.p4ub0g4qll4",
         "type": "smoothstep",
-        "source": "0.nahx3v1j4m",
-        "target": "0.nkcq9um7vfj",
-        "sourceHandle": "val-inputs-0.nahx3v1j4m",
-        "targetHandle": "in-0.nkcq9um7vfj",
+        "source": "0.am1l3dlgt74",
+        "target": "0.p4ub0g4qll4",
+        "sourceHandle": "out-0.am1l3dlgt74",
+        "targetHandle": "in-0.p4ub0g4qll4",
         "data": {},
         "label": "",
         "animated": false,
@@ -222,18 +217,18 @@
           "stroke": "green",
           "strokeWidth": 2
         },
-        "sourceX": 1171.0176267251395,
-        "sourceY": 185.22850844829998,
-        "targetX": 1566.0224705926207,
-        "targetY": 4.622610515775534
+        "sourceX": 1367.0110110517146,
+        "sourceY": 492.46488419977015,
+        "targetX": 1367.0110110517146,
+        "targetY": 515.6426432983599
       },
       {
-        "id": "vueflow__edge-0.nn9zxdi69vout-0.nn9zxdi69v-0.re2h2ep1anain-0.re2h2ep1ana",
+        "id": "vueflow__edge-0.nahx3v1644val-input-0.nahx3v1644-0.nkcq9um7v74in-0.nkcq9um7v74",
         "type": "smoothstep",
-        "source": "0.nn9zxdi69v",
-        "target": "0.re2h2ep1ana",
-        "sourceHandle": "out-0.nn9zxdi69v",
-        "targetHandle": "in-0.re2h2ep1ana",
+        "source": "0.nahx3v1644",
+        "target": "0.nkcq9um7v74",
+        "sourceHandle": "val-input-0.nahx3v1644",
+        "targetHandle": "in-0.nkcq9um7v74",
         "data": {},
         "label": "",
         "animated": false,
@@ -242,18 +237,18 @@
           "stroke": "green",
           "strokeWidth": 2
         },
-        "sourceX": 1564.9741719370002,
-        "sourceY": 204.01341669568788,
-        "targetX": 1363.9449448320897,
-        "targetY": 36.28497972360125
+        "sourceX": 1240.951407306617,
+        "sourceY": 332.4566896184516,
+        "targetX": 1368.06915866207,
+        "targetY": 109.6413037643924
       },
       {
-        "id": "vueflow__edge-0.nkcq9um7vfjout-0.nkcq9um7vfj-0.nn9zxdi69vin-0.nn9zxdi69v",
+        "id": "vueflow__edge-0.p4ub0g4qll4out-0.p4ub0g4qll4-0.nahx3v1644val-output-0.nahx3v1644",
         "type": "smoothstep",
-        "source": "0.nkcq9um7vfj",
-        "target": "0.nn9zxdi69v",
-        "sourceHandle": "out-0.nkcq9um7vfj",
-        "targetHandle": "in-0.nn9zxdi69v",
+        "source": "0.p4ub0g4qll4",
+        "target": "0.nahx3v1644",
+        "sourceHandle": "out-0.p4ub0g4qll4",
+        "targetHandle": "val-output-0.nahx3v1644",
         "data": {},
         "label": "",
         "animated": false,
@@ -262,78 +257,18 @@
           "stroke": "green",
           "strokeWidth": 2
         },
-        "sourceX": 1566.0224705926207,
-        "sourceY": 60.615660516348875,
-        "targetX": 1564.9741719370002,
-        "targetY": 148.00247498844612
+        "sourceX": 1367.0110110517146,
+        "sourceY": 571.6426432983599,
+        "targetX": 1240.951407306617,
+        "targetY": 372.4566896184516
       },
       {
-        "id": "vueflow__edge-0.re2h2ep1anaout-0.re2h2ep1ana-0.204m974f3qsin-0.204m974f3qs",
+        "id": "vueflow__edge-0.nahx3v1644out-0.nahx3v1644-0.nahx3v1j44in-0.nahx3v1j44",
         "type": "smoothstep",
-        "source": "0.re2h2ep1ana",
-        "target": "0.204m974f3qs",
-        "sourceHandle": "out-0.re2h2ep1ana",
-        "targetHandle": "in-0.204m974f3qs",
-        "data": {},
-        "label": "",
-        "animated": false,
-        "animationSpeed": 0.5,
-        "style": {
-          "stroke": "green",
-          "strokeWidth": 2
-        },
-        "sourceX": 1363.9449448320897,
-        "sourceY": 92.295954229572,
-        "targetX": 1364.355200784881,
-        "targetY": 134.56763330660752
-      },
-      {
-        "id": "vueflow__edge-0.204m974f3qsout-0.204m974f3qs-0.am1l3dlgtq6in-0.am1l3dlgtq6",
-        "type": "smoothstep",
-        "source": "0.204m974f3qs",
-        "target": "0.am1l3dlgtq6",
-        "sourceHandle": "out-0.204m974f3qs",
-        "targetHandle": "in-0.am1l3dlgtq6",
-        "data": {},
-        "label": "",
-        "animated": false,
-        "animationSpeed": 0.5,
-        "style": {
-          "stroke": "green",
-          "strokeWidth": 2
-        },
-        "sourceX": 1364.355200784881,
-        "sourceY": 190.56066690781637,
-        "targetX": 1364.1870952079203,
-        "targetY": 236.42806248229002
-      },
-      {
-        "id": "vueflow__edge-0.am1l3dlgtq6out-0.am1l3dlgtq6-0.p4ub0g4qllnin-0.p4ub0g4qlln",
-        "type": "smoothstep",
-        "source": "0.am1l3dlgtq6",
-        "target": "0.p4ub0g4qlln",
-        "sourceHandle": "out-0.am1l3dlgtq6",
-        "targetHandle": "in-0.p4ub0g4qlln",
-        "data": {},
-        "label": "",
-        "animated": false,
-        "animationSpeed": 0.5,
-        "style": {
-          "stroke": "green",
-          "strokeWidth": 2
-        },
-        "sourceX": 1364.1870952079203,
-        "sourceY": 292.42109608349887,
-        "targetX": 1364.1870952079203,
-        "targetY": 336.58058936674377
-      },
-      {
-        "id": "vueflow__edge-0.nahx3v1j4mout-0.nahx3v1j4m-0.ul4abqqi88in-0.ul4abqqi88",
-        "type": "smoothstep",
-        "source": "0.nahx3v1j4m",
-        "target": "0.ul4abqqi88",
-        "sourceHandle": "out-0.nahx3v1j4m",
-        "targetHandle": "in-0.ul4abqqi88",
+        "source": "0.nahx3v1644",
+        "target": "0.nahx3v1j44",
+        "sourceHandle": "out-0.nahx3v1644",
+        "targetHandle": "in-0.nahx3v1j44",
         "data": {},
         "label": "",
         "animated": false,
@@ -342,58 +277,18 @@
           "stroke": "teal",
           "strokeWidth": 2
         },
-        "sourceX": 1103.8107377877218,
-        "sourceY": 297.23455814823967,
-        "targetX": 1018.0513215117454,
-        "targetY": 421.0491052435002
+        "sourceX": 1194.751456134742,
+        "sourceY": 404.4566896184516,
+        "targetX": 1194.4767557900116,
+        "targetY": 751.7255870525338
       },
       {
-        "id": "vueflow__edge-0.ul4abqqi88out-0.ul4abqqi88-0.pt6nate748in-0.pt6nate748",
+        "id": "vueflow__edge-0.nkcq9um7v74out-0.nkcq9um7v74-0.8h6rp4fo124in-0.8h6rp4fo124",
         "type": "smoothstep",
-        "source": "0.ul4abqqi88",
-        "target": "0.pt6nate748",
-        "sourceHandle": "out-0.ul4abqqi88",
-        "targetHandle": "in-0.pt6nate748",
-        "data": {},
-        "label": "",
-        "animated": false,
-        "animationSpeed": 0.5,
-        "style": {
-          "stroke": "teal",
-          "strokeWidth": 2
-        },
-        "sourceX": 1018.0513215117454,
-        "sourceY": 557.057163737471,
-        "targetX": 1079.109119071459,
-        "targetY": 636.5069404702366
-      },
-      {
-        "id": "vueflow__edge-0.vjnimptozval-split2-0.vjnimptoz-0.pt6nate748val-x-0.pt6nate748",
-        "type": "smoothstep",
-        "source": "0.vjnimptoz",
-        "target": "0.pt6nate748",
-        "sourceHandle": "val-split2-0.vjnimptoz",
-        "targetHandle": "val-x-0.pt6nate748",
-        "data": {},
-        "label": "",
-        "animated": false,
-        "animationSpeed": 0.5,
-        "style": {
-          "stroke": "#ff5722",
-          "strokeWidth": 2
-        },
-        "sourceX": 1474.4546017090263,
-        "sourceY": 602.3983393979481,
-        "targetX": 1131.8606897750449,
-        "targetY": 700.5075568557257
-      },
-      {
-        "id": "vueflow__edge-0.p4ub0g4qllnout-0.p4ub0g4qlln-0.nahx3v1j4mval-outputs-0.nahx3v1j4m",
-        "type": "smoothstep",
-        "source": "0.p4ub0g4qlln",
-        "target": "0.nahx3v1j4m",
-        "sourceHandle": "out-0.p4ub0g4qlln",
-        "targetHandle": "val-outputs-0.nahx3v1j4m",
+        "source": "0.nkcq9um7v74",
+        "target": "0.8h6rp4fo124",
+        "sourceHandle": "out-0.nkcq9um7v74",
+        "targetHandle": "in-0.8h6rp4fo124",
         "data": {},
         "label": "",
         "animated": false,
@@ -402,18 +297,78 @@
           "stroke": "green",
           "strokeWidth": 2
         },
-        "sourceX": 1364.1870952079203,
-        "sourceY": 392.5736557666816,
-        "targetX": 1171.0176267251395,
-        "targetY": 225.227083241029
+        "sourceX": 1368.06915866207,
+        "sourceY": 165.6413037643924,
+        "targetX": 1368.4152385430514,
+        "targetY": 196.13127067861248
       },
       {
-        "id": "vueflow__edge-0.nahx3v1j4mval-visualizers-0.nahx3v1j4m-0.annjuj561ncin-0.annjuj561nc",
+        "id": "vueflow__edge-0.8h6rp4fo124out-0.8h6rp4fo124-0.1v5q1v5q1v4in-0.1v5q1v5q1v4",
         "type": "smoothstep",
-        "source": "0.nahx3v1j4m",
-        "target": "0.annjuj561nc",
-        "sourceHandle": "val-visualizers-0.nahx3v1j4m",
-        "targetHandle": "in-0.annjuj561nc",
+        "source": "0.8h6rp4fo124",
+        "target": "0.1v5q1v5q1v4",
+        "sourceHandle": "out-0.8h6rp4fo124",
+        "targetHandle": "in-0.1v5q1v5q1v4",
+        "data": {},
+        "label": "",
+        "animated": false,
+        "animationSpeed": 0.5,
+        "style": {
+          "stroke": "green",
+          "strokeWidth": 2
+        },
+        "sourceX": 1368.4152385430514,
+        "sourceY": 252.13127067861248,
+        "targetX": 1368.3086682091694,
+        "targetY": 275.6627094699196
+      },
+      {
+        "id": "vueflow__edge-0.1v5q1v5q1v4out-0.1v5q1v5q1v4-0.1v5q1v5q146in-0.1v5q1v5q146",
+        "type": "smoothstep",
+        "source": "0.1v5q1v5q1v4",
+        "target": "0.1v5q1v5q146",
+        "sourceHandle": "out-0.1v5q1v5q1v4",
+        "targetHandle": "in-0.1v5q1v5q146",
+        "data": {},
+        "label": "",
+        "animated": false,
+        "animationSpeed": 0.5,
+        "style": {
+          "stroke": "green",
+          "strokeWidth": 2
+        },
+        "sourceX": 1368.3086682091694,
+        "sourceY": 331.6627094699196,
+        "targetX": 1367.2340411066261,
+        "targetY": 355.1941482612267
+      },
+      {
+        "id": "vueflow__edge-0.1v5q1v5q146out-0.1v5q1v5q146-0.am1l3dlgt74in-0.am1l3dlgt74",
+        "type": "smoothstep",
+        "source": "0.1v5q1v5q146",
+        "target": "0.am1l3dlgt74",
+        "sourceHandle": "out-0.1v5q1v5q146",
+        "targetHandle": "in-0.am1l3dlgt74",
+        "data": {},
+        "label": "",
+        "animated": false,
+        "animationSpeed": 0.5,
+        "style": {
+          "stroke": "green",
+          "strokeWidth": 2
+        },
+        "sourceX": 1367.2340411066261,
+        "sourceY": 411.1941482612267,
+        "targetX": 1367.0110110517146,
+        "targetY": 436.46488419977015
+      },
+      {
+        "id": "vueflow__edge-0.nahx3v1j44val-visualizers-0.nahx3v1j44-0.1x1z1z1z1z4in-0.1x1z1z1z1z4",
+        "type": "smoothstep",
+        "source": "0.nahx3v1j44",
+        "target": "0.1x1z1z1z1z4",
+        "sourceHandle": "val-visualizers-0.nahx3v1j44",
+        "targetHandle": "in-0.1x1z1z1z1z4",
         "data": {},
         "label": "",
         "animated": false,
@@ -422,19 +377,21 @@
           "stroke": "purple",
           "strokeWidth": 2
         },
-        "sourceX": 1171.0176267251395,
-        "sourceY": 265.2435661397909,
-        "targetX": 685.200648920702,
-        "targetY": 345.83199822731984
+        "sourceX": 1278.4767557900116,
+        "sourceY": 895.7255870525338,
+        "targetX": 1846.3769239027058,
+        "targetY": 652.8996691422008
       },
       {
-        "id": "vueflow__edge-0.c9agnbfq30pval-train-0.c9agnbfq30p-0.vjnimptozin-0.vjnimptoz",
+        "id": "vueflow__edge-0.c9agnbfq324val-train-0.c9agnbfq324-0.vjnimptozin-0.vjnimptoz",
         "type": "smoothstep",
-        "source": "0.c9agnbfq30p",
+        "source": "0.c9agnbfq324",
         "target": "0.vjnimptoz",
-        "sourceHandle": "val-train-0.c9agnbfq30p",
+        "sourceHandle": "val-train-0.c9agnbfq324",
         "targetHandle": "in-0.vjnimptoz",
-        "data": {},
+        "data": {
+          "key": "train"
+        },
         "label": "",
         "animated": false,
         "animationSpeed": 0.5,
@@ -442,18 +399,18 @@
           "stroke": "#ff5722",
           "strokeWidth": 2
         },
-        "sourceX": 1581.2941650841772,
-        "sourceY": 331.0297479014874,
-        "targetX": 1428.2589721524773,
-        "targetY": 498.39914821972997
+        "sourceX": 1576.9202342842545,
+        "sourceY": 747.9963229910772,
+        "targetX": 1495.9160041091227,
+        "targetY": 825.9342859719363
       },
       {
-        "id": "vueflow__edge-0.vjnimptozval-split1-0.vjnimptoz-0.ul4abqqi88val-x-0.ul4abqqi88",
+        "id": "vueflow__edge-0.vjnimptozval-split1-0.vjnimptoz-0.nahx3v1j44val-data-0.nahx3v1j44",
         "type": "smoothstep",
         "source": "0.vjnimptoz",
-        "target": "0.ul4abqqi88",
+        "target": "0.nahx3v1j44",
         "sourceHandle": "val-split1-0.vjnimptoz",
-        "targetHandle": "val-x-0.ul4abqqi88",
+        "targetHandle": "val-data-0.nahx3v1j44",
         "data": {},
         "label": "",
         "animated": false,
@@ -462,18 +419,58 @@
           "stroke": "#ff5722",
           "strokeWidth": 2
         },
-        "sourceX": 1474.4546017090263,
-        "sourceY": 562.399764605219,
-        "targetX": 1102.0602121453444,
-        "targetY": 485.0497216289893
+        "sourceX": 1542.1160773513102,
+        "sourceY": 889.9342859719363,
+        "targetX": 1278.4767557900116,
+        "targetY": 815.7255870525338
+      },
+      {
+        "id": "vueflow__edge-0.nahx3v1j44out-0.nahx3v1j44-0.8h6rp4foe24in-0.8h6rp4foe24",
+        "type": "smoothstep",
+        "source": "0.nahx3v1j44",
+        "target": "0.8h6rp4foe24",
+        "sourceHandle": "out-0.nahx3v1j44",
+        "targetHandle": "in-0.8h6rp4foe24",
+        "data": {},
+        "label": "",
+        "animated": false,
+        "animationSpeed": 0.5,
+        "style": {
+          "stroke": "teal",
+          "strokeWidth": 2
+        },
+        "sourceX": 1194.4767557900116,
+        "sourceY": 927.7255870525338,
+        "targetX": 1193.996438765219,
+        "targetY": 949.5304408503189
+      },
+      {
+        "id": "vueflow__edge-0.vjnimptozval-split2-0.vjnimptoz-0.8h6rp4foe24val-data-0.8h6rp4foe24",
+        "type": "smoothstep",
+        "source": "0.vjnimptoz",
+        "target": "0.8h6rp4foe24",
+        "sourceHandle": "val-split2-0.vjnimptoz",
+        "targetHandle": "val-data-0.8h6rp4foe24",
+        "data": {},
+        "label": "",
+        "animated": false,
+        "animationSpeed": 0.5,
+        "style": {
+          "stroke": "#ff5722",
+          "strokeWidth": 2
+        },
+        "sourceX": 1542.1160773513102,
+        "sourceY": 929.9342859719363,
+        "targetX": 1246.746438765219,
+        "targetY": 1013.5304408503189
       }
     ],
-    "position": [-58.058374145374955, 149.39266202940325],
-    "zoom": 0.9304496577030151,
+    "position": [49.947825270149224, 129.3007301254492],
+    "zoom": 0.5,
     "viewport": {
-      "x": -58.058374145374955,
-      "y": 149.39266202940325,
-      "zoom": 0.9304496577030151
+      "x": 49.947825270149224,
+      "y": 129.3007301254492,
+      "zoom": 0.5
     }
   },
   "unlockNodes": [],
@@ -483,6 +480,7 @@
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
@@ -493,33 +491,47 @@
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
       "unlockNodes": []
     },
     {
-      "text": "To tackle overfitting, we need to keep an eye on how well our model is doing. This involves running small tests after each training cycle, or epoch, in a process called validation. Validation gives us an estimate of the test error, much like checking your answers after solving each question on a practice exam.",
+      "text": "To avoid overfitting, we need to check how well the model is doing during training. Overfitting happens when the model gets too good at remembering the training data, but struggles with new data.",
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
       "unlockNodes": []
     },
     {
-      "text": "Let’s add validation to your model. First, we need to split the training data into two parts: one for training and one for validation.",
+      "text": "To prevent this, we use validation. After each training step (epoch), we test the model on a separate set of data it hasn't seen before. This helps us see if the model is learning general patterns or just memorizing the training data.",
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
       "unlockNodes": []
     },
     {
-      "text": "Add a split node to your canvas.",
+      "text": "It's like practicing for a test and checking your answers after each question, to make sure you're learning the right things.",
+      "narrator": "LeNet-5",
+      "addNodes": [],
+      "addEdges": [],
+      "modifyNodes": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    },
+    {
+      "text": "Let’s add validation to your model. First, we will need another dataset, besides the training and testing data. To do this, add a Split node from the Dataset section.",
       "narrator": "LeNet-5",
       "addNodes": [
         {
@@ -531,13 +543,14 @@
         }
       ],
       "addEdges": [],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
-      "highlightNodeTypes": ["split"],
+      "highlightNodeTypes": [],
       "unlockNodes": []
     },
     {
-      "text": "Great! Now, connect the split1 output of the first split node to the input of the new split node. Then, remove the connection between the first split node and the fit node.",
+      "text": "Great! Now, remove the connection between the first split node and the fit node. Then, connect the split1 connection of the first split node to the input of the new split node.",
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [
@@ -558,19 +571,22 @@
           }
         }
       ],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [
         {
-          "id": "vueflow__edge-0.vjnimptozval-split1-0.vjnimptoz-0.ul4abqqi88val-x-0.ul4abqqi88"
+          "id": "vueflow__edge-0.vjnimptozval-split1-0.vjnimptoz-0.nahx3v1j44val-data-0.nahx3v1j44"
         }
       ],
       "highlightNodeTypes": [],
       "unlockNodes": []
     },
     {
-      "text": "In the settings of the new split node, set the ratio to 0.8. This means 80% of the training data will be used for training, and 20% will be used for validation.",
+      "text": "In the settings of the new split node, set the ratio to 0.8. This means 80% of the previous training data will be used for training, and 20% will be used for validation.",
       "narrator": "LeNet-5",
-      "addNodes": [
+      "addNodes": [],
+      "addEdges": [],
+      "modifyNodes": [
         {
           "id": "0.07kkpovup2mr",
           "data": {
@@ -578,24 +594,23 @@
           }
         }
       ],
-      "addEdges": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
       "unlockNodes": []
     },
     {
-      "text": "Now connect the split1 output of the new split node to the training input and the split2 output to the validation input of the fit node.",
+      "text": "Now connect the split1 connection of the new split node to the data and the split2 connection to the validation data of the fit node.",
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [
         {
-          "id": "vueflow__edge-0.07kkpovup2mrval-split1-0.07kkpovup2mr-0.ul4abqqi88val-x-0.ul4abqqi88",
+          "id": "vueflow__edge-0.07kkpovup2mrval-split1-0.07kkpovup2mr-0.nahx3v1j44val-x-0.nahx3v1j44",
           "type": "smoothstep",
           "source": "0.07kkpovup2mr",
-          "target": "0.ul4abqqi88",
+          "target": "0.nahx3v1j44",
           "sourceHandle": "val-split1-0.07kkpovup2mr",
-          "targetHandle": "val-x-0.ul4abqqi88",
+          "targetHandle": "val-data-0.nahx3v1j44",
           "data": {},
           "label": "",
           "animated": false,
@@ -606,12 +621,12 @@
           }
         },
         {
-          "id": "vueflow__edge-0.07kkpovup2mrval-split2-0.07kkpovup2mr-0.ul4abqqi88val-validation_data-0.ul4abqqi88",
+          "id": "vueflow__edge-0.07kkpovup2mrval-split2-0.07kkpovup2mr-0.nahx3v1j44val-validation_data-0.nahx3v1j44",
           "type": "smoothstep",
           "source": "0.07kkpovup2mr",
-          "target": "0.ul4abqqi88",
+          "target": "0.nahx3v1j44",
           "sourceHandle": "val-split2-0.07kkpovup2mr",
-          "targetHandle": "val-validation_data-0.ul4abqqi88",
+          "targetHandle": "val-validation_data-0.nahx3v1j44",
           "data": {},
           "label": "",
           "animated": false,
@@ -622,6 +637,7 @@
           }
         }
       ],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
@@ -632,6 +648,7 @@
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
@@ -639,10 +656,11 @@
       "trainingEnabled": true
     },
     {
-      "text": "You’ll observe a common pattern in the graph: while the training MAE keeps decreasing, the validation MAE starts increasing after a certain point. This indicates that the model is starting to overfit. Ideally, training should stop at this point.",
+      "text": "You’ll observe a common pattern in the graph: while the training MAE keeps decreasing, the validation MAE keeps steady or starts increasing after a certain point. This indicates that the model is starting to overfit. Ideally, training should stop at this point.",
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
@@ -653,6 +671,7 @@
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
@@ -661,21 +680,22 @@
     {
       "text": "How do we enable early stopping? Look for the Early Stopping Patience setting in the fit node. Go ahead and set it to 5. This means training will stop if the validation error doesn’t decrease for 5 consecutive epochs.",
       "narrator": "LeNet-5",
-      "addNodes": [
+      "addNodes": [],
+      "addEdges": [],
+      "modifyNodes": [
         {
-          "id": "0.ul4abqqi88",
+          "id": "0.nahx3v1j44",
           "data": {
             "early_stopping": 5
           }
         }
       ],
-      "addEdges": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
       "unlockNodes": [
         {
-          "id": "0.ul4abqqi88",
+          "type": "fit",
           "data": ["early_stopping"]
         }
       ]
@@ -685,6 +705,7 @@
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
@@ -696,6 +717,7 @@
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],

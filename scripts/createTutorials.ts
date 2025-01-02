@@ -15,7 +15,11 @@ const tutorials = [
   'intro/6.json',
   'intro/7.json',
   'intro/8.json',
+  'intro/9.json',
+  'intro/10.json',
 ];
+
+const resetProjects = true;
 
 async function createTutorial(tutorialPath: string) {
   const tutorialJson = JSON.parse(
@@ -43,7 +47,7 @@ async function createTutorial(tutorialPath: string) {
     tutorialJson.requiredTutorials = requiredTutorialIds;
 
     await TutorialModel.updateOne({ name: tutorialJson.name }, tutorialJson);
-    if (process.env.DELETE_PROJECTS === 'true') {
+    if (resetProjects) {
       await ProjectModel.deleteMany({
         tutorialId: tutorial?._id,
         _id: { $ne: startProjectId },

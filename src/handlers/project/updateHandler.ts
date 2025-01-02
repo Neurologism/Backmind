@@ -56,7 +56,7 @@ export const updateHandler = async (req: Request, res: Response) => {
       $set: req.body.project,
     }
   );
-  // // Write req.body.project.components to a JSON file
+  // Write req.body.project.components to a JSON file
   // fs.writeFileSync(
   //   `./project_${req.body.project._id}.json`,
   //   JSON.stringify(req.body.project.components, null, 2)

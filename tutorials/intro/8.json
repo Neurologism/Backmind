@@ -284,16 +284,11 @@
       "unlockNodes": []
     },
     {
-      "text": "Let’s increase your model’s capacity by adding more Dense layers. First, add a Dense layer with 1024 units. Then, add another Dense layer with 512 units. These layers will give your model more power to learn complex patterns.",
+      "text": "Let’s increase your model’s capacity by adding more Dense layers. First, add a Dense layer with 1024 units.",
       "narrator": "LeNet-5",
       "addNodes": [
         {
           "id": "0.1v5q1v5q1v5",
-          "identifier": "dense",
-          "group_identifier": "layer"
-        },
-        {
-          "id": "0.1v5q1v5q1v6",
           "identifier": "dense",
           "group_identifier": "layer"
         }
@@ -305,7 +300,25 @@
           "data": {
             "units": 1024
           }
-        },
+        }
+      ],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": ["dense"],
+      "unlockNodes": []
+    },
+    {
+      "text": "Then, add another Dense layer with 512 units. These layers will give your model more power to learn complex patterns.",
+      "narrator": "LeNet-5",
+      "addNodes": [
+        {
+          "id": "0.1v5q1v5q1v6",
+          "identifier": "dense",
+          "group_identifier": "layer"
+        }
+      ],
+      "addEdges": [],
+      "modifyNodes": [
         {
           "id": "0.1v5q1v5q1v6",
           "data": {

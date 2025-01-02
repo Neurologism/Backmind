@@ -17,7 +17,7 @@
           "y": 689.9963229910772
         },
         "data": {
-          "batch_size": 32
+          "batch_size": 128
         },
         "identifier": "dataset_wine_quality",
         "group_identifier": "dataset"

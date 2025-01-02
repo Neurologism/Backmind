@@ -17,7 +17,7 @@
           "y": 691.0710721639327
         },
         "data": {
-          "batch_size": 32
+          "batch_size": 128
         },
         "identifier": "dataset_wine_quality",
         "group_identifier": "dataset"
@@ -588,7 +588,7 @@
       "trainingEnabled": true
     },
     {
-      "text": "Once training is done, check the evaluate node for results. You’ll see that the Mean Absolute Error (MAE) on the test data is around 0.5, while the MAE on the training data is about 0.3. This gap indicates that the model isn’t performing as well on test data.",
+      "text": "Once training is done, check the evaluate node for results. (WhiteMind Team: We didn't manage to implement this yet. So let's just pretend results are shown. :P) You’ll see that the Mean Absolute Error (MAE) on the test data is around 0.5, while the MAE on the training data is about 0.3. This gap indicates that the model isn’t performing as well on test data.",
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],

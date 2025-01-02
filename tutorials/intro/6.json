@@ -275,7 +275,7 @@
       "unlockNodes": []
     },
     {
-      "text": "And that’s it for now! Your neural network is ready. Next time, we’ll explore how to train the model and talk about more accurate predictions. See you in the next tutorial!",
+      "text": "And that’s it for now! Your neural network is ready. See you in the next tutorial!",
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],

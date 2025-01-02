@@ -217,7 +217,7 @@
       "unlockNodes": []
     },
     {
-      "text": "In addition to the loss function, we also use metrics to evaluate how well the model is performing during training. However, metrics are not the model’s main focus — they just give us an additional view. Think of metrics as sidekicks to the loss function.",
+      "text": "In addition to the loss function, we use metrics to gather extra information about the model's performance. However, unlike the loss function, metrics don't directly affect the learning process.",
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],
@@ -228,7 +228,7 @@
       "unlockNodes": []
     },
     {
-      "text": "For this task, we’ll use Mean Absolute Error (MAE) as the metric. It’s similar to MSE but calculates the average of the absolute differences between the predicted and actual values. This gives a different view of the model's performance. Set the metric of the Model node to Mean Absolute Error.",
+      "text": "For this task, we’ll use Mean Absolute Error (MAE) as the metric. This measures the average difference between the predicted and actual wine quality. Therefore, it gives us a better understanding of how well the model is performing in comparison to the MSE.",
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],
@@ -246,7 +246,7 @@
       "unlockNodes": []
     },
     {
-      "text": "We'll also set the optimizer. An optimizer is like a strategy or plan for the model(manager) to follow. It tells the model how to adjust itself to improve performance.",
+      "text": "We'll also set the optimizer. An optimizer is like a strategy or plan for the model to follow. It tells the model how to adjust itself to improve performance.",
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],
@@ -336,7 +336,7 @@
       "trainingEnabled": true
     },
     {
-      "text": "You may notice that the model is not performing as well as expected. The MAE is quite high, meaning the model is consistently making predictions that are far off from the true values. But don't worry! We'll look at ways to improve the model's performance in the next tutorial.",
+      "text": "You may notice that the model is not performing as well as expected. But don't worry! We'll look at ways to improve the model's performance in the next tutorial.",
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],

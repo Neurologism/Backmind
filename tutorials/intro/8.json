@@ -444,7 +444,7 @@
         {
           "id": "0.1x1z1z1z1z1",
           "data": {
-            "y_label": "mae"
+            "y_label": "mean_absolute_error"
           }
         }
       ],
@@ -462,7 +462,8 @@
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
-      "unlockNodes": []
+      "unlockNodes": [],
+      "trainingEnabled": true
     },
     {
       "text": "There’s a simple trick to reduce training time: increase the batch size. Remember our example with the maze and advisors? The batch size is like the number of advisors you consult before making each move. Let’s set the batch size to 128 in the Wine Quality dataset and train the model again.",
@@ -517,7 +518,7 @@
       "unlockNodes": []
     },
     {
-      "text": "Fantastic work! You’ve learned how to add layers to increase model capacity, adjust the number of epochs for better performance, and optimize training time by modifying the batch size. Keep experimenting, and keep improving. Great job!",
+      "text": "Fantastic work! Keep experimenting, and keep improving.",
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],

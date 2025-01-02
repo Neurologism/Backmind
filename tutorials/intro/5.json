@@ -344,7 +344,7 @@
       "trainingEnabled": true
     },
     {
-      "text": "Accuracy tells you how well your model is performing. It’s the percentage of images that your model correctly identifies. Your model should achieve an accuracy of around 85% to 95%. That means it can correctly identify 85 to 95 out of 100 digits in the MNIST dataset.",
+      "text": "Accuracy tells you how well your model is performing. It’s the percentage of images that your model correctly identifies. Your model should achieve an accuracy of around 85% to 95%. ",
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],
@@ -355,7 +355,7 @@
       "unlockNodes": []
     },
     {
-      "text": "Want to make your model even better? You can improve its accuracy by giving it more time to learn. This is where epochs come into play.",
+      "text": "This is a solid start, as reaching 100% accuracy is nearly impossible due to the complexity of the task. Want to boost your model's performance? You can improve its accuracy by letting it train for more time. This is where the concept of epochs comes in.",
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],
@@ -424,23 +424,7 @@
       "unlockNodes": []
     },
     {
-      "text": "To see this, head over to the VISUALIZER section on the toolbar on the left-hand side.",
-      "narrator": "LeNet-5",
-      "addNodes": [],
-      "addEdges": [],
-      "modifyNodes": [],
-      "removeNodes": [],
-      "removeEdges": [],
-      "highlightNodeTypes": ["line-chart"],
-      "unlockNodes": [
-        {
-          "type": "line-chart",
-          "data": ["x_label", "y_label"]
-        }
-      ]
-    },
-    {
-      "text": "Drag the Line Chart node onto the canvas. Then, go to its settings, find the y_label, and set it to accuracy.",
+      "text": "Head over to the VISUALIZER section on the toolbar on the left-hand side. Drag the Line Chart node onto the canvas. Then, go to its settings, find the y_label, and set it to accuracy.",
       "narrator": "LeNet-5",
       "addNodes": [
         {
@@ -465,8 +449,13 @@
       ],
       "removeNodes": [],
       "removeEdges": [],
-      "highlightNodeTypes": [],
-      "unlockNodes": []
+      "highlightNodeTypes": ["line-chart"],
+      "unlockNodes": [
+        {
+          "type": "line-chart",
+          "data": ["x_label", "y_label"]
+        }
+      ]
     },
     {
       "text": "Connect the visualizers in the Fit node to the Line Chart. This will send the results of each epoch to the Line Chart.",

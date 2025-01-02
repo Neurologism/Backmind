@@ -165,7 +165,7 @@
         },
         "data": {
           "x_label": "epoch",
-          "y_label": "loss"
+          "y_label": "mean_absolute_error"
         },
         "identifier": "line-chart",
         "group_identifier": "visualizer",
@@ -546,7 +546,7 @@
       ]
     },
     {
-      "text": "Connect the second output of the split node to the data connection of the evaluate node. Then, connect the fit node to the input of the evaluate node.",
+      "text": "Connect the split2 output of the split node to the evaluate node. Also connect the fit node to the evaluate node.",
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [

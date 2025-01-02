@@ -480,6 +480,7 @@
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
@@ -490,33 +491,47 @@
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
       "unlockNodes": []
     },
     {
-      "text": "To tackle overfitting, we need to keep an eye on how well our model is doing. This involves running small tests after each training cycle, or epoch, in a process called validation. Validation gives us an estimate of the test error, much like checking your answers after solving each question on a practice exam.",
+      "text": "To avoid overfitting, we need to check how well the model is doing during training. Overfitting happens when the model gets too good at remembering the training data, but struggles with new data.",
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
       "unlockNodes": []
     },
     {
-      "text": "Let’s add validation to your model. First, we need to split the training data into two parts: one for training and one for validation.",
+      "text": "To prevent this, we use validation. After each training step (epoch), we test the model on a separate set of data it hasn't seen before. This helps us see if the model is learning general patterns or just memorizing the training data.",
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
       "unlockNodes": []
     },
     {
-      "text": "Add a split node to your canvas.",
+      "text": "It's like practicing for a test and checking your answers after each question, to make sure you're learning the right things.",
+      "narrator": "LeNet-5",
+      "addNodes": [],
+      "addEdges": [],
+      "modifyNodes": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    },
+    {
+      "text": "Let’s add validation to your model. First, we will need another dataset, besides the training and testing data. To do this, add a Split node from the Dataset section.",
       "narrator": "LeNet-5",
       "addNodes": [
         {
@@ -528,13 +543,14 @@
         }
       ],
       "addEdges": [],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
-      "highlightNodeTypes": ["split"],
+      "highlightNodeTypes": [],
       "unlockNodes": []
     },
     {
-      "text": "Great! Now, connect the split1 output of the first split node to the input of the new split node. Then, remove the connection between the first split node and the fit node.",
+      "text": "Great! Now, remove the connection between the first split node and the fit node. Then, connect the split1 connection of the first split node to the input of the new split node.",
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [
@@ -555,6 +571,7 @@
           }
         }
       ],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [
         {
@@ -565,9 +582,11 @@
       "unlockNodes": []
     },
     {
-      "text": "In the settings of the new split node, set the ratio to 0.8. This means 80% of the training data will be used for training, and 20% will be used for validation.",
+      "text": "In the settings of the new split node, set the ratio to 0.8. This means 80% of the previous training data will be used for training, and 20% will be used for validation.",
       "narrator": "LeNet-5",
-      "addNodes": [
+      "addNodes": [],
+      "addEdges": [],
+      "modifyNodes": [
         {
           "id": "0.07kkpovup2mr",
           "data": {
@@ -575,14 +594,13 @@
           }
         }
       ],
-      "addEdges": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
       "unlockNodes": []
     },
     {
-      "text": "Now connect the split1 output of the new split node to the training input and the split2 output to the validation input of the fit node.",
+      "text": "Now connect the split1 connection of the new split node to the data and the split2 connection to the validation data of the fit node.",
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [
@@ -619,6 +637,7 @@
           }
         }
       ],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
@@ -629,6 +648,7 @@
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
@@ -636,10 +656,11 @@
       "trainingEnabled": true
     },
     {
-      "text": "You’ll observe a common pattern in the graph: while the training MAE keeps decreasing, the validation MAE starts increasing after a certain point. This indicates that the model is starting to overfit. Ideally, training should stop at this point.",
+      "text": "You’ll observe a common pattern in the graph: while the training MAE keeps decreasing, the validation MAE keeps steady or starts increasing after a certain point. This indicates that the model is starting to overfit. Ideally, training should stop at this point.",
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
@@ -650,6 +671,7 @@
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
@@ -658,7 +680,9 @@
     {
       "text": "How do we enable early stopping? Look for the Early Stopping Patience setting in the fit node. Go ahead and set it to 5. This means training will stop if the validation error doesn’t decrease for 5 consecutive epochs.",
       "narrator": "LeNet-5",
-      "addNodes": [
+      "addNodes": [],
+      "addEdges": [],
+      "modifyNodes": [
         {
           "id": "0.nahx3v1j44",
           "data": {
@@ -666,7 +690,6 @@
           }
         }
       ],
-      "addEdges": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
@@ -682,6 +705,7 @@
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
@@ -693,6 +717,7 @@
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],

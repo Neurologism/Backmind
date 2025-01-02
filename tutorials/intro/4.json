@@ -414,7 +414,7 @@
       "unlockNodes": []
     },
     {
-      "text": "Fantastic job! You’ve successfully set up the core components of your neural network and are now ready to begin training it. In the next lesson, we’ll cover how to actually train the model and monitor its learning progress. See you in the next tutorial!",
+      "text": "Fantastic job! You’ve successfully set up the core components of your neural network and are now ready to begin training it. See you in the next tutorial!",
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],

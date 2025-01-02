@@ -169,7 +169,7 @@
       "unlockNodes": []
     },
     {
-      "text": "This second Dense layer will handle the final output of the network. To link the layers together, connect the output from the first Dense layer to the input of this new Dense layer.",
+      "text": "This second Dense layer will handle the final output of the network. Now, connect the first Dense layer to the second Dense layer.",
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [

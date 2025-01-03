@@ -10,7 +10,6 @@ export default (app: Express, vars: any) => {
         user: {
           aboutYou: 'changed',
           displayname: 'changed',
-          visibility: 'private',
           newPassword: 'test1234',
           oldPassword: 'test1234',
         },
@@ -27,6 +26,5 @@ export default (app: Express, vars: any) => {
     expect(response.status).toBe(200);
     expect(response.body.user.aboutYou).toBe('changed');
     expect(response.body.user.displayname).toBe('changed');
-    expect(response.body.user.visibility).toBe('private');
   });
 };

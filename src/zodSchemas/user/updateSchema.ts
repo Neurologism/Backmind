@@ -12,7 +12,6 @@ export const updateSchema = z
         aboutYou: z.string().optional(),
         displayname: z.string().optional(),
         dateOfBirth: z.string().optional(),
-        visibility: z.enum(['private', 'public']).optional(),
         newPassword: z
           .string()
           .min(Number(process.env.MIN_PASS_LENGTH))

@@ -138,7 +138,7 @@
       "unlockNodes": []
     },
     {
-      "text": "Recall that the model is like a manager of you project. It organizes everything, making sure the network is working and evaluating its progress. Add the Model node from the MODELS section to the canvas.",
+      "text": "Recall that the model is like a manager of your project. It organizes everything, making sure the network is working and evaluating its progress. Add the Model node from the MODELS section to the canvas.",
       "narrator": "LeNet-5",
       "addNodes": [
         {

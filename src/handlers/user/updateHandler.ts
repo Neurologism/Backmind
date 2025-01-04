@@ -33,18 +33,6 @@ export const updateHandler = async (req: Request, res: Response) => {
     }
   }
 
-  if (req.body.user.pronouns !== undefined) {
-    user.pronouns = req.body.user.pronouns;
-  }
-
-  if (req.body.user.company !== undefined) {
-    user.company = req.body.user.company;
-  }
-
-  if (req.body.user.location !== undefined) {
-    user.location = req.body.user.location;
-  }
-
   user.set(req.body.user);
   user.dateLastEdited = new Date();
   user.markModified('dateLastEdited');

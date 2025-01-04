@@ -8,7 +8,12 @@ try {
   if (err.code !== 'EEXIST') throw logger.error(err);
 }
 
-const directories = ['./logs', './dataStorage', './dataStorage/pfp'];
+const directories = [
+  './logs',
+  process.env.FILES_DIRECTORY as string,
+  process.env.PFP_DIRECTORY as string,
+  process.env.MODEL_DIRECTORY as string,
+];
 for (const dir of directories) {
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
 }

@@ -37,6 +37,9 @@ export const setEnv = (filename: string = '.env') => {
   process.env.PFP_DIRECTORY =
     process.env.PFP_DIRECTORY ||
     path.join(process.env.FILES_DIRECTORY as string, '/pfp');
+  process.env.MODEL_DIRECTORY =
+    process.env.MODEL_DIRECTORY ||
+    path.join(process.env.FILES_DIRECTORY as string, '/model');
   process.env.BACKMIND_HOSTNAME =
     process.env.BACKMIND_HOSTNAME || 'https://backmind.icinoxis.net/';
   process.env.WHITEMIND_HOSTNAME =

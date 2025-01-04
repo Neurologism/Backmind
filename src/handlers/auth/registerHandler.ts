@@ -2,9 +2,7 @@ import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { UserModel } from '../../mongooseSchemas/userSchema';
-import sgMail from '@sendgrid/mail';
-import crypto from 'crypto';
-import { URL } from 'url';
+import { sendVerificationEmail } from '../../utility/sendVerificationEmail';
 
 export const registerHandler = async (req: Request, res: Response) => {
   const givenUser = req.body['user'];
@@ -18,35 +16,18 @@ export const registerHandler = async (req: Request, res: Response) => {
   const salt = await bcrypt.genSalt(Number(process.env.SALT_ROUNDS));
   const hashedPassword = await bcrypt.hash(givenUser.plainPassword, salt);
 
-  const mailVerificationToken = crypto.randomBytes(32).toString('hex');
-  const verificationLink = new URL(
-    `/api/auth/verify-email?token=${mailVerificationToken}`,
-    process.env.BACKMIND_HOSTNAME as string
-  ).toString();
-
-  const sendVerification = !Boolean(process.env.VERIFY_ALL_EMAILS);
-  let verifyEmailSend = sendVerification;
-  if (sendVerification) {
-    try {
-      sgMail.send({
-        to: givenUser.email,
-        from: 'no-reply@whitemind.net',
-        subject: 'Verify your Email',
-        text: `Verify your email address \nYou need to verify your email address to create your account. Click the link below to verify your email address. The link will expire in one hour. \n\n${verificationLink} \n\nIn case you didn't create an account on whitemind.net, you can safely ignore this email.`,
-      });
-    } catch (e) {
-      req.logger.error(e);
-      verifyEmailSend = false;
-    }
-  }
+  let verifyEmailReturn = await sendVerificationEmail(
+    givenUser.email,
+    req.logger
+  );
 
   const newUser = new UserModel({
     emails: [
       {
         emailType: 'primary',
-        verified: !sendVerification,
+        verified: Boolean(process.env.VERIFY_ALL_EMAILS),
         address: givenUser.email,
-        verificationToken: mailVerificationToken,
+        verificationToken: verifyEmailReturn.mailVerificationToken,
         dateVerificationSent: new Date(),
       },
     ],
@@ -56,12 +37,6 @@ export const registerHandler = async (req: Request, res: Response) => {
   });
   const savedUser = await newUser.save();
 
-  if (process.env.VERIFY_ALL_EMAILS === 'true') {
-    return res.status(201).json({
-      msg: 'User registered successfully. Please verify your email address',
-      verifyEmailSend,
-    });
-  }
   const token = jwt.sign(
     { _id: '' + savedUser._id },
     process.env.JWT_SECRET as string,
@@ -71,11 +46,9 @@ export const registerHandler = async (req: Request, res: Response) => {
   savedUser.tokens.push({ token: token });
 
   await savedUser.save();
-  res
-    .status(201)
-    .json({
-      msg: 'User registered successfully',
-      token: token,
-      verifyEmailSend,
-    });
+  res.status(201).json({
+    msg: 'User registered successfully',
+    token: token,
+    verifyEmailSend: verifyEmailReturn.verifyEmailSend,
+  });
 };

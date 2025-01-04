@@ -18,14 +18,6 @@ export const loginHandler = async (req: Request, res: Response) => {
     return res.status(404).json({ msg: 'User not found' });
   }
 
-  if (process.env.VERIFY_ALL_EMAILS === 'true') {
-    const emailVerified = user.emails.some(
-      (email: any) =>
-        email.address === req.body['user']['email'] && email.verified === true
-    );
-    if (!emailVerified)
-      return res.status(401).json({ msg: 'Email not verified' });
-  }
   const isMatch = await bcrypt.compare(
     req.body['user'].plainPassword,
     user.passwordHash

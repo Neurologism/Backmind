@@ -11,8 +11,8 @@ import { updateHandler } from '../handlers/user/updateHandler';
 import { uploadPfpHandler } from '../handlers/user/uploadPfpHandler';
 import { swapPrimaryEmailHandler } from '../handlers/user/swapPrimaryEmailHandler';
 import { schemaValidationMiddleware } from '../middleware/schemaValidationMiddleware';
-import { updateSecondaryEmailHandler } from '../handlers/user/updateSecondaryEmailHandler';
-import { deleteSecondaryEmailHandler } from '../handlers/user/deleteSecondaryEmailHandler';
+import { updateEmailHandler } from '../handlers/user/updateEmailHandler';
+import { deleteEmailHandler } from '../handlers/user/deleteEmailHandler';
 import { getSchema } from '../zodSchemas/user/getSchema';
 import { updateSchema } from '../zodSchemas/user/updateSchema';
 import { deleteSchema } from '../zodSchemas/user/deleteSchema';
@@ -24,8 +24,8 @@ import { uploadPfpSchema } from '../zodSchemas/user/uploadPfpSchema';
 // import { getPfpSchema } from '../zodSchemas/user/getPfpSchema';
 import { getCreditsSchema } from '../zodSchemas/user/getCreditsSchema';
 import { swapPrimaryEmailSchema } from '../zodSchemas/user/swapPrimaryEmailSchema';
-import { updateSecondaryEmailSchema } from '../zodSchemas/user/updateSecondaryEmailSchema';
-import { deleteSecondaryEmailSchema } from '../zodSchemas/user/deleteSecondaryEmailSchema';
+import { updateEmailSchema } from '../zodSchemas/user/updateEmailSchema';
+import { deleteEmailSchema } from '../zodSchemas/user/deleteEmailSchema';
 import { pfpUploadMulter } from '../multerConfigs/pfpUpload';
 import { getCredits } from '../handlers/user/getCredits';
 
@@ -107,15 +107,15 @@ router.post(
 router.post(
   '/update-secondary-email',
   authMiddleware,
-  schemaValidationMiddleware(updateSecondaryEmailSchema),
-  updateSecondaryEmailHandler
+  schemaValidationMiddleware(updateEmailSchema),
+  updateEmailHandler
 );
 
 router.post(
   '/delete-secondary-email',
   authMiddleware,
-  schemaValidationMiddleware(deleteSecondaryEmailSchema),
-  deleteSecondaryEmailHandler
+  schemaValidationMiddleware(deleteEmailSchema),
+  deleteEmailHandler
 );
 
 export default router;

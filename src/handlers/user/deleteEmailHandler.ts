@@ -1,10 +1,7 @@
 import { Request, Response } from 'express';
 import { UserModel } from '../../mongooseSchemas/userSchema';
 
-export const deleteSecondaryEmailHandler = async (
-  req: Request,
-  res: Response
-) => {
+export const deleteEmailHandler = async (req: Request, res: Response) => {
   const user = await UserModel.findById({ _id: req.userId });
 
   if (!user) {
@@ -12,17 +9,17 @@ export const deleteSecondaryEmailHandler = async (
   }
 
   const secondaryEmail = user.emails.find(
-    (email) => email.emailType === 'secondary'
+    (email) => email.emailType === req.body.user.emailType
   );
 
   if (!secondaryEmail) {
     return res
       .status(400)
-      .json({ msg: 'User does not have a secondary email' });
+      .json({ msg: 'User does not have the specified email type' });
   }
 
-  user.emails.pull({ emailType: 'secondary' });
+  user.emails.pull({ emailType: req.body.user.emailType });
   await user.save();
 
-  return res.status(200).json({ msg: 'Secondary email deleted successfully' });
+  return res.status(200).json({ msg: 'Email deleted successfully' });
 };

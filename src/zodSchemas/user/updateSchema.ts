@@ -17,7 +17,6 @@ export const updateSchema = z
           .min(Number(process.env.MIN_PASS_LENGTH))
           .optional(),
         oldPassword: z.string().optional(),
-        primaryEmail: z.string().email().optional(),
         pronouns: z.string().optional(),
         company: z.string().optional(),
         location: z.string().optional(),

@@ -29,7 +29,7 @@ export const updateSecondaryEmailHandler = async (
     });
   } catch (e) {
     req.logger.error(e);
-    return res.status(500).json({ msg: 'Error sending verification email.' });
+    return res.status(401).json({ msg: 'Error sending verification email.' });
   }
 
   if (user.emails.find((email) => email.emailType === 'secondary')) {

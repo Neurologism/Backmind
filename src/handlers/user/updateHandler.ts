@@ -62,7 +62,7 @@ export const updateHandler = async (req: Request, res: Response) => {
         } catch (e) {
           req.logger.error(e);
           return res
-            .status(500)
+            .status(401)
             .json({ msg: 'Error sending verification email.' });
         }
       }

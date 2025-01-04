@@ -25,6 +25,7 @@ export const registerHandler = async (req: Request, res: Response) => {
   ).toString();
 
   const sendVerification = !Boolean(process.env.VERIFY_ALL_EMAILS);
+  let verifyEmailSend = sendVerification;
   if (sendVerification) {
     try {
       sgMail.send({
@@ -35,7 +36,7 @@ export const registerHandler = async (req: Request, res: Response) => {
       });
     } catch (e) {
       req.logger.error(e);
-      return res.status(500).json({ msg: 'Error sending verification email.' });
+      verifyEmailSend = false;
     }
   }
 
@@ -56,11 +57,10 @@ export const registerHandler = async (req: Request, res: Response) => {
   const savedUser = await newUser.save();
 
   if (process.env.VERIFY_ALL_EMAILS === 'true') {
-    return res
-      .status(201)
-      .json({
-        msg: 'User registered successfully. Please verify your email address',
-      });
+    return res.status(201).json({
+      msg: 'User registered successfully. Please verify your email address',
+      verifyEmailSend,
+    });
   }
   const token = jwt.sign(
     { _id: '' + savedUser._id },
@@ -71,5 +71,11 @@ export const registerHandler = async (req: Request, res: Response) => {
   savedUser.tokens.push({ token: token });
 
   await savedUser.save();
-  res.status(201).json({ msg: 'User registered successfully', token: token });
+  res
+    .status(201)
+    .json({
+      msg: 'User registered successfully',
+      token: token,
+      verifyEmailSend,
+    });
 };

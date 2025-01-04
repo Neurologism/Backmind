@@ -19,7 +19,7 @@ const tutorials = [
   'intro/10.json',
 ];
 
-const resetProjects = true;
+const resetProjects = false;
 
 async function createTutorial(tutorialPath: string) {
   const tutorialJson = JSON.parse(

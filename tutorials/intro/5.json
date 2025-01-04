@@ -507,7 +507,8 @@
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
-      "unlockNodes": []
+      "unlockNodes": [],
+      "trainingEnabled": true
     },
     {
       "text": "Congratulations! You’ve successfully built, trained, and visualized your very own neural network. Fantastic work!",

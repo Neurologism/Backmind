@@ -11,7 +11,7 @@ import { SetStateDto } from './dto/setState.schema';
 export class TutorialsController {
   @Post('get')
   get(@Body() body: GetDto, @Req() req: Request, @Res() res: Response) {
-    return getHandler(req, res);
+    return getHandler(body, req, res);
   }
 
   @Post('set-state')
@@ -20,6 +20,6 @@ export class TutorialsController {
     @Req() req: Request,
     @Res() res: Response
   ) {
-    return setStateHandler(req, res);
+    return setStateHandler(body, req, res);
   }
 }

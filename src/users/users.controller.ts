@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Res, Req } from '@nestjs/common';
+import { Controller, Get, Post, Res, Req, Body } from '@nestjs/common';
 import { Request, Response } from 'express';
 
 import { deleteEmailHandler } from './handlers/deleteEmailHandler';
@@ -15,70 +15,108 @@ import { updateEmailHandler } from './handlers/updateEmailHandler';
 import { updateHandler } from './handlers/updateHandler';
 import { uploadPfpHandler } from './handlers/uploadPfpHandler';
 
+import { DeleteEmailDto } from './dto/deleteEmail.schema';
+import { DeleteDto } from './dto/delete.schema';
+import { FollowDto } from './dto/follow.schema';
+import { GetCreditsDto } from './dto/getCredits.schema';
+import { GetDto } from './dto/get.schema';
+import { GetPfpDto } from './dto/getPfp.schema';
+import { IsTakenDto } from './dto/isTaken.schema';
+import { SearchDto } from './dto/search.schema';
+import { SwapPrimaryEmailDto } from './dto/swapPrimaryEmail.schema';
+import { UnfollowDto } from './dto/unfollow.schema';
+import { UpdateEmailDto } from './dto/updateEmail.schema';
+import { UpdateDto } from './dto/update.schema';
+import { UploadPfpDto } from './dto/uploadPfp.schema';
+
 @Controller('user')
 export class UsersController {
   @Post('delete-email')
-  deleteEmail(@Req() req: Request, @Res() res: Response) {
+  deleteEmail(
+    @Body() body: DeleteEmailDto,
+    @Req() req: Request,
+    @Res() res: Response
+  ) {
     return deleteEmailHandler(req, res);
   }
 
   @Post('delete')
-  delete(@Req() req: Request, @Res() res: Response) {
+  delete(@Body() body: DeleteDto, @Req() req: Request, @Res() res: Response) {
     return deleteHandler(req, res);
   }
 
   @Post('follow')
-  follow(@Req() req: Request, @Res() res: Response) {
+  follow(@Body() body: FollowDto, @Req() req: Request, @Res() res: Response) {
     return followHandler(req, res);
   }
 
   @Post('get-credits')
-  getCredits(@Req() req: Request, @Res() res: Response) {
+  getCredits(
+    @Body() body: GetCreditsDto,
+    @Req() req: Request,
+    @Res() res: Response
+  ) {
     return getCreditsHandler(req, res);
   }
 
   @Post('get')
-  get(@Req() req: Request, @Res() res: Response) {
+  get(@Body() body: GetDto, @Req() req: Request, @Res() res: Response) {
     return getHandler(req, res);
   }
 
   @Get('get-pfp')
-  getPfp(@Req() req: Request, @Res() res: Response) {
+  getPfp(@Body() body: GetPfpDto, @Req() req: Request, @Res() res: Response) {
     return getPfpHandler(req, res);
   }
 
   @Post('is-taken')
-  isTaken(@Req() req: Request, @Res() res: Response) {
+  isTaken(@Body() body: IsTakenDto, @Req() req: Request, @Res() res: Response) {
     return isTakenHandler(req, res);
   }
 
   @Post('search')
-  search(@Req() req: Request, @Res() res: Response) {
+  search(@Body() body: SearchDto, @Req() req: Request, @Res() res: Response) {
     return searchHandler(req, res);
   }
 
   @Post('swap-primary-email')
-  swapPrimaryEmail(@Req() req: Request, @Res() res: Response) {
+  swapPrimaryEmail(
+    @Body() body: SwapPrimaryEmailDto,
+    @Req() req: Request,
+    @Res() res: Response
+  ) {
     return swapPrimaryEmailHandler(req, res);
   }
 
   @Post('unfollow')
-  unfollow(@Req() req: Request, @Res() res: Response) {
+  unfollow(
+    @Body() body: UnfollowDto,
+    @Req() req: Request,
+    @Res() res: Response
+  ) {
     return unfollowHandler(req, res);
   }
 
   @Post('update-email')
-  updateEmailHandler(@Req() req: Request, @Res() res: Response) {
+  updateEmailHandler(
+    @Body() body: UpdateEmailDto,
+    @Req() req: Request,
+    @Res() res: Response
+  ) {
     return updateEmailHandler(req, res);
   }
 
   @Post('update')
-  update(@Req() req: Request, @Res() res: Response) {
+  update(@Body() body: UpdateDto, @Req() req: Request, @Res() res: Response) {
     return updateHandler(req, res);
   }
 
   @Post('upload-pfp')
-  uploadPfp(@Req() req: Request, @Res() res: Response) {
+  uploadPfp(
+    @Body() body: UploadPfpDto,
+    @Req() req: Request,
+    @Res() res: Response
+  ) {
     return uploadPfpHandler(req, res);
   }
 }

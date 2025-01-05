@@ -19,31 +19,31 @@ import { UpdateDto } from './dto/update.schema';
 export class ProjectsController {
   @Post('create')
   create(@Body() body: CreateDto, @Req() req: Request, @Res() res: Response) {
-    return createHandler(req, res);
+    return createHandler(body, req, res);
   }
 
   @Post('delete')
   delete(@Body() body: DeleteDto, @Req() req: Request, @Res() res: Response) {
-    return deleteHandler(req, res);
+    return deleteHandler(body, req, res);
   }
 
   @Post('get')
   get(@Body() body: GetDto, @Req() req: Request, @Res() res: Response) {
-    return getHandler(req, res);
+    return getHandler(body, req, res);
   }
 
   @Post('is-taken')
   isTaken(@Body() body: IsTakenDto, @Req() req: Request, @Res() res: Response) {
-    return isTakenHandler(req, res);
+    return isTakenHandler(body, req, res);
   }
 
   @Post('search')
   search(@Body() body: SearchDto, @Req() req: Request, @Res() res: Response) {
-    return searchHandler(req, res);
+    return searchHandler(body, req, res);
   }
 
   @Post('update')
   update(@Body() body: UpdateDto, @Req() req: Request, @Res() res: Response) {
-    return updateHandler(req, res);
+    return updateHandler(body, req, res);
   }
 }

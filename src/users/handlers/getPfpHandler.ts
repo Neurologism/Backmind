@@ -3,7 +3,7 @@ import { UserModel } from '../../../mongooseSchemas/user.schema';
 import fs from 'fs';
 import path from 'path';
 
-export const getPfpHandler = async (req: Request, res: Response) => {
+export const getPfpHandler = async (body: any, req: Request, res: Response) => {
   const user = await UserModel.findById(req.params.userId);
 
   if (user === null) {

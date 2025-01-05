@@ -1,25 +1,29 @@
 import { Request, Response } from 'express';
 import { UserModel } from '../../../mongooseSchemas/user.schema';
 
-export const unfollowHandler = async (req: Request, res: Response) => {
+export const unfollowHandler = async (
+  body: any,
+  req: Request,
+  res: Response
+) => {
   const user = await UserModel.findById({ _id: req.userId });
 
   if (!user) {
     return res.status(404).json({ msg: 'User not found' });
   }
 
-  const userToUnfollow = await UserModel.findById(req.body.userId);
+  const userToUnfollow = await UserModel.findById(body.userId);
 
   if (!userToUnfollow) {
     return res.status(404).json({ msg: 'User to unfollow not found' });
   }
 
-  if (!user.followingIds.includes(req.body.userId)) {
+  if (!user.followingIds.includes(body.userId)) {
     return res.status(400).json({ msg: 'You are not following this user' });
   }
 
   user.followingIds = user.followingIds.filter(
-    (id) => id.toString() !== req.body.userId
+    (id) => id.toString() !== body.userId
   );
   await user.save();
 

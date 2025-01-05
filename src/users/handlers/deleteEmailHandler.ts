@@ -1,7 +1,11 @@
 import { Request, Response } from 'express';
 import { UserModel } from '../../../mongooseSchemas/user.schema';
 
-export const deleteEmailHandler = async (req: Request, res: Response) => {
+export const deleteEmailHandler = async (
+  body: any,
+  req: Request,
+  res: Response
+) => {
   const user = await UserModel.findById({ _id: req.userId });
 
   if (!user) {
@@ -9,7 +13,7 @@ export const deleteEmailHandler = async (req: Request, res: Response) => {
   }
 
   const secondaryEmail = user.emails.find(
-    (email) => email.emailType === req.body.user.emailType
+    (email) => email.emailType === body.user.emailType
   );
 
   if (!secondaryEmail) {
@@ -19,7 +23,7 @@ export const deleteEmailHandler = async (req: Request, res: Response) => {
   }
 
   user.emails = user.emails.filter(
-    (email) => email.emailType !== req.body.user.emailType
+    (email) => email.emailType !== body.user.emailType
   );
   await user.save();
 

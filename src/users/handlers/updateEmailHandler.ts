@@ -2,7 +2,11 @@ import { Request, Response } from 'express';
 import { UserModel } from '../../../mongooseSchemas/user.schema';
 import { sendVerificationEmail } from '../../../utility/sendVerificationEmail';
 
-export const updateEmailHandler = async (req: Request, res: Response) => {
+export const updateEmailHandler = async (
+  body: any,
+  req: Request,
+  res: Response
+) => {
   const user = await UserModel.findById({ _id: req.userId });
 
   if (!user) {
@@ -10,7 +14,7 @@ export const updateEmailHandler = async (req: Request, res: Response) => {
   }
 
   if (
-    req.body.user.emailType === 'primary' &&
+    body.user.emailType === 'primary' &&
     user.emails.find((email) => email.emailType === 'primary' && email.verified)
   ) {
     return res
@@ -18,23 +22,18 @@ export const updateEmailHandler = async (req: Request, res: Response) => {
       .json({ msg: 'A verified primary email cannot be updated' });
   }
 
-  let verifyEmailReturn = await sendVerificationEmail(
-    req.body.user.email,
-    user
-  );
+  let verifyEmailReturn = await sendVerificationEmail(body.user.email, user);
 
-  if (
-    user.emails.find((email) => email.emailType === req.body.user.emailType)
-  ) {
+  if (user.emails.find((email) => email.emailType === body.user.emailType)) {
     user.emails = user.emails.filter(
-      (email) => email.emailType !== req.body.user.emailType
+      (email) => email.emailType !== body.user.emailType
     );
   }
 
   user.emails.push({
-    emailType: req.body.user.emailType,
+    emailType: body.user.emailType,
     verified: Boolean(process.env.VERIFY_ALL_EMAILS),
-    address: req.body.user.email,
+    address: body.user.email,
     verificationToken: verifyEmailReturn.mailVerificationToken,
     dateVerificationSent: new Date(),
     dateAdded: new Date(),

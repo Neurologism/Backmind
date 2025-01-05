@@ -2,10 +2,10 @@ import { Request, Response } from 'express';
 import { UserModel } from '../../../mongooseSchemas/user.schema';
 // import { ProjectModel } from '../../../mongooseSchemas/project.schema';
 
-export const getHandler = async (req: Request, res: Response) => {
+export const getHandler = async (body: any, req: Request, res: Response) => {
   let searchParams;
 
-  if (Object.keys(req.body).length === 0) {
+  if (Object.keys(body).length === 0) {
     if (req.userId === undefined) {
       return res
         .status(401)
@@ -15,7 +15,7 @@ export const getHandler = async (req: Request, res: Response) => {
       _id: req.userId,
     };
   } else {
-    searchParams = req.body.user;
+    searchParams = body.user;
   }
 
   const user = await UserModel.findOne(searchParams);

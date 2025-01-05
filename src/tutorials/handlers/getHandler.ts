@@ -3,21 +3,21 @@ import { TutorialModel } from '../../../mongooseSchemas/tutorial.schema';
 import { UserModel } from '../../../mongooseSchemas/user.schema';
 import { ProjectModel } from '../../../mongooseSchemas/project.schema';
 
-export const getHandler = async (req: Request, res: Response) => {
+export const getHandler = async (body: any, req: Request, res: Response) => {
   if (req.userId === undefined) {
     return res.status(403).json({
       msg: 'You need to be authenticated to access this resource.',
     });
   }
   let tutorial;
-  if (req.body.tutorialId !== undefined) {
+  if (body.tutorialId !== undefined) {
     tutorial = await TutorialModel.findOne({
-      _id: req.body.tutorialId,
+      _id: body.tutorialId,
       visibility: 'public',
     });
-  } else if (req.body.tutorialName !== undefined) {
+  } else if (body.tutorialName !== undefined) {
     tutorial = await TutorialModel.findOne({
-      name: req.body.tutorialName,
+      name: body.tutorialName,
       visibility: 'public',
     });
   } else {

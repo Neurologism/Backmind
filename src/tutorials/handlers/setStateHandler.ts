@@ -3,7 +3,11 @@ import { TutorialModel } from '../../../mongooseSchemas/tutorial.schema';
 import { UserModel } from '../../../mongooseSchemas/user.schema';
 import { ProjectModel } from '../../../mongooseSchemas/project.schema';
 
-export const setStateHandler = async (req: Request, res: Response) => {
+export const setStateHandler = async (
+  body: any,
+  req: Request,
+  res: Response
+) => {
   if (req.userId === undefined) {
     return res.status(403).json({
       msg: 'You need to be authenticated to access this resource.',
@@ -17,7 +21,7 @@ export const setStateHandler = async (req: Request, res: Response) => {
   }
 
   const tutorial = await TutorialModel.findOne({
-    _id: req.body.tutorialId,
+    _id: body.tutorialId,
     visibility: 'public',
   });
 
@@ -50,9 +54,9 @@ export const setStateHandler = async (req: Request, res: Response) => {
     });
   }
 
-  project.tutorialStep = req.body.setStep;
+  project.tutorialStep = body.setStep;
   if (
-    req.body.setCompleted &&
+    body.setCompleted &&
     !user.completedTutorials.some(
       (tutorialId) => tutorialId.toString() === tutorial._id.toString()
     )

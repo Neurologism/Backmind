@@ -1,6 +1,5 @@
 import { z } from 'zod';
 import mongoose from 'mongoose';
-import { componentsSchema } from '../componentsSchemas';
 
 export const updateSchema = z
   .object({
@@ -38,7 +37,7 @@ export const updateSchema = z
           .string()
           .min(Number(process.env.MIN_PASS_LENGTH))
           .optional(),
-        components: componentsSchema.optional(),
+        components: z.any().optional(),
       })
       .strict(),
   })

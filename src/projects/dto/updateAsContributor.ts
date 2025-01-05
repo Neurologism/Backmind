@@ -1,6 +1,5 @@
 import { z } from 'zod';
 import mongoose from 'mongoose';
-import { componentsSchema } from '../componentsSchemas';
 
 export const updateAsContributorSchema = z
   .object({
@@ -11,7 +10,7 @@ export const updateAsContributorSchema = z
             "Do not parse this schema before _id hasn't been converted to a valid mongoose object id.",
         }),
         description: z.string().optional(),
-        components: componentsSchema.optional(),
+        components: z.any().optional(),
       })
       .strict(),
   })

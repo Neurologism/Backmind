@@ -4,7 +4,6 @@ import userRoutes from './routes/userRouter';
 import projectRoutes from './routes/projectRouter';
 import projectModelRoutes from './routes/projectModelRouter';
 import tutorialRoutes from './routes/tutorialRouter';
-import { setupSwagger } from './swagger';
 import cors from 'cors';
 import morgan from 'morgan';
 import fs from 'fs';
@@ -63,10 +62,6 @@ app.use('/api/user', userRoutes);
 app.use('/api/project/model', projectModelRoutes);
 app.use('/api/project', projectRoutes);
 app.use('/api/tutorial', tutorialRoutes);
-
-if (process.env.NODE_ENV !== 'production') {
-  setupSwagger(app);
-}
 
 app.get('/', async (req: Request, res: Response) => {
   req.logger.debug('GET / worked fine :)');

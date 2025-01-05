@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Res, Req } from '@nestjs/common';
+import { Controller, Post, Res, Req, Body } from '@nestjs/common';
 import { Request, Response } from 'express';
 
 import { checkHandler } from './handlers/checkHandler';
@@ -8,6 +8,9 @@ import { logoutHandler } from './handlers/logoutHandler';
 import { registerHandler } from './handlers/registerHandler';
 import { verifyEmailHandler } from './handlers/verifyEmailHandler';
 
+import { LoginDto } from './dto/login.schema';
+import { RegisterDto } from './dto/register.schema';
+
 @Controller('auth')
 export class AuthController {
   @Post('check')
@@ -16,8 +19,8 @@ export class AuthController {
   }
 
   @Post('login')
-  login(@Req() req: Request, @Res() res: Response) {
-    return loginHandler(req, res);
+  login(@Body() body: LoginDto, @Req() req: Request, @Res() res: Response) {
+    return loginHandler(body, req, res);
   }
 
   @Post('logout-all')
@@ -31,8 +34,12 @@ export class AuthController {
   }
 
   @Post('register')
-  register(@Req() req: Request, @Res() res: Response) {
-    return registerHandler(req, res);
+  register(
+    @Body() body: RegisterDto,
+    @Req() req: Request,
+    @Res() res: Response
+  ) {
+    return registerHandler(body, req, res);
   }
 
   @Post('verify-email')

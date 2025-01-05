@@ -3,23 +3,23 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { UserModel } from '../../../mongooseSchemas/user.schema';
 
-export const loginHandler = async (req: Request, res: Response) => {
+export const loginHandler = async (body: any, req: Request, res: Response) => {
   const givenUser: any = {};
-  if (req.body['user']['email'])
+  if (body['user']['email'])
     givenUser.emails = {
       $elemMatch: {
-        address: req.body['user']['email'],
+        address: body['user']['email'],
       },
     };
-  if (req.body['user']['brainetTag'])
-    givenUser.brainetTag = req.body['user']['brainetTag'];
+  if (body['user']['brainetTag'])
+    givenUser.brainetTag = body['user']['brainetTag'];
   const user: any = await UserModel.findOne(givenUser);
   if (user === null) {
     return res.status(404).json({ msg: 'User not found' });
   }
 
   const isMatch = await bcrypt.compare(
-    req.body['user'].plainPassword,
+    body['user'].plainPassword,
     user.passwordHash
   );
 

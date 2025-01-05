@@ -14,7 +14,7 @@ export const logoutHandler = async (req: Request, res: Response) => {
     return res.status(400).json({ msg: 'Token not found' });
   }
 
-  user.tokens.pull({ token: token });
+  user.tokens = user.tokens.filter((t) => t.token !== token);
   await user.save();
 
   return res.status(200).json({ msg: 'User logged out successfully' });

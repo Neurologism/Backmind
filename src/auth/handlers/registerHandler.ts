@@ -4,10 +4,14 @@ import jwt from 'jsonwebtoken';
 import { UserModel } from '../../../mongooseSchemas/user.schema';
 import { sendVerificationEmail } from '../../../utility/sendVerificationEmail';
 
-export const registerHandler = async (req: Request, res: Response) => {
-  const givenUser = req.body['user'];
+export const registerHandler = async (
+  body: any,
+  req: Request,
+  res: Response
+) => {
+  const givenUser = body['user'];
 
-  if (!req.body.agreedToTermsOfServiceAndPrivacyPolicy) {
+  if (!body.agreedToTermsOfServiceAndPrivacyPolicy) {
     return res.status(400).json({
       msg: 'You need to agree to the terms of service and privacy policy.',
     });

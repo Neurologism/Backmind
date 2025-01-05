@@ -2,8 +2,12 @@ import { Request, Response } from 'express';
 import { QueueItemModel } from '../../../mongooseSchemas/queueItem.schema';
 import { TaskModel } from '../../../mongooseSchemas/task.schema';
 
-export const trainingStopHandler = async (req: Request, res: Response) => {
-  const model = req.body.model;
+export const trainingStopHandler = async (
+  body: any,
+  req: Request,
+  res: Response
+) => {
+  const model = body.model;
 
   if (model.status === 'queued') {
     await QueueItemModel.deleteOne({ taskId: model!._id });

@@ -1,15 +1,19 @@
 import { Request, Response } from 'express';
 
-export const trainingStatusHandler = async (req: Request, res: Response) => {
+export const trainingStatusHandler = async (
+  body: any,
+  req: Request,
+  res: Response
+) => {
   return res.status(200).send({
     model: {
-      status: req.body.model.status,
-      output: req.body.model.output,
-      dateQueued: req.body.model.dateQueued,
-      dateStarted: req.body.model.dateStarted,
-      dateFinished: req.body.model.dateFinished,
-      projectId: req.body.model.projectId,
-      ownerId: req.body.model.ownerId,
+      status: body.model.status,
+      output: body.model.output,
+      dateQueued: body.model.dateQueued,
+      dateStarted: body.model.dateStarted,
+      dateFinished: body.model.dateFinished,
+      projectId: body.model.projectId,
+      ownerId: body.model.ownerId,
     },
   });
 };

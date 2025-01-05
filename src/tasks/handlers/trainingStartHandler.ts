@@ -4,7 +4,11 @@ import { QueueItemModel } from '../../../mongooseSchemas/queueItem.schema';
 import { TaskModel } from '../../../mongooseSchemas/task.schema';
 import { UserModel } from '../../../mongooseSchemas/user.schema';
 
-export const trainingStartHandler = async (req: Request, res: Response) => {
+export const trainingStartHandler = async (
+  body: any,
+  req: Request,
+  res: Response
+) => {
   let priority = 0;
   let user = await UserModel.findOne({ _id: req.userId });
   if (user != null && user.admin) {

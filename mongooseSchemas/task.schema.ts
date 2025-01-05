@@ -1,9 +1,11 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Types, Schema as MongooseSchema } from 'mongoose';
+import { HydratedDocument, Types, Schema as MongooseSchema } from 'mongoose';
+import mongoose from 'mongoose';
+
+export type TaskDocument = HydratedDocument<Task>;
 
 @Schema()
-export class Task extends Document {
-  // @ts-ignore
+export class Task {
   @Prop({
     type: String,
     enum: ['queued', 'training', 'finished', 'error', 'stopped'],
@@ -11,35 +13,27 @@ export class Task extends Document {
   })
   status!: string;
 
-  // @ts-ignore
   @Prop({ type: Array, required: true, default: [] })
   output!: any[];
 
-  // @ts-ignore
   @Prop({ type: MongooseSchema.Types.Mixed, required: true })
   task!: any;
 
-  // @ts-ignore
   @Prop({ type: Date, required: true, default: () => new Date() })
   datelastUpdated!: Date;
 
-  // @ts-ignore
   @Prop({ type: Date })
   dateQueued?: Date;
 
-  // @ts-ignore
   @Prop({ type: Date })
   dateStarted?: Date;
 
-  // @ts-ignore
   @Prop({ type: Date })
   dateFinished?: Date;
 
-  // @ts-ignore
   @Prop({ type: Types.ObjectId, required: true })
   projectId!: Types.ObjectId;
 
-  // @ts-ignore
   @Prop({ type: Types.ObjectId, required: true })
   ownerId!: Types.ObjectId;
 }
@@ -50,3 +44,5 @@ TaskSchema.pre('save', function (next) {
   this.datelastUpdated = new Date();
   next();
 });
+
+export const TaskModel = mongoose.model('tasks', TaskSchema);

@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import mongoose from 'mongoose';
-import { TaskModel } from '../../mongooseSchemas/taskSchema';
+import { TaskModel } from '../../../mongooseSchemas/task.schema';
 
 export const deleteTaskSchema = z
   .object({

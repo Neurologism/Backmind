@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Types, Schema as MongooseSchema } from 'mongoose';
+import mongoose from 'mongoose';
 
 export type TaskDocument = HydratedDocument<Task>;
 
@@ -43,3 +44,5 @@ TaskSchema.pre('save', function (next) {
   this.datelastUpdated = new Date();
   next();
 });
+
+export const TaskModel = mongoose.model('tasks', TaskSchema);

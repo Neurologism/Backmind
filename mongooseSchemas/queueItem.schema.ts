@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
 import { Types } from 'mongoose';
+import mongoose from 'mongoose';
 
 export type QueueItemDocument = HydratedDocument<QueueItem>;
 
@@ -14,3 +15,5 @@ export class QueueItem {
 }
 
 export const QueueItemSchema = SchemaFactory.createForClass(QueueItem);
+
+export const QueueItemModel = mongoose.model('queueitems', QueueItemSchema);

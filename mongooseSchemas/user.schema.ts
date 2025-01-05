@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Types } from 'mongoose';
+import mongoose from 'mongoose';
 
 @Schema()
 export class Email {
@@ -169,3 +170,5 @@ UserSchema.pre('save', function (next) {
   this.dateLastEdited = new Date();
   next();
 });
+
+export const UserModel = mongoose.model('users', UserSchema);

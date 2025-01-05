@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Types } from 'mongoose';
+import mongoose from 'mongoose';
 
 @Schema()
 class UnlockNode {
@@ -126,3 +127,5 @@ TutorialSchema.pre('save', function (next) {
   this.dateLastEdited = new Date();
   next();
 });
+
+export const TutorialModel = mongoose.model('tutorials', TutorialSchema);

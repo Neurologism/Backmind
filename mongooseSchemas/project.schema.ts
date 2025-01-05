@@ -5,6 +5,7 @@ import {
   Types,
   Schema as MongooseSchema,
 } from 'mongoose';
+import mongoose from 'mongoose';
 
 export type ProjectDocument = HydratedDocument<Project>;
 
@@ -64,3 +65,5 @@ ProjectSchema.pre('save', function (next) {
   this.dateLastEdited = new Date();
   next();
 });
+
+export const ProjectModel = mongoose.model('projects', ProjectSchema);

@@ -1,9 +1,11 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { HydratedDocument } from 'mongoose';
 import { Types } from 'mongoose';
 
+export type QueueItemDocument = HydratedDocument<QueueItem>;
+
 @Schema()
-export class QueueItem extends Document {
+export class QueueItem {
   @Prop({ type: Types.ObjectId, required: true })
   taskId!: Types.ObjectId;
 

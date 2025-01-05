@@ -1,8 +1,15 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Types, Schema as MongooseSchema } from 'mongoose';
+import {
+  HydratedDocument,
+  Document,
+  Types,
+  Schema as MongooseSchema,
+} from 'mongoose';
+
+export type ProjectDocument = HydratedDocument<Project>;
 
 @Schema()
-export class Project extends Document {
+export class Project {
   @Prop({ type: String, required: true })
   name!: string;
 

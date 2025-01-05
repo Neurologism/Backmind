@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Types } from 'mongoose';
+import { HydratedDocument, Types } from 'mongoose';
 
 @Schema()
 export class Email {
@@ -61,8 +61,10 @@ export class Token {
 
 const TokenSchema = SchemaFactory.createForClass(Token);
 
+export type UserDocument = HydratedDocument<User>;
+
 @Schema()
-export class User extends Document {
+export class User {
   @Prop({ type: [EmailSchema], required: true })
   emails!: Email[];
 

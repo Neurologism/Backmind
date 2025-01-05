@@ -1,8 +1,8 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Types } from 'mongoose';
+import { HydratedDocument, Types } from 'mongoose';
 
 @Schema()
-class UnlockNode extends Document {
+class UnlockNode {
   @Prop({ type: String, required: true })
   type!: string;
 
@@ -16,7 +16,7 @@ class UnlockNode extends Document {
 const UnlockNodeSchema = SchemaFactory.createForClass(UnlockNode);
 
 @Schema()
-class Step extends Document {
+class Step {
   @Prop({
     type: String,
     required: function () {
@@ -61,8 +61,10 @@ class Step extends Document {
 
 const StepSchema = SchemaFactory.createForClass(Step);
 
+export type TutorialDocument = HydratedDocument<Tutorial>;
+
 @Schema()
-export class Tutorial extends Document {
+export class Tutorial {
   @Prop({ type: String, required: true })
   name!: string;
 

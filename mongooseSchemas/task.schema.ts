@@ -1,8 +1,10 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Types, Schema as MongooseSchema } from 'mongoose';
+import { HydratedDocument, Types, Schema as MongooseSchema } from 'mongoose';
+
+export type TaskDocument = HydratedDocument<Task>;
 
 @Schema()
-export class Task extends Document {
+export class Task {
   @Prop({
     type: String,
     enum: ['queued', 'training', 'finished', 'error', 'stopped'],

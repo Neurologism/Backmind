@@ -1,82 +1,153 @@
-import mongoose from 'mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Document, Types, Schema as MongooseSchema } from 'mongoose';
 
-const unlockNodeSchema = new mongoose.Schema({
-  type: { type: String, required: true },
-  id: { type: String, required: false },
-  data: { type: [String], required: true, default: [] },
-});
+@Schema()
+class UnlockNode extends Document {
+  // @ts-ignore
+  @Prop({ type: String, required: true })
+  type!: string;
 
-const stepSchema = new mongoose.Schema({
-  text: {
+  // @ts-ignore
+  @Prop({ type: String })
+  id: string = new Types.ObjectId().toString();
+
+  // @ts-ignore
+  @Prop({ type: [String], required: true, default: [] })
+  data!: string[];
+}
+
+const UnlockNodeSchema = SchemaFactory.createForClass(UnlockNode);
+
+@Schema()
+class Step extends Document {
+  // @ts-ignore
+  @Prop({
     type: String,
     required: function () {
       return typeof (this as any).text !== 'string';
     },
-  },
-  narrator: {
+  })
+  text!: string;
+
+  // @ts-ignore
+  @Prop({
     type: String,
     required: function () {
       return typeof (this as any).narrator !== 'string';
     },
     default: '',
-  },
-  addNodes: { type: [Object], required: true, default: [] },
-  addEdges: { type: [Object], required: true, default: [] },
-  removeNodes: { type: [Object], required: true, default: [] },
-  removeEdges: { type: [Object], required: true, default: [] },
-  highlightNodeTypes: { type: [String], required: true, default: [] },
-  unlockNodes: { type: [unlockNodeSchema], required: true, default: [] },
-  trainingEnabled: { type: Boolean, required: true, default: false },
-  trainedModel: { type: mongoose.Types.ObjectId, required: false },
-});
+  })
+  narrator!: string;
 
-const mongooseTutorialSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  summary: {
+  // @ts-ignore
+  @Prop({ type: [Object], required: true, default: [] })
+  addNodes!: Record<string, any>[];
+
+  // @ts-ignore
+  @Prop({ type: [Object], required: true, default: [] })
+  addEdges!: Record<string, any>[];
+
+  // @ts-ignore
+  @Prop({ type: [Object], required: true, default: [] })
+  removeNodes!: Record<string, any>[];
+
+  // @ts-ignore
+  @Prop({ type: [Object], required: true, default: [] })
+  removeEdges!: Record<string, any>[];
+
+  // @ts-ignore
+  @Prop({ type: [String], required: true, default: [] })
+  highlightNodeTypes!: string[];
+
+  // @ts-ignore
+  @Prop({ type: [UnlockNodeSchema], required: true, default: [] })
+  unlockNodes!: UnlockNode[];
+
+  // @ts-ignore
+  @Prop({ type: Boolean, required: true, default: false })
+  trainingEnabled!: boolean;
+
+  // @ts-ignore
+  @Prop({ type: Types.ObjectId })
+  trainedModel?: Types.ObjectId;
+}
+
+const StepSchema = SchemaFactory.createForClass(Step);
+
+@Schema()
+export class Tutorial extends Document {
+  // @ts-ignore
+  @Prop({ type: String, required: true })
+  name!: string;
+
+  // @ts-ignore
+  @Prop({
     type: String,
     required: function () {
       return typeof (this as any).summary !== 'string';
     },
     default: '',
-  },
-  description: {
+  })
+  summary!: string;
+
+  // @ts-ignore
+  @Prop({
     type: String,
     required: function () {
       return typeof (this as any).description !== 'string';
     },
     default: '',
-  },
-  ownerId: mongoose.Types.ObjectId,
-  visibility: { type: String, enum: ['public', 'private'], required: true },
-  premiumRequired: { type: Boolean, required: true, default: false },
-  dateCreatedAt: { type: Date, required: true, default: () => new Date() },
-  dateLastEdited: { type: Date, required: true, default: () => new Date() },
-  requiredTutorials: {
-    type: [mongoose.Types.ObjectId],
-    required: true,
-    default: [],
-  },
-  nextTutorials: {
-    type: [mongoose.Types.ObjectId],
-    required: true,
-    default: [],
-  },
-  experienceGain: { type: Number, required: true, default: 100 },
-  startProject: { type: mongoose.Types.ObjectId, required: true },
-  unlockNodes: { type: [unlockNodeSchema], required: true, default: [] },
-  steps: {
-    type: [stepSchema],
-    required: true,
-    default: [],
-  },
-});
+  })
+  description!: string;
 
-mongooseTutorialSchema.pre('save', function (next) {
+  // @ts-ignore
+  @Prop({ type: Types.ObjectId })
+  ownerId!: Types.ObjectId;
+
+  // @ts-ignore
+  @Prop({ type: String, enum: ['public', 'private'], required: true })
+  visibility!: string;
+
+  // @ts-ignore
+  @Prop({ type: Boolean, required: true, default: false })
+  premiumRequired!: boolean;
+
+  // @ts-ignore
+  @Prop({ type: Date, required: true, default: () => new Date() })
+  dateCreatedAt!: Date;
+
+  // @ts-ignore
+  @Prop({ type: Date, required: true, default: () => new Date() })
+  dateLastEdited!: Date;
+
+  // @ts-ignore
+  @Prop({ type: [Types.ObjectId], required: true, default: [] })
+  requiredTutorials!: Types.ObjectId[];
+
+  // @ts-ignore
+  @Prop({ type: [Types.ObjectId], required: true, default: [] })
+  nextTutorials!: Types.ObjectId[];
+
+  // @ts-ignore
+  @Prop({ type: Number, required: true, default: 100 })
+  experienceGain!: number;
+
+  // @ts-ignore
+  @Prop({ type: Types.ObjectId, required: true })
+  startProject!: Types.ObjectId;
+
+  // @ts-ignore
+  @Prop({ type: [UnlockNodeSchema], required: true, default: [] })
+  unlockNodes!: UnlockNode[];
+
+  // @ts-ignore
+  @Prop({ type: [StepSchema], required: true, default: [] })
+  steps!: Step[];
+}
+
+export const TutorialSchema = SchemaFactory.createForClass(Tutorial);
+
+TutorialSchema.pre('save', function (next) {
   this.dateLastEdited = new Date();
   next();
 });
-
-export const TutorialModel = mongoose.model(
-  'tutorials',
-  mongooseTutorialSchema
-);

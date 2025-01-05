@@ -1,38 +1,71 @@
-import mongoose from 'mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Document, Types, Schema as MongooseSchema } from 'mongoose';
 
-const mongooseProjectSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  description: {
+@Schema()
+export class Project extends Document {
+  // @ts-ignore
+  @Prop({ type: String, required: true })
+  name!: string;
+
+  // @ts-ignore
+  @Prop({
     type: String,
-    required: function () {
-      return typeof (this as any).description !== 'string';
+    required: function (this: Document) {
+      return typeof this.get('description') !== 'string';
     },
     default: '',
-  },
-  ownerId: { type: mongoose.Types.ObjectId, required: true },
-  contributors: {
-    type: [mongoose.Types.ObjectId],
+  })
+  description!: string;
+
+  // @ts-ignore
+  @Prop({ type: Types.ObjectId, required: true })
+  ownerId!: Types.ObjectId;
+
+  // @ts-ignore
+  @Prop({
+    type: [Types.ObjectId],
     required: true,
     default: [],
     ref: 'users',
-  },
-  visibility: { type: String, enum: ['public', 'private'], required: true },
-  dateCreatedAt: { type: Date, required: true, default: () => new Date() },
-  dateLastEdited: { type: Date, required: true, default: () => new Date() },
-  components: {
-    type: mongoose.Schema.Types.Mixed,
-    required: true,
-    default: {},
-  },
-  models: { type: [mongoose.Types.ObjectId], required: true, default: [] },
-  isTutorialProject: { type: Boolean, required: true, default: false },
-  tutorialId: mongoose.Types.ObjectId,
-  tutorialStep: { type: Number, required: false },
-});
+  })
+  contributors!: Types.ObjectId[];
 
-mongooseProjectSchema.pre('save', function (next) {
+  // @ts-ignore
+  @Prop({ type: String, enum: ['public', 'private'], required: true })
+  visibility!: string;
+
+  // @ts-ignore
+  @Prop({ type: Date, required: true, default: () => new Date() })
+  dateCreatedAt!: Date;
+
+  // @ts-ignore
+  @Prop({ type: Date, required: true, default: () => new Date() })
+  dateLastEdited!: Date;
+
+  // @ts-ignore
+  @Prop({ type: MongooseSchema.Types.Mixed, required: true, default: {} })
+  components!: Record<string, any>;
+
+  // @ts-ignore
+  @Prop({ type: [Types.ObjectId], required: true, default: [] })
+  models!: Types.ObjectId[];
+
+  // @ts-ignore
+  @Prop({ type: Boolean, required: true, default: false })
+  isTutorialProject!: boolean;
+
+  // @ts-ignore
+  @Prop({ type: Types.ObjectId })
+  tutorialId?: Types.ObjectId;
+
+  // @ts-ignore
+  @Prop({ type: Number })
+  tutorialStep?: number;
+}
+
+export const ProjectSchema = SchemaFactory.createForClass(Project);
+
+ProjectSchema.pre('save', function (next) {
   this.dateLastEdited = new Date();
   next();
 });
-
-export const ProjectModel = mongoose.model('projects', mongooseProjectSchema);

@@ -1,24 +1,52 @@
-import mongoose from 'mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Document, Types, Schema as MongooseSchema } from 'mongoose';
 
-const mongooseTaskSchema = new mongoose.Schema({
-  status: {
+@Schema()
+export class Task extends Document {
+  // @ts-ignore
+  @Prop({
     type: String,
     enum: ['queued', 'training', 'finished', 'error', 'stopped'],
     required: true,
-  },
-  output: { type: [], required: true, default: [] },
-  task: { type: mongoose.Schema.Types.Mixed, required: true },
-  datelastUpdated: { type: Date, required: true, default: () => new Date() },
-  dateQueued: Date,
-  dateStarted: Date,
-  dateFinished: Date,
-  projectId: { type: mongoose.Types.ObjectId, required: true },
-  ownerId: { type: mongoose.Types.ObjectId, required: true },
-});
+  })
+  status!: string;
 
-mongooseTaskSchema.pre('save', function (next) {
+  // @ts-ignore
+  @Prop({ type: Array, required: true, default: [] })
+  output!: any[];
+
+  // @ts-ignore
+  @Prop({ type: MongooseSchema.Types.Mixed, required: true })
+  task!: any;
+
+  // @ts-ignore
+  @Prop({ type: Date, required: true, default: () => new Date() })
+  datelastUpdated!: Date;
+
+  // @ts-ignore
+  @Prop({ type: Date })
+  dateQueued?: Date;
+
+  // @ts-ignore
+  @Prop({ type: Date })
+  dateStarted?: Date;
+
+  // @ts-ignore
+  @Prop({ type: Date })
+  dateFinished?: Date;
+
+  // @ts-ignore
+  @Prop({ type: Types.ObjectId, required: true })
+  projectId!: Types.ObjectId;
+
+  // @ts-ignore
+  @Prop({ type: Types.ObjectId, required: true })
+  ownerId!: Types.ObjectId;
+}
+
+export const TaskSchema = SchemaFactory.createForClass(Task);
+
+TaskSchema.pre('save', function (next) {
   this.datelastUpdated = new Date();
   next();
 });
-
-export const TaskModel = mongoose.model('tasks', mongooseTaskSchema);

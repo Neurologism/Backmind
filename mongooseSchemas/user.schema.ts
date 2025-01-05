@@ -1,108 +1,207 @@
-import mongoose from 'mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Document, Types } from 'mongoose';
 
-export const mongooseUserSchema = new mongoose.Schema({
-  emails: {
-    type: [
-      {
-        emailType: {
-          type: String,
-          enum: ['primary', 'secondary'],
-          required: true,
-        },
-        address: { type: String, required: true },
-        verified: { type: Boolean, required: true, default: false },
-        verificationToken: { type: String },
-        dateVerificationSent: { type: Date },
-        dateAdded: { type: Date, required: true, default: () => new Date() },
-        dateVerified: { type: Date },
-      },
-    ],
-    required: true,
-  },
-  phone: {
-    type: {
-      number: { type: String },
-      verified: { type: Boolean, default: false },
-      verificationCode: { type: String },
-      dateVerificationSent: { type: Date },
-      dateAdded: { type: Date },
-      dateVerified: { type: Date },
-    },
-    required: false,
-  },
-  tokens: {
-    type: [
-      {
-        token: { type: String, required: true },
-        dateAdded: { type: Date, required: true, default: () => new Date() },
-      },
-    ],
-    required: true,
-    default: [],
-  },
-  aboutYou: {
+@Schema()
+export class Email {
+  // @ts-ignore
+  @Prop({ type: String, enum: ['primary', 'secondary'], required: true })
+  emailType!: string;
+
+  // @ts-ignore
+  @Prop({ type: String, required: true })
+  address!: string;
+
+  // @ts-ignore
+  @Prop({ type: Boolean, required: true, default: false })
+  verified!: boolean;
+
+  // @ts-ignore
+  @Prop({ type: String })
+  verificationToken?: string;
+
+  // @ts-ignore
+  @Prop({ type: Date })
+  dateVerificationSent?: Date;
+
+  // @ts-ignore
+  @Prop({ type: Date, required: true, default: () => new Date() })
+  dateAdded!: Date;
+
+  // @ts-ignore
+  @Prop({ type: Date })
+  dateVerified?: Date;
+}
+
+const EmailSchema = SchemaFactory.createForClass(Email);
+
+@Schema()
+export class Phone {
+  // @ts-ignore
+  @Prop({ type: String })
+  number?: string;
+
+  // @ts-ignore
+  @Prop({ type: Boolean, default: false })
+  verified?: boolean;
+
+  // @ts-ignore
+  @Prop({ type: String })
+  verificationCode?: string;
+
+  // @ts-ignore
+  @Prop({ type: Date })
+  dateVerificationSent?: Date;
+
+  // @ts-ignore
+  @Prop({ type: Date })
+  dateAdded?: Date;
+
+  // @ts-ignore
+  @Prop({ type: Date })
+  dateVerified?: Date;
+}
+
+const PhoneSchema = SchemaFactory.createForClass(Phone);
+
+@Schema()
+export class Token {
+  // @ts-ignore
+  @Prop({ type: String, required: true })
+  token!: string;
+
+  // @ts-ignore
+  @Prop({ type: Date, required: true, default: () => new Date() })
+  dateAdded!: Date;
+}
+
+const TokenSchema = SchemaFactory.createForClass(Token);
+
+@Schema()
+export class User extends Document {
+  // @ts-ignore
+  @Prop({ type: [EmailSchema], required: true })
+  emails!: Email[];
+
+  // @ts-ignore
+  @Prop({ type: PhoneSchema, required: false })
+  phone?: Phone;
+
+  // @ts-ignore
+  @Prop({ type: [TokenSchema], required: true, default: [] })
+  tokens!: Token[];
+
+  // @ts-ignore
+  @Prop({
     type: String,
     required: function () {
       return typeof (this as any).aboutYou !== 'string';
     },
     default: '',
-  },
-  displayname: {
+  })
+  aboutYou!: string;
+
+  // @ts-ignore
+  @Prop({
     type: String,
     required: function () {
       return typeof (this as any).displayname !== 'string';
     },
     default: '',
-  },
-  brainetTag: { type: String, required: true },
-  passwordHash: { type: String, required: true },
-  dateOfBirth: { type: Date },
-  visibility: {
+  })
+  displayname!: string;
+
+  // @ts-ignore
+  @Prop({ type: String, required: true })
+  brainetTag!: string;
+
+  // @ts-ignore
+  @Prop({ type: String, required: true })
+  passwordHash!: string;
+
+  // @ts-ignore
+  @Prop({ type: Date })
+  dateOfBirth?: Date;
+
+  // @ts-ignore
+  @Prop({
     type: String,
     enum: ['public', 'private'],
     default: 'public',
     required: true,
-  },
-  pronouns: { type: String, default: '' },
-  company: { type: String, default: '' },
-  location: { type: String, default: '' },
-  premium: { type: Boolean, required: true, default: false },
-  remainingCredits: { type: Number, required: true, default: 600 },
-  dateLastEdited: { type: Date, required: true, default: () => new Date() },
-  dateCreatedAt: { type: Date, required: true, default: () => new Date() },
-  projectIds: { type: [mongoose.Types.ObjectId], default: [], ref: 'projects' }, // doesn't contain tutorial projects
-  followerIds: {
-    type: [mongoose.Types.ObjectId],
-    required: true,
-    default: [],
-    ref: 'users',
-  },
-  followingIds: {
-    type: [mongoose.Types.ObjectId],
-    required: true,
-    default: [],
-    ref: 'users',
-  },
-  pfpPath: {
+  })
+  visibility!: string;
+
+  // @ts-ignore
+  @Prop({ type: String, default: '' })
+  pronouns!: string;
+
+  // @ts-ignore
+  @Prop({ type: String, default: '' })
+  company!: string;
+
+  // @ts-ignore
+  @Prop({ type: String, default: '' })
+  location!: string;
+
+  // @ts-ignore
+  @Prop({ type: Boolean, required: true, default: false })
+  premium!: boolean;
+
+  // @ts-ignore
+  @Prop({ type: Number, required: true, default: 600 })
+  remainingCredits!: number;
+
+  // @ts-ignore
+  @Prop({ type: Date, required: true, default: () => new Date() })
+  dateLastEdited!: Date;
+
+  // @ts-ignore
+  @Prop({ type: Date, required: true, default: () => new Date() })
+  dateCreatedAt!: Date;
+
+  // @ts-ignore
+  @Prop({ type: [Types.ObjectId], default: [], ref: 'projects' })
+  projectIds!: Types.ObjectId[];
+
+  // @ts-ignore
+  @Prop({ type: [Types.ObjectId], required: true, default: [], ref: 'users' })
+  followerIds!: Types.ObjectId[];
+
+  // @ts-ignore
+  @Prop({ type: [Types.ObjectId], required: true, default: [], ref: 'users' })
+  followingIds!: Types.ObjectId[];
+
+  // @ts-ignore
+  @Prop({
     type: String,
     required: function () {
       return typeof (this as any).pfpPath !== 'string';
     },
     default: '',
-  },
-  completedTutorials: {
-    type: [mongoose.Types.ObjectId],
+  })
+  pfpPath!: string;
+
+  // @ts-ignore
+  @Prop({
+    type: [Types.ObjectId],
     required: true,
     default: [],
     ref: 'tutorials',
-  },
-  experience: { type: Number, required: true, default: 0 },
-  admin: { type: Boolean, required: true, default: false },
-});
+  })
+  completedTutorials!: Types.ObjectId[];
 
-mongooseUserSchema.pre('save', function (next) {
+  // @ts-ignore
+  @Prop({ type: Number, required: true, default: 0 })
+  experience!: number;
+
+  // @ts-ignore
+  @Prop({ type: Boolean, required: true, default: false })
+  admin!: boolean;
+}
+
+export const UserSchema = SchemaFactory.createForClass(User);
+
+UserSchema.pre('save', function (next) {
   this.dateLastEdited = new Date();
   next();
 });
-
-export const UserModel = mongoose.model('users', mongooseUserSchema);

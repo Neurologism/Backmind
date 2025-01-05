@@ -1,4 +1,6 @@
 import winston from 'winston';
+import { Injectable, NestMiddleware } from '@nestjs/common';
+import { Request, Response, NextFunction } from 'express';
 
 export const logger = winston.createLogger({
   level: process.env.LOG_LEVEL,
@@ -16,7 +18,10 @@ export const logger = winston.createLogger({
   ],
 });
 
-export const loggingMiddleware = (req: any, res: any, next: any) => {
-  req.logger = logger;
-  next();
-};
+@Injectable()
+export class LoggerMiddleware implements NestMiddleware {
+  async use(req: Request, res: Response, next: NextFunction) {
+    req.logger = logger;
+    next();
+  }
+}

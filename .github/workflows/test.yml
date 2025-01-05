@@ -33,10 +33,10 @@ jobs:
           node-version: '20'
 
       - name: Install dependencies
-        run: npm install
+        run: pnpm install
 
       - name: create .env file
         run: echo "MONGO_URI='mongodb://root:password@localhost:27017'" > .env
 
       - name: Run Jest tests
-        run: npm test
+        run: pnpm test

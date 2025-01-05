@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-export const getHandler = async (req: Request, res: Response) => {
+export const getHandler = async (body: any, req: Request, res: Response) => {
   req.project!;
   const projectJson = {
     _id: req.project!._id,

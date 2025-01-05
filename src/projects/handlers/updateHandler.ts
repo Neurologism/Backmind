@@ -5,14 +5,14 @@ import { UserModel } from '../../../mongooseSchemas/user.schema';
 import { ProjectModel } from '../../../mongooseSchemas/project.schema';
 // import fs from 'fs';
 
-export const updateHandler = async (req: Request, res: Response) => {
+export const updateHandler = async (body: any, req: Request, res: Response) => {
   if (
-    req.body.project.name !== undefined &&
-    req.body.project.name !== req.project!.name
+    body.project.name !== undefined &&
+    body.project.name !== req.project!.name
   ) {
     const nameTaken =
       (await ProjectModel.findOne({
-        name: req.body.project.name,
+        name: body.project.name,
         ownerId: req.userId,
         isTutorialProject: false,
       })) !== null;
@@ -29,9 +29,9 @@ export const updateHandler = async (req: Request, res: Response) => {
 
   const currentUser = await UserModel.findById(req.userId);
 
-  if (req.body.project.plainPassword) {
+  if (body.project.plainPassword) {
     const passwordsMatch = bcrypt.compareSync(
-      req.body.project.plainPassword,
+      body.project.plainPassword,
       currentUser!.passwordHash
     );
     if (!passwordsMatch) {
@@ -39,17 +39,17 @@ export const updateHandler = async (req: Request, res: Response) => {
     }
   }
 
-  delete req.body.project.plainPassword;
+  delete body.project.plainPassword;
   await ProjectModel.updateOne(
-    { _id: req.body.project._id },
+    { _id: body.project._id },
     {
-      $set: req.body.project,
+      $set: body.project,
     }
   );
-  // Write req.body.project.components to a JSON file
+  // Write body.project.components to a JSON file
   // fs.writeFileSync(
-  //   `./project_${req.body.project._id}.json`,
-  //   JSON.stringify(req.body.project.components, null, 2)
+  //   `./project_${body.project._id}.json`,
+  //   JSON.stringify(body.project.components, null, 2)
   // );
   return res.status(200).json({ msg: 'Project changed successfully.' });
 };

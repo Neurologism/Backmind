@@ -1,5 +1,4 @@
 import express, { Express, Request, Response, NextFunction } from 'express';
-import bodyParser from 'body-parser';
 import authRoutes from './routes/authRouter';
 import userRoutes from './routes/userRouter';
 import projectRoutes from './routes/projectRouter';
@@ -19,7 +18,7 @@ const accessLogStream = fs.createWriteStream(path.join('./logs/access.log'), {
 });
 
 const app: Express = express();
-app.use(bodyParser.json());
+app.use(express.json());
 app.use(
   cors({
     origin:

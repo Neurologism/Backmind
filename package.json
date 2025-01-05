@@ -4,6 +4,7 @@
   "description": "",
   "main": "dist/src/server.js",
   "scripts": {
+    "preinstall": "npx only-allow pnpm",
     "format": "prettier --write .",
     "test": "jest",
     "build": "npx tsc",

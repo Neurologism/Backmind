@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import fs from 'fs';
-import { TutorialModel } from '../src/mongooseSchemas/tutorialSchema';
-import { ProjectModel } from '../src/mongooseSchemas/projectSchema';
+import { TutorialModel } from '../mongooseSchemas/tutorial.schema';
+import { ProjectModel } from '../mongooseSchemas/project.schema';
 
 require('dotenv').config();
 

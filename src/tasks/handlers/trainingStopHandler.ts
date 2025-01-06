@@ -7,7 +7,15 @@ export const trainingStopHandler = async (
   req: Request,
   res: Response
 ) => {
-  const model = body.model;
+  const model = await TaskModel.findOne({ _id: body.model._id });
+  if (model === null) {
+    return res
+      .status(404)
+      .send({ message: 'Model with that id does not exist.' });
+  }
+  if (model.ownerId.toString() !== req.userId?.toString()) {
+    return res.status(403).send({ message: 'Not authorized.' });
+  }
 
   if (model.status === 'queued') {
     await QueueItemModel.deleteOne({ taskId: model!._id });

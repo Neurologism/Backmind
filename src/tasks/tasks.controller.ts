@@ -32,7 +32,6 @@ export class TasksController {
   }
 
   @Post('training-status')
-  @UseInterceptors(AccessProjectInterceptor)
   trainingStatus(
     @Body() body: TrainingStatusDto,
     @Req() req: Request,
@@ -42,7 +41,6 @@ export class TasksController {
   }
 
   @Post('training-stop')
-  @UseInterceptors(AccessProjectInterceptor)
   trainingStop(
     @Body() body: TrainingStopDto,
     @Req() req: Request,
@@ -52,7 +50,6 @@ export class TasksController {
   }
 
   @Post('delete-task')
-  @UseInterceptors(AccessProjectInterceptor)
   deleteTask(
     @Body() body: DeleteTaskDto,
     @Req() req: Request,

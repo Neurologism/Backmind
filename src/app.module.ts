@@ -13,6 +13,7 @@ import { AppService } from './app.service';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from 'guards/auth.guard';
 import { ThrottlerModule } from '@nestjs/throttler';
+import { AppLogger } from './logger.service';
 
 @Module({
   imports: [
@@ -38,7 +39,9 @@ import { ThrottlerModule } from '@nestjs/throttler';
       provide: APP_GUARD,
       useClass: AuthGuard,
     },
+    AppLogger,
   ],
+  exports: [AppLogger],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

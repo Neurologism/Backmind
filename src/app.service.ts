@@ -1,8 +1,13 @@
 import { Injectable, Logger } from '@nestjs/common';
+import { AppLogger } from './logger.service';
 
 @Injectable()
 export class AppService {
-  private readonly logger = new Logger(AppService.name, { timestamp: true });
+  private readonly logger: AppLogger;
+
+  constructor(logger: AppLogger) {
+    this.logger = logger;
+  }
 
   getHello(): string {
     this.logger.log('Someone is looking for the root path');

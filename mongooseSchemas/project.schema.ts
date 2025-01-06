@@ -26,14 +26,6 @@ export class Project {
   @Prop({ type: Types.ObjectId, required: true })
   ownerId!: Types.ObjectId;
 
-  @Prop({
-    type: [Types.ObjectId],
-    required: true,
-    default: [],
-    ref: 'users',
-  })
-  contributors!: Types.ObjectId[];
-
   @Prop({ type: String, enum: ['public', 'private'], required: true })
   visibility!: string;
 

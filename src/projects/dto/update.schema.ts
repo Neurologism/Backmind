@@ -22,17 +22,6 @@ export const updateSchema = z
             }
             return new mongoose.Types.ObjectId(ownerId);
           }),
-        contributors: z
-          .array(z.string().length(24))
-          .optional()
-          .transform((contributors) => {
-            if (contributors === undefined) {
-              return undefined;
-            }
-            return contributors!.map(
-              (contributor) => new mongoose.Types.ObjectId(contributor)
-            );
-          }),
         plainPassword: z
           .string()
           .min(Number(process.env.MIN_PASS_LENGTH))
@@ -49,7 +38,6 @@ export const updateSchema = z
         !data.project.description &&
         !data.project.visibility &&
         !data.project.ownerId &&
-        !data.project.contributors &&
         !data.project.components
       );
     },

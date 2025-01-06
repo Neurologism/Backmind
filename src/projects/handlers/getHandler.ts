@@ -17,11 +17,7 @@ export const getHandler = async (body: any, req: Request, res: Response) => {
       });
     }
     const isOwner = project.ownerId!.toString() === req.userId!.toString();
-    const isContributor = project.contributors
-      .map((contributor) => contributor.toString())
-      .includes(req.userId!.toString());
-
-    if (!isOwner && !isContributor) {
+    if (!isOwner) {
       return res.status(404).json({
         msg: 'This project is private. You do not have access to it.',
       });
@@ -36,7 +32,6 @@ export const getHandler = async (body: any, req: Request, res: Response) => {
     name: req.project!.name,
     description: req.project!.description,
     ownerId: req.project!.ownerId,
-    contributors: req.project!.contributors,
     visibility: req.project!.visibility,
     dateCreatedAt: req.project!.dateCreatedAt,
     dateLastEdited: req.project!.dateLastEdited,

@@ -35,20 +35,15 @@ export class AccessProjectInterceptor implements NestInterceptor {
 
     const isProjectOwner =
       dbProject.ownerId?.toString() === req.userId.toString();
-    const canUpdateProject =
-      isProjectOwner ||
-      dbProject.contributors.some(
-        (contributor) => contributor._id.toString() === req.userId.toString()
-      );
 
-    if (!canUpdateProject) {
+    if (!isProjectOwner) {
       throw new NotFoundException(
         "There is no project with that id or you don't have access to it."
       );
     }
 
     req.project = dbProject;
-    req.middlewareParams = { isProjectOwner, canUpdateProject };
+    req.middlewareParams = { isProjectOwner };
 
     return next.handle();
   }

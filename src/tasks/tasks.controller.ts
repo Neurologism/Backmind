@@ -1,4 +1,11 @@
-import { Controller, Post, Res, Req, Body } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Res,
+  Req,
+  Body,
+  UseInterceptors,
+} from '@nestjs/common';
 import { Request, Response } from 'express';
 
 import { deleteTaskHandler } from './handlers/deleteTaskHandler';
@@ -10,10 +17,12 @@ import { DeleteTaskDto } from './dto/deleteTask.schema';
 import { TrainingStartDto } from './dto/trainingStart.schema';
 import { TrainingStatusDto } from './dto/trainingStatus.schema';
 import { TrainingStopDto } from './dto/trainingStop.schema';
+import { AccessProjectInterceptor } from 'interceptors/accessProject.interceptor';
 
 @Controller('tasks')
 export class TasksController {
   @Post('training-start')
+  @UseInterceptors(AccessProjectInterceptor)
   trainingStart(
     @Body() body: TrainingStartDto,
     @Req() req: Request,
@@ -23,6 +32,7 @@ export class TasksController {
   }
 
   @Post('training-status')
+  @UseInterceptors(AccessProjectInterceptor)
   trainingStatus(
     @Body() body: TrainingStatusDto,
     @Req() req: Request,
@@ -32,6 +42,7 @@ export class TasksController {
   }
 
   @Post('training-stop')
+  @UseInterceptors(AccessProjectInterceptor)
   trainingStop(
     @Body() body: TrainingStopDto,
     @Req() req: Request,
@@ -41,6 +52,7 @@ export class TasksController {
   }
 
   @Post('delete-task')
+  @UseInterceptors(AccessProjectInterceptor)
   deleteTask(
     @Body() body: DeleteTaskDto,
     @Req() req: Request,

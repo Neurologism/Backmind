@@ -30,6 +30,7 @@ export class ProjectsController {
   }
 
   @Post('delete')
+  @UseInterceptors(AccessProjectInterceptor)
   delete(@Body() body: DeleteDto, @Req() req: Request, @Res() res: Response) {
     return deleteHandler(body, req, res);
   }

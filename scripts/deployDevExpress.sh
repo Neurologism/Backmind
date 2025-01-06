@@ -10,5 +10,5 @@ git pull
 pnpm i
 pnpm run build
 pm2 delete backmind-server
-pnpm run start
+pnpm run start:prod
 pm2 save --force

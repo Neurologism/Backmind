@@ -1,4 +1,11 @@
-import { Controller, Post, Res, Req, Body } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Res,
+  Req,
+  Body,
+  UseInterceptors,
+} from '@nestjs/common';
 import { Request, Response } from 'express';
 
 import { createHandler } from './handlers/createHandler';
@@ -14,6 +21,8 @@ import { GetDto } from './dto/get.schema';
 import { IsTakenDto } from './dto/isTaken.schema';
 import { SearchDto } from './dto/search.schema';
 import { UpdateDto } from './dto/update.schema';
+
+import { AccessProjectInterceptor } from 'interceptors/accessProject.interceptor';
 
 @Controller('projects')
 export class ProjectsController {
@@ -43,6 +52,7 @@ export class ProjectsController {
   }
 
   @Post('update')
+  @UseInterceptors(AccessProjectInterceptor)
   update(@Body() body: UpdateDto, @Req() req: Request, @Res() res: Response) {
     return updateHandler(body, req, res);
   }

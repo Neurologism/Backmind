@@ -50,7 +50,7 @@ export const pfpUploadMulter = {
   },
 };
 
-@Controller('user')
+@Controller('users')
 export class UsersController {
   @Post('delete-email')
   deleteEmail(

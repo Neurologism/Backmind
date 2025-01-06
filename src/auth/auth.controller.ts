@@ -10,6 +10,7 @@ import { verifyEmailHandler } from './handlers/verifyEmailHandler';
 
 import { LoginDto } from './dto/login.schema';
 import { RegisterDto } from './dto/register.schema';
+import { SkipAuth } from 'decorators/skipAuth.decorator';
 
 @Controller('auth')
 export class AuthController {
@@ -33,6 +34,7 @@ export class AuthController {
     return logoutHandler(req, res);
   }
 
+  @SkipAuth()
   @Post('register')
   register(
     @Body() body: RegisterDto,

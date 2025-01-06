@@ -12,14 +12,12 @@ import { createHandler } from './handlers/createHandler';
 import { deleteHandler } from './handlers/deleteHandler';
 import { getHandler } from './handlers/getHandler';
 import { isTakenHandler } from './handlers/isTakenHandler';
-import { searchHandler } from './handlers/searchHandler';
 import { updateHandler } from './handlers/updateHandler';
 
 import { CreateDto } from './dto/create.schema';
 import { DeleteDto } from './dto/delete.schema';
 import { GetDto } from './dto/get.schema';
 import { IsTakenDto } from './dto/isTaken.schema';
-import { SearchDto } from './dto/search.schema';
 import { UpdateDto } from './dto/update.schema';
 
 import { AccessProjectInterceptor } from 'interceptors/accessProject.interceptor';
@@ -44,11 +42,6 @@ export class ProjectsController {
   @Post('is-taken')
   isTaken(@Body() body: IsTakenDto, @Req() req: Request, @Res() res: Response) {
     return isTakenHandler(body, req, res);
-  }
-
-  @Post('search')
-  search(@Body() body: SearchDto, @Req() req: Request, @Res() res: Response) {
-    return searchHandler(body, req, res);
   }
 
   @Post('update')

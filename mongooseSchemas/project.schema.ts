@@ -23,7 +23,7 @@ export class Project {
   })
   description!: string;
 
-  @Prop({ type: Types.ObjectId, required: true })
+  @Prop({ type: Types.ObjectId, required: true, ref: 'users' })
   ownerId!: Types.ObjectId;
 
   @Prop({ type: String, enum: ['public', 'private'], required: true })
@@ -38,13 +38,13 @@ export class Project {
   @Prop({ type: MongooseSchema.Types.Mixed, required: true, default: {} })
   components!: Record<string, any>;
 
-  @Prop({ type: [Types.ObjectId], required: true, default: [] })
+  @Prop({ type: [Types.ObjectId], required: true, default: [], ref: 'tasks' })
   models!: Types.ObjectId[];
 
   @Prop({ type: Boolean, required: true, default: false })
   isTutorialProject!: boolean;
 
-  @Prop({ type: Types.ObjectId })
+  @Prop({ type: Types.ObjectId, ref: 'tutorials' })
   tutorialId?: Types.ObjectId;
 
   @Prop({ type: Number })

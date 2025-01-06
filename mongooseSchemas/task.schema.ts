@@ -31,10 +31,10 @@ export class Task {
   @Prop({ type: Date })
   dateFinished?: Date;
 
-  @Prop({ type: Types.ObjectId, required: true })
+  @Prop({ type: Types.ObjectId, required: true, ref: 'projects' })
   projectId!: Types.ObjectId;
 
-  @Prop({ type: Types.ObjectId, required: true })
+  @Prop({ type: Types.ObjectId, required: true, ref: 'users' })
   ownerId!: Types.ObjectId;
 }
 

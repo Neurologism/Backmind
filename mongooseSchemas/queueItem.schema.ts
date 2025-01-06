@@ -7,7 +7,7 @@ export type QueueItemDocument = HydratedDocument<QueueItem>;
 
 @Schema()
 export class QueueItem {
-  @Prop({ type: Types.ObjectId, required: true })
+  @Prop({ type: Types.ObjectId, required: true, ref: 'tasks' })
   taskId!: Types.ObjectId;
 
   @Prop({ type: Number, required: true, default: 0 })

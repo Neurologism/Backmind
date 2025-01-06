@@ -119,8 +119,8 @@ export class User {
   @Prop({ type: String, default: '' })
   location!: string;
 
-  @Prop({ type: Boolean, required: true, default: false })
-  premium!: boolean;
+  @Prop({ type: Number, required: true, default: 0 })
+  premiumTier!: number;
 
   @Prop({ type: Number, required: true, default: 600 })
   remainingCredits!: number;

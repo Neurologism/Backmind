@@ -87,7 +87,7 @@ export class Tutorial {
   })
   description!: string;
 
-  @Prop({ type: Types.ObjectId })
+  @Prop({ type: Types.ObjectId, ref: 'users' })
   ownerId!: Types.ObjectId;
 
   @Prop({ type: String, enum: ['public', 'private'], required: true })
@@ -102,16 +102,26 @@ export class Tutorial {
   @Prop({ type: Date, required: true, default: () => new Date() })
   dateLastEdited!: Date;
 
-  @Prop({ type: [Types.ObjectId], required: true, default: [] })
+  @Prop({
+    type: [Types.ObjectId],
+    required: true,
+    default: [],
+    ref: 'tutorials',
+  })
   requiredTutorials!: Types.ObjectId[];
 
-  @Prop({ type: [Types.ObjectId], required: true, default: [] })
+  @Prop({
+    type: [Types.ObjectId],
+    required: true,
+    default: [],
+    ref: 'tutorials',
+  })
   nextTutorials!: Types.ObjectId[];
 
   @Prop({ type: Number, required: true, default: 100 })
   experienceGain!: number;
 
-  @Prop({ type: Types.ObjectId, required: true })
+  @Prop({ type: Types.ObjectId, required: true, ref: 'projects' })
   startProject!: Types.ObjectId;
 
   @Prop({ type: [UnlockNodeSchema], required: true, default: [] })

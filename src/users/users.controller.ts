@@ -1,5 +1,16 @@
-import { Controller, Get, Post, Res, Req, Body } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Res,
+  Req,
+  Body,
+  UseInterceptors,
+  UploadedFile,
+} from '@nestjs/common';
 import { Request, Response } from 'express';
+import { FileInterceptor } from '@nestjs/platform-express';
+import multer from 'multer';
 
 import { deleteEmailHandler } from './handlers/deleteEmailHandler';
 import { deleteHandler } from './handlers/deleteHandler';
@@ -17,11 +28,27 @@ import { uploadPfpHandler } from './handlers/uploadPfpHandler';
 import { DeleteEmailDto } from './dto/deleteEmail.schema';
 import { FollowDto } from './dto/follow.schema';
 import { GetDto } from './dto/get.schema';
-import { GetPfpDto } from './dto/getPfp.schema';
 import { IsTakenDto } from './dto/isTaken.schema';
 import { UnfollowDto } from './dto/unfollow.schema';
 import { UpdateEmailDto } from './dto/updateEmail.schema';
 import { UpdateDto } from './dto/update.schema';
+
+export const pfpUploadMulter = {
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 8 * 1024 * 1024 },
+  fileFilter: (req: Request, file: Express.Multer.File, cb: Function) => {
+    const allowedMimeTypes = [
+      'image/webp',
+      'image/jpg',
+      'image/jpeg',
+      'image/png',
+    ];
+    if (!allowedMimeTypes.includes(file.mimetype)) {
+      return cb(new Error('Invalid file type.'));
+    }
+    cb(null, true);
+  },
+};
 
 @Controller('user')
 export class UsersController {
@@ -55,8 +82,8 @@ export class UsersController {
   }
 
   @Get('get-pfp')
-  getPfp(@Body() body: GetPfpDto, @Req() req: Request, @Res() res: Response) {
-    return getPfpHandler(body, req, res);
+  getPfp(@Req() req: Request, @Res() res: Response) {
+    return getPfpHandler(req, res);
   }
 
   @Post('is-taken')
@@ -93,7 +120,12 @@ export class UsersController {
   }
 
   @Post('upload-pfp')
-  uploadPfp(@Req() req: Request, @Res() res: Response) {
-    return uploadPfpHandler(req, res);
+  @UseInterceptors(FileInterceptor('pfp', pfpUploadMulter))
+  uploadPfp(
+    @Req() req: Request,
+    @Res() res: Response,
+    @UploadedFile() file: Express.Multer.File
+  ) {
+    return uploadPfpHandler(req, res, file);
   }
 }

@@ -3,12 +3,16 @@ import { UserModel } from '../../../mongooseSchemas/user.schema';
 import sharp from 'sharp';
 import path from 'path';
 
-export const uploadPfpHandler = async (req: Request, res: Response) => {
-  if (!req.file) {
+export const uploadPfpHandler = async (
+  req: Request,
+  res: Response,
+  file: Express.Multer.File
+) => {
+  if (!file) {
     return res.status(400).json({ message: 'No file uploaded' });
   }
 
-  const { buffer } = req.file;
+  const { buffer } = file;
   const image = sharp(buffer);
   const metadata = await image.metadata();
 

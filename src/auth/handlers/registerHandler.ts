@@ -9,6 +9,18 @@ export const registerHandler = async (
   req: Request,
   res: Response
 ) => {
+  const user = await UserModel.findOne({
+    $or: [
+      { 'emails.address': body.user.email },
+      { brainetTag: body.user.brainetTag },
+    ],
+  });
+  if (user !== null) {
+    return res.status(400).json({
+      msg: 'User already exists',
+    });
+  }
+
   if (Boolean(process.env.DISABLE_ACCOUNT_CREATION as string)) {
     return res.status(403).json({
       msg: 'Account creation is disabled.',

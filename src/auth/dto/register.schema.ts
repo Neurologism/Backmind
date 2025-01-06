@@ -1,5 +1,4 @@
 import { z } from 'zod';
-import { UserModel } from '../../../mongooseSchemas/user.schema';
 
 export const registerSchema = z
   .object({
@@ -12,19 +11,6 @@ export const registerSchema = z
       .strict(),
     agreedToTermsOfServiceAndPrivacyPolicy: z.boolean(),
   })
-  .strict()
-  .refine(
-    async (data) => {
-      return (
-        (await UserModel.findOne({
-          $or: [
-            { 'emails.address': data.user.email },
-            { brainetTag: data.user.brainetTag },
-          ],
-        })) === null
-      );
-    },
-    { message: 'User with that email or brainetTag already exists.' }
-  );
+  .strict();
 
 export type RegisterDto = z.infer<typeof registerSchema>;

@@ -22,6 +22,7 @@ import sgMail from '@sendgrid/mail';
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY as string);
 
+import { connectToDatabase } from '../utility/connectToDatabase';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { NestExpressApplication } from '@nestjs/platform-express';
@@ -34,6 +35,7 @@ const accessLogStream = fs.createWriteStream(path.join('./logs/access.log'), {
 });
 
 async function bootstrap() {
+  await connectToDatabase();
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   app.enableCors({
     origin:

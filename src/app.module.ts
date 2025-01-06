@@ -12,6 +12,7 @@ import { LoggerMiddleware } from 'middleware/logger.middleware';
 import { AppController } from './app.controller';
 
 import { AppService } from './app.service';
+import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from 'guards/auth.guard';
 
 @Module({
@@ -26,7 +27,13 @@ import { AuthGuard } from 'guards/auth.guard';
     UsersModule,
   ],
   controllers: [AppController],
-  providers: [AppService, AuthGuard],
+  providers: [
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: AuthGuard,
+    },
+  ],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

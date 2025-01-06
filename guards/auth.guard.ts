@@ -58,11 +58,13 @@ export class AuthGuard implements CanActivate {
       req.userId = userId;
       return true;
     } catch (err) {
-      if (err instanceof jwt.JsonWebTokenError) {
+      if (err instanceof UnauthorizedException) {
+        throw err;
+      } else if (err instanceof jwt.JsonWebTokenError) {
         req.userId = undefined;
         return true;
       } else {
-        req.logger.error(err);
+        // req.logger.error(err);
         throw err;
       }
     }

@@ -9,6 +9,12 @@ export const registerHandler = async (
   req: Request,
   res: Response
 ) => {
+  if (Boolean(process.env.DISABLE_ACCOUNT_CREATION as string)) {
+    return res.status(403).json({
+      msg: 'Account creation is disabled.',
+    });
+  }
+
   const givenUser = body['user'];
 
   if (!body.agreedToTermsOfServiceAndPrivacyPolicy) {

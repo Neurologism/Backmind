@@ -4,7 +4,7 @@ import { updateAsContributorSchema } from '../../zodSchemas/project/updateAsCont
 import { z } from 'zod';
 import { UserModel } from '../../mongooseSchemas/userSchema';
 import { ProjectModel } from '../../mongooseSchemas/projectSchema';
-// import fs from 'fs';
+import fs from 'fs';
 
 export const updateHandler = async (req: Request, res: Response) => {
   if (
@@ -56,10 +56,12 @@ export const updateHandler = async (req: Request, res: Response) => {
       $set: req.body.project,
     }
   );
-  // Write req.body.project.components to a JSON file
-  // fs.writeFileSync(
-  //   `./project_${req.body.project._id}.json`,
-  //   JSON.stringify(req.body.project.components, null, 2)
-  // );
+  if (process.env.WRITE_PROJECT_JSON === 'true') {
+    // Write req.body.project.components to a JSON file
+    fs.writeFileSync(
+      `./project_${req.body.project._id}.json`,
+      JSON.stringify(req.body.project.components, null, 2)
+    );
+  }
   return res.status(200).json({ msg: 'Project changed successfully.' });
 };

@@ -2,27 +2,27 @@ import { Request, Response } from 'express';
 import { TutorialModel } from '../../../mongooseSchemas/tutorial.schema';
 import { UserModel } from '../../../mongooseSchemas/user.schema';
 import { ProjectModel } from '../../../mongooseSchemas/project.schema';
+import { ObjectId } from 'mongoose';
 
-export const getHandler = async (body: any, req: Request, res: Response) => {
+export const getHandler = async (
+  tutorialId: ObjectId,
+  req: Request,
+  res: Response
+) => {
   if (req.userId === undefined) {
     return res.status(403).json({
       msg: 'You need to be authenticated to access this resource.',
     });
   }
   let tutorial;
-  if (body.tutorialId !== undefined) {
+  if (tutorialId !== undefined) {
     tutorial = await TutorialModel.findOne({
-      _id: body.tutorialId,
-      visibility: 'public',
-    });
-  } else if (body.tutorialName !== undefined) {
-    tutorial = await TutorialModel.findOne({
-      name: body.tutorialName,
+      _id: tutorialId,
       visibility: 'public',
     });
   } else {
     return res.status(400).json({
-      msg: 'You need to provide either a tutorialId or tutorialName.',
+      msg: 'You need to provide either a tutorialId.',
     });
   }
 

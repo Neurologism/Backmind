@@ -2,8 +2,10 @@ import { Request, Response } from 'express';
 import { TutorialModel } from '../../../mongooseSchemas/tutorial.schema';
 import { UserModel } from '../../../mongooseSchemas/user.schema';
 import { ProjectModel } from '../../../mongooseSchemas/project.schema';
+import { ObjectId } from 'mongoose';
 
 export const setStateHandler = async (
+  tutorialId: ObjectId,
   body: any,
   req: Request,
   res: Response
@@ -21,7 +23,7 @@ export const setStateHandler = async (
   }
 
   const tutorial = await TutorialModel.findOne({
-    _id: body.tutorialId,
+    _id: tutorialId,
     visibility: 'public',
   });
 

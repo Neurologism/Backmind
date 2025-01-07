@@ -4,25 +4,26 @@ import {
   Res,
   Req,
   Body,
-  UseInterceptors,
+  Get,
+  Patch,
+  Delete,
+  Param,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 
+// handlers
 import { deleteTaskHandler } from './handlers/deleteTaskHandler';
 import { trainingStartHandler } from './handlers/trainingStartHandler';
 import { trainingStatusHandler } from './handlers/trainingStatusHandler';
 import { trainingStopHandler } from './handlers/trainingStopHandler';
 
-import { DeleteTaskDto } from './dto/deleteTask.schema';
+// dtos
 import { TrainingStartDto } from './dto/trainingStart.schema';
-import { TrainingStatusDto } from './dto/trainingStatus.schema';
-import { TrainingStopDto } from './dto/trainingStop.schema';
-import { AccessProjectInterceptor } from 'interceptors/accessProject.interceptor';
+import { ParseObjectIdPipe } from 'pipes/parseObjectId.pipe';
 
 @Controller('tasks')
 export class TasksController {
-  @Post('training-start')
-  @UseInterceptors(AccessProjectInterceptor)
+  @Post()
   trainingStart(
     @Body() body: TrainingStartDto,
     @Req() req: Request,
@@ -31,30 +32,30 @@ export class TasksController {
     return trainingStartHandler(body, req, res);
   }
 
-  @Post('training-status')
+  @Get(':taskId')
   trainingStatus(
-    @Body() body: TrainingStatusDto,
+    @Param('taskId', ParseObjectIdPipe) taskId: string,
     @Req() req: Request,
     @Res() res: Response
   ) {
-    return trainingStatusHandler(body, req, res);
+    return trainingStatusHandler(taskId, req, res);
   }
 
-  @Post('training-stop')
+  @Patch(':taskId')
   trainingStop(
-    @Body() body: TrainingStopDto,
+    @Param('taskId', ParseObjectIdPipe) taskId: string,
     @Req() req: Request,
     @Res() res: Response
   ) {
-    return trainingStopHandler(body, req, res);
+    return trainingStopHandler(taskId, req, res);
   }
 
-  @Post('delete-task')
+  @Delete(':taskId')
   deleteTask(
-    @Body() body: DeleteTaskDto,
+    @Param('taskId', ParseObjectIdPipe) taskId: string,
     @Req() req: Request,
     @Res() res: Response
   ) {
-    return deleteTaskHandler(body, req, res);
+    return deleteTaskHandler(taskId, req, res);
   }
 }

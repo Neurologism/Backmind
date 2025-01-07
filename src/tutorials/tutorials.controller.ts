@@ -1,25 +1,43 @@
-import { Controller, Get, Post, Res, Req, Body } from '@nestjs/common';
+import { Controller, Get, Patch, Res, Req, Body, Param } from '@nestjs/common';
 import { Request, Response } from 'express';
+import { ParseObjectIdPipe } from 'pipes/parseObjectId.pipe';
+import { ObjectId } from 'mongoose';
 
+// handlers
 import { getHandler } from './handlers/getHandler';
+import { getByNameHandler } from './handlers/getByNameHandler';
 import { setStateHandler } from './handlers/setStateHandler';
 
-import { GetDto } from './dto/get.schema';
+// dtos
 import { SetStateDto } from './dto/setState.schema';
 
 @Controller('tutorials')
 export class TutorialsController {
-  @Post('get')
-  get(@Body() body: GetDto, @Req() req: Request, @Res() res: Response) {
-    return getHandler(body, req, res);
+  @Get(':tutorialId')
+  get(
+    @Param('tutorialId', ParseObjectIdPipe) tutorialId: ObjectId,
+    @Req() req: Request,
+    @Res() res: Response
+  ) {
+    return getHandler(tutorialId, req, res);
   }
 
-  @Post('set-state')
+  @Get('by-name/:tutorialName')
+  getByName(
+    @Param('tutorialName') tutorialName: string,
+    @Req() req: Request,
+    @Res() res: Response
+  ) {
+    return getByNameHandler(tutorialName, req, res);
+  }
+
+  @Patch(':tutorialId')
   setState(
+    @Param('tutorialId', ParseObjectIdPipe) tutorialId: ObjectId,
     @Body() body: SetStateDto,
     @Req() req: Request,
     @Res() res: Response
   ) {
-    return setStateHandler(body, req, res);
+    return setStateHandler(tutorialId, body, req, res);
   }
 }

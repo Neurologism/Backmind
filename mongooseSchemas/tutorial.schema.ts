@@ -2,6 +2,13 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Types } from 'mongoose';
 import mongoose from 'mongoose';
 
+enum PremiumTier {
+  Free = 0,
+  Basic = 100,
+  Premium = 200,
+  Unlimited = 300,
+}
+
 @Schema()
 class UnlockNode {
   @Prop({ type: String, required: true })
@@ -93,8 +100,13 @@ export class Tutorial {
   @Prop({ type: String, enum: ['public', 'private'], required: true })
   visibility!: string;
 
-  @Prop({ type: Number, required: true, default: 0 })
-  premiumRequired!: number;
+  @Prop({
+    type: Number,
+    enum: PremiumTier,
+    required: true,
+    default: PremiumTier.Free,
+  })
+  requiredPremiumTier!: number;
 
   @Prop({ type: Date, required: true, default: () => new Date() })
   dateCreatedAt!: Date;

@@ -30,7 +30,7 @@ export const setStateHandler = async (
     return res.status(404).json({ msg: 'Tutorial not found' });
   }
 
-  if (tutorial.premiumRequired > user.premiumTier) {
+  if (tutorial.requiredPremiumTier > user.premiumTier) {
     return res.status(403).json({ msg: 'Premium required' });
   }
 

@@ -36,7 +36,7 @@ export const getHandler = async (body: any, req: Request, res: Response) => {
     return res.status(404).json({ msg: 'User not found' });
   }
 
-  if (tutorial.premiumRequired > user.premiumTier) {
+  if (tutorial.requiredPremiumTier > user.premiumTier) {
     return res.status(403).json({ msg: 'Premium required' });
   }
 

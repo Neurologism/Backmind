@@ -12,7 +12,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from 'guards/auth.guard';
-import { ThrottlerModule } from '@nestjs/throttler';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { AppLogger } from './logger.service';
 
 @Module({
@@ -28,7 +28,7 @@ import { AppLogger } from './logger.service';
     ThrottlerModule.forRoot([
       {
         ttl: 60,
-        limit: 10,
+        limit: 1,
       },
     ]),
   ],
@@ -39,12 +39,14 @@ import { AppLogger } from './logger.service';
       provide: APP_GUARD,
       useClass: AuthGuard,
     },
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard,
+    },
     AppLogger,
   ],
   exports: [AppLogger],
 })
 export class AppModule implements NestModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer.apply(ThrottlerModule).forRoutes('*');
-  }
+  configure(consumer: MiddlewareConsumer) {}
 }

@@ -12,10 +12,10 @@ export const trainingStartHandler = async (
   let priority = 0;
   let user = await UserModel.findOne({ _id: req.userId });
   if (user != null && user.admin) {
-    priority = 2;
+    priority = 200;
   }
-  if (user != null && user.premium) {
-    priority = 1;
+  if (user != null && user.premiumTier) {
+    priority = 100;
   }
   const insertResult = await new TaskModel({
     status: 'queued',

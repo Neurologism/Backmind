@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { TaskModel } from 'mongooseSchemas/task.schema';
 
 export const trainingStatusHandler = async (
-  taskId: string,
+  taskId: Types.ObjectId,
   req: Request,
   res: Response
 ) => {

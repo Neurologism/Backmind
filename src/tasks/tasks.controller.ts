@@ -10,6 +10,7 @@ import {
   Param,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
+import { ParseObjectIdPipe } from 'pipes/parseObjectId.pipe';
 
 // handlers
 import { deleteTaskHandler } from './handlers/deleteTaskHandler';
@@ -19,7 +20,6 @@ import { trainingStopHandler } from './handlers/trainingStopHandler';
 
 // dtos
 import { TrainingStartDto } from './dto/trainingStart.schema';
-import { ParseObjectIdPipe } from 'pipes/parseObjectId.pipe';
 
 @Controller('tasks')
 export class TasksController {
@@ -34,7 +34,7 @@ export class TasksController {
 
   @Get(':taskId')
   trainingStatus(
-    @Param('taskId', ParseObjectIdPipe) taskId: string,
+    @Param('taskId', ParseObjectIdPipe) taskId: Types.ObjectId,
     @Req() req: Request,
     @Res() res: Response
   ) {
@@ -43,7 +43,7 @@ export class TasksController {
 
   @Patch(':taskId')
   trainingStop(
-    @Param('taskId', ParseObjectIdPipe) taskId: string,
+    @Param('taskId', ParseObjectIdPipe) taskId: Types.ObjectId,
     @Req() req: Request,
     @Res() res: Response
   ) {
@@ -52,7 +52,7 @@ export class TasksController {
 
   @Delete(':taskId')
   deleteTask(
-    @Param('taskId', ParseObjectIdPipe) taskId: string,
+    @Param('taskId', ParseObjectIdPipe) taskId: Types.ObjectId,
     @Req() req: Request,
     @Res() res: Response
   ) {

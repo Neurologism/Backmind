@@ -4,7 +4,7 @@ import { QueueItemModel } from '../../../mongooseSchemas/queueItem.schema';
 import { TaskModel } from '../../../mongooseSchemas/task.schema';
 
 export const deleteTaskHandler = async (
-  taskId: string,
+  taskId: Types.ObjectId,
   req: Request,
   res: Response
 ) => {

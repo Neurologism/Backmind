@@ -4,7 +4,6 @@ import {
   Res,
   Req,
   Body,
-  UseInterceptors,
   Param,
   Delete,
   Get,
@@ -19,10 +18,8 @@ import { isTakenHandler } from './handlers/isTakenHandler';
 import { updateHandler } from './handlers/updateHandler';
 
 import { CreateDto } from './dto/create.schema';
-import { DeleteDto } from './dto/delete.schema';
 import { UpdateDto } from './dto/update.schema';
-
-import { AccessProjectInterceptor } from 'interceptors/accessProject.interceptor';
+import { ParseObjectIdPipe } from 'pipes/parseObjectId.pipe';
 
 @Controller('projects')
 export class ProjectsController {
@@ -42,7 +39,7 @@ export class ProjectsController {
 
   @Get(':projectId')
   get(
-    @Param('projectId') projectId: string,
+    @Param('projectId', ParseObjectIdPipe) projectId: string,
     @Req() req: Request,
     @Res() res: Response
   ) {
@@ -50,9 +47,8 @@ export class ProjectsController {
   }
 
   @Delete(':projectId')
-  @UseInterceptors(AccessProjectInterceptor)
   delete(
-    @Param('projectId') projectId: string,
+    @Param('projectId', ParseObjectIdPipe) projectId: string,
     @Req() req: Request,
     @Res() res: Response
   ) {
@@ -60,9 +56,8 @@ export class ProjectsController {
   }
 
   @Patch(':projectId')
-  @UseInterceptors(AccessProjectInterceptor)
   update(
-    @Param('projectId') projectId: string,
+    @Param('projectId', ParseObjectIdPipe) projectId: string,
     @Body() body: UpdateDto,
     @Req() req: Request,
     @Res() res: Response

@@ -5,7 +5,9 @@ import {
   Res,
   Req,
   Body,
-  UseGuards,
+  Delete,
+  Query,
+  Patch,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 
@@ -22,6 +24,7 @@ import { SkipAuth } from 'decorators/skipAuth.decorator';
 
 @Controller('auth')
 export class AuthController {
+  @SkipAuth()
   @Get('check')
   check(@Req() req: Request, @Res() res: Response) {
     return checkHandler(req, res);
@@ -29,18 +32,8 @@ export class AuthController {
 
   @SkipAuth()
   @Post('login')
-  login(@Body() body: LoginDto, @Req() req: Request, @Res() res: Response) {
-    return loginHandler(body, req, res);
-  }
-
-  @Post('logout-all')
-  logoutAll(@Req() req: Request, @Res() res: Response) {
-    return logoutAllHandler(req, res);
-  }
-
-  @Post('logout')
-  logout(@Req() req: Request, @Res() res: Response) {
-    return logoutHandler(req, res);
+  login(@Body() body: LoginDto, @Res() res: Response) {
+    return loginHandler(body, res);
   }
 
   @SkipAuth()
@@ -53,8 +46,18 @@ export class AuthController {
     return registerHandler(body, req, res);
   }
 
-  @Post('verify-email')
-  verifyEmail(@Req() req: Request, @Res() res: Response) {
-    return verifyEmailHandler(req, res);
+  @Delete('logout-all')
+  logoutAll(@Req() req: Request, @Res() res: Response) {
+    return logoutAllHandler(req, res);
+  }
+
+  @Delete('logout')
+  logout(@Req() req: Request, @Res() res: Response) {
+    return logoutHandler(req, res);
+  }
+
+  @Patch('verify-email')
+  verifyEmail(@Query('token') token: string, @Res() res: Response) {
+    return verifyEmailHandler(token, res);
   }
 }

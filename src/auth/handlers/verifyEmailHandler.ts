@@ -2,9 +2,7 @@ import { Request, Response } from 'express';
 import { UserModel } from '../../../mongooseSchemas/user.schema';
 import jwt from 'jsonwebtoken';
 
-export const verifyEmailHandler = async (req: Request, res: Response) => {
-  const { token } = req.query;
-
+export const verifyEmailHandler = async (token: string, res: Response) => {
   const user = await UserModel.findOne({
     emails: {
       $elemMatch: { verificationToken: token },
@@ -28,13 +26,13 @@ export const verifyEmailHandler = async (req: Request, res: Response) => {
 
   user.save();
 
-  const authorizationtoken = jwt.sign(
+  const authorizationToken = jwt.sign(
     { _id: '' + user._id },
     process.env.JWT_SECRET as string,
     { expiresIn: process.env.JWT_TOKEN_EXPIRE_IN }
   );
 
-  res.set('Authorization', authorizationtoken);
+  res.set('Authorization', authorizationToken);
   return res.redirect(
     new URL('/profile/login', process.env.WHITEMIND_HOSTNAME).toString()
   );

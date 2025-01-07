@@ -11,12 +11,14 @@ import {
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 
+// handlers
 import { createHandler } from './handlers/createHandler';
 import { deleteHandler } from './handlers/deleteHandler';
 import { getHandler } from './handlers/getHandler';
 import { isTakenHandler } from './handlers/isTakenHandler';
 import { updateHandler } from './handlers/updateHandler';
 
+// dtos
 import { CreateDto } from './dto/create.schema';
 import { UpdateDto } from './dto/update.schema';
 import { ParseObjectIdPipe } from 'pipes/parseObjectId.pipe';

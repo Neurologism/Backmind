@@ -41,8 +41,13 @@ export const uploadPfpHandler = async (
     .toFile(pfpPath);
 
   const user = await UserModel.findById(req.userId);
-  user!.pfpPath = pfpPath;
-  await user!.save();
+
+  if (!user) {
+    return res.status(404).json({ msg: 'User not found' });
+  }
+
+  user.pfpPath = pfpPath;
+  await user.save();
 
   return res.status(200).json({ msg: 'Profile picture uploaded' });
 };

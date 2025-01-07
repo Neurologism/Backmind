@@ -62,10 +62,14 @@ export const updateHandler = async (
 
   const currentUser = await UserModel.findById(req.userId);
 
+  if (!currentUser) {
+    return res.status(404).json({ msg: 'User not found.' });
+  }
+
   if (body.project.plainPassword) {
     const passwordsMatch = bcrypt.compareSync(
       body.project.plainPassword,
-      currentUser!.passwordHash
+      currentUser.passwordHash
     );
     if (!passwordsMatch) {
       return res.status(400).json({ msg: 'The password is incorrect.' });

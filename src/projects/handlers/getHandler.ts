@@ -16,12 +16,12 @@ export const getHandler = async (
   }
 
   if (project.visibility === 'private') {
-    if (req.userId === undefined) {
+    if (req.userId === undefined || req.userId === null) {
       return res.status(404).json({
         msg: 'This project is private. You need to be logged in to access it. ',
       });
     }
-    const isOwner = project.ownerId!.toString() === req.userId!.toString();
+    const isOwner = project.ownerId.toString() === req.userId.toString();
     if (!isOwner) {
       return res.status(404).json({
         msg: 'This project is private. You do not have access to it.',

@@ -71,7 +71,7 @@ export const getHandler = async (
 
   for (const requiredTutorialId of tutorial.requiredTutorials) {
     if (
-      !user!.completedTutorials.some(
+      !user.completedTutorials.some(
         (completedTutorialId) =>
           completedTutorialId.toString() === requiredTutorialId.toString()
       )
@@ -81,12 +81,12 @@ export const getHandler = async (
     }
   }
 
-  responseJson.tutorialCompleted = user!.completedTutorials.some(
+  responseJson.tutorialCompleted = user.completedTutorials.some(
     (tutorialId) => tutorialId.toString() === tutorial._id.toString()
   );
 
   const project = await ProjectModel.findOne({
-    ownerId: user!._id,
+    ownerId: user._id,
     isTutorialProject: true,
     tutorialId: tutorial._id,
   });

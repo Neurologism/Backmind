@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { UserModel } from '../../../mongooseSchemas/user.schema';
+import { Email, UserModel } from '../../../mongooseSchemas/user.schema';
 import jwt from 'jsonwebtoken';
 
 export const verifyEmailHandler = async (token: string, res: Response) => {
@@ -13,16 +13,27 @@ export const verifyEmailHandler = async (token: string, res: Response) => {
     return res.status(400).json({ msg: 'Invalid verification token' });
   }
 
-  const email = user.emails.find((email) => email.verificationToken === token);
+  const email = user.emails.find(
+    (email) => email.verificationToken === token
+  ) as Email;
+
+  if (email.verified) {
+    return res.status(400).json({ msg: 'Email already verified' });
+  }
+
+  if (email.dateVerificationSent === undefined) {
+    return res.status(400).json({ msg: 'Invalid verification token' });
+  }
+
   if (
-    (new Date().getTime() - email!.dateVerificationSent!.getTime()) / 60000 >=
+    (new Date().getTime() - email.dateVerificationSent.getTime()) / 60000 >=
     Number(process.env.EMAIL_VERIFICATION_TOKEN_VALID_MINUTES)
   ) {
     return res.status(400).json({ msg: 'Invalid verification token' });
   }
 
-  email!.verified = true;
-  email!.dateVerified = new Date();
+  email.verified = true;
+  email.dateVerified = new Date();
 
   user.save();
 

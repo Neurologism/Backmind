@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { ProjectModel } from '../../../mongooseSchemas/project.schema';
 import { QueueItemModel } from '../../../mongooseSchemas/queueItem.schema';
 import { TaskModel } from '../../../mongooseSchemas/task.schema';
+import { Types } from 'mongoose';
 
 export const deleteTaskHandler = async (
   taskId: Types.ObjectId,
@@ -19,7 +20,7 @@ export const deleteTaskHandler = async (
   }
 
   if (task.status === 'queued') {
-    await QueueItemModel.deleteOne({ taskId: task!._id });
+    await QueueItemModel.deleteOne({ taskId: task._id });
   }
 
   await ProjectModel.updateOne(

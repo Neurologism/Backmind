@@ -5,8 +5,6 @@ declare global {
   namespace Express {
     export interface Request {
       userId?: mongoose.Types.ObjectId | null;
-      project?: any;
-      middlewareParams?: any;
       logger: Logger;
     }
   }

@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { TaskModel } from 'mongooseSchemas/task.schema';
+import { Types } from 'mongoose';
 
 export const trainingStatusHandler = async (
   taskId: Types.ObjectId,

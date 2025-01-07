@@ -2,8 +2,9 @@ import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { UserModel } from '../../../mongooseSchemas/user.schema';
+import { LoginDto } from '../dto/login.schema';
 
-export const loginHandler = async (body: any, res: Response) => {
+export const loginHandler = async (body: LoginDto, res: Response) => {
   const givenUser: any = {};
   if (body['user']['email'])
     givenUser.emails = {

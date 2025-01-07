@@ -2,10 +2,11 @@ import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import { UserModel } from '../../../mongooseSchemas/user.schema';
 import { Types } from 'mongoose';
+import { UpdateDto } from '../dto/update.schema';
 
 export const updateHandler = async (
   userId: Types.ObjectId,
-  body: any,
+  body: UpdateDto,
   req: Request,
   res: Response
 ) => {

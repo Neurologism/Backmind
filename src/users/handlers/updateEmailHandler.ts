@@ -2,10 +2,11 @@ import { Request, Response } from 'express';
 import { UserModel } from '../../../mongooseSchemas/user.schema';
 import { sendVerificationEmail } from '../../../utility/sendVerificationEmail';
 import { Types } from 'mongoose';
+import { UpdateEmailDto } from '../dto/updateEmail.schema';
 
 export const updateEmailHandler = async (
   userId: Types.ObjectId,
-  body: any,
+  body: UpdateEmailDto,
   req: Request,
   res: Response
 ) => {

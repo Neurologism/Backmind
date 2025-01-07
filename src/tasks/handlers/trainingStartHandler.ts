@@ -4,9 +4,10 @@ import { QueueItemModel } from '../../../mongooseSchemas/queueItem.schema';
 import { TaskModel } from '../../../mongooseSchemas/task.schema';
 import { UserModel } from '../../../mongooseSchemas/user.schema';
 import { UnauthorizedException, NotFoundException } from '@nestjs/common';
+import { TrainingStartDto } from '../dto/trainingStart.schema';
 
 export const trainingStartHandler = async (
-  body: any,
+  body: TrainingStartDto,
   req: Request,
   res: Response
 ) => {

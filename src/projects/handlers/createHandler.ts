@@ -1,8 +1,13 @@
 import { Request, Response } from 'express';
 import { UserModel } from '../../../mongooseSchemas/user.schema';
 import { ProjectModel } from '../../../mongooseSchemas/project.schema';
+import { CreateDto } from '../dto/create.schema';
 
-export const createHandler = async (body: any, req: Request, res: Response) => {
+export const createHandler = async (
+  body: CreateDto,
+  req: Request,
+  res: Response
+) => {
   const isLoggedIn = req.userId !== null;
   if (!isLoggedIn) {
     return res

@@ -3,10 +3,12 @@ import bcrypt from 'bcrypt';
 import { UserModel } from '../../../mongooseSchemas/user.schema';
 import { ProjectModel } from '../../../mongooseSchemas/project.schema';
 import { UnauthorizedException, NotFoundException } from '@nestjs/common';
+import { Types } from 'mongoose';
+import { UpdateDto } from '../dto/update.schema';
 
 export const updateHandler = async (
   projectId: Types.ObjectId,
-  body: any,
+  body: UpdateDto,
   req: Request,
   res: Response
 ) => {

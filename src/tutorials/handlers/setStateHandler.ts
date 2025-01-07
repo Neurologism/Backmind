@@ -3,10 +3,11 @@ import { TutorialModel } from '../../../mongooseSchemas/tutorial.schema';
 import { UserModel } from '../../../mongooseSchemas/user.schema';
 import { ProjectModel } from '../../../mongooseSchemas/project.schema';
 import { Types } from 'mongoose';
+import { SetStateDto } from '../dto/setState.schema';
 
 export const setStateHandler = async (
   tutorialId: Types.ObjectId,
-  body: any,
+  body: SetStateDto,
   req: Request,
   res: Response
 ) => {

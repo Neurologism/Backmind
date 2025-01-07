@@ -3,9 +3,10 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { UserModel } from '../../../mongooseSchemas/user.schema';
 import { sendVerificationEmail } from '../../../utility/sendVerificationEmail';
+import { RegisterDto } from '../dto/register.schema';
 
 export const registerHandler = async (
-  body: any,
+  body: RegisterDto,
   req: Request,
   res: Response
 ) => {

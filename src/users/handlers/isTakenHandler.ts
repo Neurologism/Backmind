@@ -2,19 +2,19 @@ import { Request, Response } from 'express';
 import { UserModel } from '../../../mongooseSchemas/user.schema';
 
 export const isTakenHandler = async (
-  body: any,
-  req: Request,
+  brainetTag: string,
+  email: string,
   res: Response
 ) => {
   const searchProperties = {
     $or: [],
   } as any;
 
-  if (body.user.email !== undefined) {
-    searchProperties.$or.push({ 'emails.address': body.user.email });
+  if (email !== undefined) {
+    searchProperties.$or.push({ 'emails.address': email });
   }
-  if (body.user.brainetTag !== undefined) {
-    searchProperties.$or.push({ brainetTag: body.user.brainetTag });
+  if (brainetTag !== undefined) {
+    searchProperties.$or.push({ brainetTag: brainetTag });
   }
 
   const user = await UserModel.findOne(searchProperties);

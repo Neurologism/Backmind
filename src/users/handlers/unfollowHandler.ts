@@ -1,8 +1,9 @@
 import { Request, Response } from 'express';
 import { UserModel } from '../../../mongooseSchemas/user.schema';
+import { Types } from 'mongoose';
 
 export const unfollowHandler = async (
-  body: any,
+  userId: Types.ObjectId,
   req: Request,
   res: Response
 ) => {
@@ -12,18 +13,18 @@ export const unfollowHandler = async (
     return res.status(404).json({ msg: 'User not found' });
   }
 
-  const userToUnfollow = await UserModel.findById(body.userId);
+  const userToUnfollow = await UserModel.findById(userId);
 
   if (!userToUnfollow) {
     return res.status(404).json({ msg: 'User to unfollow not found' });
   }
 
-  if (!user.followingIds.includes(body.userId)) {
+  if (!user.followingIds.includes(userId)) {
     return res.status(400).json({ msg: 'You are not following this user' });
   }
 
   user.followingIds = user.followingIds.filter(
-    (id) => id.toString() !== body.userId
+    (id) => id.toString() !== userId.toString()
   );
   await user.save();
 

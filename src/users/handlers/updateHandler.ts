@@ -1,13 +1,25 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import { UserModel } from '../../../mongooseSchemas/user.schema';
+import { Types } from 'mongoose';
 
-export const updateHandler = async (body: any, req: Request, res: Response) => {
+export const updateHandler = async (
+  userId: Types.ObjectId,
+  body: any,
+  req: Request,
+  res: Response
+) => {
   if (req.userId === undefined) {
     return res.status(401).json({ msg: 'You are not authenticated.' });
   }
 
-  const user = await UserModel.findById(req.userId);
+  if (req.userId?.toString() !== userId.toString()) {
+    return res
+      .status(403)
+      .json({ msg: 'You are not authorized to update this user.' });
+  }
+
+  const user = await UserModel.findById(userId);
 
   if (user === null) {
     return res

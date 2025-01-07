@@ -1,13 +1,23 @@
 import { Request, Response } from 'express';
 import { UserModel } from '../../../mongooseSchemas/user.schema';
 import { sendVerificationEmail } from '../../../utility/sendVerificationEmail';
+import { Types } from 'mongoose';
 
 export const updateEmailHandler = async (
+  userId: Types.ObjectId,
   body: any,
   req: Request,
   res: Response
 ) => {
-  const user = await UserModel.findById({ _id: req.userId });
+  if (req.userId === undefined) {
+    return res.status(401).json({ msg: 'Unauthorized' });
+  }
+
+  if (req.userId?.toString() !== userId.toString()) {
+    return res.status(403).json({ msg: 'Forbidden' });
+  }
+
+  const user = await UserModel.findById({ _id: userId });
 
   if (!user) {
     return res.status(404).json({ msg: 'User not found' });

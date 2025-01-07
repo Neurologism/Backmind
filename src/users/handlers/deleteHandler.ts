@@ -2,10 +2,19 @@ import { Request, Response } from 'express';
 import { UserModel } from '../../../mongooseSchemas/user.schema';
 import { ProjectModel } from '../../../mongooseSchemas/project.schema';
 import { TaskModel } from '../../../mongooseSchemas/task.schema';
+import { Types } from 'mongoose';
 
-export const deleteHandler = async (req: Request, res: Response) => {
+export const deleteHandler = async (
+  userId: Types.ObjectId,
+  req: Request,
+  res: Response
+) => {
   if (req.userId === undefined) {
     return res.status(401).send('Unauthorized');
+  }
+
+  if (req.userId?.toString() !== userId.toString()) {
+    return res.status(403).send('Forbidden');
   }
 
   const user = await UserModel.findById(req.userId);

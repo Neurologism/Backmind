@@ -1,24 +1,13 @@
 import { Request, Response } from 'express';
 import { UserModel } from '../../../mongooseSchemas/user.schema';
-// import { ProjectModel } from '../../../mongooseSchemas/project.schema';
+import { Types } from 'mongoose';
 
-export const getHandler = async (body: any, req: Request, res: Response) => {
-  let searchParams;
-
-  if (Object.keys(body).length === 0) {
-    if (req.userId === undefined) {
-      return res
-        .status(401)
-        .json({ msg: 'You are not authenticated and provided an empty body.' });
-    }
-    searchParams = {
-      _id: req.userId,
-    };
-  } else {
-    searchParams = body.user;
-  }
-
-  const user = await UserModel.findOne(searchParams);
+export const getHandler = async (
+  userId: Types.ObjectId,
+  req: Request,
+  res: Response
+) => {
+  const user = await UserModel.findById(userId);
   if (user === null) {
     return res
       .status(404)

@@ -2,9 +2,10 @@ import { Request, Response } from 'express';
 import { UserModel } from '../../../mongooseSchemas/user.schema';
 import fs from 'fs';
 import path from 'path';
+import { Types } from 'mongoose';
 
-export const getPfpHandler = async (req: Request, res: Response) => {
-  const user = await UserModel.findById(req.params.userId);
+export const getPfpHandler = async (userId: Types.ObjectId, res: Response) => {
+  const user = await UserModel.findById(userId);
 
   if (user === null) {
     return res.status(404).json({ msg: 'User not found.' });

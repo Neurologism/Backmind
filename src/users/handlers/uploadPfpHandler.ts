@@ -2,8 +2,10 @@ import { Request, Response } from 'express';
 import { UserModel } from '../../../mongooseSchemas/user.schema';
 import sharp from 'sharp';
 import path from 'path';
+import { Types } from 'mongoose';
 
 export const uploadPfpHandler = async (
+  userId: Types.ObjectId,
   req: Request,
   res: Response,
   file: Express.Multer.File

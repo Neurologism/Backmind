@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { ProjectModel } from 'mongooseSchemas/project.schema';
+import { Types } from 'mongoose';
 
 export const getHandler = async (
   projectId: Types.ObjectId,
@@ -28,19 +29,17 @@ export const getHandler = async (
     }
   }
 
-  req.project = project;
-
-  req.project!;
+  project!;
   const projectJson = {
-    _id: req.project!._id,
-    name: req.project!.name,
-    description: req.project!.description,
-    ownerId: req.project!.ownerId,
-    visibility: req.project!.visibility,
-    dateCreatedAt: req.project!.dateCreatedAt,
-    dateLastEdited: req.project!.dateLastEdited,
-    models: req.project!.models,
-    components: req.project!.components,
+    _id: project._id,
+    name: project.name,
+    description: project.description,
+    ownerId: project.ownerId,
+    visibility: project.visibility,
+    dateCreatedAt: project.dateCreatedAt,
+    dateLastEdited: project.dateLastEdited,
+    tasks: project.tasks,
+    components: project.components,
   };
   return res.status(200).json({ project: projectJson });
 };

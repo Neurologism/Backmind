@@ -39,7 +39,7 @@ export class Project {
   components!: Record<string, any>;
 
   @Prop({ type: [Types.ObjectId], required: true, default: [], ref: 'tasks' })
-  models!: Types.ObjectId[];
+  tasks!: Types.ObjectId[];
 
   @Prop({ type: Boolean, required: true, default: false })
   isTutorialProject!: boolean;

@@ -25,7 +25,7 @@ export const deleteTaskHandler = async (
   await ProjectModel.updateOne(
     { _id: task.projectId },
     {
-      $pull: { models: task._id },
+      $pull: { tasks: task._id },
     }
   );
 

@@ -60,16 +60,16 @@ export const trainingStartHandler = async (
     projectId: project._id,
     ownerId: req.userId,
   }).save();
-  const modelId = insertResult._id;
-  await new QueueItemModel({ taskId: modelId, priority: priority }).save();
+  const taskId = insertResult._id;
+  await new QueueItemModel({ taskId: taskId, priority: priority }).save();
   await ProjectModel.updateOne(
     { _id: project._id },
     {
-      $push: { models: modelId },
+      $push: { tasks: taskId },
     }
   );
 
   res
     .status(200)
-    .send({ model: { _id: modelId }, msg: 'Model training queued.' });
+    .send({ task: { _id: taskId }, msg: 'Model training queued.' });
 };

@@ -66,6 +66,9 @@ export type UserDocument = HydratedDocument<User>;
 
 @Schema()
 export class User {
+  @Prop({ type: String, required: true, index: true, unique: true })
+  brainetTag!: string;
+
   @Prop({ type: [EmailSchema], required: true })
   emails!: Email[];
 
@@ -92,9 +95,6 @@ export class User {
     default: '',
   })
   displayname!: string;
-
-  @Prop({ type: String, required: true })
-  brainetTag!: string;
 
   @Prop({ type: String, required: true })
   passwordHash!: string;

@@ -73,7 +73,7 @@ export type TutorialDocument = HydratedDocument<Tutorial>;
 
 @Schema()
 export class Tutorial {
-  @Prop({ type: String, required: true })
+  @Prop({ type: String, required: true, index: true, unique: true })
   name!: string;
 
   @Prop({

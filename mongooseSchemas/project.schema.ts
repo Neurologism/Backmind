@@ -11,7 +11,7 @@ export type ProjectDocument = HydratedDocument<Project>;
 
 @Schema()
 export class Project {
-  @Prop({ type: String, required: true })
+  @Prop({ type: String, required: true, index: true, unique: true })
   name!: string;
 
   @Prop({

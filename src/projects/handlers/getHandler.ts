@@ -1,8 +1,12 @@
 import { Request, Response } from 'express';
 import { ProjectModel } from 'mongooseSchemas/project.schema';
 
-export const getHandler = async (body: any, req: Request, res: Response) => {
-  const project = await ProjectModel.findById(req.body.project._id);
+export const getHandler = async (
+  projectId: string,
+  req: Request,
+  res: Response
+) => {
+  const project = await ProjectModel.findById(projectId);
 
   if (project === null) {
     return res.status(404).json({

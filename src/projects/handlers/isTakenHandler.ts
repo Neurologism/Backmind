@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { ProjectModel } from '../../../mongooseSchemas/project.schema';
 
 export const isTakenHandler = async (
-  body: any,
+  projectName: string,
   req: Request,
   res: Response
 ) => {
@@ -13,7 +13,7 @@ export const isTakenHandler = async (
 
   const nameTaken =
     (await ProjectModel.findOne({
-      name: body.project.name,
+      name: projectName,
       ownerId: req.userId,
       isTutorialProject: false,
     })) !== null;

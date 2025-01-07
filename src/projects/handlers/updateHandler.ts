@@ -1,15 +1,46 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
-import { z } from 'zod';
 import { UserModel } from '../../../mongooseSchemas/user.schema';
 import { ProjectModel } from '../../../mongooseSchemas/project.schema';
-// import fs from 'fs';
+import { UnauthorizedException, NotFoundException } from '@nestjs/common';
 
-export const updateHandler = async (body: any, req: Request, res: Response) => {
-  if (
-    body.project.name !== undefined &&
-    body.project.name !== req.project!.name
-  ) {
+export const updateHandler = async (
+  projectId: string,
+  body: any,
+  req: Request,
+  res: Response
+) => {
+  if (!req.userId) {
+    throw new UnauthorizedException(
+      'You need to be authenticated to access this resource.'
+    );
+  }
+
+  const project = await ProjectModel.findOne({
+    _id: projectId,
+  });
+
+  if (!project) {
+    throw new NotFoundException(
+      "There is no project with that id or you don't have access to it."
+    );
+  }
+
+  const isProjectOwner = project.ownerId?.toString() === req.userId.toString();
+
+  if (!isProjectOwner) {
+    throw new NotFoundException(
+      "There is no project with that id or you don't have access to it."
+    );
+  }
+
+  if (isProjectOwner) {
+    return res
+      .status(401)
+      .json({ msg: 'You are not the owner of this project.' });
+  }
+
+  if (body.project.name !== undefined && body.project.name !== project.name) {
     const nameTaken =
       (await ProjectModel.findOne({
         name: body.project.name,
@@ -21,7 +52,7 @@ export const updateHandler = async (body: any, req: Request, res: Response) => {
     }
   }
 
-  if (!req.middlewareParams.isProjectOwner) {
+  if (!isProjectOwner) {
     return res
       .status(403)
       .json({ msg: 'You are not the owner of this project.' });
@@ -41,15 +72,10 @@ export const updateHandler = async (body: any, req: Request, res: Response) => {
 
   delete body.project.plainPassword;
   await ProjectModel.updateOne(
-    { _id: body.project._id },
+    { _id: projectId },
     {
       $set: body.project,
     }
   );
-  // Write body.project.components to a JSON file
-  // fs.writeFileSync(
-  //   `./project_${body.project._id}.json`,
-  //   JSON.stringify(body.project.components, null, 2)
-  // );
   return res.status(200).json({ msg: 'Project changed successfully.' });
 };

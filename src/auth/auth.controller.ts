@@ -1,3 +1,15 @@
+// handlers
+import { checkHandler } from './handlers/checkHandler';
+import { loginHandler } from './handlers/loginHandler';
+import { logoutAllHandler } from './handlers/logoutAllHandler';
+import { logoutHandler } from './handlers/logoutHandler';
+import { registerHandler } from './handlers/registerHandler';
+import { verifyEmailHandler } from './handlers/verifyEmailHandler';
+
+// dtos
+import { LoginDto } from './dto/login.schema';
+import { RegisterDto } from './dto/register.schema';
+
 import {
   Controller,
   Post,
@@ -10,18 +22,6 @@ import {
   Patch,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
-
-// handlers
-import { checkHandler } from './handlers/checkHandler';
-import { loginHandler } from './handlers/loginHandler';
-import { logoutAllHandler } from './handlers/logoutAllHandler';
-import { logoutHandler } from './handlers/logoutHandler';
-import { registerHandler } from './handlers/registerHandler';
-import { verifyEmailHandler } from './handlers/verifyEmailHandler';
-
-// dtos
-import { LoginDto } from './dto/login.schema';
-import { RegisterDto } from './dto/register.schema';
 import { SkipAuth } from 'decorators/skipAuth.decorator';
 
 @Controller('auth')

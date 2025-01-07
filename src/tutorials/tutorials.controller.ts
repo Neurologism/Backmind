@@ -1,8 +1,3 @@
-import { Controller, Get, Patch, Res, Req, Body, Param } from '@nestjs/common';
-import { Request, Response } from 'express';
-import { ParseObjectIdPipe } from 'pipes/parseObjectId.pipe';
-import { Types } from 'mongoose';
-
 // handlers
 import { getHandler } from './handlers/getHandler';
 import { getByNameHandler } from './handlers/getByNameHandler';
@@ -10,6 +5,11 @@ import { setStateHandler } from './handlers/setStateHandler';
 
 // dtos
 import { SetStateDto } from './dto/setState.schema';
+
+import { Controller, Get, Patch, Res, Req, Body, Param } from '@nestjs/common';
+import { Request, Response } from 'express';
+import { ParseObjectIdPipe } from 'pipes/parseObjectId.pipe';
+import { Types } from 'mongoose';
 
 @Controller('tutorials')
 export class TutorialsController {

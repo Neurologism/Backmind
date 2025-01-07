@@ -1,3 +1,22 @@
+// handlers
+import { deleteEmailHandler } from './handlers/deleteEmailHandler';
+import { deleteHandler } from './handlers/deleteHandler';
+import { followHandler } from './handlers/followHandler';
+import { getCreditsHandler } from './handlers/getCreditsHandler';
+import { getHandler } from './handlers/getHandler';
+import { getByNameHandler } from './handlers/getByNameHandler';
+import { getPfpHandler } from './handlers/getPfpHandler';
+import { isTakenHandler } from './handlers/isTakenHandler';
+import { swapPrimaryEmailHandler } from './handlers/swapPrimaryEmailHandler';
+import { unfollowHandler } from './handlers/unfollowHandler';
+import { updateEmailHandler } from './handlers/updateEmailHandler';
+import { updateHandler } from './handlers/updateHandler';
+import { uploadPfpHandler } from './handlers/uploadPfpHandler';
+
+// dtos
+import { UpdateEmailDto } from './dto/updateEmail.schema';
+import { UpdateDto } from './dto/update.schema';
+
 import {
   Controller,
   Get,
@@ -19,25 +38,6 @@ import multer from 'multer';
 import { ParseObjectIdPipe } from 'pipes/parseObjectId.pipe';
 import { Types } from 'mongoose';
 import { SkipAuth } from 'decorators/skipAuth.decorator';
-
-// handlers
-import { deleteEmailHandler } from './handlers/deleteEmailHandler';
-import { deleteHandler } from './handlers/deleteHandler';
-import { followHandler } from './handlers/followHandler';
-import { getCreditsHandler } from './handlers/getCreditsHandler';
-import { getHandler } from './handlers/getHandler';
-import { getByNameHandler } from './handlers/getByNameHandler';
-import { getPfpHandler } from './handlers/getPfpHandler';
-import { isTakenHandler } from './handlers/isTakenHandler';
-import { swapPrimaryEmailHandler } from './handlers/swapPrimaryEmailHandler';
-import { unfollowHandler } from './handlers/unfollowHandler';
-import { updateEmailHandler } from './handlers/updateEmailHandler';
-import { updateHandler } from './handlers/updateHandler';
-import { uploadPfpHandler } from './handlers/uploadPfpHandler';
-
-// dtos
-import { UpdateEmailDto } from './dto/updateEmail.schema';
-import { UpdateDto } from './dto/update.schema';
 
 export const pfpUploadMulter = {
   storage: multer.memoryStorage(),

@@ -1,3 +1,12 @@
+// handlers
+import { deleteTaskHandler } from './handlers/deleteTaskHandler';
+import { trainingStartHandler } from './handlers/trainingStartHandler';
+import { trainingStatusHandler } from './handlers/trainingStatusHandler';
+import { trainingStopHandler } from './handlers/trainingStopHandler';
+
+// dtos
+import { TrainingStartDto } from './dto/trainingStart.schema';
+
 import {
   Controller,
   Post,
@@ -11,15 +20,7 @@ import {
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { ParseObjectIdPipe } from 'pipes/parseObjectId.pipe';
-
-// handlers
-import { deleteTaskHandler } from './handlers/deleteTaskHandler';
-import { trainingStartHandler } from './handlers/trainingStartHandler';
-import { trainingStatusHandler } from './handlers/trainingStatusHandler';
-import { trainingStopHandler } from './handlers/trainingStopHandler';
-
-// dtos
-import { TrainingStartDto } from './dto/trainingStart.schema';
+import { Types } from 'mongoose';
 
 @Controller('tasks')
 export class TasksController {

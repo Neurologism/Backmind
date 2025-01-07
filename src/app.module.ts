@@ -27,8 +27,16 @@ import { AppLogger } from './logger.service';
     UsersModule,
     ThrottlerModule.forRoot([
       {
+        ttl: 1,
+        limit: 30,
+      },
+      {
+        ttl: 10,
+        limit: 100,
+      },
+      {
         ttl: 60,
-        limit: 1,
+        limit: 300,
       },
     ]),
   ],

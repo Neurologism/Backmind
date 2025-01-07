@@ -2,10 +2,10 @@ import { Request, Response } from 'express';
 import { TutorialModel } from '../../../mongooseSchemas/tutorial.schema';
 import { UserModel } from '../../../mongooseSchemas/user.schema';
 import { ProjectModel } from '../../../mongooseSchemas/project.schema';
-import { ObjectId } from 'mongoose';
+import { Types } from 'mongoose';
 
 export const setStateHandler = async (
-  tutorialId: ObjectId,
+  tutorialId: Types.ObjectId,
   body: any,
   req: Request,
   res: Response

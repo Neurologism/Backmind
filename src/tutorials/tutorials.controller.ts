@@ -1,7 +1,7 @@
 import { Controller, Get, Patch, Res, Req, Body, Param } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { ParseObjectIdPipe } from 'pipes/parseObjectId.pipe';
-import { ObjectId } from 'mongoose';
+import { Types } from 'mongoose';
 
 // handlers
 import { getHandler } from './handlers/getHandler';
@@ -15,7 +15,7 @@ import { SetStateDto } from './dto/setState.schema';
 export class TutorialsController {
   @Get(':tutorialId')
   get(
-    @Param('tutorialId', ParseObjectIdPipe) tutorialId: ObjectId,
+    @Param('tutorialId', ParseObjectIdPipe) tutorialId: Types.ObjectId,
     @Req() req: Request,
     @Res() res: Response
   ) {
@@ -33,7 +33,7 @@ export class TutorialsController {
 
   @Patch(':tutorialId')
   setState(
-    @Param('tutorialId', ParseObjectIdPipe) tutorialId: ObjectId,
+    @Param('tutorialId', ParseObjectIdPipe) tutorialId: Types.ObjectId,
     @Body() body: SetStateDto,
     @Req() req: Request,
     @Res() res: Response

@@ -1,6 +1,6 @@
 import { Logger, Injectable } from '@nestjs/common';
-import * as fs from 'fs';
-import * as path from 'path';
+import fs from 'fs';
+import path from 'path';
 
 @Injectable()
 export class AppLogger extends Logger {
@@ -14,8 +14,18 @@ export class AppLogger extends Logger {
   };
 
   private writeLog(level: keyof typeof this.logFiles, message: string) {
-    fs.appendFileSync(this.logFiles[level], message + '\n');
-    fs.appendFileSync(this.logFiles['combined'], message + '\n');
+    try {
+      fs.appendFileSync(this.logFiles[level], message + '\n');
+      fs.appendFileSync(this.logFiles['combined'], message + '\n');
+    } catch (error: any) {
+      if (error.code === 'ENOENT') {
+        fs.mkdirSync(path.dirname(this.logFiles[level]), { recursive: true });
+        fs.appendFileSync(this.logFiles[level], message + '\n');
+        fs.appendFileSync(this.logFiles['combined'], message + '\n');
+      } else {
+        throw error;
+      }
+    }
   }
 
   log(message: string) {

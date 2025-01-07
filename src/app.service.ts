@@ -10,7 +10,7 @@ export class AppService {
   }
 
   getHello(): string {
-    this.logger.log('Someone is looking for the root path');
+    this.logger.verbose('Someone is looking for the root path');
     return "Heyo! You're probably looking for https://whitemind.net";
   }
 }

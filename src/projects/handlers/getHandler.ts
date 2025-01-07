@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { ProjectModel } from 'mongooseSchemas/project.schema';
 
 export const getHandler = async (
-  projectId: string,
+  projectId: Types.ObjectId,
   req: Request,
   res: Response
 ) => {

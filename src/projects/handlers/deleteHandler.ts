@@ -3,9 +3,10 @@ import { UserModel } from '../../../mongooseSchemas/user.schema';
 import { ProjectModel } from '../../../mongooseSchemas/project.schema';
 import { TaskModel } from '../../../mongooseSchemas/task.schema';
 import { UnauthorizedException, NotFoundException } from '@nestjs/common';
+import { Types } from 'mongoose';
 
 export const deleteHandler = async (
-  projectId: string,
+  projectId: Types.ObjectId,
   req: Request,
   res: Response
 ) => {

@@ -5,7 +5,7 @@ import { ProjectModel } from '../../../mongooseSchemas/project.schema';
 import { UnauthorizedException, NotFoundException } from '@nestjs/common';
 
 export const updateHandler = async (
-  projectId: string,
+  projectId: Types.ObjectId,
   body: any,
   req: Request,
   res: Response

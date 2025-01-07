@@ -10,6 +10,7 @@ import {
   Patch,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
+import { Types } from 'mongoose';
 
 // handlers
 import { createHandler } from './handlers/createHandler';
@@ -41,7 +42,7 @@ export class ProjectsController {
 
   @Get(':projectId')
   get(
-    @Param('projectId', ParseObjectIdPipe) projectId: string,
+    @Param('projectId', ParseObjectIdPipe) projectId: Types.ObjectId,
     @Req() req: Request,
     @Res() res: Response
   ) {
@@ -50,7 +51,7 @@ export class ProjectsController {
 
   @Delete(':projectId')
   delete(
-    @Param('projectId', ParseObjectIdPipe) projectId: string,
+    @Param('projectId', ParseObjectIdPipe) projectId: Types.ObjectId,
     @Req() req: Request,
     @Res() res: Response
   ) {
@@ -59,7 +60,7 @@ export class ProjectsController {
 
   @Patch(':projectId')
   update(
-    @Param('projectId', ParseObjectIdPipe) projectId: string,
+    @Param('projectId', ParseObjectIdPipe) projectId: Types.ObjectId,
     @Body() body: UpdateDto,
     @Req() req: Request,
     @Res() res: Response

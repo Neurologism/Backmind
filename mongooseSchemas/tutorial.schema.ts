@@ -93,8 +93,8 @@ export class Tutorial {
   @Prop({ type: String, enum: ['public', 'private'], required: true })
   visibility!: string;
 
-  @Prop({ type: Boolean, required: true, default: false })
-  premiumRequired!: boolean;
+  @Prop({ type: Number, required: true, default: 0 })
+  premiumRequired!: number;
 
   @Prop({ type: Date, required: true, default: () => new Date() })
   dateCreatedAt!: Date;

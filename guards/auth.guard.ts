@@ -5,11 +5,11 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import jwt from 'jsonwebtoken';
-import mongoose from 'mongoose';
 import { JwtPayload } from 'jsonwebtoken';
 import { UserModel } from '../mongooseSchemas/user.schema';
 import { Reflector } from '@nestjs/core';
 import { SKIP_AUTH_KEY } from 'decorators/skipAuth.decorator';
+import { Types } from 'mongoose';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -29,10 +29,10 @@ export class AuthGuard implements CanActivate {
 
     try {
       const decoded = jwt.verify(
-        token!,
+        token,
         process.env.JWT_SECRET as string
       ) as JwtPayload;
-      const userId = new mongoose.Types.ObjectId(decoded._id);
+      const userId = new Types.ObjectId(decoded._id as string);
       if (!userId) {
         throw new UnauthorizedException();
       }

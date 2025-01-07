@@ -7,16 +7,26 @@ import {
   Body,
   UseInterceptors,
   UploadedFile,
+  Param,
+  Delete,
+  Patch,
+  Query,
+  Put,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { FileInterceptor } from '@nestjs/platform-express';
 import multer from 'multer';
+import { ParseObjectIdPipe } from 'pipes/parseObjectId.pipe';
+import { Types } from 'mongoose';
+import { SkipAuth } from 'decorators/skipAuth.decorator';
 
+// handlers
 import { deleteEmailHandler } from './handlers/deleteEmailHandler';
 import { deleteHandler } from './handlers/deleteHandler';
 import { followHandler } from './handlers/followHandler';
 import { getCreditsHandler } from './handlers/getCreditsHandler';
 import { getHandler } from './handlers/getHandler';
+import { getByNameHandler } from './handlers/getByNameHandler';
 import { getPfpHandler } from './handlers/getPfpHandler';
 import { isTakenHandler } from './handlers/isTakenHandler';
 import { swapPrimaryEmailHandler } from './handlers/swapPrimaryEmailHandler';
@@ -25,11 +35,7 @@ import { updateEmailHandler } from './handlers/updateEmailHandler';
 import { updateHandler } from './handlers/updateHandler';
 import { uploadPfpHandler } from './handlers/uploadPfpHandler';
 
-import { DeleteEmailDto } from './dto/deleteEmail.schema';
-import { FollowDto } from './dto/follow.schema';
-import { GetDto } from './dto/get.schema';
-import { IsTakenDto } from './dto/isTaken.schema';
-import { UnfollowDto } from './dto/unfollow.schema';
+// dtos
 import { UpdateEmailDto } from './dto/updateEmail.schema';
 import { UpdateDto } from './dto/update.schema';
 
@@ -52,80 +58,125 @@ export const pfpUploadMulter = {
 
 @Controller('users')
 export class UsersController {
-  @Post('delete-email')
-  deleteEmail(
-    @Body() body: DeleteEmailDto,
+  @Get('is-taken')
+  @SkipAuth()
+  isTaken(
+    @Query('brainetTag') brainetTag: string,
+    @Query('email') email: string,
+    @Res() res: Response
+  ) {
+    return isTakenHandler(brainetTag, email, res);
+  }
+
+  @Get(':userId')
+  get(
+    @Param('userId', ParseObjectIdPipe) userId: Types.ObjectId,
     @Req() req: Request,
     @Res() res: Response
   ) {
-    return deleteEmailHandler(body, req, res);
+    return getHandler(userId, req, res);
   }
 
-  @Post('delete')
-  delete(@Req() req: Request, @Res() res: Response) {
-    return deleteHandler(req, res);
-  }
-
-  @Post('follow')
-  follow(@Body() body: FollowDto, @Req() req: Request, @Res() res: Response) {
-    return followHandler(body, req, res);
-  }
-
-  @Post('get-credits')
-  getCredits(@Req() req: Request, @Res() res: Response) {
-    return getCreditsHandler(req, res);
-  }
-
-  @Post('get')
-  get(@Body() body: GetDto, @Req() req: Request, @Res() res: Response) {
-    return getHandler(body, req, res);
-  }
-
-  @Get('get-pfp')
-  getPfp(@Req() req: Request, @Res() res: Response) {
-    return getPfpHandler(req, res);
-  }
-
-  @Post('is-taken')
-  isTaken(@Body() body: IsTakenDto, @Req() req: Request, @Res() res: Response) {
-    return isTakenHandler(body, req, res);
-  }
-
-  @Post('swap-primary-email')
-  swapPrimaryEmail(@Req() req: Request, @Res() res: Response) {
-    return swapPrimaryEmailHandler(req, res);
-  }
-
-  @Post('unfollow')
-  unfollow(
-    @Body() body: UnfollowDto,
+  @Get('by-name/:brainetTag')
+  getByName(
+    @Param('brainetTag') brainetTag: string,
     @Req() req: Request,
     @Res() res: Response
   ) {
-    return unfollowHandler(body, req, res);
+    return getByNameHandler(brainetTag, req, res);
   }
 
-  @Post('update-email')
-  updateEmailHandler(
-    @Body() body: UpdateEmailDto,
+  @Delete(':userId')
+  delete(
+    @Param('userId', ParseObjectIdPipe) userId: Types.ObjectId,
     @Req() req: Request,
     @Res() res: Response
   ) {
-    return updateEmailHandler(body, req, res);
+    return deleteHandler(userId, req, res);
   }
 
-  @Post('update')
-  update(@Body() body: UpdateDto, @Req() req: Request, @Res() res: Response) {
-    return updateHandler(body, req, res);
+  @Patch(':userId')
+  update(
+    @Param('userId', ParseObjectIdPipe) userId: Types.ObjectId,
+    @Body() body: UpdateDto,
+    @Req() req: Request,
+    @Res() res: Response
+  ) {
+    return updateHandler(userId, body, req, res);
   }
 
-  @Post('upload-pfp')
+  @Get(':userId/get-credits')
+  getCredits(
+    @Param('userId', ParseObjectIdPipe) userId: Types.ObjectId,
+    @Req() req: Request,
+    @Res() res: Response
+  ) {
+    return getCreditsHandler(userId, req, res);
+  }
+
+  @Get(':userId/get-pfp')
+  getPfp(
+    @Param('userId', ParseObjectIdPipe) userId: Types.ObjectId,
+    @Res() res: Response
+  ) {
+    return getPfpHandler(userId, res);
+  }
+
+  @Patch(':userId/swap-primary-email')
+  swapPrimaryEmail(
+    @Param('userId', ParseObjectIdPipe) userId: Types.ObjectId,
+    @Req() req: Request,
+    @Res() res: Response
+  ) {
+    return swapPrimaryEmailHandler(userId, req, res);
+  }
+
+  @Put(':userId/upload-pfp')
   @UseInterceptors(FileInterceptor('pfp', pfpUploadMulter))
   uploadPfp(
+    @Param('userId', ParseObjectIdPipe) userId: Types.ObjectId,
     @Req() req: Request,
     @Res() res: Response,
     @UploadedFile() file: Express.Multer.File
   ) {
-    return uploadPfpHandler(req, res, file);
+    return uploadPfpHandler(userId, req, res, file);
+  }
+
+  @Post(':userId/followers')
+  follow(
+    @Param('userId', ParseObjectIdPipe) userId: Types.ObjectId,
+    @Req() req: Request,
+    @Res() res: Response
+  ) {
+    return followHandler(userId, req, res);
+  }
+
+  @Delete(':userId/followers')
+  unfollow(
+    @Param('userId', ParseObjectIdPipe) userId: Types.ObjectId,
+    @Req() req: Request,
+    @Res() res: Response
+  ) {
+    return unfollowHandler(userId, req, res);
+  }
+
+  @Delete(':userId/emails')
+  deleteEmail(
+    @Param('userId', ParseObjectIdPipe) userId: Types.ObjectId,
+    @Query('emailType') emailType: string,
+    @Req() req: Request,
+    @Res() res: Response
+  ) {
+    return deleteEmailHandler(userId, emailType, req, res);
+  }
+
+  @Patch(':userId/emails')
+  updateEmailHandler(
+    @Param('userId', ParseObjectIdPipe) userId: Types.ObjectId,
+    @Body() body: UpdateEmailDto,
+    @Req() req: Request,
+    @Res() res: Response
+  ) {
+    return updateEmailHandler(userId, body, req, res);
   }
 }

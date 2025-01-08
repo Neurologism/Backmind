@@ -26,17 +26,15 @@ import { connectToDatabase } from '../utility/connectToDatabase';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { NestExpressApplication } from '@nestjs/platform-express';
-import morgan from 'morgan';
 import rateLimit from 'express-rate-limit';
-import path from 'path';
-
-const accessLogStream = fs.createWriteStream(path.join('./logs/access.log'), {
-  flags: 'a',
-});
+import { AppLogger } from './logger.service';
 
 async function bootstrap() {
   await connectToDatabase();
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  const appLogger = app.get(AppLogger);
+  app.useLogger(appLogger);
+
   app.enableCors({
     origin:
       process.env.NODE_ENV === 'development'
@@ -51,19 +49,8 @@ async function bootstrap() {
       message: "You're sending too many requests.",
     })
   );
-  app.use(
-    morgan(
-      '[:date[web]] :method :url HTTP/:http-version :status :response-time ms - :res[content-length] :user-agent',
-      { stream: accessLogStream }
-    )
-  );
-  app.use(
-    morgan(
-      '[:date[web]] :method :url HTTP/:http-version :status :response-time ms - :res[content-length] :user-agent'
-    )
-  );
 
-  app.listen(Number(process.env.EXPRESS_PORT));
+  await app.listen(Number(process.env.EXPRESS_PORT));
 }
 
 bootstrap();

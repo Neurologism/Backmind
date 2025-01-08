@@ -1,12 +1,12 @@
-import { Logger, Injectable } from '@nestjs/common';
+import { ConsoleLogger, Injectable } from '@nestjs/common';
 import fs from 'fs';
 import path from 'path';
 
 @Injectable()
-export class AppLogger extends Logger {
+export class AppLogger extends ConsoleLogger {
   private logFiles = {
-    log: path.join(__dirname, '../logs/app.log'),
-    error: path.join(__dirname, '../logs/error.log'),
+    log: path.join(__dirname, '../../logs/app.log'),
+    error: path.join(__dirname, '../../logs/error.log'),
     warn: path.join(__dirname, '../logs/warn.log'),
     debug: path.join(__dirname, '../logs/debug.log'),
     verbose: path.join(__dirname, '../logs/verbose.log'),

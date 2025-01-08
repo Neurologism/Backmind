@@ -27,7 +27,6 @@ import { AppLogger } from '../logger.service';
 
 @Controller('auth')
 export class AuthController {
-  @SkipAuth()
   constructor(private readonly logger: AppLogger) {}
 
   @Get('check')

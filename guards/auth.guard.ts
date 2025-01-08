@@ -64,7 +64,7 @@ export class AuthGuard implements CanActivate {
         req.userId = undefined;
         return true;
       } else {
-        // req.logger.error(err);
+        // logger.error(err);
         throw err;
       }
     }

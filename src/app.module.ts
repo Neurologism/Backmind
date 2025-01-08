@@ -1,14 +1,16 @@
-import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
-
+import {
+  Module,
+  NestModule,
+  MiddlewareConsumer,
+  forwardRef,
+} from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from './auth/auth.module';
 import { ProjectsModule } from './projects/projects.module';
 import { TasksModule } from './tasks/tasks.module';
 import { TutorialsModule } from './tutorials/tutorials.module';
 import { UsersModule } from './users/users.module';
-
 import { AppController } from './app.controller';
-
 import { AppService } from './app.service';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from 'guards/auth.guard';
@@ -20,7 +22,7 @@ import { AppLogger } from './logger.service';
     MongooseModule.forRoot(process.env.MONGO_URI as string, {
       dbName: process.env.DB_NAME as string,
     }),
-    AuthModule,
+    forwardRef(() => AuthModule),
     ProjectsModule,
     TasksModule,
     TutorialsModule,
@@ -56,5 +58,9 @@ import { AppLogger } from './logger.service';
   exports: [AppLogger],
 })
 export class AppModule implements NestModule {
-  configure(consumer: MiddlewareConsumer) {}
+  constructor(private readonly appLogger: AppLogger) {}
+
+  configure(consumer: MiddlewareConsumer) {
+    this.appLogger.log('AppModule configured');
+  }
 }

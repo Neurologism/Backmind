@@ -4,8 +4,7 @@ import {
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
-import jwt from 'jsonwebtoken';
-import { JwtPayload } from 'jsonwebtoken';
+import jwt, { JwtPayload, JsonWebTokenError } from 'jsonwebtoken';
 import { UserModel } from '../mongooseSchemas/user.schema';
 import { Reflector } from '@nestjs/core';
 import { SKIP_AUTH_KEY } from 'decorators/skipAuth.decorator';
@@ -20,9 +19,7 @@ export class AuthGuard implements CanActivate {
       context.getHandler(),
       context.getClass(),
     ]);
-    if (isPublic) {
-      return true;
-    }
+    if (isPublic) return true;
 
     const req = context.switchToHttp().getRequest();
     const token = req.header('Authorization')?.split(' ')[1];
@@ -33,40 +30,28 @@ export class AuthGuard implements CanActivate {
         process.env.JWT_SECRET as string
       ) as JwtPayload;
       const userId = new Types.ObjectId(decoded._id as string);
-      if (!userId) {
-        throw new UnauthorizedException();
-      }
-      const user = await UserModel.findOne({ _id: userId });
+      if (!userId) throw new UnauthorizedException();
 
-      if (user === null) {
-        throw new UnauthorizedException();
-      }
+      const user = await UserModel.findOne({ _id: userId });
+      if (!user) throw new UnauthorizedException();
 
       const oneMonthAgo = new Date();
       oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
-
-      user.tokens = user.tokens.filter((t) => {
-        return t.dateAdded > oneMonthAgo;
-      }) as any;
-
+      user.tokens = user.tokens.filter((t) => t.dateAdded > oneMonthAgo) as any;
       await user.save();
 
-      if (!user.tokens.find((t) => t.token === token)) {
+      if (!user.tokens.find((t) => t.token === token))
         throw new UnauthorizedException();
-      }
 
       req.userId = userId;
       return true;
     } catch (err) {
-      if (err instanceof UnauthorizedException) {
-        throw err;
-      } else if (err instanceof jwt.JsonWebTokenError) {
+      if (err instanceof UnauthorizedException) throw err;
+      if (err instanceof JsonWebTokenError) {
         req.userId = undefined;
         return true;
-      } else {
-        // logger.error(err);
-        throw err;
       }
+      throw err;
     }
   }
 }

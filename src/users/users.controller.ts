@@ -1,4 +1,3 @@
-// handlers
 import { deleteEmailHandler } from './handlers/deleteEmailHandler';
 import { deleteHandler } from './handlers/deleteHandler';
 import { followHandler } from './handlers/followHandler';
@@ -12,16 +11,12 @@ import { unfollowHandler } from './handlers/unfollowHandler';
 import { updateEmailHandler } from './handlers/updateEmailHandler';
 import { updateHandler } from './handlers/updateHandler';
 import { uploadPfpHandler } from './handlers/uploadPfpHandler';
-
-// dtos
 import { UpdateEmailDto } from './dto/updateEmail.schema';
 import { UpdateDto } from './dto/update.schema';
-
 import {
   Controller,
   Get,
   Post,
-  Res,
   Req,
   Body,
   UseInterceptors,
@@ -31,8 +26,10 @@ import {
   Patch,
   Query,
   Put,
+  HttpException,
+  HttpStatus,
 } from '@nestjs/common';
-import { Request, Response } from 'express';
+import { Request } from 'express';
 import { FileInterceptor } from '@nestjs/platform-express';
 import multer from 'multer';
 import { ParseObjectIdPipe } from 'pipes/parseObjectId.pipe';
@@ -60,123 +57,199 @@ export const pfpUploadMulter = {
 export class UsersController {
   @Get('is-taken')
   @SkipAuth()
-  isTaken(
+  async isTaken(
     @Query('brainetTag') brainetTag: string,
-    @Query('email') email: string,
-    @Res() res: Response
+    @Query('email') email: string
   ) {
-    return isTakenHandler(brainetTag, email, res);
+    try {
+      return await isTakenHandler(brainetTag, email);
+    } catch (error) {
+      throw new HttpException(
+        (error as any).message,
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
   }
 
   @Get(':userId')
-  get(
+  async get(
     @Param('userId', ParseObjectIdPipe) userId: Types.ObjectId,
-    @Req() req: Request,
-    @Res() res: Response
+    @Req() req: Request
   ) {
-    return getHandler(userId, req, res);
+    try {
+      return await getHandler(userId, req);
+    } catch (error) {
+      throw new HttpException(
+        (error as any).message,
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
   }
 
   @Get('by-name/:brainetTag')
-  getByName(
+  async getByName(
     @Param('brainetTag') brainetTag: string,
-    @Req() req: Request,
-    @Res() res: Response
+    @Req() req: Request
   ) {
-    return getByNameHandler(brainetTag, req, res);
+    try {
+      return await getByNameHandler(brainetTag, req);
+    } catch (error) {
+      throw new HttpException(
+        (error as any).message,
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
   }
 
   @Delete(':userId')
-  delete(
+  async delete(
     @Param('userId', ParseObjectIdPipe) userId: Types.ObjectId,
-    @Req() req: Request,
-    @Res() res: Response
+    @Req() req: Request
   ) {
-    return deleteHandler(userId, req, res);
+    try {
+      return await deleteHandler(userId, req);
+    } catch (error) {
+      throw new HttpException(
+        (error as any).message,
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
   }
 
   @Patch(':userId')
-  update(
+  async update(
     @Param('userId', ParseObjectIdPipe) userId: Types.ObjectId,
     @Body() body: UpdateDto,
-    @Req() req: Request,
-    @Res() res: Response
+    @Req() req: Request
   ) {
-    return updateHandler(userId, body, req, res);
+    try {
+      return await updateHandler(userId, body, req);
+    } catch (error) {
+      throw new HttpException(
+        (error as any).message,
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
   }
 
   @Get(':userId/get-credits')
-  getCredits(
+  async getCredits(
     @Param('userId', ParseObjectIdPipe) userId: Types.ObjectId,
-    @Req() req: Request,
-    @Res() res: Response
+    @Req() req: Request
   ) {
-    return getCreditsHandler(userId, req, res);
+    try {
+      return await getCreditsHandler(userId, req);
+    } catch (error) {
+      throw new HttpException(
+        (error as any).message,
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
   }
 
   @Get(':userId/get-pfp')
-  getPfp(
-    @Param('userId', ParseObjectIdPipe) userId: Types.ObjectId,
-    @Res() res: Response
-  ) {
-    return getPfpHandler(userId, res);
+  async getPfp(@Param('userId', ParseObjectIdPipe) userId: Types.ObjectId) {
+    try {
+      return await getPfpHandler(userId);
+    } catch (error) {
+      throw new HttpException(
+        (error as any).message,
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
   }
 
   @Patch(':userId/swap-primary-email')
-  swapPrimaryEmail(
+  async swapPrimaryEmail(
     @Param('userId', ParseObjectIdPipe) userId: Types.ObjectId,
-    @Req() req: Request,
-    @Res() res: Response
+    @Req() req: Request
   ) {
-    return swapPrimaryEmailHandler(userId, req, res);
+    try {
+      return await swapPrimaryEmailHandler(userId, req);
+    } catch (error) {
+      throw new HttpException(
+        (error as any).message,
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
   }
 
   @Put(':userId/upload-pfp')
   @UseInterceptors(FileInterceptor('pfp', pfpUploadMulter))
-  uploadPfp(
+  async uploadPfp(
     @Param('userId', ParseObjectIdPipe) userId: Types.ObjectId,
     @Req() req: Request,
-    @Res() res: Response,
     @UploadedFile() file: Express.Multer.File
   ) {
-    return uploadPfpHandler(userId, req, res, file);
+    try {
+      return await uploadPfpHandler(userId, req, file);
+    } catch (error) {
+      throw new HttpException(
+        (error as any).message,
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
   }
 
   @Post(':userId/followers')
-  follow(
+  async follow(
     @Param('userId', ParseObjectIdPipe) userId: Types.ObjectId,
-    @Req() req: Request,
-    @Res() res: Response
+    @Req() req: Request
   ) {
-    return followHandler(userId, req, res);
+    try {
+      return await followHandler(userId, req);
+    } catch (error) {
+      throw new HttpException(
+        (error as any).message,
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
   }
 
   @Delete(':userId/followers')
-  unfollow(
+  async unfollow(
     @Param('userId', ParseObjectIdPipe) userId: Types.ObjectId,
-    @Req() req: Request,
-    @Res() res: Response
+    @Req() req: Request
   ) {
-    return unfollowHandler(userId, req, res);
+    try {
+      return await unfollowHandler(userId, req);
+    } catch (error) {
+      throw new HttpException(
+        (error as any).message,
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
   }
 
   @Delete(':userId/emails')
-  deleteEmail(
+  async deleteEmail(
     @Param('userId', ParseObjectIdPipe) userId: Types.ObjectId,
     @Query('emailType') emailType: string,
-    @Req() req: Request,
-    @Res() res: Response
+    @Req() req: Request
   ) {
-    return deleteEmailHandler(userId, emailType, req, res);
+    try {
+      return await deleteEmailHandler(userId, emailType, req);
+    } catch (error) {
+      throw new HttpException(
+        (error as any).message,
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
   }
 
   @Patch(':userId/emails')
-  updateEmailHandler(
+  async updateEmailHandler(
     @Param('userId', ParseObjectIdPipe) userId: Types.ObjectId,
     @Body() body: UpdateEmailDto,
-    @Req() req: Request,
-    @Res() res: Response
+    @Req() req: Request
   ) {
-    return updateEmailHandler(userId, body, req, res);
+    try {
+      return await updateEmailHandler(userId, body, req);
+    } catch (error) {
+      throw new HttpException(
+        (error as any).message,
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
   }
 }

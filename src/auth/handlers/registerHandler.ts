@@ -1,15 +1,15 @@
-import { Request, Response } from 'express';
+import { Request } from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { UserModel } from '../../../mongooseSchemas/user.schema';
 import { sendVerificationEmail } from '../../../utility/sendVerificationEmail';
 import { AppLogger } from '../../logger.service';
 import { RegisterDto } from '../dto/register.schema';
+import { HttpException, HttpStatus } from '@nestjs/common';
 
 export const registerHandler = async (
   body: RegisterDto,
   req: Request,
-  res: Response,
   logger: AppLogger
 ) => {
   const user = await UserModel.findOne({
@@ -19,23 +19,23 @@ export const registerHandler = async (
     ],
   });
   if (user !== null) {
-    return res.status(400).json({
-      msg: 'User already exists',
-    });
+    throw new HttpException('User already exists', HttpStatus.BAD_REQUEST);
   }
 
   if (Boolean(process.env.DISABLE_ACCOUNT_CREATION as string)) {
-    return res.status(403).json({
-      msg: 'Account creation is disabled.',
-    });
+    throw new HttpException(
+      'Account creation is disabled.',
+      HttpStatus.FORBIDDEN
+    );
   }
 
   const givenUser = body['user'];
 
   if (!body.agreedToTermsOfServiceAndPrivacyPolicy) {
-    return res.status(400).json({
-      msg: 'You need to agree to the terms of service and privacy policy.',
-    });
+    throw new HttpException(
+      'You need to agree to the terms of service and privacy policy.',
+      HttpStatus.BAD_REQUEST
+    );
   }
 
   const salt = await bcrypt.genSalt(Number(process.env.SALT_ROUNDS));
@@ -68,9 +68,9 @@ export const registerHandler = async (
   savedUser.tokens.push({ token: token } as any);
 
   await savedUser.save();
-  res.status(201).json({
+  return {
     msg: 'User registered successfully',
     token: token,
     verifyEmailSend: verifyEmailReturn.verifyEmailSend,
-  });
+  };
 };

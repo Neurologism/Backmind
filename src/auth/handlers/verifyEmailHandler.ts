@@ -1,8 +1,8 @@
-import { Request, Response } from 'express';
 import { Email, UserModel } from '../../../mongooseSchemas/user.schema';
 import jwt from 'jsonwebtoken';
+import { HttpException, HttpStatus } from '@nestjs/common';
 
-export const verifyEmailHandler = async (token: string, res: Response) => {
+export const verifyEmailHandler = async (token: string) => {
   const user = await UserModel.findOne({
     emails: {
       $elemMatch: { verificationToken: token },
@@ -10,7 +10,10 @@ export const verifyEmailHandler = async (token: string, res: Response) => {
   });
 
   if (user === null) {
-    return res.status(400).json({ msg: 'Invalid verification token' });
+    throw new HttpException(
+      'Invalid verification token',
+      HttpStatus.BAD_REQUEST
+    );
   }
 
   const email = user.emails.find(
@@ -18,24 +21,30 @@ export const verifyEmailHandler = async (token: string, res: Response) => {
   ) as Email;
 
   if (email.verified) {
-    return res.status(400).json({ msg: 'Email already verified' });
+    throw new HttpException('Email already verified', HttpStatus.BAD_REQUEST);
   }
 
   if (email.dateVerificationSent === undefined) {
-    return res.status(400).json({ msg: 'Invalid verification token' });
+    throw new HttpException(
+      'Invalid verification token',
+      HttpStatus.BAD_REQUEST
+    );
   }
 
   if (
     (new Date().getTime() - email.dateVerificationSent.getTime()) / 60000 >=
     Number(process.env.EMAIL_VERIFICATION_TOKEN_VALID_MINUTES)
   ) {
-    return res.status(400).json({ msg: 'Invalid verification token' });
+    throw new HttpException(
+      'Invalid verification token',
+      HttpStatus.BAD_REQUEST
+    );
   }
 
   email.verified = true;
   email.dateVerified = new Date();
 
-  user.save();
+  await user.save();
 
   const authorizationToken = jwt.sign(
     { _id: '' + user._id },
@@ -43,8 +52,11 @@ export const verifyEmailHandler = async (token: string, res: Response) => {
     { expiresIn: process.env.JWT_TOKEN_EXPIRE_IN }
   );
 
-  res.set('Authorization', authorizationToken);
-  return res.redirect(
-    new URL('/profile/login', process.env.WHITEMIND_HOSTNAME).toString()
-  );
+  return {
+    authorizationToken,
+    redirectUrl: new URL(
+      '/profile/login',
+      process.env.WHITEMIND_HOSTNAME
+    ).toString(),
+  };
 };

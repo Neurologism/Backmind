@@ -1,43 +1,66 @@
-// handlers
+import {
+  HttpException,
+  HttpStatus,
+  Controller,
+  Get,
+  Patch,
+  Req,
+  Body,
+  Param,
+} from '@nestjs/common';
+import { Request } from 'express';
+import { ParseObjectIdPipe } from 'pipes/parseObjectId.pipe';
+import { Types } from 'mongoose';
 import { getHandler } from './handlers/getHandler';
 import { getByNameHandler } from './handlers/getByNameHandler';
 import { setStateHandler } from './handlers/setStateHandler';
-
-// dtos
 import { SetStateDto } from './dto/setState.schema';
-
-import { Controller, Get, Patch, Res, Req, Body, Param } from '@nestjs/common';
-import { Request, Response } from 'express';
-import { ParseObjectIdPipe } from 'pipes/parseObjectId.pipe';
-import { Types } from 'mongoose';
 
 @Controller('tutorials')
 export class TutorialsController {
   @Get(':tutorialId')
-  get(
+  async get(
     @Param('tutorialId', ParseObjectIdPipe) tutorialId: Types.ObjectId,
-    @Req() req: Request,
-    @Res() res: Response
+    @Req() req: Request
   ) {
-    return getHandler(tutorialId, req, res);
+    try {
+      return await getHandler(tutorialId, req);
+    } catch (error) {
+      throw new HttpException(
+        (error as any).message,
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
   }
 
   @Get('by-name/:tutorialName')
-  getByName(
+  async getByName(
     @Param('tutorialName') tutorialName: string,
-    @Req() req: Request,
-    @Res() res: Response
+    @Req() req: Request
   ) {
-    return getByNameHandler(tutorialName, req, res);
+    try {
+      return await getByNameHandler(tutorialName, req);
+    } catch (error) {
+      throw new HttpException(
+        (error as any).message,
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
   }
 
   @Patch(':tutorialId')
-  setState(
+  async setState(
     @Param('tutorialId', ParseObjectIdPipe) tutorialId: Types.ObjectId,
     @Body() body: SetStateDto,
-    @Req() req: Request,
-    @Res() res: Response
+    @Req() req: Request
   ) {
-    return setStateHandler(tutorialId, body, req, res);
+    try {
+      return await setStateHandler(tutorialId, body, req);
+    } catch (error) {
+      throw new HttpException(
+        (error as any).message,
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
   }
 }

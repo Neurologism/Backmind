@@ -1,14 +1,14 @@
-import { Request, Response } from 'express';
 import { UserModel } from '../../../mongooseSchemas/user.schema';
 import fs from 'fs';
 import path from 'path';
 import { Types } from 'mongoose';
+import { HttpException, HttpStatus } from '@nestjs/common';
 
-export const getPfpHandler = async (userId: Types.ObjectId, res: Response) => {
+export const getPfpHandler = async (userId: Types.ObjectId) => {
   const user = await UserModel.findById(userId);
 
   if (user === null) {
-    return res.status(404).json({ msg: 'User not found.' });
+    throw new HttpException('User not found.', HttpStatus.NOT_FOUND);
   }
 
   const pfpPath = path.join(
@@ -17,16 +17,18 @@ export const getPfpHandler = async (userId: Types.ObjectId, res: Response) => {
   );
   console.log(pfpPath);
   if (!fs.existsSync(pfpPath)) {
-    return res
-      .status(404)
-      .json({ msg: "There's no profile picture for this user." });
+    throw new HttpException(
+      "There's no profile picture for this user.",
+      HttpStatus.NOT_FOUND
+    );
   }
 
-  return res.sendFile(pfpPath, (err) => {
-    if (err) {
-      return res
-        .status(500)
-        .json({ msg: 'There was an error sending the file.' });
-    }
-  });
+  try {
+    return fs.readFileSync(pfpPath);
+  } catch (err) {
+    throw new HttpException(
+      'There was an error sending the file.',
+      HttpStatus.INTERNAL_SERVER_ERROR
+    );
+  }
 };

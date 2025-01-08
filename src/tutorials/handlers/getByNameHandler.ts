@@ -1,17 +1,15 @@
-import { Request, Response } from 'express';
+import { Request } from 'express';
 import { TutorialModel } from '../../../mongooseSchemas/tutorial.schema';
 import { UserModel } from '../../../mongooseSchemas/user.schema';
 import { ProjectModel } from '../../../mongooseSchemas/project.schema';
+import { HttpException, HttpStatus } from '@nestjs/common';
 
-export const getByNameHandler = async (
-  tutorialName: string,
-  req: Request,
-  res: Response
-) => {
+export const getByNameHandler = async (tutorialName: string, req: Request) => {
   if (req.userId === undefined) {
-    return res.status(403).json({
-      msg: 'You need to be authenticated to access this resource.',
-    });
+    throw new HttpException(
+      'You need to be authenticated to access this resource.',
+      HttpStatus.FORBIDDEN
+    );
   }
   let tutorial;
   if (tutorialName !== undefined) {
@@ -20,23 +18,24 @@ export const getByNameHandler = async (
       visibility: 'public',
     });
   } else {
-    return res.status(400).json({
-      msg: 'You need to provide either a tutorialName.',
-    });
+    throw new HttpException(
+      'You need to provide a tutorialName.',
+      HttpStatus.BAD_REQUEST
+    );
   }
 
   if (tutorial === null) {
-    return res.status(404).json({ msg: 'Tutorial not found' });
+    throw new HttpException('Tutorial not found', HttpStatus.NOT_FOUND);
   }
 
   const user = await UserModel.findById(req.userId);
 
   if (user === null) {
-    return res.status(404).json({ msg: 'User not found' });
+    throw new HttpException('User not found', HttpStatus.NOT_FOUND);
   }
 
   if (tutorial.requiredPremiumTier > user.premiumTier) {
-    return res.status(403).json({ msg: 'Premium required' });
+    throw new HttpException('Premium required', HttpStatus.FORBIDDEN);
   }
 
   const responseJson = {
@@ -97,5 +96,5 @@ export const getByNameHandler = async (
     responseJson.projectId = project._id;
   }
 
-  return res.status(200).json(responseJson);
+  return responseJson;
 };

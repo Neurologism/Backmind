@@ -1,31 +1,36 @@
-import { Request, Response } from 'express';
+import { Request } from 'express';
 import bcrypt from 'bcrypt';
 import { UserModel } from '../../../mongooseSchemas/user.schema';
 import { Types } from 'mongoose';
 import { UpdateDto } from '../dto/update.schema';
+import { HttpException, HttpStatus } from '@nestjs/common';
 
 export const updateHandler = async (
   userId: Types.ObjectId,
   body: UpdateDto,
-  req: Request,
-  res: Response
+  req: Request
 ) => {
   if (req.userId === undefined) {
-    return res.status(401).json({ msg: 'You are not authenticated.' });
+    throw new HttpException(
+      'You are not authenticated.',
+      HttpStatus.UNAUTHORIZED
+    );
   }
 
   if (req.userId?.toString() !== userId.toString()) {
-    return res
-      .status(403)
-      .json({ msg: 'You are not authorized to update this user.' });
+    throw new HttpException(
+      'You are not authorized to update this user.',
+      HttpStatus.FORBIDDEN
+    );
   }
 
   const user = await UserModel.findById(userId);
 
   if (user === null) {
-    return res
-      .status(404)
-      .json({ msg: 'Authentication token invalid. Try relogging.' });
+    throw new HttpException(
+      'Authentication token invalid. Try relogging.',
+      HttpStatus.NOT_FOUND
+    );
   }
 
   if (body.user.oldPassword !== undefined) {
@@ -34,7 +39,10 @@ export const updateHandler = async (
       user.passwordHash
     );
     if (!passwordsMatch) {
-      return res.status(400).json({ msg: 'The old password is incorrect.' });
+      throw new HttpException(
+        'The old password is incorrect.',
+        HttpStatus.BAD_REQUEST
+      );
     }
     delete body.user.oldPassword;
     if (body.user.newPassword !== undefined) {
@@ -51,5 +59,5 @@ export const updateHandler = async (
   user.markModified('dateLastEdited');
   await user.save();
 
-  return res.status(200).json({ msg: 'User updated successfully.' });
+  return { msg: 'User updated successfully.' };
 };

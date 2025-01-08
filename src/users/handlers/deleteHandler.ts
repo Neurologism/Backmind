@@ -1,26 +1,28 @@
-import { Request, Response } from 'express';
+import { Request } from 'express';
 import { UserModel } from '../../../mongooseSchemas/user.schema';
 import { ProjectModel } from '../../../mongooseSchemas/project.schema';
 import { TaskModel } from '../../../mongooseSchemas/task.schema';
+import {
+  UnauthorizedException,
+  ForbiddenException,
+  NotFoundException,
+  ConflictException,
+} from '@nestjs/common';
 import { Types } from 'mongoose';
 
-export const deleteHandler = async (
-  userId: Types.ObjectId,
-  req: Request,
-  res: Response
-) => {
+export const deleteHandler = async (userId: Types.ObjectId, req: Request) => {
   if (req.userId === undefined) {
-    return res.status(401).send('Unauthorized');
+    throw new UnauthorizedException('Unauthorized');
   }
 
   if (req.userId?.toString() !== userId.toString()) {
-    return res.status(403).send('Forbidden');
+    throw new ForbiddenException('Forbidden');
   }
 
   const user = await UserModel.findById(req.userId);
 
   if (user === null) {
-    return res.status(404).send('User not found');
+    throw new NotFoundException('User not found');
   }
 
   const runningTask = await TaskModel.findOne({
@@ -28,7 +30,7 @@ export const deleteHandler = async (
     status: { $in: ['queued', 'training'] },
   });
   if (runningTask !== null) {
-    return res.status(409).send('Cannot delete user with running tasks');
+    throw new ConflictException('Cannot delete user with running tasks');
   }
 
   let promises = [];
@@ -75,9 +77,5 @@ export const deleteHandler = async (
 
   await Promise.all(promises);
 
-  console.log('test');
-
-  return res.status(200).json({
-    msg: 'User deleted',
-  });
+  return { msg: 'User deleted' };
 };

@@ -1,24 +1,24 @@
-import { Request, Response } from 'express';
+import { Request } from 'express';
 import { UserModel } from '../../../mongooseSchemas/user.schema';
 import { Types } from 'mongoose';
+import { HttpException, HttpStatus } from '@nestjs/common';
 
 export const swapPrimaryEmailHandler = async (
   userId: Types.ObjectId,
-  req: Request,
-  res: Response
+  req: Request
 ) => {
   if (req.userId === undefined) {
-    return res.status(401).json({ msg: 'Unauthorized' });
+    throw new HttpException('Unauthorized', HttpStatus.UNAUTHORIZED);
   }
 
   if (req.userId?.toString() !== userId.toString()) {
-    return res.status(403).json({ msg: 'Forbidden' });
+    throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
   }
 
   const user = await UserModel.findById({ _id: userId });
 
   if (!user) {
-    return res.status(404).json({ msg: 'User not found' });
+    throw new HttpException('User not found', HttpStatus.NOT_FOUND);
   }
   const primaryEmail = user.emails.find(
     (email) => email.emailType === 'primary'
@@ -28,18 +28,22 @@ export const swapPrimaryEmailHandler = async (
   );
 
   if (!primaryEmail || !secondaryEmail) {
-    return res
-      .status(400)
-      .json({ msg: 'User does not have a primary or secondary email' });
+    throw new HttpException(
+      'User does not have a primary or secondary email',
+      HttpStatus.BAD_REQUEST
+    );
   }
 
   if (!secondaryEmail.verified) {
-    return res.status(400).json({ msg: 'Secondary email is not verified' });
+    throw new HttpException(
+      'Secondary email is not verified',
+      HttpStatus.BAD_REQUEST
+    );
   }
 
   primaryEmail.emailType = 'secondary';
   secondaryEmail.emailType = 'primary';
   await user.save();
 
-  return res.status(200).json({ msg: 'Primary email swapped successfully' });
+  return { msg: 'Primary email swapped successfully' };
 };

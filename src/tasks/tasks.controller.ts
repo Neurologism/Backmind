@@ -1,62 +1,80 @@
-// handlers
 import { deleteTaskHandler } from './handlers/deleteTaskHandler';
 import { trainingStartHandler } from './handlers/trainingStartHandler';
 import { trainingStatusHandler } from './handlers/trainingStatusHandler';
 import { trainingStopHandler } from './handlers/trainingStopHandler';
-
-// dtos
 import { TrainingStartDto } from './dto/trainingStart.schema';
-
 import {
   Controller,
   Post,
-  Res,
   Req,
   Body,
   Get,
   Patch,
   Delete,
   Param,
+  HttpException,
+  HttpStatus,
 } from '@nestjs/common';
-import { Request, Response } from 'express';
+import { Request } from 'express';
 import { ParseObjectIdPipe } from 'pipes/parseObjectId.pipe';
 import { Types } from 'mongoose';
 
 @Controller('tasks')
 export class TasksController {
   @Post()
-  trainingStart(
-    @Body() body: TrainingStartDto,
-    @Req() req: Request,
-    @Res() res: Response
-  ) {
-    return trainingStartHandler(body, req, res);
+  async trainingStart(@Body() body: TrainingStartDto, @Req() req: Request) {
+    try {
+      return await trainingStartHandler(body, req);
+    } catch (error) {
+      throw new HttpException(
+        (error as any).message,
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
   }
 
   @Get(':taskId')
-  trainingStatus(
+  async trainingStatus(
     @Param('taskId', ParseObjectIdPipe) taskId: Types.ObjectId,
-    @Req() req: Request,
-    @Res() res: Response
+    @Req() req: Request
   ) {
-    return trainingStatusHandler(taskId, req, res);
+    try {
+      return await trainingStatusHandler(taskId, req);
+    } catch (error) {
+      throw new HttpException(
+        (error as any).message,
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
   }
 
   @Patch(':taskId')
-  trainingStop(
+  async trainingStop(
     @Param('taskId', ParseObjectIdPipe) taskId: Types.ObjectId,
-    @Req() req: Request,
-    @Res() res: Response
+    @Req() req: Request
   ) {
-    return trainingStopHandler(taskId, req, res);
+    try {
+      return await trainingStopHandler(taskId, req);
+    } catch (error) {
+      throw new HttpException(
+        (error as any).message,
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
   }
 
   @Delete(':taskId')
-  deleteTask(
+  async deleteTask(
     @Param('taskId', ParseObjectIdPipe) taskId: Types.ObjectId,
-    @Req() req: Request,
-    @Res() res: Response
+    @Req() req: Request
   ) {
-    return deleteTaskHandler(taskId, req, res);
+    try {
+      return await deleteTaskHandler(taskId, req);
+    } catch (error) {
+      throw new HttpException(
+        (error as any).message,
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
   }
 }

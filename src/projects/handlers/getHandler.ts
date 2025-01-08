@@ -1,35 +1,34 @@
-import { Request, Response } from 'express';
+import { Request } from 'express';
 import { ProjectModel } from 'mongooseSchemas/project.schema';
 import { Types } from 'mongoose';
+import { HttpException, HttpStatus } from '@nestjs/common';
 
-export const getHandler = async (
-  projectId: Types.ObjectId,
-  req: Request,
-  res: Response
-) => {
+export const getHandler = async (projectId: Types.ObjectId, req: Request) => {
   const project = await ProjectModel.findById(projectId);
 
   if (project === null) {
-    return res.status(404).json({
-      msg: "This project doesn't exist.",
-    });
+    throw new HttpException(
+      "This project doesn't exist.",
+      HttpStatus.NOT_FOUND
+    );
   }
 
   if (project.visibility === 'private') {
     if (req.userId === undefined || req.userId === null) {
-      return res.status(404).json({
-        msg: 'This project is private. You need to be logged in to access it. ',
-      });
+      throw new HttpException(
+        'This project is private. You need to be logged in to access it.',
+        HttpStatus.NOT_FOUND
+      );
     }
     const isOwner = project.ownerId.toString() === req.userId.toString();
     if (!isOwner) {
-      return res.status(404).json({
-        msg: 'This project is private. You do not have access to it.',
-      });
+      throw new HttpException(
+        'This project is private. You do not have access to it.',
+        HttpStatus.NOT_FOUND
+      );
     }
   }
 
-  project!;
   const projectJson = {
     _id: project._id,
     name: project.name,
@@ -41,5 +40,5 @@ export const getHandler = async (
     tasks: project.tasks,
     components: project.components,
   };
-  return res.status(200).json({ project: projectJson });
+  return { project: projectJson };
 };

@@ -1,36 +1,37 @@
-import { Request, Response } from 'express';
+import { Request } from 'express';
 import { UserModel } from '../../../mongooseSchemas/user.schema';
 import { sendVerificationEmail } from '../../../utility/sendVerificationEmail';
 import { Types } from 'mongoose';
 import { UpdateEmailDto } from '../dto/updateEmail.schema';
+import { HttpException, HttpStatus } from '@nestjs/common';
 
 export const updateEmailHandler = async (
   userId: Types.ObjectId,
   body: UpdateEmailDto,
-  req: Request,
-  res: Response
+  req: Request
 ) => {
   if (req.userId === undefined) {
-    return res.status(401).json({ msg: 'Unauthorized' });
+    throw new HttpException('Unauthorized', HttpStatus.UNAUTHORIZED);
   }
 
   if (req.userId?.toString() !== userId.toString()) {
-    return res.status(403).json({ msg: 'Forbidden' });
+    throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
   }
 
   const user = await UserModel.findById({ _id: userId });
 
   if (!user) {
-    return res.status(404).json({ msg: 'User not found' });
+    throw new HttpException('User not found', HttpStatus.NOT_FOUND);
   }
 
   if (
     body.user.emailType === 'primary' &&
     user.emails.find((email) => email.emailType === 'primary' && email.verified)
   ) {
-    return res
-      .status(400)
-      .json({ msg: 'A verified primary email cannot be updated' });
+    throw new HttpException(
+      'A verified primary email cannot be updated',
+      HttpStatus.BAD_REQUEST
+    );
   }
 
   let verifyEmailReturn = await sendVerificationEmail(body.user.email, user);
@@ -52,8 +53,8 @@ export const updateEmailHandler = async (
 
   await user.save();
 
-  return res.status(200).json({
+  return {
     msg: 'Email updated successfully',
     verifyEmailSend: verifyEmailReturn.verifyEmailSend,
-  });
+  };
 };

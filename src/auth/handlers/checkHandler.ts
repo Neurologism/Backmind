@@ -1,12 +1,15 @@
-import { Request, Response } from 'express';
+import { Request } from 'express';
 import { UserModel } from '../../../mongooseSchemas/user.schema';
+import { HttpException, HttpStatus } from '@nestjs/common';
 
-export const checkHandler = async (req: Request, res: Response) => {
+export const checkHandler = async (req: Request) => {
   const user = await UserModel.findOne({
     _id: req.userId,
   });
 
-  const userExists = user !== null;
+  if (!user) {
+    throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+  }
 
-  return res.status(200).json({ loggedIn: userExists });
+  return { loggedIn: true };
 };

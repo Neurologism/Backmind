@@ -1,26 +1,25 @@
-import { Request, Response } from 'express';
+import { Request } from 'express';
 import { UserModel } from '../../../mongooseSchemas/user.schema';
+import { HttpException, HttpStatus } from '@nestjs/common';
 
-export const getByNameHandler = async (
-  brainetTag: string,
-  req: Request,
-  res: Response
-) => {
+export const getByNameHandler = async (brainetTag: string, req: Request) => {
   const user = await UserModel.findOne({
     brainetTag: brainetTag,
   });
   if (user === null) {
-    return res
-      .status(404)
-      .json({ msg: 'No user found matching the criteria.' });
+    throw new HttpException(
+      'No user found matching the criteria.',
+      HttpStatus.NOT_FOUND
+    );
   }
 
   const ownsProfile = user._id.toString() === req.userId?.toString();
 
   if (user.visibility === 'private' && !ownsProfile) {
-    return res.status(403).json({
-      msg: 'This user is private. You can only access private users if they follow you.',
-    });
+    throw new HttpException(
+      'This user is private. You can only access private users if they follow you.',
+      HttpStatus.FORBIDDEN
+    );
   }
 
   const query = {
@@ -60,5 +59,5 @@ export const getByNameHandler = async (
     }
   }
 
-  return res.status(200).json({ user: userJson });
+  return { user: userJson };
 };

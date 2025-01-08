@@ -1,28 +1,28 @@
-import { Request, Response } from 'express';
+import { Request } from 'express';
 import { UserModel } from '../../../mongooseSchemas/user.schema';
 import { Types } from 'mongoose';
+import { HttpException, HttpStatus } from '@nestjs/common';
 
-export const followHandler = async (
-  userId: Types.ObjectId,
-  req: Request,
-  res: Response
-) => {
+export const followHandler = async (userId: Types.ObjectId, req: Request) => {
   const loggedInUser = await UserModel.findById({ _id: req.userId });
 
   if (!loggedInUser) {
-    return res.status(404).json({ msg: 'User not found' });
+    throw new HttpException('User not found', HttpStatus.NOT_FOUND);
   }
 
   const userToFollow = await UserModel.findById(userId);
 
   if (!userToFollow) {
-    return res.status(404).json({ msg: 'User to follow not found' });
+    throw new HttpException('User to follow not found', HttpStatus.NOT_FOUND);
   }
 
   if (
     loggedInUser.followingIds.some((id) => id.toString() === userId.toString())
   ) {
-    return res.status(400).json({ msg: 'You are already following this user' });
+    throw new HttpException(
+      'You are already following this user',
+      HttpStatus.BAD_REQUEST
+    );
   }
 
   loggedInUser.followingIds.push(userId);
@@ -31,5 +31,5 @@ export const followHandler = async (
   userToFollow.followerIds.push(loggedInUser._id);
   await userToFollow.save();
 
-  return res.status(200).json({ msg: 'User followed successfully' });
+  return { msg: 'User followed successfully' };
 };

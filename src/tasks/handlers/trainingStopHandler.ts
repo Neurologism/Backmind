@@ -1,21 +1,22 @@
-import { Request, Response } from 'express';
+import { Request } from 'express';
 import { QueueItemModel } from '../../../mongooseSchemas/queueItem.schema';
 import { TaskModel } from '../../../mongooseSchemas/task.schema';
 import { Types } from 'mongoose';
+import { HttpException, HttpStatus } from '@nestjs/common';
 
 export const trainingStopHandler = async (
   taskId: Types.ObjectId,
-  req: Request,
-  res: Response
+  req: Request
 ) => {
   const task = await TaskModel.findOne({ _id: taskId });
   if (task === null) {
-    return res
-      .status(404)
-      .send({ message: 'Task with that id does not exist.' });
+    throw new HttpException(
+      'Task with that id does not exist.',
+      HttpStatus.NOT_FOUND
+    );
   }
   if (task.ownerId.toString() !== req.userId?.toString()) {
-    return res.status(403).send({ message: 'Not authorized.' });
+    throw new HttpException('Not authorized.', HttpStatus.FORBIDDEN);
   }
 
   if (task.status === 'queued') {
@@ -33,5 +34,5 @@ export const trainingStopHandler = async (
     }
   );
 
-  res.status(200).send({ msg: 'Task training stopped.' });
+  return { msg: 'Task training stopped.' };
 };

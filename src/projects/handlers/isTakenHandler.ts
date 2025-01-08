@@ -1,14 +1,11 @@
-import { Request, Response } from 'express';
+import { Request } from 'express';
 import { ProjectModel } from '../../../mongooseSchemas/project.schema';
+import { UnauthorizedException, ConflictException } from '@nestjs/common';
 
-export const isTakenHandler = async (
-  projectName: string,
-  req: Request,
-  res: Response
-) => {
+export const isTakenHandler = async (projectName: string, req: Request) => {
   const isLoggedIn = req.userId !== null;
   if (!isLoggedIn) {
-    return res.status(401).json({ msg: 'You need to be logged in.' });
+    throw new UnauthorizedException('You need to be logged in.');
   }
 
   const nameTaken =
@@ -19,9 +16,7 @@ export const isTakenHandler = async (
     })) !== null;
 
   if (nameTaken) {
-    return res
-      .status(409)
-      .json({ msg: 'This project name is already in use.' });
+    throw new ConflictException('This project name is already in use.');
   }
-  return res.status(200).json({ msg: 'This project name is available.' });
+  return { msg: 'This project name is available.' };
 };

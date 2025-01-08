@@ -1,15 +1,19 @@
-import { Request, Response } from 'express';
+import { Request } from 'express';
 import { ProjectModel } from '../../../mongooseSchemas/project.schema';
 import { QueueItemModel } from '../../../mongooseSchemas/queueItem.schema';
 import { TaskModel } from '../../../mongooseSchemas/task.schema';
 import { UserModel } from '../../../mongooseSchemas/user.schema';
-import { UnauthorizedException, NotFoundException } from '@nestjs/common';
+import {
+  UnauthorizedException,
+  NotFoundException,
+  HttpException,
+  HttpStatus,
+} from '@nestjs/common';
 import { TrainingStartDto } from '../dto/trainingStart.schema';
 
 export const trainingStartHandler = async (
   body: TrainingStartDto,
-  req: Request,
-  res: Response
+  req: Request
 ) => {
   if (!req.userId) {
     throw new UnauthorizedException(
@@ -36,9 +40,10 @@ export const trainingStartHandler = async (
   }
 
   if (isProjectOwner) {
-    return res
-      .status(401)
-      .json({ msg: 'You are not the owner of this project.' });
+    throw new HttpException(
+      'You are not the owner of this project.',
+      HttpStatus.UNAUTHORIZED
+    );
   }
 
   let priority = 0;
@@ -69,7 +74,5 @@ export const trainingStartHandler = async (
     }
   );
 
-  res
-    .status(200)
-    .send({ task: { _id: taskId }, msg: 'Model training queued.' });
+  return { task: { _id: taskId }, msg: 'Model training queued.' };
 };

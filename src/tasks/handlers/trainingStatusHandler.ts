@@ -1,23 +1,24 @@
-import { Request, Response } from 'express';
+import { Request } from 'express';
 import { TaskModel } from 'mongooseSchemas/task.schema';
 import { Types } from 'mongoose';
+import { HttpException, HttpStatus } from '@nestjs/common';
 
 export const trainingStatusHandler = async (
   taskId: Types.ObjectId,
-  req: Request,
-  res: Response
+  req: Request
 ) => {
   const task = await TaskModel.findOne({ _id: taskId });
   if (task === null) {
-    return res
-      .status(404)
-      .send({ message: 'Model with that id does not exist.' });
+    throw new HttpException(
+      'Model with that id does not exist.',
+      HttpStatus.NOT_FOUND
+    );
   }
   if (task.ownerId.toString() !== req.userId?.toString()) {
-    return res.status(403).send({ message: 'Not authorized.' });
+    throw new HttpException('Not authorized.', HttpStatus.FORBIDDEN);
   }
 
-  return res.status(200).send({
+  return {
     task: {
       status: task.status,
       output: task.output,
@@ -27,5 +28,5 @@ export const trainingStatusHandler = async (
       projectId: task.projectId,
       ownerId: task.ownerId,
     },
-  });
+  };
 };

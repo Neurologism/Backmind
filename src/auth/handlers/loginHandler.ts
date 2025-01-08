@@ -1,10 +1,10 @@
-import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { UserModel } from '../../../mongooseSchemas/user.schema';
 import { LoginDto } from '../dto/login.schema';
+import { HttpException, HttpStatus } from '@nestjs/common';
 
-export const loginHandler = async (body: LoginDto, res: Response) => {
+export const loginHandler = async (body: LoginDto) => {
   const givenUser: any = {};
   if (body['user']['email'])
     givenUser.emails = {
@@ -16,7 +16,7 @@ export const loginHandler = async (body: LoginDto, res: Response) => {
     givenUser.brainetTag = body['user']['brainetTag'];
   const user: any = await UserModel.findOne(givenUser);
   if (user === null) {
-    return res.status(404).json({ msg: 'User not found' });
+    throw new HttpException('User not found', HttpStatus.NOT_FOUND);
   }
 
   const isMatch = await bcrypt.compare(
@@ -24,7 +24,9 @@ export const loginHandler = async (body: LoginDto, res: Response) => {
     user.passwordHash
   );
 
-  if (!isMatch) return res.status(401).json({ msg: 'Invalid credentials' });
+  if (!isMatch) {
+    throw new HttpException('Invalid credentials', HttpStatus.UNAUTHORIZED);
+  }
 
   const token = jwt.sign(
     { _id: '' + user._id },
@@ -40,5 +42,5 @@ export const loginHandler = async (body: LoginDto, res: Response) => {
     user.tokens.shift();
   }
   await user.save();
-  return res.status(200).json({ token: token });
+  return { token: token };
 };

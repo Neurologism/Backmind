@@ -1,18 +1,16 @@
-import { Request, Response } from 'express';
+import { Request } from 'express';
 import { UserModel } from '../../../mongooseSchemas/user.schema';
 import { ProjectModel } from '../../../mongooseSchemas/project.schema';
 import { CreateDto } from '../dto/create.schema';
+import { HttpException, HttpStatus } from '@nestjs/common';
 
-export const createHandler = async (
-  body: CreateDto,
-  req: Request,
-  res: Response
-) => {
+export const createHandler = async (body: CreateDto, req: Request) => {
   const isLoggedIn = req.userId !== null;
   if (!isLoggedIn) {
-    return res
-      .status(401)
-      .json({ msg: 'You need to be logged in to create a project.' });
+    throw new HttpException(
+      'You need to be logged in to create a project.',
+      HttpStatus.UNAUTHORIZED
+    );
   }
 
   const nameTaken =
@@ -22,7 +20,7 @@ export const createHandler = async (
       isTutorialProject: false,
     })) !== null;
   if (nameTaken) {
-    return res.status(409).json({ msg: 'Project name already taken.' });
+    throw new HttpException('Project name already taken.', HttpStatus.CONFLICT);
   }
 
   const project = new ProjectModel({
@@ -39,8 +37,8 @@ export const createHandler = async (
       $push: { projectIds: insertResult._id },
     }
   );
-  return res.status(200).json({
+  return {
     msg: 'Project created successfully.',
     project: { _id: insertResult._id },
-  });
+  };
 };

@@ -1,70 +1,98 @@
-// handlers
 import { createHandler } from './handlers/createHandler';
 import { deleteHandler } from './handlers/deleteHandler';
 import { getHandler } from './handlers/getHandler';
 import { isTakenHandler } from './handlers/isTakenHandler';
 import { updateHandler } from './handlers/updateHandler';
-
-// dtos
 import { CreateDto } from './dto/create.schema';
 import { UpdateDto } from './dto/update.schema';
-
 import {
   Controller,
   Post,
-  Res,
   Req,
   Body,
   Param,
   Delete,
   Get,
   Patch,
+  HttpException,
+  HttpStatus,
 } from '@nestjs/common';
-import { Request, Response } from 'express';
+import { Request } from 'express';
 import { Types } from 'mongoose';
 import { ParseObjectIdPipe } from 'pipes/parseObjectId.pipe';
 
 @Controller('projects')
 export class ProjectsController {
   @Get('is-taken')
-  isTaken(
+  async isTaken(
     @Param('projectName') projectName: string,
-    @Req() req: Request,
-    @Res() res: Response
+    @Req() req: Request
   ) {
-    return isTakenHandler(projectName, req, res);
+    try {
+      return await isTakenHandler(projectName, req);
+    } catch (error) {
+      throw new HttpException(
+        (error as any).message,
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
   }
 
   @Post()
-  create(@Body() body: CreateDto, @Req() req: Request, @Res() res: Response) {
-    return createHandler(body, req, res);
+  async create(@Body() body: CreateDto, @Req() req: Request) {
+    try {
+      return await createHandler(body, req);
+    } catch (error) {
+      throw new HttpException(
+        (error as any).message,
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
   }
 
   @Get(':projectId')
-  get(
+  async get(
     @Param('projectId', ParseObjectIdPipe) projectId: Types.ObjectId,
-    @Req() req: Request,
-    @Res() res: Response
+    @Req() req: Request
   ) {
-    return getHandler(projectId, req, res);
+    try {
+      return await getHandler(projectId, req);
+    } catch (error) {
+      throw new HttpException(
+        (error as any).message,
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
   }
 
   @Delete(':projectId')
-  delete(
+  async delete(
     @Param('projectId', ParseObjectIdPipe) projectId: Types.ObjectId,
-    @Req() req: Request,
-    @Res() res: Response
+    @Req() req: Request
   ) {
-    return deleteHandler(projectId, req, res);
+    try {
+      return await deleteHandler(projectId, req);
+    } catch (error) {
+      throw new HttpException(
+        (error as any).message,
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
   }
 
   @Patch(':projectId')
-  update(
+  async update(
     @Param('projectId', ParseObjectIdPipe) projectId: Types.ObjectId,
     @Body() body: UpdateDto,
-    @Req() req: Request,
-    @Res() res: Response
+    @Req() req: Request
   ) {
-    return updateHandler(projectId, body, req, res);
+    try {
+      return await updateHandler(projectId, body, req);
+    } catch (error) {
+      throw new HttpException(
+        (error as any).message,
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
   }
 }

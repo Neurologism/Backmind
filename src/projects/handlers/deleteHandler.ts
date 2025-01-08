@@ -1,14 +1,18 @@
-import { Request, Response } from 'express';
+import { Request } from 'express';
 import { UserModel } from '../../../mongooseSchemas/user.schema';
 import { ProjectModel } from '../../../mongooseSchemas/project.schema';
 import { TaskModel } from '../../../mongooseSchemas/task.schema';
-import { UnauthorizedException, NotFoundException } from '@nestjs/common';
+import {
+  UnauthorizedException,
+  NotFoundException,
+  HttpException,
+  HttpStatus,
+} from '@nestjs/common';
 import { Types } from 'mongoose';
 
 export const deleteHandler = async (
   projectId: Types.ObjectId,
-  req: Request,
-  res: Response
+  req: Request
 ) => {
   if (!req.userId) {
     throw new UnauthorizedException(
@@ -29,15 +33,10 @@ export const deleteHandler = async (
   const isProjectOwner = project.ownerId?.toString() === req.userId.toString();
 
   if (!isProjectOwner) {
-    throw new NotFoundException(
-      "There is no project with that id or you don't have access to it."
+    throw new HttpException(
+      'You are not the owner of this project.',
+      HttpStatus.UNAUTHORIZED
     );
-  }
-
-  if (isProjectOwner) {
-    return res
-      .status(401)
-      .json({ msg: 'You are not the owner of this project.' });
   }
 
   const promises = [];
@@ -55,5 +54,5 @@ export const deleteHandler = async (
   );
   await Promise.all(promises);
 
-  return res.status(200).json({ msg: 'Project deleted successfully.' });
+  return { msg: 'Project deleted successfully.' };
 };

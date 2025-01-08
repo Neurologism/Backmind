@@ -1,17 +1,17 @@
-import { Request, Response } from 'express';
+import { Request } from 'express';
 import { UserModel } from '../../../mongooseSchemas/user.schema';
 import sharp from 'sharp';
 import path from 'path';
 import { Types } from 'mongoose';
+import { HttpException, HttpStatus } from '@nestjs/common';
 
 export const uploadPfpHandler = async (
   userId: Types.ObjectId,
   req: Request,
-  res: Response,
   file: Express.Multer.File
 ) => {
   if (!file) {
-    return res.status(400).json({ message: 'No file uploaded' });
+    throw new HttpException('No file uploaded', HttpStatus.BAD_REQUEST);
   }
 
   const { buffer } = file;
@@ -24,9 +24,10 @@ export const uploadPfpHandler = async (
     metadata.width > Number(process.env.MAX_PFP_SIZE) ||
     metadata.height > Number(process.env.MAX_PFP_SIZE)
   ) {
-    return res.status(400).json({
-      msg: 'Invalid image dimensions. Resolution should be below 512x512',
-    });
+    throw new HttpException(
+      'Invalid image dimensions. Resolution should be below 512x512',
+      HttpStatus.BAD_REQUEST
+    );
   }
 
   const filename = `${req.userId}.png`;
@@ -43,11 +44,11 @@ export const uploadPfpHandler = async (
   const user = await UserModel.findById(req.userId);
 
   if (!user) {
-    return res.status(404).json({ msg: 'User not found' });
+    throw new HttpException('User not found', HttpStatus.NOT_FOUND);
   }
 
   user.pfpPath = pfpPath;
   await user.save();
 
-  return res.status(200).json({ msg: 'Profile picture uploaded' });
+  return { msg: 'Profile picture uploaded' };
 };

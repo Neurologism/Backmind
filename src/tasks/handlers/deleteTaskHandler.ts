@@ -1,22 +1,23 @@
-import { Request, Response } from 'express';
+import { Request } from 'express';
 import { ProjectModel } from '../../../mongooseSchemas/project.schema';
 import { QueueItemModel } from '../../../mongooseSchemas/queueItem.schema';
 import { TaskModel } from '../../../mongooseSchemas/task.schema';
 import { Types } from 'mongoose';
+import { HttpException, HttpStatus } from '@nestjs/common';
 
 export const deleteTaskHandler = async (
   taskId: Types.ObjectId,
-  req: Request,
-  res: Response
+  req: Request
 ) => {
   const task = await TaskModel.findOne({ _id: taskId });
   if (task === null) {
-    return res
-      .status(404)
-      .send({ message: 'Task with that id does not exist.' });
+    throw new HttpException(
+      'Task with that id does not exist.',
+      HttpStatus.NOT_FOUND
+    );
   }
   if (task.ownerId.toString() !== req.userId?.toString()) {
-    return res.status(403).send({ message: 'Not authorized.' });
+    throw new HttpException('Not authorized.', HttpStatus.FORBIDDEN);
   }
 
   if (task.status === 'queued') {
@@ -32,5 +33,5 @@ export const deleteTaskHandler = async (
 
   await TaskModel.deleteOne({ _id: task._id });
 
-  res.status(200).send({ msg: 'Task deleted successfully.' });
+  return { msg: 'Task deleted successfully.' };
 };

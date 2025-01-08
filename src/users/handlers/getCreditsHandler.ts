@@ -1,24 +1,24 @@
-import { Request, Response } from 'express';
+import { Request } from 'express';
 import { UserModel } from '../../../mongooseSchemas/user.schema';
 import { Types } from 'mongoose';
+import { HttpException, HttpStatus } from '@nestjs/common';
 
 export const getCreditsHandler = async (
   userId: Types.ObjectId,
-  req: Request,
-  res: Response
+  req: Request
 ) => {
   if (req.userId === undefined) {
-    return res.status(401).json({ msg: 'Unauthorized' });
+    throw new HttpException('Unauthorized', HttpStatus.UNAUTHORIZED);
   }
 
   if (req.userId?.toString() !== userId.toString()) {
-    return res.status(403).json({ msg: 'Forbidden' });
+    throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
   }
 
   const user = await UserModel.findById({ _id: userId });
   if (!user) {
-    return res.status(404).json({ msg: 'User not found' });
+    throw new HttpException('User not found', HttpStatus.NOT_FOUND);
   }
 
-  return res.status(200).json({ remainingCredits: user.remainingCredits });
+  return { remainingCredits: user.remainingCredits };
 };

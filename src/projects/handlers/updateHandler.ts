@@ -1,20 +1,19 @@
-import { Request, Response } from 'express';
-import bcrypt from 'bcrypt';
+import { Request } from 'express';
 import { UserModel } from '../../../mongooseSchemas/user.schema';
 import { ProjectModel } from '../../../mongooseSchemas/project.schema';
-import { UnauthorizedException, NotFoundException } from '@nestjs/common';
+import { HttpException, HttpStatus } from '@nestjs/common';
 import { Types } from 'mongoose';
 import { UpdateDto } from '../dto/update.schema';
 
 export const updateHandler = async (
   projectId: Types.ObjectId,
   body: UpdateDto,
-  req: Request,
-  res: Response
+  req: Request
 ) => {
   if (!req.userId) {
-    throw new UnauthorizedException(
-      'You need to be authenticated to access this resource.'
+    throw new HttpException(
+      'You need to be authenticated to access this resource.',
+      HttpStatus.UNAUTHORIZED
     );
   }
 
@@ -23,23 +22,19 @@ export const updateHandler = async (
   });
 
   if (!project) {
-    throw new NotFoundException(
-      "There is no project with that id or you don't have access to it."
+    throw new HttpException(
+      "There is no project with that id or you don't have access to it.",
+      HttpStatus.NOT_FOUND
     );
   }
 
   const isProjectOwner = project.ownerId?.toString() === req.userId.toString();
 
   if (!isProjectOwner) {
-    throw new NotFoundException(
-      "There is no project with that id or you don't have access to it."
+    throw new HttpException(
+      "There is no project with that id or you don't have access to it.",
+      HttpStatus.FORBIDDEN
     );
-  }
-
-  if (isProjectOwner) {
-    return res
-      .status(401)
-      .json({ msg: 'You are not the owner of this project.' });
   }
 
   if (body.project.name !== undefined && body.project.name !== project.name) {
@@ -50,20 +45,17 @@ export const updateHandler = async (
         isTutorialProject: false,
       })) !== null;
     if (nameTaken) {
-      return res.status(409).json({ msg: 'Project name already taken.' });
+      throw new HttpException(
+        'Project name already taken.',
+        HttpStatus.CONFLICT
+      );
     }
-  }
-
-  if (!isProjectOwner) {
-    return res
-      .status(403)
-      .json({ msg: 'You are not the owner of this project.' });
   }
 
   const currentUser = await UserModel.findById(req.userId);
 
   if (!currentUser) {
-    return res.status(404).json({ msg: 'User not found.' });
+    throw new HttpException('User not found.', HttpStatus.NOT_FOUND);
   }
 
   await ProjectModel.updateOne(
@@ -72,5 +64,6 @@ export const updateHandler = async (
       $set: body.project,
     }
   );
-  return res.status(200).json({ msg: 'Project changed successfully.' });
+
+  return { msg: 'Project changed successfully.' };
 };

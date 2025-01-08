@@ -3,12 +3,14 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { UserModel } from '../../../mongooseSchemas/user.schema';
 import { sendVerificationEmail } from '../../../utility/sendVerificationEmail';
+import { AppLogger } from '../../logger.service';
 import { RegisterDto } from '../dto/register.schema';
 
 export const registerHandler = async (
   body: RegisterDto,
   req: Request,
-  res: Response
+  res: Response,
+  logger: AppLogger
 ) => {
   const user = await UserModel.findOne({
     $or: [
@@ -39,10 +41,7 @@ export const registerHandler = async (
   const salt = await bcrypt.genSalt(Number(process.env.SALT_ROUNDS));
   const hashedPassword = await bcrypt.hash(givenUser.plainPassword, salt);
 
-  let verifyEmailReturn = await sendVerificationEmail(
-    givenUser.email,
-    req.logger
-  );
+  let verifyEmailReturn = await sendVerificationEmail(givenUser.email, logger);
 
   const newUser = new UserModel({
     emails: [

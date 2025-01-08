@@ -23,10 +23,13 @@ import {
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { SkipAuth } from 'decorators/skipAuth.decorator';
+import { AppLogger } from '../logger.service';
 
 @Controller('auth')
 export class AuthController {
   @SkipAuth()
+  constructor(private readonly logger: AppLogger) {}
+
   @Get('check')
   check(@Req() req: Request, @Res() res: Response) {
     return checkHandler(req, res);
@@ -45,7 +48,7 @@ export class AuthController {
     @Req() req: Request,
     @Res() res: Response
   ) {
-    return registerHandler(body, req, res);
+    return registerHandler(body, req, res, this.logger);
   }
 
   @Delete('logout-all')

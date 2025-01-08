@@ -66,17 +66,6 @@ export const updateHandler = async (
     return res.status(404).json({ msg: 'User not found.' });
   }
 
-  if (body.project.plainPassword) {
-    const passwordsMatch = bcrypt.compareSync(
-      body.project.plainPassword,
-      currentUser.passwordHash
-    );
-    if (!passwordsMatch) {
-      return res.status(400).json({ msg: 'The password is incorrect.' });
-    }
-  }
-
-  delete body.project.plainPassword;
   await ProjectModel.updateOne(
     { _id: projectId },
     {

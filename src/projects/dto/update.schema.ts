@@ -22,10 +22,6 @@ export const updateSchema = z
             }
             return new mongoose.Types.ObjectId(ownerId);
           }),
-        plainPassword: z
-          .string()
-          .min(Number(process.env.MIN_PASS_LENGTH))
-          .optional(),
         components: z.any().optional(),
       })
       .strict(),
@@ -42,15 +38,6 @@ export const updateSchema = z
       );
     },
     { message: 'You must provide at least one field to update.' }
-  )
-  .refine(
-    async (data) => {
-      return !(data.project.ownerId && !data.project.plainPassword);
-    },
-    {
-      message:
-        'If you are changing the owner of the project, you must provide a password.',
-    }
   );
 
 export type UpdateDto = z.infer<typeof updateSchema>;

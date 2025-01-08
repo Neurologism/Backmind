@@ -14,14 +14,16 @@ export class AppLogger extends Logger {
   };
 
   private writeLog(level: keyof typeof this.logFiles, message: string) {
+    const timestamp = new Date().toISOString();
+    const logMessage = `${timestamp} - ${message}`;
     try {
-      fs.appendFileSync(this.logFiles[level], message + '\n');
-      fs.appendFileSync(this.logFiles['combined'], message + '\n');
+      fs.appendFileSync(this.logFiles[level], logMessage + '\n');
+      fs.appendFileSync(this.logFiles['combined'], logMessage + '\n');
     } catch (error: any) {
       if (error.code === 'ENOENT') {
         fs.mkdirSync(path.dirname(this.logFiles[level]), { recursive: true });
-        fs.appendFileSync(this.logFiles[level], message + '\n');
-        fs.appendFileSync(this.logFiles['combined'], message + '\n');
+        fs.appendFileSync(this.logFiles[level], logMessage + '\n');
+        fs.appendFileSync(this.logFiles['combined'], logMessage + '\n');
       } else {
         throw error;
       }

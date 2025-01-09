@@ -1,11 +1,14 @@
-import { Request } from 'express';
 import { TutorialModel } from '../../../mongooseSchemas/tutorial.schema';
 import { UserModel } from '../../../mongooseSchemas/user.schema';
 import { ProjectModel } from '../../../mongooseSchemas/project.schema';
 import { HttpException, HttpStatus } from '@nestjs/common';
+import { Types } from 'mongoose';
 
-export const getByNameHandler = async (tutorialName: string, req: Request) => {
-  if (req.userId === undefined) {
+export const getByNameHandler = async (
+  tutorialName: string,
+  userId: Types.ObjectId
+) => {
+  if (userId === undefined) {
     throw new HttpException(
       'You need to be authenticated to access this resource.',
       HttpStatus.FORBIDDEN
@@ -28,7 +31,7 @@ export const getByNameHandler = async (tutorialName: string, req: Request) => {
     throw new HttpException('Tutorial not found', HttpStatus.NOT_FOUND);
   }
 
-  const user = await UserModel.findById(req.userId);
+  const user = await UserModel.findById(userId);
 
   if (user === null) {
     throw new HttpException('User not found', HttpStatus.NOT_FOUND);

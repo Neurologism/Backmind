@@ -1,10 +1,10 @@
-import { Request } from 'express';
 import { UserModel } from '../../../mongooseSchemas/user.schema';
 import { HttpException, HttpStatus } from '@nestjs/common';
+import { Types } from 'mongoose';
 
-export const checkHandler = async (req: Request) => {
+export const checkHandler = async (userId: Types.ObjectId) => {
   const user = await UserModel.findOne({
-    _id: req.userId,
+    _id: userId,
   });
 
   if (!user) {

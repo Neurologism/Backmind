@@ -1,17 +1,12 @@
-import { Request } from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { UserModel } from '../../../mongooseSchemas/user.schema';
 import { sendVerificationEmail } from '../../../utility/sendVerificationEmail';
-import { AppLogger } from '../../logger.service';
+import { AppLogger } from '../../../providers/logger.provider';
 import { RegisterDto } from '../dto/register.schema';
 import { HttpException, HttpStatus } from '@nestjs/common';
 
-export const registerHandler = async (
-  body: RegisterDto,
-  req: Request,
-  logger: AppLogger
-) => {
+export const registerHandler = async (body: RegisterDto, logger: AppLogger) => {
   const user = await UserModel.findOne({
     $or: [
       { 'emails.address': body.user.email },

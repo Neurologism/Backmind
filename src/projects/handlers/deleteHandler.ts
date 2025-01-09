@@ -1,4 +1,3 @@
-import { Request } from 'express';
 import { UserModel } from '../../../mongooseSchemas/user.schema';
 import { ProjectModel } from '../../../mongooseSchemas/project.schema';
 import { TaskModel } from '../../../mongooseSchemas/task.schema';
@@ -12,9 +11,9 @@ import { Types } from 'mongoose';
 
 export const deleteHandler = async (
   projectId: Types.ObjectId,
-  req: Request
+  userId: Types.ObjectId
 ) => {
-  if (!req.userId) {
+  if (!userId) {
     throw new UnauthorizedException(
       'You need to be authenticated to access this resource.'
     );
@@ -30,7 +29,7 @@ export const deleteHandler = async (
     );
   }
 
-  const isProjectOwner = project.ownerId?.toString() === req.userId.toString();
+  const isProjectOwner = project.ownerId?.toString() === userId.toString();
 
   if (!isProjectOwner) {
     throw new HttpException(
@@ -46,7 +45,7 @@ export const deleteHandler = async (
   promises.push(TaskModel.deleteMany({ projectId: project._id }));
   promises.push(
     UserModel.updateOne(
-      { _id: req.userId },
+      { _id: userId },
       {
         $pull: { projectIds: project._id },
       }

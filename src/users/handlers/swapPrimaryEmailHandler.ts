@@ -1,20 +1,8 @@
-import { Request } from 'express';
 import { UserModel } from '../../../mongooseSchemas/user.schema';
 import { Types } from 'mongoose';
 import { HttpException, HttpStatus } from '@nestjs/common';
 
-export const swapPrimaryEmailHandler = async (
-  userId: Types.ObjectId,
-  req: Request
-) => {
-  if (req.userId === undefined) {
-    throw new HttpException('Unauthorized', HttpStatus.UNAUTHORIZED);
-  }
-
-  if (req.userId?.toString() !== userId.toString()) {
-    throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
-  }
-
+export const swapPrimaryEmailHandler = async (userId: Types.ObjectId) => {
   const user = await UserModel.findById({ _id: userId });
 
   if (!user) {

@@ -1,12 +1,14 @@
-import { Request } from 'express';
 import { UserModel } from '../../../mongooseSchemas/user.schema';
 import { ProjectModel } from '../../../mongooseSchemas/project.schema';
 import { CreateDto } from '../dto/create.schema';
 import { HttpException, HttpStatus } from '@nestjs/common';
+import { Types } from 'mongoose';
 
-export const createHandler = async (body: CreateDto, req: Request) => {
-  const isLoggedIn = req.userId !== null;
-  if (!isLoggedIn) {
+export const createHandler = async (
+  userId: Types.ObjectId,
+  body: CreateDto
+) => {
+  if (!userId) {
     throw new HttpException(
       'You need to be logged in to create a project.',
       HttpStatus.UNAUTHORIZED
@@ -16,7 +18,7 @@ export const createHandler = async (body: CreateDto, req: Request) => {
   const nameTaken =
     (await ProjectModel.findOne({
       name: body.project.name,
-      ownerId: req.userId,
+      ownerId: userId,
       isTutorialProject: false,
     })) !== null;
   if (nameTaken) {
@@ -26,13 +28,13 @@ export const createHandler = async (body: CreateDto, req: Request) => {
   const project = new ProjectModel({
     name: body.project.name,
     description: body.project.description,
-    ownerId: req.userId,
+    ownerId: userId,
     visibility: body.project.visibility,
   });
 
   const insertResult = await project.save();
   await UserModel.updateOne(
-    { _id: req.userId! },
+    { _id: userId },
     {
       $push: { projectIds: insertResult._id },
     }

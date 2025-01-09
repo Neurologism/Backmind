@@ -1,10 +1,12 @@
-import { Request } from 'express';
 import { UserModel } from '../../../mongooseSchemas/user.schema';
 import { Types } from 'mongoose';
 import { HttpException, HttpStatus } from '@nestjs/common';
 
-export const unfollowHandler = async (userId: Types.ObjectId, req: Request) => {
-  const user = await UserModel.findById({ _id: req.userId });
+export const unfollowHandler = async (
+  currentUserId: Types.ObjectId,
+  userId: Types.ObjectId
+) => {
+  const user = await UserModel.findById({ _id: currentUserId });
 
   if (!user) {
     throw new HttpException('User not found', HttpStatus.NOT_FOUND);

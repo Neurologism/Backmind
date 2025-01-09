@@ -1,4 +1,3 @@
-import { Request } from 'express';
 import { UserModel } from '../../../mongooseSchemas/user.schema';
 import { ProjectModel } from '../../../mongooseSchemas/project.schema';
 import { HttpException, HttpStatus } from '@nestjs/common';
@@ -8,9 +7,9 @@ import { UpdateDto } from '../dto/update.schema';
 export const updateHandler = async (
   projectId: Types.ObjectId,
   body: UpdateDto,
-  req: Request
+  userId: Types.ObjectId
 ) => {
-  if (!req.userId) {
+  if (!userId) {
     throw new HttpException(
       'You need to be authenticated to access this resource.',
       HttpStatus.UNAUTHORIZED
@@ -28,7 +27,7 @@ export const updateHandler = async (
     );
   }
 
-  const isProjectOwner = project.ownerId?.toString() === req.userId.toString();
+  const isProjectOwner = project.ownerId?.toString() === userId.toString();
 
   if (!isProjectOwner) {
     throw new HttpException(
@@ -41,7 +40,7 @@ export const updateHandler = async (
     const nameTaken =
       (await ProjectModel.findOne({
         name: body.project.name,
-        ownerId: req.userId,
+        ownerId: userId,
         isTutorialProject: false,
       })) !== null;
     if (nameTaken) {
@@ -52,7 +51,7 @@ export const updateHandler = async (
     }
   }
 
-  const currentUser = await UserModel.findById(req.userId);
+  const currentUser = await UserModel.findById(userId);
 
   if (!currentUser) {
     throw new HttpException('User not found.', HttpStatus.NOT_FOUND);

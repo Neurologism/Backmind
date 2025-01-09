@@ -1,3 +1,4 @@
+// src/guards/auth.guard.ts
 import {
   CanActivate,
   ExecutionContext,
@@ -9,10 +10,14 @@ import { UserModel } from '../mongooseSchemas/user.schema';
 import { Reflector } from '@nestjs/core';
 import { SKIP_AUTH_KEY } from 'decorators/skipAuth.decorator';
 import { Types } from 'mongoose';
+import { UserIdProvider } from 'providers/userId.provider';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-  constructor(private reflector: Reflector) {}
+  constructor(
+    private reflector: Reflector,
+    private userIdProvider: UserIdProvider
+  ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const isPublic = this.reflector.getAllAndOverride<boolean>(SKIP_AUTH_KEY, [
@@ -43,12 +48,11 @@ export class AuthGuard implements CanActivate {
       if (!user.tokens.find((t) => t.token === token))
         throw new UnauthorizedException();
 
-      req.userId = userId;
+      this.userIdProvider.setUserId(userId);
       return true;
     } catch (err) {
       if (err instanceof UnauthorizedException) throw err;
       if (err instanceof JsonWebTokenError) {
-        req.userId = undefined;
         return true;
       }
       throw err;

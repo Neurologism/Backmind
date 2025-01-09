@@ -1,9 +1,11 @@
-import { Request } from 'express';
 import { UserModel } from '../../../mongooseSchemas/user.schema';
 import { Types } from 'mongoose';
 import { HttpException, HttpStatus } from '@nestjs/common';
 
-export const getHandler = async (userId: Types.ObjectId, req: Request) => {
+export const getHandler = async (
+  userId: Types.ObjectId,
+  loggedInUserId: Types.ObjectId
+) => {
   const user = await UserModel.findById(userId);
   if (user === null) {
     throw new HttpException(
@@ -12,7 +14,7 @@ export const getHandler = async (userId: Types.ObjectId, req: Request) => {
     );
   }
 
-  const ownsProfile = user._id.toString() === req.userId?.toString();
+  const ownsProfile = user._id.toString() === loggedInUserId?.toString();
 
   if (user.visibility === 'private' && !ownsProfile) {
     throw new HttpException(

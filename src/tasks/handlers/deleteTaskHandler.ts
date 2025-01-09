@@ -1,4 +1,3 @@
-import { Request } from 'express';
 import { ProjectModel } from '../../../mongooseSchemas/project.schema';
 import { QueueItemModel } from '../../../mongooseSchemas/queueItem.schema';
 import { TaskModel } from '../../../mongooseSchemas/task.schema';
@@ -7,7 +6,7 @@ import { HttpException, HttpStatus } from '@nestjs/common';
 
 export const deleteTaskHandler = async (
   taskId: Types.ObjectId,
-  req: Request
+  userId: Types.ObjectId
 ) => {
   const task = await TaskModel.findOne({ _id: taskId });
   if (task === null) {
@@ -16,7 +15,7 @@ export const deleteTaskHandler = async (
       HttpStatus.NOT_FOUND
     );
   }
-  if (task.ownerId.toString() !== req.userId?.toString()) {
+  if (task.ownerId.toString() !== userId.toString()) {
     throw new HttpException('Not authorized.', HttpStatus.FORBIDDEN);
   }
 

@@ -1,3 +1,4 @@
+// src/app.module.ts
 import {
   Module,
   NestModule,
@@ -15,7 +16,8 @@ import { AppService } from './app.service';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from 'guards/auth.guard';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
-import { AppLogger } from './logger.service';
+import { AppLogger } from '../providers/logger.provider';
+import { UserIdProvider } from '../providers/userId.provider';
 
 @Module({
   imports: [
@@ -54,6 +56,7 @@ import { AppLogger } from './logger.service';
       useClass: ThrottlerGuard,
     },
     AppLogger,
+    UserIdProvider,
   ],
   exports: [AppLogger],
 })

@@ -1,4 +1,24 @@
-import { deleteEmailHandler } from './handlers/deleteEmailHandler';
+// src/users/users.controller.ts
+import {
+  Controller,
+  Get,
+  Param,
+  Delete,
+  Patch,
+  Body,
+  Query,
+  Put,
+  Post,
+  HttpException,
+  HttpStatus,
+  UseInterceptors,
+  UploadedFile,
+} from '@nestjs/common';
+import { Types } from 'mongoose';
+import { ParseObjectIdPipe } from 'pipes/parseObjectId.pipe';
+import { UserIdProvider } from 'providers/userId.provider';
+import { UpdateDto } from './dto/update.schema';
+import { UpdateEmailDto } from './dto/updateEmail.schema';
 import { deleteHandler } from './handlers/deleteHandler';
 import { followHandler } from './handlers/followHandler';
 import { getCreditsHandler } from './handlers/getCreditsHandler';
@@ -11,50 +31,16 @@ import { unfollowHandler } from './handlers/unfollowHandler';
 import { updateEmailHandler } from './handlers/updateEmailHandler';
 import { updateHandler } from './handlers/updateHandler';
 import { uploadPfpHandler } from './handlers/uploadPfpHandler';
-import { UpdateEmailDto } from './dto/updateEmail.schema';
-import { UpdateDto } from './dto/update.schema';
-import {
-  Controller,
-  Get,
-  Post,
-  Req,
-  Body,
-  UseInterceptors,
-  UploadedFile,
-  Param,
-  Delete,
-  Patch,
-  Query,
-  Put,
-  HttpException,
-  HttpStatus,
-} from '@nestjs/common';
-import { Request } from 'express';
+import { deleteEmailHandler } from './handlers/deleteEmailHandler';
 import { FileInterceptor } from '@nestjs/platform-express';
-import multer from 'multer';
-import { ParseObjectIdPipe } from 'pipes/parseObjectId.pipe';
-import { Types } from 'mongoose';
-import { SkipAuth } from 'decorators/skipAuth.decorator';
+import { SkipAuth } from '../../decorators/skipAuth.decorator';
 
-export const pfpUploadMulter = {
-  storage: multer.memoryStorage(),
-  limits: { fileSize: 8 * 1024 * 1024 },
-  fileFilter: (req: Request, file: Express.Multer.File, cb: Function) => {
-    const allowedMimeTypes = [
-      'image/webp',
-      'image/jpg',
-      'image/jpeg',
-      'image/png',
-    ];
-    if (!allowedMimeTypes.includes(file.mimetype)) {
-      return cb(new Error('Invalid file type.'));
-    }
-    cb(null, true);
-  },
-};
+let pfpUploadMulter;
 
 @Controller('users')
 export class UsersController {
+  constructor(private userIdProvider: UserIdProvider) {}
+
   @Get('is-taken')
   @SkipAuth()
   async isTaken(
@@ -72,12 +58,10 @@ export class UsersController {
   }
 
   @Get(':userId')
-  async get(
-    @Param('userId', ParseObjectIdPipe) userId: Types.ObjectId,
-    @Req() req: Request
-  ) {
+  async get(@Param('userId', ParseObjectIdPipe) userId: Types.ObjectId) {
     try {
-      return await getHandler(userId, req);
+      const loggedInUserId = this.userIdProvider.getUserId();
+      return await getHandler(userId, loggedInUserId);
     } catch (error) {
       throw new HttpException(
         (error as any).message,
@@ -87,12 +71,10 @@ export class UsersController {
   }
 
   @Get('by-name/:brainetTag')
-  async getByName(
-    @Param('brainetTag') brainetTag: string,
-    @Req() req: Request
-  ) {
+  async getByName(@Param('brainetTag') brainetTag: string) {
     try {
-      return await getByNameHandler(brainetTag, req);
+      const loggedInUserId = this.userIdProvider.getUserId();
+      return await getByNameHandler(brainetTag, loggedInUserId);
     } catch (error) {
       throw new HttpException(
         (error as any).message,
@@ -102,12 +84,10 @@ export class UsersController {
   }
 
   @Delete(':userId')
-  async delete(
-    @Param('userId', ParseObjectIdPipe) userId: Types.ObjectId,
-    @Req() req: Request
-  ) {
+  async delete() {
     try {
-      return await deleteHandler(userId, req);
+      const loggedInUserId = this.userIdProvider.getUserId();
+      return await deleteHandler(loggedInUserId);
     } catch (error) {
       throw new HttpException(
         (error as any).message,
@@ -117,13 +97,10 @@ export class UsersController {
   }
 
   @Patch(':userId')
-  async update(
-    @Param('userId', ParseObjectIdPipe) userId: Types.ObjectId,
-    @Body() body: UpdateDto,
-    @Req() req: Request
-  ) {
+  async update(@Body() body: UpdateDto) {
     try {
-      return await updateHandler(userId, body, req);
+      const loggedInUserId = this.userIdProvider.getUserId();
+      return await updateHandler(loggedInUserId, body);
     } catch (error) {
       throw new HttpException(
         (error as any).message,
@@ -133,12 +110,10 @@ export class UsersController {
   }
 
   @Get(':userId/get-credits')
-  async getCredits(
-    @Param('userId', ParseObjectIdPipe) userId: Types.ObjectId,
-    @Req() req: Request
-  ) {
+  async getCredits() {
     try {
-      return await getCreditsHandler(userId, req);
+      const loggedInUserId = this.userIdProvider.getUserId();
+      return await getCreditsHandler(loggedInUserId);
     } catch (error) {
       throw new HttpException(
         (error as any).message,
@@ -160,12 +135,10 @@ export class UsersController {
   }
 
   @Patch(':userId/swap-primary-email')
-  async swapPrimaryEmail(
-    @Param('userId', ParseObjectIdPipe) userId: Types.ObjectId,
-    @Req() req: Request
-  ) {
+  async swapPrimaryEmail() {
     try {
-      return await swapPrimaryEmailHandler(userId, req);
+      const loggedInUserId = this.userIdProvider.getUserId();
+      return await swapPrimaryEmailHandler(loggedInUserId);
     } catch (error) {
       throw new HttpException(
         (error as any).message,
@@ -178,11 +151,11 @@ export class UsersController {
   @UseInterceptors(FileInterceptor('pfp', pfpUploadMulter))
   async uploadPfp(
     @Param('userId', ParseObjectIdPipe) userId: Types.ObjectId,
-    @Req() req: Request,
     @UploadedFile() file: Express.Multer.File
   ) {
     try {
-      return await uploadPfpHandler(userId, req, file);
+      const loggedInUserId = this.userIdProvider.getUserId();
+      return await uploadPfpHandler(loggedInUserId, file);
     } catch (error) {
       throw new HttpException(
         (error as any).message,
@@ -192,12 +165,10 @@ export class UsersController {
   }
 
   @Post(':userId/followers')
-  async follow(
-    @Param('userId', ParseObjectIdPipe) userId: Types.ObjectId,
-    @Req() req: Request
-  ) {
+  async follow(@Param('userId', ParseObjectIdPipe) userId: Types.ObjectId) {
     try {
-      return await followHandler(userId, req);
+      const loggedInUserId = this.userIdProvider.getUserId();
+      return await followHandler(userId, loggedInUserId);
     } catch (error) {
       throw new HttpException(
         (error as any).message,
@@ -207,12 +178,10 @@ export class UsersController {
   }
 
   @Delete(':userId/followers')
-  async unfollow(
-    @Param('userId', ParseObjectIdPipe) userId: Types.ObjectId,
-    @Req() req: Request
-  ) {
+  async unfollow(@Param('userId', ParseObjectIdPipe) userId: Types.ObjectId) {
     try {
-      return await unfollowHandler(userId, req);
+      const loggedInUserId = this.userIdProvider.getUserId();
+      return await unfollowHandler(userId, loggedInUserId);
     } catch (error) {
       throw new HttpException(
         (error as any).message,
@@ -222,13 +191,10 @@ export class UsersController {
   }
 
   @Delete(':userId/emails')
-  async deleteEmail(
-    @Param('userId', ParseObjectIdPipe) userId: Types.ObjectId,
-    @Query('emailType') emailType: string,
-    @Req() req: Request
-  ) {
+  async deleteEmail(@Query('emailType') emailType: string) {
     try {
-      return await deleteEmailHandler(userId, emailType, req);
+      const loggedInUserId = this.userIdProvider.getUserId();
+      return await deleteEmailHandler(loggedInUserId, emailType);
     } catch (error) {
       throw new HttpException(
         (error as any).message,
@@ -238,13 +204,10 @@ export class UsersController {
   }
 
   @Patch(':userId/emails')
-  async updateEmailHandler(
-    @Param('userId', ParseObjectIdPipe) userId: Types.ObjectId,
-    @Body() body: UpdateEmailDto,
-    @Req() req: Request
-  ) {
+  async updateEmailHandler(@Body() body: UpdateEmailDto) {
     try {
-      return await updateEmailHandler(userId, body, req);
+      const loggedInUserId = this.userIdProvider.getUserId();
+      return await updateEmailHandler(loggedInUserId, body);
     } catch (error) {
       throw new HttpException(
         (error as any).message,

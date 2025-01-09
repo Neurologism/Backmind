@@ -6,7 +6,6 @@ import { TrainingStartDto } from './dto/trainingStart.schema';
 import {
   Controller,
   Post,
-  Req,
   Body,
   Get,
   Patch,
@@ -15,16 +14,19 @@ import {
   HttpException,
   HttpStatus,
 } from '@nestjs/common';
-import { Request } from 'express';
 import { ParseObjectIdPipe } from 'pipes/parseObjectId.pipe';
 import { Types } from 'mongoose';
+import { UserIdProvider } from 'providers/userId.provider';
 
 @Controller('tasks')
 export class TasksController {
+  constructor(private userIdProvider: UserIdProvider) {}
+
   @Post()
-  async trainingStart(@Body() body: TrainingStartDto, @Req() req: Request) {
+  async trainingStart(@Body() body: TrainingStartDto) {
     try {
-      return await trainingStartHandler(body, req);
+      const userId = this.userIdProvider.getUserId();
+      return await trainingStartHandler(body, userId);
     } catch (error) {
       throw new HttpException(
         (error as any).message,
@@ -35,11 +37,11 @@ export class TasksController {
 
   @Get(':taskId')
   async trainingStatus(
-    @Param('taskId', ParseObjectIdPipe) taskId: Types.ObjectId,
-    @Req() req: Request
+    @Param('taskId', ParseObjectIdPipe) taskId: Types.ObjectId
   ) {
     try {
-      return await trainingStatusHandler(taskId, req);
+      const userId = this.userIdProvider.getUserId();
+      return await trainingStatusHandler(taskId, userId);
     } catch (error) {
       throw new HttpException(
         (error as any).message,
@@ -50,11 +52,11 @@ export class TasksController {
 
   @Patch(':taskId')
   async trainingStop(
-    @Param('taskId', ParseObjectIdPipe) taskId: Types.ObjectId,
-    @Req() req: Request
+    @Param('taskId', ParseObjectIdPipe) taskId: Types.ObjectId
   ) {
     try {
-      return await trainingStopHandler(taskId, req);
+      const userId = this.userIdProvider.getUserId();
+      return await trainingStopHandler(taskId, userId);
     } catch (error) {
       throw new HttpException(
         (error as any).message,
@@ -64,12 +66,10 @@ export class TasksController {
   }
 
   @Delete(':taskId')
-  async deleteTask(
-    @Param('taskId', ParseObjectIdPipe) taskId: Types.ObjectId,
-    @Req() req: Request
-  ) {
+  async deleteTask(@Param('taskId', ParseObjectIdPipe) taskId: Types.ObjectId) {
     try {
-      return await deleteTaskHandler(taskId, req);
+      const userId = this.userIdProvider.getUserId();
+      return await deleteTaskHandler(taskId, userId);
     } catch (error) {
       throw new HttpException(
         (error as any).message,

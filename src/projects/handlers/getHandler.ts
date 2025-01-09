@@ -1,9 +1,11 @@
-import { Request } from 'express';
 import { ProjectModel } from 'mongooseSchemas/project.schema';
 import { Types } from 'mongoose';
 import { HttpException, HttpStatus } from '@nestjs/common';
 
-export const getHandler = async (projectId: Types.ObjectId, req: Request) => {
+export const getHandler = async (
+  projectId: Types.ObjectId,
+  userId: Types.ObjectId
+) => {
   const project = await ProjectModel.findById(projectId);
 
   if (project === null) {
@@ -14,13 +16,13 @@ export const getHandler = async (projectId: Types.ObjectId, req: Request) => {
   }
 
   if (project.visibility === 'private') {
-    if (req.userId === undefined || req.userId === null) {
+    if (userId === undefined || userId === null) {
       throw new HttpException(
         'This project is private. You need to be logged in to access it.',
         HttpStatus.NOT_FOUND
       );
     }
-    const isOwner = project.ownerId.toString() === req.userId.toString();
+    const isOwner = project.ownerId.toString() === userId.toString();
     if (!isOwner) {
       throw new HttpException(
         'This project is private. You do not have access to it.',

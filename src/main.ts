@@ -26,8 +26,7 @@ import { connectToDatabase } from '../utility/connectToDatabase';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { NestExpressApplication } from '@nestjs/platform-express';
-import rateLimit from 'express-rate-limit';
-import { AppLogger } from './logger.service';
+import { AppLogger } from '../providers/logger.provider';
 
 async function bootstrap() {
   await connectToDatabase();
@@ -42,13 +41,6 @@ async function bootstrap() {
         : (process.env.WHITEMIND_HOSTNAME as string),
     credentials: true,
   });
-  app.use(
-    rateLimit({
-      windowMs: 60 * 1000 * Number(process.env.RATE_LIMIT_DURATION), // 5 min
-      max: Number(process.env.RATE_LIMIT_REQUESTS),
-      message: "You're sending too many requests.",
-    })
-  );
 
   await app.listen(Number(process.env.EXPRESS_PORT));
 }

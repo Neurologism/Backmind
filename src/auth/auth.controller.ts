@@ -14,7 +14,6 @@ import {
   Controller,
   Post,
   Get,
-  Req,
   Body,
   Delete,
   Query,
@@ -22,18 +21,22 @@ import {
   HttpException,
   HttpStatus,
 } from '@nestjs/common';
-import { Request } from 'express';
 import { SkipAuth } from 'decorators/skipAuth.decorator';
-import { AppLogger } from '../logger.service';
+import { AppLogger } from '../../providers/logger.provider';
+import { UserIdProvider } from 'providers/userId.provider';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly logger: AppLogger) {}
+  constructor(
+    private readonly logger: AppLogger,
+    private userIdProvider: UserIdProvider
+  ) {}
 
   @Get('check')
-  async check(@Req() req: Request) {
+  async check() {
     try {
-      return await checkHandler(req);
+      const userId = this.userIdProvider.getUserId();
+      return await checkHandler(userId);
     } catch (error) {
       throw new HttpException(
         (error as any).message,
@@ -57,9 +60,9 @@ export class AuthController {
 
   @SkipAuth()
   @Post('register')
-  async register(@Body() body: RegisterDto, @Req() req: Request) {
+  async register(@Body() body: RegisterDto) {
     try {
-      return await registerHandler(body, req, this.logger);
+      return await registerHandler(body, this.logger);
     } catch (error) {
       throw new HttpException(
         (error as any).message,
@@ -69,9 +72,10 @@ export class AuthController {
   }
 
   @Delete('logout-all')
-  async logoutAll(@Req() req: Request) {
+  async logoutAll() {
     try {
-      return await logoutAllHandler(req);
+      const userId = this.userIdProvider.getUserId();
+      return await logoutAllHandler(userId);
     } catch (error) {
       throw new HttpException(
         (error as any).message,
@@ -81,9 +85,10 @@ export class AuthController {
   }
 
   @Delete('logout')
-  async logout(@Req() req: Request) {
+  async logout(@Query('token') token: string) {
     try {
-      return await logoutHandler(req);
+      const userId = this.userIdProvider.getUserId();
+      return await logoutHandler(userId, token);
     } catch (error) {
       throw new HttpException(
         (error as any).message,

@@ -1,4 +1,3 @@
-import { Request } from 'express';
 import bcrypt from 'bcrypt';
 import { UserModel } from '../../../mongooseSchemas/user.schema';
 import { Types } from 'mongoose';
@@ -7,23 +6,8 @@ import { HttpException, HttpStatus } from '@nestjs/common';
 
 export const updateHandler = async (
   userId: Types.ObjectId,
-  body: UpdateDto,
-  req: Request
+  body: UpdateDto
 ) => {
-  if (req.userId === undefined) {
-    throw new HttpException(
-      'You are not authenticated.',
-      HttpStatus.UNAUTHORIZED
-    );
-  }
-
-  if (req.userId?.toString() !== userId.toString()) {
-    throw new HttpException(
-      'You are not authorized to update this user.',
-      HttpStatus.FORBIDDEN
-    );
-  }
-
   const user = await UserModel.findById(userId);
 
   if (user === null) {

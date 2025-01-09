@@ -4,27 +4,28 @@ import {
   Controller,
   Get,
   Patch,
-  Req,
   Body,
   Param,
 } from '@nestjs/common';
-import { Request } from 'express';
 import { ParseObjectIdPipe } from 'pipes/parseObjectId.pipe';
 import { Types } from 'mongoose';
 import { getHandler } from './handlers/getHandler';
 import { getByNameHandler } from './handlers/getByNameHandler';
 import { setStateHandler } from './handlers/setStateHandler';
 import { SetStateDto } from './dto/setState.schema';
+import { UserIdProvider } from 'providers/userId.provider';
 
 @Controller('tutorials')
 export class TutorialsController {
+  constructor(private userIdProvider: UserIdProvider) {}
+
   @Get(':tutorialId')
   async get(
-    @Param('tutorialId', ParseObjectIdPipe) tutorialId: Types.ObjectId,
-    @Req() req: Request
+    @Param('tutorialId', ParseObjectIdPipe) tutorialId: Types.ObjectId
   ) {
     try {
-      return await getHandler(tutorialId, req);
+      const userId = this.userIdProvider.getUserId();
+      return await getHandler(tutorialId, userId);
     } catch (error) {
       throw new HttpException(
         (error as any).message,
@@ -34,12 +35,10 @@ export class TutorialsController {
   }
 
   @Get('by-name/:tutorialName')
-  async getByName(
-    @Param('tutorialName') tutorialName: string,
-    @Req() req: Request
-  ) {
+  async getByName(@Param('tutorialName') tutorialName: string) {
     try {
-      return await getByNameHandler(tutorialName, req);
+      const userId = this.userIdProvider.getUserId();
+      return await getByNameHandler(tutorialName, userId);
     } catch (error) {
       throw new HttpException(
         (error as any).message,
@@ -51,11 +50,11 @@ export class TutorialsController {
   @Patch(':tutorialId')
   async setState(
     @Param('tutorialId', ParseObjectIdPipe) tutorialId: Types.ObjectId,
-    @Body() body: SetStateDto,
-    @Req() req: Request
+    @Body() body: SetStateDto
   ) {
     try {
-      return await setStateHandler(tutorialId, body, req);
+      const userId = this.userIdProvider.getUserId();
+      return await setStateHandler(tutorialId, body, userId);
     } catch (error) {
       throw new HttpException(
         (error as any).message,

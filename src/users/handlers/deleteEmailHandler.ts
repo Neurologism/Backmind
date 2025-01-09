@@ -1,21 +1,11 @@
-import { Request } from 'express';
 import { UserModel } from '../../../mongooseSchemas/user.schema';
 import { Types } from 'mongoose';
 import { HttpException, HttpStatus } from '@nestjs/common';
 
 export const deleteEmailHandler = async (
   userId: Types.ObjectId,
-  emailType: string,
-  req: Request
+  emailType: string
 ) => {
-  if (req.userId === undefined) {
-    throw new HttpException('Unauthorized', HttpStatus.UNAUTHORIZED);
-  }
-
-  if (req.userId?.toString() !== userId.toString()) {
-    throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
-  }
-
   const user = await UserModel.findById({ _id: userId });
 
   if (!user) {

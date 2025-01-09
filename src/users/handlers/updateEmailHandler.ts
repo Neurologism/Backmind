@@ -1,4 +1,3 @@
-import { Request } from 'express';
 import { UserModel } from '../../../mongooseSchemas/user.schema';
 import { sendVerificationEmail } from '../../../utility/sendVerificationEmail';
 import { Types } from 'mongoose';
@@ -7,17 +6,8 @@ import { HttpException, HttpStatus } from '@nestjs/common';
 
 export const updateEmailHandler = async (
   userId: Types.ObjectId,
-  body: UpdateEmailDto,
-  req: Request
+  body: UpdateEmailDto
 ) => {
-  if (req.userId === undefined) {
-    throw new HttpException('Unauthorized', HttpStatus.UNAUTHORIZED);
-  }
-
-  if (req.userId?.toString() !== userId.toString()) {
-    throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
-  }
-
   const user = await UserModel.findById({ _id: userId });
 
   if (!user) {

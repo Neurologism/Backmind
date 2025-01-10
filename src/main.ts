@@ -25,6 +25,7 @@ import {
   FastifyAdapter,
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
+import fastifyHelmet from '@fastify/helmet';
 
 async function bootstrap() {
   await connectToDatabase();
@@ -32,6 +33,8 @@ async function bootstrap() {
     AppModule,
     new FastifyAdapter()
   );
+
+  await app.register(fastifyHelmet, { global: true });
 
   app.enableCors({
     origin:

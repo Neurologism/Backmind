@@ -33,6 +33,14 @@ export const registerHandler = async (body: RegisterDto, logger: AppLogger) => {
     );
   }
 
+  const brainetTagRegex = /^[a-zA-Z0-9_-]{1,32}$/;
+  if (!brainetTagRegex.test(givenUser.brainetTag)) {
+    throw new HttpException(
+      'brainetTag must consist of letters, numbers, underscores, hyphens and have a length between 1 and 32 characters.',
+      HttpStatus.BAD_REQUEST
+    );
+  }
+
   const salt = await bcrypt.genSalt(Number(process.env.SALT_ROUNDS));
   const hashedPassword = await bcrypt.hash(givenUser.plainPassword, salt);
 

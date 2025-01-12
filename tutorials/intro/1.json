@@ -4,7 +4,7 @@
   "description": "",
   "visibility": "public",
   "requiredTutorials": [],
-  "nextTutorials": ["Datasets and Configuration"],
+  "nextTutorials": ["Datasets and Settings"],
   "experienceGain": 100,
   "startProject": {
     "nodes": [],
@@ -24,6 +24,7 @@
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
@@ -34,6 +35,7 @@
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
@@ -44,6 +46,7 @@
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
@@ -66,6 +69,7 @@
         }
       ],
       "addEdges": [],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": ["dense"],
@@ -81,6 +85,7 @@
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
@@ -93,7 +98,6 @@
         {
           "id": "0.0atma5spa9l",
           "data": {
-            "shape": [0],
             "batch_size": null,
             "dtype": "float32",
             "sparse": false,
@@ -104,6 +108,7 @@
         }
       ],
       "addEdges": [],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": ["input"],
@@ -115,7 +120,7 @@
       ]
     },
     {
-      "text": "The Input layer is crucial as it serves as the entry point for data into the network. It’s like the first team that\ncollects the raw data before passing it on. To connect the Input layer to the Dense layer, simply drag the output of\nthe Input layer to the input of the Dense layer.",
+      "text": "The Input layer is crucial as it serves as the entry point for data into the network. It’s like the first team that collects the raw data before passing it on. To connect the Input layer to the Dense layer, simply drag the output of the Input layer to the input of the Dense layer.",
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [
@@ -127,16 +132,21 @@
           "sourceHandle": "out-0.0atma5spa9l",
           "targetHandle": "in-0.rjprcijyi19",
           "data": {},
-          "label": ""
+          "label": "",
+          "style": {
+            "stroke": "green",
+            "strokeWidth": 2
+          }
         }
       ],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
       "unlockNodes": []
     },
     {
-      "text": "Great work! Next, we’ll add another Dense layer. Head back to the Toolbar and grab a Dense layer,\nthen drag it below the first one.",
+      "text": "Great work! Next, we’ll add another Dense layer. Head back to the Toolbar and grab a Dense layer, then drag it below the first one.",
       "narrator": "LeNet-5",
       "addNodes": [
         {
@@ -152,13 +162,14 @@
         }
       ],
       "addEdges": [],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": ["dense"],
       "unlockNodes": []
     },
     {
-      "text": "This second Dense layer will handle the final output of the network. To link the layers together, connect the output from the first Dense layer to the input of this new Dense layer.",
+      "text": "This second Dense layer will handle the final output of the network. Now, connect the first Dense layer to the second Dense layer.",
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [
@@ -170,9 +181,14 @@
           "sourceHandle": "out-0.rjprcijyi19",
           "targetHandle": "in-0.kc9iafnk32m",
           "data": {},
-          "label": ""
+          "label": "",
+          "style": {
+            "stroke": "green",
+            "strokeWidth": 2
+          }
         }
       ],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
@@ -183,6 +199,7 @@
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],

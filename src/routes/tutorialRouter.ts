@@ -3,7 +3,8 @@ import { schemaValidationMiddleware } from '../middleware/schemaValidationMiddle
 import { authMiddleware } from '../middleware/authMiddleware';
 import { getHandler } from '../handlers/tutorial/getHandler';
 import { setStateHandler } from '../handlers/tutorial/setStateHandler';
-import { getSchema, setStateSchema } from '../zodSchemas/tutorialSchemas';
+import { getSchema } from '../zodSchemas/tutorial/getSchema';
+import { setStateSchema } from '../zodSchemas/tutorial/setStateSchema';
 
 const router = express.Router();
 

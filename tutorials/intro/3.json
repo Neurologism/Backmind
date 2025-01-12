@@ -9,15 +9,14 @@
   "startProject": {
     "nodes": [
       {
-        "id": "0.x65scbd309a",
+        "id": "0.xi6v6n52txb",
         "type": "input_layer",
         "initialized": false,
         "position": {
-          "x": 606,
-          "y": 157
+          "x": 442,
+          "y": 235
         },
         "data": {
-          "shape": [28, 28, 1],
           "batch_size": null,
           "dtype": "float32",
           "sparse": false,
@@ -27,12 +26,12 @@
         "group_identifier": "layer"
       },
       {
-        "id": "0.chj63w1q2u6",
+        "id": "0.4zl1fq0ycco",
         "type": "dense",
         "initialized": false,
         "position": {
-          "x": 603,
-          "y": 264
+          "x": 438,
+          "y": 361
         },
         "data": {
           "activation": "relu",
@@ -44,12 +43,12 @@
         "group_identifier": "layer"
       },
       {
-        "id": "0.h9ht3sxzctp",
+        "id": "0.4wgn0gy8fir",
         "type": "dense",
         "initialized": false,
         "position": {
-          "x": 603,
-          "y": 363
+          "x": 438,
+          "y": 492
         },
         "data": {
           "activation": "softmax",
@@ -61,12 +60,12 @@
         "group_identifier": "layer"
       },
       {
-        "id": "0.xq22qq3n1qj",
+        "id": "0.ahupr5uxdij",
         "type": "mnist",
         "initialized": false,
         "position": {
-          "x": 800,
-          "y": 142
+          "x": 648,
+          "y": 643
         },
         "data": {
           "batch_size": 32
@@ -77,40 +76,52 @@
     ],
     "edges": [
       {
-        "id": "vueflow__edge-0.x65scbd309aout-0.x65scbd309a-0.chj63w1q2u6in-0.chj63w1q2u6",
+        "id": "vueflow__edge-0.4zl1fq0yccoout-0.4zl1fq0ycco-0.4wgn0gy8firin-0.4wgn0gy8fir",
         "type": "smoothstep",
-        "source": "0.x65scbd309a",
-        "target": "0.chj63w1q2u6",
-        "sourceHandle": "out-0.x65scbd309a",
-        "targetHandle": "in-0.chj63w1q2u6",
+        "source": "0.4zl1fq0ycco",
+        "target": "0.4wgn0gy8fir",
+        "sourceHandle": "out-0.4zl1fq0ycco",
+        "targetHandle": "in-0.4wgn0gy8fir",
         "data": {},
         "label": "",
-        "sourceX": 666,
-        "sourceY": 206,
-        "targetX": 666.36669921875,
-        "targetY": 259
+        "animated": false,
+        "animationSpeed": 0.5,
+        "style": {
+          "stroke": "green",
+          "strokeWidth": 2
+        },
+        "sourceX": 499.83331298828125,
+        "sourceY": 411,
+        "targetX": 499.83331298828125,
+        "targetY": 486
       },
       {
-        "id": "vueflow__edge-0.chj63w1q2u6out-0.chj63w1q2u6-0.h9ht3sxzctpin-0.h9ht3sxzctp",
+        "id": "vueflow__edge-0.xi6v6n52txbout-0.xi6v6n52txb-0.4zl1fq0yccoin-0.4zl1fq0ycco",
         "type": "smoothstep",
-        "source": "0.chj63w1q2u6",
-        "target": "0.h9ht3sxzctp",
-        "sourceHandle": "out-0.chj63w1q2u6",
-        "targetHandle": "in-0.h9ht3sxzctp",
+        "source": "0.xi6v6n52txb",
+        "target": "0.4zl1fq0ycco",
+        "sourceHandle": "out-0.xi6v6n52txb",
+        "targetHandle": "in-0.4zl1fq0ycco",
         "data": {},
         "label": "",
-        "sourceX": 666.36669921875,
-        "sourceY": 313,
-        "targetX": 666.36669921875,
-        "targetY": 358
+        "animated": false,
+        "animationSpeed": 0.5,
+        "style": {
+          "stroke": "green",
+          "strokeWidth": 2
+        },
+        "sourceX": 500.316650390625,
+        "sourceY": 285,
+        "targetX": 499.83331298828125,
+        "targetY": 355
       }
     ],
-    "position": [5, -2],
-    "zoom": 1,
+    "position": [298.2932659739259, 223.84924115727563],
+    "zoom": 0.5241312377584643,
     "viewport": {
-      "x": 5,
-      "y": -2,
-      "zoom": 1
+      "x": 298.2932659739259,
+      "y": 223.84924115727563,
+      "zoom": 0.5241312377584643
     }
   },
   "unlockNodes": [],
@@ -120,6 +131,7 @@
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
@@ -139,6 +151,7 @@
         }
       ],
       "addEdges": [],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": ["flatten"],
@@ -154,6 +167,7 @@
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
@@ -174,6 +188,7 @@
         }
       ],
       "addEdges": [],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": ["normalization"],
@@ -185,35 +200,15 @@
       ]
     },
     {
-      "text": "The Normalization layer needs to understand the dataset before it can be helpful. To do this, connect the adapt connection from the MNIST dataset to the train connection.",
-      "narrator": "LeNet-5",
-      "addNodes": [],
-      "addEdges": [
-        {
-          "id": "vueflow__edge-0.8h6rp4fo12qval-adapt-0.8h6rp4fo12q-0.xq22qq3n1qjval-train-0.xq22qq3n1qj",
-          "type": "smoothstep",
-          "source": "0.8h6rp4fo12q",
-          "target": "0.xq22qq3n1qj",
-          "sourceHandle": "val-adapt-0.8h6rp4fo12q",
-          "targetHandle": "val-train-0.xq22qq3n1qj",
-          "data": {},
-          "label": ""
-        }
-      ],
-      "removeNodes": [],
-      "removeEdges": [],
-      "highlightNodeTypes": [],
-      "unlockNodes": []
-    },
-    {
-      "text": "Now, let's integrate these layers into the network. First, remove the connection between the Input layer and the first Dense layer by selecting it and pressing Delete/Backspace.",
+      "text": "Now, let's integrate these layers into the network. First, remove the connection between the Input layer and the first Dense layer by clicking on it.",
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [
         {
-          "id": "vueflow__edge-0.x65scbd309aout-0.x65scbd309a-0.chj63w1q2u6in-0.chj63w1q2u6"
+          "id": "vueflow__edge-0.xi6v6n52txbout-0.xi6v6n52txb-0.4zl1fq0yccoin-0.4zl1fq0ycco"
         }
       ],
       "highlightNodeTypes": [],
@@ -225,16 +220,21 @@
       "addNodes": [],
       "addEdges": [
         {
-          "id": "vueflow__edge-0.x65scbd309aout-0.x65scbd309a-0.8h6rp4fo12qin-0.8h6rp4fo12q",
+          "id": "vueflow__edge-0.xi6v6n52txbout-0.xi6v6n52txb-0.8h6rp4fo12qin-0.8h6rp4fo12q",
           "type": "smoothstep",
-          "source": "0.x65scbd309a",
+          "source": "0.xi6v6n52txb",
           "target": "0.8h6rp4fo12q",
-          "sourceHandle": "out-0.x65scbd309a",
+          "sourceHandle": "out-0.xi6v6n52txb",
           "targetHandle": "in-0.8h6rp4fo12q",
           "data": {},
-          "label": ""
+          "label": "",
+          "style": {
+            "stroke": "green",
+            "strokeWidth": 2
+          }
         }
       ],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
@@ -253,9 +253,14 @@
           "sourceHandle": "out-0.8h6rp4fo12q",
           "targetHandle": "in-0.v0xhroyxof",
           "data": {},
-          "label": ""
+          "label": "",
+          "style": {
+            "stroke": "green",
+            "strokeWidth": 2
+          }
         }
       ],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
@@ -267,16 +272,21 @@
       "addNodes": [],
       "addEdges": [
         {
-          "id": "vueflow__edge-0.v0xhroyxofout-0.v0xhroyxof-0.chj63w1q2uin-0.chj63w1q2u6",
+          "id": "vueflow__edge-0.v0xhroyxofout-0.v0xhroyxof-0.4zl1fq0yccoin-0.4zl1fq0ycco",
           "type": "smoothstep",
           "source": "0.v0xhroyxof",
-          "target": "0.chj63w1q2u6",
+          "target": "0.4zl1fq0ycco",
           "sourceHandle": "out-0.v0xhroyxof",
-          "targetHandle": "in-0.chj63w1q2u6",
+          "targetHandle": "in-0.4zl1fq0ycco",
           "data": {},
-          "label": ""
+          "label": "",
+          "style": {
+            "stroke": "green",
+            "strokeWidth": 2
+          }
         }
       ],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
@@ -287,6 +297,7 @@
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],
@@ -297,6 +308,7 @@
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],

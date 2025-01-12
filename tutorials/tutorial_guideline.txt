@@ -1,0 +1,4 @@
+do funny / informative introduction
+keep ending very short
+keep steps short not longer than 2 lines in webstorm
+dont mention redundant stuff people will memorize

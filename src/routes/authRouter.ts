@@ -6,12 +6,12 @@ import { registerHandler } from '../handlers/auth/registerHandler';
 import { verifyEmailHandler } from '../handlers/auth/verifyEmailHandler';
 import { schemaValidationMiddleware } from '../middleware/schemaValidationMiddleware';
 import { authMiddleware } from '../middleware/authMiddleware';
-import {
-  registerSchema,
-  loginSchema,
-  logoutSchema,
-} from '../zodSchemas/authSchemas';
+import { registerSchema } from '../zodSchemas/auth/registerSchema';
+import { loginSchema } from '../zodSchemas/auth/loginSchema';
+import { logoutSchema } from '../zodSchemas/auth/logoutSchema';
+import { logoutAllSchema } from '../zodSchemas/auth/logoutAllSchema';
 import { isEnabledMiddleware } from '../middleware/isTrueMiddleware';
+import { logoutAllHandler } from '../handlers/auth/logoutAllHandler';
 
 const router = express.Router();
 
@@ -19,7 +19,7 @@ router.get('/check', authMiddleware, checkHandler);
 
 router.post('/login', schemaValidationMiddleware(loginSchema), loginHandler);
 
-router.post('/logout', schemaValidationMiddleware(logoutSchema), logoutHandler);
+//router.post('/logout', schemaValidationMiddleware(logoutSchema), logoutHandler); carefull with this one
 
 router.post(
   '/register',
@@ -28,6 +28,20 @@ router.post(
   registerHandler
 );
 
-router.get('/verify-email', verifyEmailHandler);
+router.get('/verify-email', verifyEmailHandler); // possible to verify other users ???
+
+router.get(
+  '/logout',
+  authMiddleware,
+  schemaValidationMiddleware(logoutSchema),
+  logoutHandler
+);
+
+router.get(
+  '/logout-all',
+  authMiddleware,
+  schemaValidationMiddleware(logoutAllSchema),
+  logoutAllHandler
+);
 
 export default router;

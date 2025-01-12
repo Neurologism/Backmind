@@ -9,15 +9,14 @@
   "startProject": {
     "nodes": [
       {
-        "id": "0.x65scbd309a",
+        "id": "0.di77hewn007",
         "type": "input_layer",
         "initialized": false,
         "position": {
-          "x": 608,
-          "y": 22
+          "x": 347,
+          "y": 185
         },
         "data": {
-          "shape": [28, 28, 1],
           "batch_size": null,
           "dtype": "float32",
           "sparse": false,
@@ -27,12 +26,12 @@
         "group_identifier": "layer"
       },
       {
-        "id": "0.chj63w1q2u6",
+        "id": "0.260bbmwtfk6",
         "type": "dense",
         "initialized": false,
         "position": {
-          "x": 605,
-          "y": 460
+          "x": 342.90524228551436,
+          "y": 522.3266080027985
         },
         "data": {
           "activation": "relu",
@@ -44,12 +43,12 @@
         "group_identifier": "layer"
       },
       {
-        "id": "0.h9ht3sxzctp",
+        "id": "0.lja62xohk3",
         "type": "dense",
         "initialized": false,
         "position": {
-          "x": 605,
-          "y": 566
+          "x": 342.90524228551436,
+          "y": 632.9052422855144
         },
         "data": {
           "activation": "softmax",
@@ -61,12 +60,12 @@
         "group_identifier": "layer"
       },
       {
-        "id": "0.xq22qq3n1qj",
+        "id": "0.u762xd3km5",
         "type": "mnist",
         "initialized": false,
         "position": {
-          "x": 769.5769256842311,
-          "y": 564.5506002567699
+          "x": 516,
+          "y": 625
         },
         "data": {
           "batch_size": 32
@@ -75,12 +74,12 @@
         "group_identifier": "dataset"
       },
       {
-        "id": "0.accmpdnxgzm",
+        "id": "0.u6mho59r5c",
         "type": "normalization",
         "initialized": false,
         "position": {
-          "x": 576.3978602448208,
-          "y": 131.80641926553776
+          "x": 315.1912377335177,
+          "y": 298.5644988491333
         },
         "data": {
           "axis": -1,
@@ -90,12 +89,12 @@
         "group_identifier": "layer"
       },
       {
-        "id": "0.dq08q9e87ch",
+        "id": "0.1363galch9c",
         "type": "flatten",
         "initialized": false,
         "position": {
-          "x": 601.3978602448208,
-          "y": 330.8064192655378
+          "x": 340.3706651666868,
+          "y": 410.2297857266658
         },
         "data": {
           "data_format": "channels_last"
@@ -104,12 +103,12 @@
         "group_identifier": "layer"
       },
       {
-        "id": "0.8bszg84j0ww",
+        "id": "0.krzpfhhcuj",
         "type": "Model",
         "initialized": false,
         "position": {
-          "x": 386.3978602448208,
-          "y": 240.80641926553778
+          "x": 103,
+          "y": 154
         },
         "data": {
           "optimizer": "adam",
@@ -121,15 +120,16 @@
         "group_identifier": "model"
       },
       {
-        "id": "0.7uxn1yptkb4",
+        "id": "0.lq5n7lqjfxf",
         "type": "fit",
         "initialized": false,
         "position": {
-          "x": 352.76678633936467,
-          "y": 668.7387165778972
+          "x": 65.01288988795372,
+          "y": 741.5524853934293
         },
         "data": {
           "epochs": 1,
+          "early_stopping": null,
           "name": "model"
         },
         "identifier": "fit",
@@ -138,153 +138,406 @@
     ],
     "edges": [
       {
-        "id": "vueflow__edge-0.chj63w1q2u6out-0.chj63w1q2u6-0.h9ht3sxzctpin-0.h9ht3sxzctp",
+        "id": "vueflow__edge-0.260bbmwtfk6out-0.260bbmwtfk6-0.lja62xohk3in-0.lja62xohk3",
         "type": "smoothstep",
-        "source": "0.chj63w1q2u6",
-        "target": "0.h9ht3sxzctp",
-        "sourceHandle": "out-0.chj63w1q2u6",
-        "targetHandle": "in-0.h9ht3sxzctp",
+        "source": "0.260bbmwtfk6",
+        "target": "0.lja62xohk3",
+        "sourceHandle": "out-0.260bbmwtfk6",
+        "targetHandle": "in-0.lja62xohk3",
         "data": {},
         "label": "",
-        "sourceX": 666.8284277335616,
-        "sourceY": 508.9887492247004,
-        "targetX": 666.8284277335616,
-        "targetY": 560.9951909412963
-      },
-      {
-        "id": "vueflow__edge-0.x65scbd309aout-0.x65scbd309a-0.accmpdnxgzmin-0.accmpdnxgzm",
-        "type": "smoothstep",
-        "source": "0.x65scbd309a",
-        "target": "0.accmpdnxgzm",
-        "sourceHandle": "out-0.x65scbd309a",
-        "targetHandle": "in-0.accmpdnxgzm",
-        "data": {},
-        "label": "",
-        "sourceX": 666.3169837558406,
-        "sourceY": 70.98880465221615,
-        "targetX": 666.2772668586225,
-        "targetY": 126.80164715851126
-      },
-      {
-        "id": "vueflow__edge-0.accmpdnxgzmval-adapt-0.accmpdnxgzm-0.xq22qq3n1qjval-train-0.xq22qq3n1qj",
-        "type": "smoothstep",
-        "source": "0.accmpdnxgzm",
-        "target": "0.xq22qq3n1qj",
-        "sourceHandle": "val-adapt-0.accmpdnxgzm",
-        "targetHandle": "val-train-0.xq22qq3n1qj",
-        "data": {
-          "key": "adapt"
+        "animated": false,
+        "animationSpeed": 0.5,
+        "style": {
+          "stroke": "green",
+          "strokeWidth": 2
         },
-        "label": "",
-        "sourceX": 757.666418394708,
-        "sourceY": 201.8079298096844,
-        "targetX": 853.7567996645778,
-        "targetY": 634.5521477525938
+        "sourceX": 404.73858579137374,
+        "sourceY": 572.3266080027985,
+        "targetX": 404.73858579137374,
+        "targetY": 626.9052422855144
       },
       {
-        "id": "vueflow__edge-0.accmpdnxgzmout-0.accmpdnxgzm-0.dq08q9e87chin-0.dq08q9e87ch",
+        "id": "vueflow__edge-0.di77hewn007out-0.di77hewn007-0.u6mho59r5cin-0.u6mho59r5c",
         "type": "smoothstep",
-        "source": "0.accmpdnxgzm",
-        "target": "0.dq08q9e87ch",
-        "sourceHandle": "out-0.accmpdnxgzm",
-        "targetHandle": "in-0.dq08q9e87ch",
+        "source": "0.di77hewn007",
+        "target": "0.u6mho59r5c",
+        "sourceHandle": "out-0.di77hewn007",
+        "targetHandle": "in-0.u6mho59r5c",
         "data": {},
         "label": "",
-        "sourceX": 666.2772668586225,
-        "sourceY": 236.81638683611078,
-        "targetX": 666.3744230662084,
-        "targetY": 325.80161020683414
-      },
-      {
-        "id": "vueflow__edge-0.dq08q9e87chout-0.dq08q9e87ch-0.chj63w1q2u6in-0.chj63w1q2u6",
-        "type": "smoothstep",
-        "source": "0.dq08q9e87ch",
-        "target": "0.chj63w1q2u6",
-        "sourceHandle": "out-0.dq08q9e87ch",
-        "targetHandle": "in-0.chj63w1q2u6",
-        "data": {},
-        "label": "",
-        "sourceX": 666.3744230662084,
-        "sourceY": 379.8154180093251,
-        "targetX": 666.8284277335616,
-        "targetY": 454.99519094129636
-      },
-      {
-        "id": "vueflow__edge-0.8bszg84j0wwval-inputs-0.8bszg84j0ww-0.x65scbd309ain-0.x65scbd309a",
-        "type": "smoothstep",
-        "source": "0.8bszg84j0ww",
-        "target": "0.x65scbd309a",
-        "sourceHandle": "val-inputs-0.8bszg84j0ww",
-        "targetHandle": "in-0.x65scbd309a",
-        "data": {
-          "key": "inputs"
+        "animated": false,
+        "animationSpeed": 0.5,
+        "style": {
+          "stroke": "green",
+          "strokeWidth": 2
         },
-        "label": "",
-        "sourceX": 486.68194026425505,
-        "sourceY": 310.8079298096844,
-        "targetX": 666.3169837558406,
-        "targetY": 16.99522789297351
+        "sourceX": 405.316650390625,
+        "sourceY": 235,
+        "targetX": 405.0745385147677,
+        "targetY": 292.5644988491333
       },
       {
-        "id": "vueflow__edge-0.h9ht3sxzctpout-0.h9ht3sxzctp-0.8bszg84j0wwval-outputs-0.8bszg84j0ww",
+        "id": "vueflow__edge-0.u6mho59r5cout-0.u6mho59r5c-0.1363galch9cin-0.1363galch9c",
         "type": "smoothstep",
-        "source": "0.h9ht3sxzctp",
-        "target": "0.8bszg84j0ww",
-        "sourceHandle": "out-0.h9ht3sxzctp",
-        "targetHandle": "val-outputs-0.8bszg84j0ww",
+        "source": "0.u6mho59r5c",
+        "target": "0.1363galch9c",
+        "sourceHandle": "out-0.u6mho59r5c",
+        "targetHandle": "in-0.1363galch9c",
         "data": {},
         "label": "",
-        "sourceX": 666.8284277335616,
-        "sourceY": 614.9888231280547,
-        "targetX": 486.68194026425505,
-        "targetY": 354.8217006604982
-      },
-      {
-        "id": "vueflow__edge-0.8bszg84j0wwout-0.8bszg84j0ww-0.7uxn1yptkb4in-0.7uxn1yptkb4",
-        "type": "smoothstep",
-        "source": "0.8bszg84j0ww",
-        "target": "0.7uxn1yptkb4",
-        "sourceHandle": "out-0.8bszg84j0ww",
-        "targetHandle": "in-0.7uxn1yptkb4",
-        "data": {},
-        "label": "",
-        "sourceX": 435.7950786495851,
-        "sourceY": 389.8100190228692,
-        "targetX": 435.76460821120673,
-        "targetY": 663.7541570382805
-      },
-      {
-        "id": "vueflow__edge-0.xq22qq3n1qjval-train-0.xq22qq3n1qj-0.7uxn1yptkb4val-x-0.7uxn1yptkb4",
-        "type": "smoothstep",
-        "source": "0.xq22qq3n1qj",
-        "target": "0.7uxn1yptkb4",
-        "sourceHandle": "val-train-0.xq22qq3n1qj",
-        "targetHandle": "val-x-0.7uxn1yptkb4",
-        "data": {
-          "key": "train"
+        "animated": false,
+        "animationSpeed": 0.5,
+        "style": {
+          "stroke": "green",
+          "strokeWidth": 2
         },
+        "sourceX": 405.0745385147677,
+        "sourceY": 348.5644988491333,
+        "targetX": 405.35400256903057,
+        "targetY": 404.2297857266658
+      },
+      {
+        "id": "vueflow__edge-0.1363galch9cout-0.1363galch9c-0.260bbmwtfk6in-0.260bbmwtfk6",
+        "type": "smoothstep",
+        "source": "0.1363galch9c",
+        "target": "0.260bbmwtfk6",
+        "sourceHandle": "out-0.1363galch9c",
+        "targetHandle": "in-0.260bbmwtfk6",
+        "data": {},
         "label": "",
-        "sourceX": 853.7567996645778,
-        "sourceY": 634.5521477525938,
-        "targetX": 520.272248908687,
-        "targetY": 738.740264073721
+        "animated": false,
+        "animationSpeed": 0.5,
+        "style": {
+          "stroke": "green",
+          "strokeWidth": 2
+        },
+        "sourceX": 405.35400256903057,
+        "sourceY": 460.2297857266658,
+        "targetX": 404.73858579137374,
+        "targetY": 516.3266080027985
+      },
+      {
+        "id": "vueflow__edge-0.krzpfhhcujout-0.krzpfhhcuj-0.lq5n7lqjfxfin-0.lq5n7lqjfxf",
+        "type": "smoothstep",
+        "source": "0.krzpfhhcuj",
+        "target": "0.lq5n7lqjfxf",
+        "sourceHandle": "out-0.krzpfhhcuj",
+        "targetHandle": "in-0.lq5n7lqjfxf",
+        "data": {},
+        "label": "",
+        "animated": false,
+        "animationSpeed": 0.5,
+        "style": {
+          "stroke": "teal",
+          "strokeWidth": 2
+        },
+        "sourceX": 166.1999969482422,
+        "sourceY": 324,
+        "targetX": 166,
+        "targetY": 747
+      },
+      {
+        "id": "vueflow__edge-0.lja62xohk3out-0.lja62xohk3-0.krzpfhhcujval-output-0.krzpfhhcuj",
+        "type": "smoothstep",
+        "source": "0.lja62xohk3",
+        "target": "0.krzpfhhcuj",
+        "sourceHandle": "out-0.lja62xohk3",
+        "targetHandle": "val-output-0.krzpfhhcuj",
+        "data": {},
+        "label": "",
+        "animated": false,
+        "animationSpeed": 0.5,
+        "style": {
+          "stroke": "green",
+          "strokeWidth": 2
+        },
+        "sourceX": 404.73858579137374,
+        "sourceY": 682.9052422855144,
+        "targetX": 233.39999389648438,
+        "targetY": 252
+      },
+      {
+        "id": "vueflow__edge-0.krzpfhhcujval-input-0.krzpfhhcuj-0.di77hewn007in-0.di77hewn007",
+        "type": "smoothstep",
+        "source": "0.krzpfhhcuj",
+        "target": "0.di77hewn007",
+        "sourceHandle": "val-input-0.krzpfhhcuj",
+        "targetHandle": "in-0.di77hewn007",
+        "data": {},
+        "label": "",
+        "animated": false,
+        "animationSpeed": 0.5,
+        "style": {
+          "stroke": "green",
+          "strokeWidth": 2
+        },
+        "sourceX": 233.39999389648438,
+        "sourceY": 212,
+        "targetX": 405.316650390625,
+        "targetY": 179
+      },
+      {
+        "id": "vueflow__edge-0.u762xd3km5val-train-0.u762xd3km5-0.lq5n7lqjfxfval-data-0.lq5n7lqjfxf",
+        "type": "smoothstep",
+        "source": "0.u762xd3km5",
+        "target": "0.lq5n7lqjfxf",
+        "sourceHandle": "val-train-0.u762xd3km5",
+        "targetHandle": "val-data-0.lq5n7lqjfxf",
+        "data": {},
+        "label": "",
+        "animated": false,
+        "animationSpeed": 0.5,
+        "style": {
+          "stroke": "#ff5722",
+          "strokeWidth": 2
+        },
+        "sourceX": 602.6666870117188,
+        "sourceY": 683,
+        "targetX": 250,
+        "targetY": 811
       }
     ],
-    "position": [398.47760036122645, 96.99525915646518],
-    "zoom": 0.8258776649357199,
+    "position": [463.2932659739258, 161.84924115727563],
+    "zoom": 0.5241312377584643,
     "viewport": {
-      "x": 398.47760036122645,
-      "y": 96.99525915646518,
-      "zoom": 0.8258776649357199
+      "x": 463.2932659739258,
+      "y": 161.84924115727563,
+      "zoom": 0.5241312377584643
     }
   },
   "unlockNodes": [],
   "steps": [
     {
-      "text": "",
+      "text": "Hey there! Welcome back! Did you know that artificial intelligence has been around for over 60 years? However, the incredible breakthroughs we’ve seen in AI only started in the last decade. Enough history—let’s dive back into your project!",
       "narrator": "LeNet-5",
       "addNodes": [],
       "addEdges": [],
+      "modifyNodes": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    },
+    {
+      "text": "Click the Start Training button at the top of the screen to finally train your model!",
+      "narrator": "LeNet-5",
+      "addNodes": [],
+      "addEdges": [],
+      "modifyNodes": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": [],
+      "trainingEnabled": true
+    },
+    {
+      "text": "Once you start training, results will appear just to the right of the Start Training button. These results include several values, but let’s focus on the most important one: accuracy.",
+      "narrator": "LeNet-5",
+      "addNodes": [],
+      "addEdges": [],
+      "modifyNodes": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": [],
+      "trainingEnabled": true
+    },
+    {
+      "text": "Accuracy tells you how well your model is performing. It’s the percentage of images that your model correctly identifies. Your model should achieve an accuracy of around 85% to 95%. ",
+      "narrator": "LeNet-5",
+      "addNodes": [],
+      "addEdges": [],
+      "modifyNodes": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    },
+    {
+      "text": "This is a solid start, as reaching 100% accuracy is nearly impossible due to the complexity of the task. Want to boost your model's performance? You can improve its accuracy by letting it train for more time. This is where the concept of epochs comes in.",
+      "narrator": "LeNet-5",
+      "addNodes": [],
+      "addEdges": [],
+      "modifyNodes": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    },
+    {
+      "text": "Training a model is like navigating a maze, with each move guided by advisors (the dataset). An epoch is one round of consulting all the advisors. Revisiting them multiple times deepens your understanding of the maze, increasing your chances of finding the best path.",
+      "narrator": "LeNet-5",
+      "addNodes": [],
+      "addEdges": [],
+      "modifyNodes": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    },
+    {
+      "text": "To adjust the number of epochs, click on the Fit node and set the epochs to 10.",
+      "narrator": "LeNet-5",
+      "addNodes": [],
+      "addEdges": [],
+      "modifyNodes": [
+        {
+          "id": "0.lq5n7lqjfxf",
+          "data": {
+            "epochs": 10,
+            "name": "model"
+          }
+        }
+      ],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": [
+        {
+          "type": "fit",
+          "data": ["epochs"]
+        }
+      ]
+    },
+    {
+      "text": "Now, hit the Start Training button again and pay attention to how the accuracy improves over time. After each epoch, your model will get better at recognizing digits.",
+      "narrator": "LeNet-5",
+      "addNodes": [],
+      "addEdges": [],
+      "modifyNodes": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": [],
+      "trainingEnabled": true
+    },
+    {
+      "text": "By the end of training, your accuracy should climb to around 99%. That means your model can correctly identify 99 out of 100 digits in the MNIST dataset! Incredible, isn’t it? But wait—there’s more! Let’s take a look at how your model’s accuracy improves visually.",
+      "narrator": "LeNet-5",
+      "addNodes": [],
+      "addEdges": [],
+      "modifyNodes": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    },
+    {
+      "text": "Head over to the VISUALIZER section on the toolbar on the left-hand side. Drag the Line Chart node onto the canvas. Then, go to its settings, find the y_label, and set it to accuracy.",
+      "narrator": "LeNet-5",
+      "addNodes": [
+        {
+          "id": "0.1x1z1z1z1z1",
+          "type": "line-chart",
+          "data": {
+            "x_label": "epoch",
+            "y_label": "loss"
+          },
+          "identifier": "line-chart",
+          "group_identifier": "visualizer"
+        }
+      ],
+      "addEdges": [],
+      "modifyNodes": [
+        {
+          "id": "0.1x1z1z1z1z1",
+          "data": {
+            "y_label": "accuracy"
+          }
+        }
+      ],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": ["line-chart"],
+      "unlockNodes": [
+        {
+          "type": "line-chart",
+          "data": ["x_label", "y_label"]
+        }
+      ]
+    },
+    {
+      "text": "Connect the visualizers in the Fit node to the Line Chart. This will send the results of each epoch to the Line Chart.",
+      "narrator": "LeNet-5",
+      "addNodes": [],
+      "addEdges": [
+        {
+          "id": "vueflow__edge-0.lq5n7lqjfxfval-visualizers-0.lq5n7lqjfxf-0.1x1z1z1z1z1in-0.1x1z1z1z1z1",
+          "type": "smoothstep",
+          "source": "0.lq5n7lqjfxf",
+          "target": "0.1x1z1z1z1z1",
+          "sourceHandle": "val-visualizers-0.lq5n7lqjfxf",
+          "targetHandle": "in-0.1x1z1z1z1z1",
+          "data": {},
+          "label": "",
+          "animated": false,
+          "animationSpeed": 0.5,
+          "style": {
+            "stroke": "purple",
+            "strokeWidth": 2
+          }
+        }
+      ],
+      "modifyNodes": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": [],
+      "trainingEnabled": true
+    },
+    {
+      "text": "Great job! Now hit the Start Training button again, and watch the line chart come to life.",
+      "narrator": "LeNet-5",
+      "addNodes": [],
+      "addEdges": [],
+      "modifyNodes": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": [],
+      "trainingEnabled": true
+    },
+    {
+      "text": "As training progresses, you’ll see the accuracy line steadily rise. This shows how your model learns more about the digits in the MNIST dataset with each epoch.",
+      "narrator": "LeNet-5",
+      "addNodes": [],
+      "addEdges": [],
+      "modifyNodes": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": [],
+      "trainingEnabled": true
+    },
+    {
+      "text": "Congratulations! You’ve successfully built, trained, and visualized your very own neural network. Fantastic work!",
+      "narrator": "LeNet-5",
+      "addNodes": [],
+      "addEdges": [],
+      "modifyNodes": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    },
+    {
+      "text": "Thanks for sticking around until the end! This is just the beginning of your journey into AI. We’d love to hear your feedback and suggestions so we can keep improving these tutorials. If you’re interested, check out additional tutorials predicting wine quality. Or, explore the WhiteMind Editor to experiment and create your own projects.",
+      "narrator": "WhiteMind Team",
+      "addNodes": [],
+      "addEdges": [],
+      "modifyNodes": [],
+      "removeNodes": [],
+      "removeEdges": [],
+      "highlightNodeTypes": [],
+      "unlockNodes": []
+    },
+    {
+      "text": "Have an amazing day! I can’t wait to see you again.",
+      "narrator": "LeNet-5",
+      "addNodes": [],
+      "addEdges": [],
+      "modifyNodes": [],
       "removeNodes": [],
       "removeEdges": [],
       "highlightNodeTypes": [],

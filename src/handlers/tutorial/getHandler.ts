@@ -9,14 +9,24 @@ export const getHandler = async (req: Request, res: Response) => {
       msg: 'You need to be authenticated to access this resource.',
     });
   }
+  let tutorial;
+  if (req.body.tutorialId !== undefined) {
+    tutorial = await TutorialModel.findOne({
+      _id: req.body.tutorialId,
+      visibility: 'public',
+    });
+  } else if (req.body.tutorialName !== undefined) {
+    tutorial = await TutorialModel.findOne({
+      name: req.body.tutorialName,
+      visibility: 'public',
+    });
+  } else {
+    return res.status(400).json({
+      msg: 'You need to provide either a tutorialId or tutorialName.',
+    });
+  }
 
-  const tutorial = await TutorialModel.findOne({
-    _id: req.body.tutorialId,
-    visibility: 'public',
-  });
-
-  const tutorialExists = tutorial !== null;
-  if (!tutorialExists) {
+  if (tutorial === null) {
     return res.status(404).json({ msg: 'Tutorial not found' });
   }
 
@@ -52,12 +62,24 @@ export const getHandler = async (req: Request, res: Response) => {
     tutorialStarted: false,
     currentStep: 0,
     projectId: null,
+    isUnlocked: true,
   } as any;
 
-  const tutorialCompleted = user!.completedTutorials.some(
+  for (const requiredTutorialId of tutorial.requiredTutorials) {
+    if (
+      !user!.completedTutorials.some(
+        (completedTutorialId) =>
+          completedTutorialId.toString() === requiredTutorialId.toString()
+      )
+    ) {
+      responseJson.isUnlocked = false;
+      break;
+    }
+  }
+
+  responseJson.tutorialCompleted = user!.completedTutorials.some(
     (tutorialId) => tutorialId.toString() === tutorial._id.toString()
   );
-  responseJson.tutorialCompleted = tutorialCompleted;
 
   const project = await ProjectModel.findOne({
     ownerId: user!._id,

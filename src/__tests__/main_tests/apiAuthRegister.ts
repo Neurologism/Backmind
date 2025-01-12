@@ -3,7 +3,7 @@ import { z } from 'zod';
 import { Express } from 'express';
 
 const registerResponseSchema = z.object({
-  token: z.string(),
+  token: z.string().optional(),
 });
 
 export default (app: Express) => {
@@ -16,6 +16,7 @@ export default (app: Express) => {
           brainetTag: 'test',
           plainPassword: 'test1234',
         },
+        agreedToTermsOfServiceAndPrivacyPolicy: true,
       });
 
     expect(response.status).toBe(201);

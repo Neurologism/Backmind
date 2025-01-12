@@ -41,6 +41,7 @@ export const getHandler = async (
     dateLastEdited: project.dateLastEdited,
     tasks: project.tasks,
     components: project.components,
+    isTutorialProject: project.isTutorialProject,
   };
   return { project: projectJson };
 };

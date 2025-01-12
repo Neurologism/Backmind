@@ -8,8 +8,14 @@ importers:
   .:
     dependencies:
       '@fastify/helmet':
-        specifier: ^13.0.1
-        version: 13.0.1
+        specifier: ^9.0.0
+        version: 9.0.0
+      '@fastify/passport':
+        specifier: ^3.0.1
+        version: 3.0.1
+      '@fastify/secure-session':
+        specifier: 7.3.0
+        version: 7.3.0
       '@nestjs/common':
         specifier: ^10.4.15
         version: 10.4.15(reflect-metadata@0.2.2)(rxjs@7.8.1)
@@ -504,6 +510,12 @@ packages:
         integrity: sha512-LwdXQJjmMD+GwLOkP7TVC68qa+pSSogeWWmznRJ/coyTcfe9qA05AHFSe1eZFwK6q+xVRpChnvFUkf1iYaSZsQ==,
       }
 
+  '@fastify/cookie@9.4.0':
+    resolution:
+      {
+        integrity: sha512-Th+pt3kEkh4MQD/Q2q1bMuJIB5NX/D5SwSpOKu3G/tjoGbwfpurIMJsWSPS0SJJ4eyjtmQ8OipDQspf8RbUOlg==,
+      }
+
   '@fastify/cors@9.0.1':
     resolution:
       {
@@ -522,16 +534,22 @@ packages:
         integrity: sha512-aZAXGYo6m22Fk1zZzEUKBvut/CIIQe/BapEORnxiD5Qr0kPHqqI69NtEMCme74h+at72sPhbkb4ZrLd1W3KRLA==,
       }
 
+  '@fastify/flash@6.0.3':
+    resolution:
+      {
+        integrity: sha512-MyUvkiIR9zRqfMPCuWeTf8uyYpPhL+eZH4oSTxvqtbW+ifbo1Bk1SJtlrxmFgu52ZAAKUnYtI5OuSY9/GR22SA==,
+      }
+
   '@fastify/formbody@7.4.0':
     resolution:
       {
         integrity: sha512-H3C6h1GN56/SMrZS8N2vCT2cZr7mIHzBHzOBa5OPpjfB/D6FzP9mMpE02ZzrFX0ANeh0BAJdoXKOF2e7IbV+Og==,
       }
 
-  '@fastify/helmet@13.0.1':
+  '@fastify/helmet@9.0.0':
     resolution:
       {
-        integrity: sha512-i+ifqazG3d0HwHL3zuZdg6B/WPc9Ee6kVfGpwGho4nxm0UaK1htss0zq+1rVhOoAorZlCgTZ3/i4S58hUGkkoA==,
+        integrity: sha512-4xgKwVzLrGLy15QVGI0I5Up5fPb5/rinWTBEiglxf/jpbPqO/Z6BmClMRdMle8U+i2yJOUkGGyAPsgf+Bma7fg==,
       }
 
   '@fastify/merge-json-schemas@0.1.1':
@@ -545,6 +563,19 @@ packages:
       {
         integrity: sha512-+WHavMQr9CNTZoy2cjoDxoWp76kZ3JKjAtZj5sXNlxX5XBzHig0TeCPfPc+1+NQmliXtndT3PFwAjrQHE/6wnQ==,
       }
+
+  '@fastify/passport@3.0.1':
+    resolution:
+      {
+        integrity: sha512-23hMw7W2rJafea0uiWiWMpNyLFAORABNH2mFzlF4jmlimM8A1dtBuWoyQe/UsgDXtGeDKfyDMJvD5yzR4vY81w==,
+      }
+
+  '@fastify/secure-session@7.3.0':
+    resolution:
+      {
+        integrity: sha512-9d7CMZ2OrOVsrWtkCf60weyfhQcscrnboUdnETMAAhEyUXrZtO66Zu99DH/g/VfGW1mUU5tKHq7jCkm+itvDWA==,
+      }
+    hasBin: true
 
   '@img/sharp-darwin-arm64@0.33.5':
     resolution:
@@ -2857,6 +2888,13 @@ packages:
         integrity: sha512-QADzlaHc8icV8I7vbaJXJwod9HWYp8uCqf1xa4OfNu1T7JVxQIrUgOWtHdNDtPiywmFbiS12VjotIXLrKM3orQ==,
       }
 
+  cookie-signature@1.2.2:
+    resolution:
+      {
+        integrity: sha512-D76uU73ulSXrD1UXF4KE2TMxVVwhsnCgfAyTg9k8P6KGZjlXKrOLe4dJQKI3Bxi5wjesZoFXJWElNWBjPZMbhg==,
+      }
+    engines: { node: '>=6.6.0' }
+
   cookie@0.7.1:
     resolution:
       {
@@ -3507,6 +3545,12 @@ packages:
         integrity: sha512-5JnBCWpFlMo0a3ciDy/JckMzzv1U9coZrIhedq+HXxxUfDTAiS0LA8OKVao4G9BxmCVck/jtA5r3KAtRWEyD8Q==,
       }
 
+  fastify-plugin@3.0.1:
+    resolution:
+      {
+        integrity: sha512-qKcDXmuZadJqdTm6vlCqioEbyewF60b/0LOFCcYN1B6BIZGlYJumWWOYs70SFYLDAH4YqdE1cxH/RKMG7rFxgA==,
+      }
+
   fastify-plugin@4.5.1:
     resolution:
       {
@@ -3897,12 +3941,12 @@ packages:
       }
     engines: { node: '>= 0.4' }
 
-  helmet@8.0.0:
+  helmet@5.1.1:
     resolution:
       {
-        integrity: sha512-VyusHLEIIO5mjQPUI1wpOAEu+wl6Q0998jzTxqUYGE45xCIcAxy3MsbEK/yyJUJ3ADeMoB6MornPH6GMWAf+Pw==,
+        integrity: sha512-/yX0oVZBggA9cLJh8aw3PPCfedBnbd7J2aowjzsaWwZh7/UFY0nccn/aHAggIgWUFfnykX8GKd3a1pSbrmlcVQ==,
       }
-    engines: { node: '>=18.0.0' }
+    engines: { node: '>=12.0.0' }
 
   hexoid@2.0.0:
     resolution:
@@ -5132,6 +5176,13 @@ packages:
       encoding:
         optional: true
 
+  node-gyp-build@4.8.4:
+    resolution:
+      {
+        integrity: sha512-LA4ZjwlnUblHVgq0oBF3Jl/6h/Nvs5fzBLwdEF4nuxnFdsfajde4WfxtJr3CaiH+F6ewcIB/q4jQ4UzPyid+CQ==,
+      }
+    hasBin: true
+
   node-int64@0.4.0:
     resolution:
       {
@@ -6164,6 +6215,12 @@ packages:
         integrity: sha512-l5x7VUUWbjVFbafGLxPWkYsHIhEvmF85tbIeFZWc8ZPtoMyybuEhL7Jye/ooC4/d48FgOjSJXgsF/AJPYCW8Zw==,
       }
     engines: { node: '>= 10.0.0', npm: '>= 3.0.0' }
+
+  sodium-native@4.3.1:
+    resolution:
+      {
+        integrity: sha512-YdP64gAdpIKHfL4ttuX4aIfjeunh9f+hNeQJpE9C8UMndB3zkgZ7YmmGT4J2+v6Ibyp6Wem8D1TcSrtdW0bqtg==,
+      }
 
   sonic-boom@4.2.0:
     resolution:
@@ -7229,6 +7286,11 @@ snapshots:
       ajv-formats: 2.1.1(ajv@8.17.1)
       fast-uri: 2.4.0
 
+  '@fastify/cookie@9.4.0':
+    dependencies:
+      cookie-signature: 1.2.2
+      fastify-plugin: 4.5.1
+
   '@fastify/cors@9.0.1':
     dependencies:
       fastify-plugin: 4.5.1
@@ -7240,15 +7302,19 @@ snapshots:
     dependencies:
       fast-json-stringify: 5.16.1
 
+  '@fastify/flash@6.0.3':
+    dependencies:
+      fastify-plugin: 5.0.1
+
   '@fastify/formbody@7.4.0':
     dependencies:
       fast-querystring: 1.1.2
       fastify-plugin: 4.5.1
 
-  '@fastify/helmet@13.0.1':
+  '@fastify/helmet@9.0.0':
     dependencies:
-      fastify-plugin: 5.0.1
-      helmet: 8.0.0
+      fastify-plugin: 3.0.1
+      helmet: 5.1.1
 
   '@fastify/merge-json-schemas@0.1.1':
     dependencies:
@@ -7260,6 +7326,17 @@ snapshots:
       fastify-plugin: 4.5.1
       path-to-regexp: 6.3.0
       reusify: 1.0.4
+
+  '@fastify/passport@3.0.1':
+    dependencies:
+      '@fastify/flash': 6.0.3
+      fastify-plugin: 5.0.1
+
+  '@fastify/secure-session@7.3.0':
+    dependencies:
+      '@fastify/cookie': 9.4.0
+      fastify-plugin: 4.5.1
+      sodium-native: 4.3.1
 
   '@img/sharp-darwin-arm64@0.33.5':
     optionalDependencies:
@@ -8797,6 +8874,8 @@ snapshots:
 
   cookie-signature@1.0.6: {}
 
+  cookie-signature@1.2.2: {}
+
   cookie@0.7.1: {}
 
   cookie@1.0.2: {}
@@ -9144,6 +9223,8 @@ snapshots:
 
   fast-uri@3.0.5: {}
 
+  fastify-plugin@3.0.1: {}
+
   fastify-plugin@4.5.1: {}
 
   fastify-plugin@5.0.1: {}
@@ -9411,7 +9492,7 @@ snapshots:
     dependencies:
       function-bind: 1.1.2
 
-  helmet@8.0.0: {}
+  helmet@5.1.1: {}
 
   hexoid@2.0.0: {}
 
@@ -10280,6 +10361,8 @@ snapshots:
     dependencies:
       whatwg-url: 5.0.0
 
+  node-gyp-build@4.8.4: {}
+
   node-int64@0.4.0: {}
 
   node-releases@2.0.19: {}
@@ -10930,6 +11013,10 @@ snapshots:
     dependencies:
       ip-address: 9.0.5
       smart-buffer: 4.2.0
+
+  sodium-native@4.3.1:
+    dependencies:
+      node-gyp-build: 4.8.4
 
   sonic-boom@4.2.0:
     dependencies:

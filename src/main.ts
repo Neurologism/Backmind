@@ -26,6 +26,8 @@ import {
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
 import fastifyHelmet from '@fastify/helmet';
+import fastifySecureSession from '@fastify/secure-session';
+import fastifyPassport from '@fastify/passport';
 
 async function bootstrap() {
   await connectToDatabase();
@@ -35,6 +37,11 @@ async function bootstrap() {
   );
 
   await app.register(fastifyHelmet, { global: true });
+  await app.register(fastifySecureSession, {
+    key: process.env.SECRET_KEY as string,
+  });
+  await app.register(fastifyPassport.initialize());
+  await app.register(fastifyPassport.secureSession());
 
   app.enableCors({
     origin:

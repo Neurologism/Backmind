@@ -16,7 +16,6 @@ import {
 } from '@nestjs/common';
 import { Types } from 'mongoose';
 import { ParseObjectIdPipe } from 'pipes/parseObjectId.pipe';
-import { UserIdProvider } from 'providers/userId.provider';
 import { UpdateDto } from './dto/update.schema';
 import { UpdateEmailDto } from './dto/updateEmail.schema';
 import { deleteHandler } from './handlers/deleteHandler';
@@ -33,7 +32,6 @@ import { updateHandler } from './handlers/updateHandler';
 import { uploadPfpHandler } from './handlers/uploadPfpHandler';
 import { deleteEmailHandler } from './handlers/deleteEmailHandler';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { SkipAuth } from '../../decorators/skipAuth.decorator';
 
 let pfpUploadMulter;
 
@@ -41,8 +39,8 @@ let pfpUploadMulter;
 export class UsersController {
   constructor(private userIdProvider: UserIdProvider) {}
 
+  @Private()
   @Get('is-taken')
-  @SkipAuth()
   async isTaken(
     @Query('brainetTag') brainetTag: string,
     @Query('email') email: string

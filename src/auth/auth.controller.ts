@@ -1,9 +1,7 @@
 // handlers
-import { checkHandler } from './handlers/checkHandler';
 import { loginHandler } from './handlers/loginHandler';
 import { logoutAllHandler } from './handlers/logoutAllHandler';
 import { logoutHandler } from './handlers/logoutHandler';
-import { registerHandler } from './handlers/registerHandler';
 import { verifyEmailHandler } from './handlers/verifyEmailHandler';
 
 // dtos
@@ -13,7 +11,6 @@ import { RegisterDto } from './dto/register.schema';
 import {
   Controller,
   Post,
-  Get,
   Body,
   Delete,
   Query,
@@ -21,31 +18,18 @@ import {
   HttpException,
   HttpStatus,
 } from '@nestjs/common';
-import { SkipAuth } from 'decorators/skipAuth.decorator';
 import { AppLogger } from '../../providers/logger.provider';
-import { UserIdProvider } from 'providers/userId.provider';
+import { AuthService } from './auth.service';
+import { Public } from './strategies/jwt.strategy';
 
 @Controller('auth')
 export class AuthController {
   constructor(
     private readonly logger: AppLogger,
-    private userIdProvider: UserIdProvider
+    private readonly authService: AuthService
   ) {}
 
-  @Get('check')
-  async check() {
-    try {
-      const userId = this.userIdProvider.getUserId();
-      return await checkHandler(userId);
-    } catch (error) {
-      throw new HttpException(
-        (error as any).message,
-        HttpStatus.INTERNAL_SERVER_ERROR
-      );
-    }
-  }
-
-  @SkipAuth()
+  @Public()
   @Post('login')
   async login(@Body() body: LoginDto) {
     try {
@@ -58,11 +42,11 @@ export class AuthController {
     }
   }
 
-  @SkipAuth()
+  @Public()
   @Post('register')
   async register(@Body() body: RegisterDto) {
     try {
-      return await registerHandler(body, this.logger);
+      return await this.authService.register(body, this.logger);
     } catch (error) {
       throw new HttpException(
         (error as any).message,

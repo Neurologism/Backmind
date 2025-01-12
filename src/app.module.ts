@@ -14,10 +14,10 @@ import { UsersModule } from './users/users.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { APP_GUARD } from '@nestjs/core';
-import { AuthGuard } from 'guards/auth.guard';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { AppLogger } from '../providers/logger.provider';
 import { UserIdProvider } from '../providers/userId.provider';
+import { JwtAuthGuard } from './auth/jwt-auth.guard';
 
 @Module({
   imports: [
@@ -49,11 +49,11 @@ import { UserIdProvider } from '../providers/userId.provider';
     AppService,
     {
       provide: APP_GUARD,
-      useClass: AuthGuard,
+      useClass: ThrottlerGuard,
     },
     {
       provide: APP_GUARD,
-      useClass: ThrottlerGuard,
+      useClass: JwtAuthGuard,
     },
     AppLogger,
     UserIdProvider,

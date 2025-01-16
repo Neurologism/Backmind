@@ -1,26 +1,14 @@
 import { ProjectModel } from '../../../mongooseSchemas/project.schema';
 import { QueueItemModel } from '../../../mongooseSchemas/queueItem.schema';
 import { TaskModel } from '../../../mongooseSchemas/task.schema';
-import { UserModel } from '../../../mongooseSchemas/user.schema';
-import {
-  UnauthorizedException,
-  NotFoundException,
-  HttpException,
-  HttpStatus,
-} from '@nestjs/common';
+import { UserDocument } from '../../../mongooseSchemas/user.schema';
+import { NotFoundException, HttpException, HttpStatus } from '@nestjs/common';
 import { TrainingStartDto } from '../dto/trainingStart.schema';
-import { Types } from 'mongoose';
 
 export const trainingStartHandler = async (
   body: TrainingStartDto,
-  userId: Types.ObjectId
+  user: UserDocument
 ) => {
-  if (!userId) {
-    throw new UnauthorizedException(
-      'You need to be authenticated to access this resource.'
-    );
-  }
-
   const project = await ProjectModel.findOne({
     _id: body.project._id,
   });
@@ -31,7 +19,7 @@ export const trainingStartHandler = async (
     );
   }
 
-  const isProjectOwner = project.ownerId?.toString() === userId.toString();
+  const isProjectOwner = project.ownerId?.toString() === user._id.toString();
 
   if (!isProjectOwner) {
     throw new NotFoundException(
@@ -47,11 +35,10 @@ export const trainingStartHandler = async (
   }
 
   let priority = 0;
-  let user = await UserModel.findOne({ _id: userId });
-  if (user != null && user.admin) {
+  if (user.admin) {
     priority = 200;
   }
-  if (user != null && user.premiumTier) {
+  if (user.premiumTier) {
     priority = 100;
   }
   const insertResult = await new TaskModel({
@@ -63,7 +50,7 @@ export const trainingStartHandler = async (
     dateStarted: null,
     dateFinished: null,
     projectId: project._id,
-    ownerId: userId,
+    ownerId: user._id,
   }).save();
   const taskId = insertResult._id;
   await new QueueItemModel({ taskId: taskId, priority: priority }).save();

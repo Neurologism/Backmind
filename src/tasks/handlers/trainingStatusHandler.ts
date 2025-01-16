@@ -1,10 +1,11 @@
 import { TaskModel } from 'mongooseSchemas/task.schema';
 import { Types } from 'mongoose';
 import { HttpException, HttpStatus } from '@nestjs/common';
+import { UserDocument } from '../../../mongooseSchemas/user.schema';
 
 export const trainingStatusHandler = async (
   taskId: Types.ObjectId,
-  userId: Types.ObjectId
+  user: UserDocument
 ) => {
   const task = await TaskModel.findOne({ _id: taskId });
   if (task === null) {
@@ -13,7 +14,7 @@ export const trainingStatusHandler = async (
       HttpStatus.NOT_FOUND
     );
   }
-  if (task.ownerId.toString() !== userId.toString()) {
+  if (task.ownerId.toString() !== user._id.toString()) {
     throw new HttpException('Not authorized.', HttpStatus.FORBIDDEN);
   }
 

@@ -1,19 +1,12 @@
-import { UserModel } from '../../../mongooseSchemas/user.schema';
-import { Types } from 'mongoose';
+import { UserDocument } from '../../../mongooseSchemas/user.schema';
 import { HttpException, HttpStatus } from '@nestjs/common';
 
 export const deleteEmailHandler = async (
-  userId: Types.ObjectId,
+  user: UserDocument,
   emailType: string
 ) => {
-  const user = await UserModel.findById({ _id: userId });
-
-  if (!user) {
-    throw new HttpException('User not found', HttpStatus.NOT_FOUND);
-  }
-
   const secondaryEmail = user.emails.find(
-    (email) => email.emailType === emailType
+    (email: { emailType: string }) => email.emailType === emailType
   );
 
   if (!secondaryEmail) {
@@ -23,7 +16,9 @@ export const deleteEmailHandler = async (
     );
   }
 
-  user.emails = user.emails.filter((email) => email.emailType !== emailType);
+  user.emails = user.emails.filter(
+    (email: { emailType: string }) => email.emailType !== emailType
+  );
   await user.save();
 
   return { msg: 'Email deleted successfully' };

@@ -13,19 +13,20 @@ import { getHandler } from './handlers/getHandler';
 import { getByNameHandler } from './handlers/getByNameHandler';
 import { setStateHandler } from './handlers/setStateHandler';
 import { SetStateDto } from './dto/setState.schema';
-import { UserIdProvider } from 'providers/userId.provider';
+import { UserDocument } from '../../mongooseSchemas/user.schema';
+import { User } from '../../decorators/user.decorator';
 
 @Controller('tutorials')
 export class TutorialsController {
-  constructor(private userIdProvider: UserIdProvider) {}
+  constructor() {}
 
   @Get(':tutorialId')
   async get(
-    @Param('tutorialId', ParseObjectIdPipe) tutorialId: Types.ObjectId
+    @Param('tutorialId', ParseObjectIdPipe) tutorialId: Types.ObjectId,
+    @User() user: UserDocument
   ) {
     try {
-      const userId = this.userIdProvider.getUserId();
-      return await getHandler(tutorialId, userId);
+      return await getHandler(tutorialId, user);
     } catch (error) {
       throw new HttpException(
         (error as any).message,
@@ -35,10 +36,12 @@ export class TutorialsController {
   }
 
   @Get('by-name/:tutorialName')
-  async getByName(@Param('tutorialName') tutorialName: string) {
+  async getByName(
+    @Param('tutorialName') tutorialName: string,
+    @User() user: UserDocument
+  ) {
     try {
-      const userId = this.userIdProvider.getUserId();
-      return await getByNameHandler(tutorialName, userId);
+      return await getByNameHandler(tutorialName, user);
     } catch (error) {
       throw new HttpException(
         (error as any).message,
@@ -50,11 +53,11 @@ export class TutorialsController {
   @Patch(':tutorialId')
   async setState(
     @Param('tutorialId', ParseObjectIdPipe) tutorialId: Types.ObjectId,
-    @Body() body: SetStateDto
+    @Body() body: SetStateDto,
+    @User() user: UserDocument
   ) {
     try {
-      const userId = this.userIdProvider.getUserId();
-      return await setStateHandler(tutorialId, body, userId);
+      return await setStateHandler(tutorialId, body, user);
     } catch (error) {
       throw new HttpException(
         (error as any).message,

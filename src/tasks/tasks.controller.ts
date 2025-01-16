@@ -16,17 +16,20 @@ import {
 } from '@nestjs/common';
 import { ParseObjectIdPipe } from 'pipes/parseObjectId.pipe';
 import { Types } from 'mongoose';
-import { UserIdProvider } from 'providers/userId.provider';
+import { User } from '../../decorators/user.decorator';
+import { UserDocument } from '../../mongooseSchemas/user.schema';
 
 @Controller('tasks')
 export class TasksController {
-  constructor(private userIdProvider: UserIdProvider) {}
+  constructor() {}
 
   @Post()
-  async trainingStart(@Body() body: TrainingStartDto) {
+  async trainingStart(
+    @Body() body: TrainingStartDto,
+    @User() user: UserDocument
+  ) {
     try {
-      const userId = this.userIdProvider.getUserId();
-      return await trainingStartHandler(body, userId);
+      return await trainingStartHandler(body, user);
     } catch (error) {
       throw new HttpException(
         (error as any).message,
@@ -37,11 +40,11 @@ export class TasksController {
 
   @Get(':taskId')
   async trainingStatus(
-    @Param('taskId', ParseObjectIdPipe) taskId: Types.ObjectId
+    @Param('taskId', ParseObjectIdPipe) taskId: Types.ObjectId,
+    @User() user: UserDocument
   ) {
     try {
-      const userId = this.userIdProvider.getUserId();
-      return await trainingStatusHandler(taskId, userId);
+      return await trainingStatusHandler(taskId, user);
     } catch (error) {
       throw new HttpException(
         (error as any).message,
@@ -52,11 +55,11 @@ export class TasksController {
 
   @Patch(':taskId')
   async trainingStop(
-    @Param('taskId', ParseObjectIdPipe) taskId: Types.ObjectId
+    @Param('taskId', ParseObjectIdPipe) taskId: Types.ObjectId,
+    @User() user: UserDocument
   ) {
     try {
-      const userId = this.userIdProvider.getUserId();
-      return await trainingStopHandler(taskId, userId);
+      return await trainingStopHandler(taskId, user);
     } catch (error) {
       throw new HttpException(
         (error as any).message,
@@ -66,10 +69,12 @@ export class TasksController {
   }
 
   @Delete(':taskId')
-  async deleteTask(@Param('taskId', ParseObjectIdPipe) taskId: Types.ObjectId) {
+  async deleteTask(
+    @Param('taskId', ParseObjectIdPipe) taskId: Types.ObjectId,
+    @User() user: UserDocument
+  ) {
     try {
-      const userId = this.userIdProvider.getUserId();
-      return await deleteTaskHandler(taskId, userId);
+      return await deleteTaskHandler(taskId, user);
     } catch (error) {
       throw new HttpException(
         (error as any).message,

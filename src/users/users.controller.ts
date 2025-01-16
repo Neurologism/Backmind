@@ -32,14 +32,12 @@ import { updateHandler } from './handlers/updateHandler';
 import { uploadPfpHandler } from './handlers/uploadPfpHandler';
 import { deleteEmailHandler } from './handlers/deleteEmailHandler';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { User } from '../../decorators/user.decorator';
 
 let pfpUploadMulter;
 
 @Controller('users')
 export class UsersController {
-  constructor(private userIdProvider: UserIdProvider) {}
-
-  @Private()
   @Get('is-taken')
   async isTaken(
     @Query('brainetTag') brainetTag: string,
@@ -56,10 +54,12 @@ export class UsersController {
   }
 
   @Get(':userId')
-  async get(@Param('userId', ParseObjectIdPipe) userId: Types.ObjectId) {
+  async get(
+    @Param('userId', ParseObjectIdPipe) userId: Types.ObjectId,
+    @User() user: any
+  ) {
     try {
-      const loggedInUserId = this.userIdProvider.getUserId();
-      return await getHandler(userId, loggedInUserId);
+      return await getHandler(userId, user);
     } catch (error) {
       throw new HttpException(
         (error as any).message,
@@ -69,10 +69,9 @@ export class UsersController {
   }
 
   @Get('by-name/:brainetTag')
-  async getByName(@Param('brainetTag') brainetTag: string) {
+  async getByName(@Param('brainetTag') brainetTag: string, @User() user: any) {
     try {
-      const loggedInUserId = this.userIdProvider.getUserId();
-      return await getByNameHandler(brainetTag, loggedInUserId);
+      return await getByNameHandler(brainetTag, user);
     } catch (error) {
       throw new HttpException(
         (error as any).message,
@@ -82,10 +81,9 @@ export class UsersController {
   }
 
   @Delete(':userId')
-  async delete() {
+  async delete(@User() user: any) {
     try {
-      const loggedInUserId = this.userIdProvider.getUserId();
-      return await deleteHandler(loggedInUserId);
+      return await deleteHandler(user);
     } catch (error) {
       throw new HttpException(
         (error as any).message,
@@ -95,10 +93,9 @@ export class UsersController {
   }
 
   @Patch(':userId')
-  async update(@Body() body: UpdateDto) {
+  async update(@Body() body: UpdateDto, @User() user: any) {
     try {
-      const loggedInUserId = this.userIdProvider.getUserId();
-      return await updateHandler(loggedInUserId, body);
+      return await updateHandler(user, body);
     } catch (error) {
       throw new HttpException(
         (error as any).message,
@@ -108,10 +105,9 @@ export class UsersController {
   }
 
   @Get(':userId/get-credits')
-  async getCredits() {
+  async getCredits(@User() user: any) {
     try {
-      const loggedInUserId = this.userIdProvider.getUserId();
-      return await getCreditsHandler(loggedInUserId);
+      return await getCreditsHandler(user);
     } catch (error) {
       throw new HttpException(
         (error as any).message,
@@ -133,10 +129,9 @@ export class UsersController {
   }
 
   @Patch(':userId/swap-primary-email')
-  async swapPrimaryEmail() {
+  async swapPrimaryEmail(@User() user: any) {
     try {
-      const loggedInUserId = this.userIdProvider.getUserId();
-      return await swapPrimaryEmailHandler(loggedInUserId);
+      return await swapPrimaryEmailHandler(user);
     } catch (error) {
       throw new HttpException(
         (error as any).message,
@@ -149,11 +144,11 @@ export class UsersController {
   @UseInterceptors(FileInterceptor('pfp', pfpUploadMulter))
   async uploadPfp(
     @Param('userId', ParseObjectIdPipe) userId: Types.ObjectId,
-    @UploadedFile() file: Express.Multer.File
+    @UploadedFile() file: Express.Multer.File,
+    @User() user: any
   ) {
     try {
-      const loggedInUserId = this.userIdProvider.getUserId();
-      return await uploadPfpHandler(loggedInUserId, file);
+      return await uploadPfpHandler(user, file);
     } catch (error) {
       throw new HttpException(
         (error as any).message,
@@ -163,10 +158,12 @@ export class UsersController {
   }
 
   @Post(':userId/followers')
-  async follow(@Param('userId', ParseObjectIdPipe) userId: Types.ObjectId) {
+  async follow(
+    @Param('userId', ParseObjectIdPipe) userId: Types.ObjectId,
+    @User() user: any
+  ) {
     try {
-      const loggedInUserId = this.userIdProvider.getUserId();
-      return await followHandler(userId, loggedInUserId);
+      return await followHandler(userId, user);
     } catch (error) {
       throw new HttpException(
         (error as any).message,
@@ -176,10 +173,12 @@ export class UsersController {
   }
 
   @Delete(':userId/followers')
-  async unfollow(@Param('userId', ParseObjectIdPipe) userId: Types.ObjectId) {
+  async unfollow(
+    @Param('userId', ParseObjectIdPipe) userId: Types.ObjectId,
+    @User() user: any
+  ) {
     try {
-      const loggedInUserId = this.userIdProvider.getUserId();
-      return await unfollowHandler(userId, loggedInUserId);
+      return await unfollowHandler(userId, user);
     } catch (error) {
       throw new HttpException(
         (error as any).message,
@@ -189,10 +188,9 @@ export class UsersController {
   }
 
   @Delete(':userId/emails')
-  async deleteEmail(@Query('emailType') emailType: string) {
+  async deleteEmail(@Query('emailType') emailType: string, @User() user: any) {
     try {
-      const loggedInUserId = this.userIdProvider.getUserId();
-      return await deleteEmailHandler(loggedInUserId, emailType);
+      return await deleteEmailHandler(user, emailType);
     } catch (error) {
       throw new HttpException(
         (error as any).message,
@@ -202,10 +200,9 @@ export class UsersController {
   }
 
   @Patch(':userId/emails')
-  async updateEmailHandler(@Body() body: UpdateEmailDto) {
+  async updateEmailHandler(@Body() body: UpdateEmailDto, @User() user: any) {
     try {
-      const loggedInUserId = this.userIdProvider.getUserId();
-      return await updateEmailHandler(loggedInUserId, body);
+      return await updateEmailHandler(user, body);
     } catch (error) {
       throw new HttpException(
         (error as any).message,

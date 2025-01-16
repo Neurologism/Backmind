@@ -116,4 +116,70 @@ export class AuthService {
 
     return await this.login(savedUser);
   }
+
+  async verifyEmail(token: string) {
+    const user = await UserModel.findOne({
+      emails: {
+        $elemMatch: { verificationToken: token },
+      },
+    });
+
+    if (user === null) {
+      throw new HttpException(
+        'Invalid verification token',
+        HttpStatus.BAD_REQUEST
+      );
+    }
+
+    const email = user.emails.find(
+      (email) => email.verificationToken === token
+    );
+
+    if (email === undefined) {
+      throw new HttpException(
+        'Invalid verification token',
+        HttpStatus.BAD_REQUEST
+      );
+    }
+
+    if (email.verified) {
+      throw new HttpException('Email already verified', HttpStatus.BAD_REQUEST);
+    }
+
+    if (email.dateVerificationSent === undefined) {
+      throw new HttpException(
+        'Invalid verification token',
+        HttpStatus.BAD_REQUEST
+      );
+    }
+
+    if (
+      (new Date().getTime() - email.dateVerificationSent.getTime()) / 60000 >=
+      Number(process.env.EMAIL_VERIFICATION_TOKEN_VALID_MINUTES)
+    ) {
+      throw new HttpException(
+        'Invalid verification token',
+        HttpStatus.BAD_REQUEST
+      );
+    }
+
+    email.verified = true;
+    email.dateVerified = new Date();
+
+    await user.save();
+
+    return await this.login(user);
+  }
+
+  async logout(user: any, token: string) {
+    user.tokens = user.tokens.filter((t: any) => t.token !== token);
+    await user.save();
+    return { msg: 'Logged out successfully' };
+  }
+
+  async logoutAll(user: any) {
+    user.tokens = [];
+    await user.save();
+    return { msg: 'Logged out from all devices successfully' };
+  }
 }

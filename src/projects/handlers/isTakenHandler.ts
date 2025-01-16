@@ -1,19 +1,15 @@
 import { ProjectModel } from '../../../mongooseSchemas/project.schema';
-import { UnauthorizedException, ConflictException } from '@nestjs/common';
-import { Types } from 'mongoose';
+import { ConflictException } from '@nestjs/common';
+import { UserDocument } from '../../../mongooseSchemas/user.schema';
 
 export const isTakenHandler = async (
   projectName: string,
-  userId: Types.ObjectId
+  user: UserDocument
 ) => {
-  if (!userId) {
-    throw new UnauthorizedException('You need to be logged in.');
-  }
-
   const nameTaken =
     (await ProjectModel.findOne({
       name: projectName,
-      ownerId: userId,
+      ownerId: user._id,
       isTutorialProject: false,
     })) !== null;
 

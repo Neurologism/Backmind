@@ -19,17 +19,18 @@ import {
 } from '@nestjs/common';
 import { Types } from 'mongoose';
 import { ParseObjectIdPipe } from 'pipes/parseObjectId.pipe';
-import { UserIdProvider } from 'providers/userId.provider';
+import { User } from '../../decorators/user.decorator';
+import { UserDocument } from '../../mongooseSchemas/user.schema';
 
 @Controller('projects')
 export class ProjectsController {
-  constructor(private userIdProvider: UserIdProvider) {}
-
   @Get('is-taken/:projectName')
-  async isTaken(@Param('projectName') projectName: string) {
+  async isTaken(
+    @Param('projectName') projectName: string,
+    @User() user: UserDocument
+  ) {
     try {
-      const userId = this.userIdProvider.getUserId();
-      return await isTakenHandler(projectName, userId);
+      return await isTakenHandler(projectName, user);
     } catch (error) {
       throw new HttpException(
         (error as any).message,
@@ -39,10 +40,9 @@ export class ProjectsController {
   }
 
   @Post()
-  async create(@Body() body: CreateDto) {
+  async create(@Body() body: CreateDto, @User() user: UserDocument) {
     try {
-      const userId = this.userIdProvider.getUserId();
-      return await createHandler(userId, body);
+      return await createHandler(user, body);
     } catch (error) {
       throw new HttpException(
         (error as any).message,
@@ -52,10 +52,12 @@ export class ProjectsController {
   }
 
   @Get(':projectId')
-  async get(@Param('projectId', ParseObjectIdPipe) projectId: Types.ObjectId) {
+  async get(
+    @Param('projectId', ParseObjectIdPipe) projectId: Types.ObjectId,
+    @User() user: UserDocument
+  ) {
     try {
-      const userId = this.userIdProvider.getUserId();
-      return await getHandler(projectId, userId);
+      return await getHandler(projectId, user);
     } catch (error) {
       throw new HttpException(
         (error as any).message,
@@ -66,11 +68,11 @@ export class ProjectsController {
 
   @Delete(':projectId')
   async delete(
-    @Param('projectId', ParseObjectIdPipe) projectId: Types.ObjectId
+    @Param('projectId', ParseObjectIdPipe) projectId: Types.ObjectId,
+    @User() user: UserDocument
   ) {
     try {
-      const userId = this.userIdProvider.getUserId();
-      return await deleteHandler(projectId, userId);
+      return await deleteHandler(projectId, user);
     } catch (error) {
       throw new HttpException(
         (error as any).message,
@@ -82,11 +84,11 @@ export class ProjectsController {
   @Patch(':projectId')
   async update(
     @Param('projectId', ParseObjectIdPipe) projectId: Types.ObjectId,
-    @Body() body: UpdateDto
+    @Body() body: UpdateDto,
+    @User() user: UserDocument
   ) {
     try {
-      const userId = this.userIdProvider.getUserId();
-      return await updateHandler(projectId, body, userId);
+      return await updateHandler(projectId, body, user);
     } catch (error) {
       throw new HttpException(
         (error as any).message,

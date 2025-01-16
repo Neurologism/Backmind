@@ -1,22 +1,9 @@
 import bcrypt from 'bcrypt';
-import { UserModel } from '../../../mongooseSchemas/user.schema';
-import { Types } from 'mongoose';
+import { UserDocument } from '../../../mongooseSchemas/user.schema';
 import { UpdateDto } from '../dto/update.schema';
 import { HttpException, HttpStatus } from '@nestjs/common';
 
-export const updateHandler = async (
-  userId: Types.ObjectId,
-  body: UpdateDto
-) => {
-  const user = await UserModel.findById(userId);
-
-  if (user === null) {
-    throw new HttpException(
-      'Authentication token invalid. Try relogging.',
-      HttpStatus.NOT_FOUND
-    );
-  }
-
+export const updateHandler = async (user: UserDocument, body: UpdateDto) => {
   if (body.user.oldPassword !== undefined) {
     const passwordsMatch = bcrypt.compareSync(
       body.user.oldPassword,

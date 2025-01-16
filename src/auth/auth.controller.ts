@@ -1,9 +1,3 @@
-// handlers
-import { loginHandler } from './handlers/loginHandler';
-import { logoutAllHandler } from './handlers/logoutAllHandler';
-import { logoutHandler } from './handlers/logoutHandler';
-import { verifyEmailHandler } from './handlers/verifyEmailHandler';
-
 // dtos
 import { LoginDto } from './dto/login.schema';
 import { RegisterDto } from './dto/register.schema';
@@ -21,6 +15,7 @@ import {
 import { AppLogger } from '../../providers/logger.provider';
 import { AuthService } from './auth.service';
 import { Public } from './strategies/jwt.strategy';
+import { User } from '../../decorators/user.decorator';
 
 @Controller('auth')
 export class AuthController {
@@ -33,7 +28,20 @@ export class AuthController {
   @Post('login')
   async login(@Body() body: LoginDto) {
     try {
-      return await loginHandler(body);
+      if (body.user.brainetTag) {
+        await this.authService.validateUserByBrainetTag(
+          body.user.brainetTag,
+          body.user.plainPassword
+        );
+      } else if (body.user.email) {
+        await this.authService.validateUserByEmail(
+          body.user.email,
+          body.user.plainPassword
+        );
+      } else {
+        throw new HttpException('Invalid credentials', HttpStatus.BAD_REQUEST);
+      }
+      return await this.authService.login(body.user);
     } catch (error) {
       throw new HttpException(
         (error as any).message,
@@ -56,10 +64,9 @@ export class AuthController {
   }
 
   @Delete('logout-all')
-  async logoutAll() {
+  async logoutAll(@User() user: any) {
     try {
-      const userId = this.userIdProvider.getUserId();
-      return await logoutAllHandler(userId);
+      return await this.authService.logoutAll(user);
     } catch (error) {
       throw new HttpException(
         (error as any).message,
@@ -69,10 +76,9 @@ export class AuthController {
   }
 
   @Delete('logout')
-  async logout(@Query('token') token: string) {
+  async logout(@Query('token') token: string, @User() user: any) {
     try {
-      const userId = this.userIdProvider.getUserId();
-      return await logoutHandler(userId, token);
+      return await this.authService.logout(token, user);
     } catch (error) {
       throw new HttpException(
         (error as any).message,
@@ -84,7 +90,7 @@ export class AuthController {
   @Patch('verify-email')
   async verifyEmail(@Query('token') token: string) {
     try {
-      return await verifyEmailHandler(token);
+      return await this.authService.verifyEmail(token);
     } catch (error) {
       throw new HttpException(
         (error as any).message,

@@ -1,24 +1,13 @@
-import { UserModel } from '../../../mongooseSchemas/user.schema';
+import { UserDocument, UserModel } from '../../../mongooseSchemas/user.schema';
 import { ProjectModel } from '../../../mongooseSchemas/project.schema';
 import { CreateDto } from '../dto/create.schema';
 import { HttpException, HttpStatus } from '@nestjs/common';
-import { Types } from 'mongoose';
 
-export const createHandler = async (
-  userId: Types.ObjectId,
-  body: CreateDto
-) => {
-  if (!userId) {
-    throw new HttpException(
-      'You need to be logged in to create a project.',
-      HttpStatus.UNAUTHORIZED
-    );
-  }
-
+export const createHandler = async (user: UserDocument, body: CreateDto) => {
   const nameTaken =
     (await ProjectModel.findOne({
       name: body.project.name,
-      ownerId: userId,
+      ownerId: user._id,
       isTutorialProject: false,
     })) !== null;
   if (nameTaken) {
@@ -28,13 +17,13 @@ export const createHandler = async (
   const project = new ProjectModel({
     name: body.project.name,
     description: body.project.description,
-    ownerId: userId,
+    ownerId: user._id,
     visibility: body.project.visibility,
   });
 
   const insertResult = await project.save();
   await UserModel.updateOne(
-    { _id: userId },
+    { _id: user._id },
     {
       $push: { projectIds: insertResult._id },
     }

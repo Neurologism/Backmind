@@ -1,10 +1,9 @@
-import { UserModel } from '../../../mongooseSchemas/user.schema';
+import { UserDocument, UserModel } from '../../../mongooseSchemas/user.schema';
 import { HttpException, HttpStatus } from '@nestjs/common';
-import { Types } from 'mongoose';
 
 export const getByNameHandler = async (
   brainetTag: string,
-  loggedInUserId: Types.ObjectId
+  loggedInUser: UserDocument
 ) => {
   const user = await UserModel.findOne({
     brainetTag: brainetTag,
@@ -16,7 +15,7 @@ export const getByNameHandler = async (
     );
   }
 
-  const ownsProfile = user._id.toString() === loggedInUserId?.toString();
+  const ownsProfile = user._id.toString() === loggedInUser._id?.toString();
 
   if (user.visibility === 'private' && !ownsProfile) {
     throw new HttpException(

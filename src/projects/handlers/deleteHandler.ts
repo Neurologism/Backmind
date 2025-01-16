@@ -1,24 +1,13 @@
-import { UserModel } from '../../../mongooseSchemas/user.schema';
+import { UserDocument, UserModel } from '../../../mongooseSchemas/user.schema';
 import { ProjectModel } from '../../../mongooseSchemas/project.schema';
 import { TaskModel } from '../../../mongooseSchemas/task.schema';
-import {
-  UnauthorizedException,
-  NotFoundException,
-  HttpException,
-  HttpStatus,
-} from '@nestjs/common';
+import { NotFoundException, HttpException, HttpStatus } from '@nestjs/common';
 import { Types } from 'mongoose';
 
 export const deleteHandler = async (
   projectId: Types.ObjectId,
-  userId: Types.ObjectId
+  user: UserDocument
 ) => {
-  if (!userId) {
-    throw new UnauthorizedException(
-      'You need to be authenticated to access this resource.'
-    );
-  }
-
   const project = await ProjectModel.findOne({
     _id: projectId,
   });
@@ -29,7 +18,7 @@ export const deleteHandler = async (
     );
   }
 
-  const isProjectOwner = project.ownerId?.toString() === userId.toString();
+  const isProjectOwner = project.ownerId?.toString() === user._id.toString();
 
   if (!isProjectOwner) {
     throw new HttpException(
@@ -45,7 +34,7 @@ export const deleteHandler = async (
   promises.push(TaskModel.deleteMany({ projectId: project._id }));
   promises.push(
     UserModel.updateOne(
-      { _id: userId },
+      { _id: user._id },
       {
         $pull: { projectIds: project._id },
       }

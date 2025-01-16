@@ -1,12 +1,5 @@
-import { UserModel } from '../../../mongooseSchemas/user.schema';
-import { Types } from 'mongoose';
-import { HttpException, HttpStatus } from '@nestjs/common';
+import { UserDocument } from '../../../mongooseSchemas/user.schema';
 
-export const getCreditsHandler = async (userId: Types.ObjectId) => {
-  const user = await UserModel.findById({ _id: userId });
-  if (!user) {
-    throw new HttpException('User not found', HttpStatus.NOT_FOUND);
-  }
-
+export const getCreditsHandler = async (user: UserDocument) => {
   return { remainingCredits: user.remainingCredits };
 };

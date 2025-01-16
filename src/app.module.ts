@@ -16,7 +16,6 @@ import { AppService } from './app.service';
 import { APP_GUARD } from '@nestjs/core';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { AppLogger } from '../providers/logger.provider';
-import { UserIdProvider } from '../providers/userId.provider';
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
 
 @Module({
@@ -56,7 +55,6 @@ import { JwtAuthGuard } from './auth/jwt-auth.guard';
       useClass: JwtAuthGuard,
     },
     AppLogger,
-    UserIdProvider,
   ],
   exports: [AppLogger],
 })

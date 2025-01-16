@@ -1,11 +1,10 @@
-import { UserModel } from '../../../mongooseSchemas/user.schema';
+import { UserDocument } from '../../../mongooseSchemas/user.schema';
 import sharp from 'sharp';
 import path from 'path';
-import { Types } from 'mongoose';
 import { HttpException, HttpStatus } from '@nestjs/common';
 
 export const uploadPfpHandler = async (
-  userId: Types.ObjectId,
+  user: UserDocument,
   file: Express.Multer.File
 ) => {
   if (!file) {
@@ -28,7 +27,7 @@ export const uploadPfpHandler = async (
     );
   }
 
-  const filename = `${userId}.png`;
+  const filename = `${user._id}.png`;
   const pfpPath = path.join(process.env.PFP_DIRECTORY as string, filename);
 
   await image
@@ -38,12 +37,6 @@ export const uploadPfpHandler = async (
     )
     .png()
     .toFile(pfpPath);
-
-  const user = await UserModel.findById(userId);
-
-  if (!user) {
-    throw new HttpException('User not found', HttpStatus.NOT_FOUND);
-  }
 
   user.pfpPath = pfpPath;
   await user.save();

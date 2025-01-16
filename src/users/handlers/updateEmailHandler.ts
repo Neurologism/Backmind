@@ -1,19 +1,12 @@
-import { UserModel } from '../../../mongooseSchemas/user.schema';
+import { UserDocument } from '../../../mongooseSchemas/user.schema';
 import { sendVerificationEmail } from '../../../utility/sendVerificationEmail';
-import { Types } from 'mongoose';
 import { UpdateEmailDto } from '../dto/updateEmail.schema';
 import { HttpException, HttpStatus } from '@nestjs/common';
 
 export const updateEmailHandler = async (
-  userId: Types.ObjectId,
+  user: UserDocument,
   body: UpdateEmailDto
 ) => {
-  const user = await UserModel.findById({ _id: userId });
-
-  if (!user) {
-    throw new HttpException('User not found', HttpStatus.NOT_FOUND);
-  }
-
   if (
     body.user.emailType === 'primary' &&
     user.emails.find((email) => email.emailType === 'primary' && email.verified)

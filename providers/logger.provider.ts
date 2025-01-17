@@ -7,10 +7,10 @@ export class AppLogger extends ConsoleLogger {
   private logFiles = {
     log: path.join(__dirname, '../../logs/app.log'),
     error: path.join(__dirname, '../../logs/error.log'),
-    warn: path.join(__dirname, '../logs/warn.log'),
-    debug: path.join(__dirname, '../logs/debug.log'),
-    verbose: path.join(__dirname, '../logs/verbose.log'),
-    combined: path.join(__dirname, '../logs/combined.log'),
+    warn: path.join(__dirname, '../../logs/warn.log'),
+    debug: path.join(__dirname, '../../logs/debug.log'),
+    verbose: path.join(__dirname, '../../logs/verbose.log'),
+    combined: path.join(__dirname, '../../logs/combined.log'),
   };
 
   private writeLog(level: keyof typeof this.logFiles, message: string) {

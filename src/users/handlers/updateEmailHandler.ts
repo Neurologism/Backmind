@@ -2,10 +2,12 @@ import { UserDocument } from '../../../mongooseSchemas/user.schema';
 import { sendVerificationEmail } from '../../../utility/sendVerificationEmail';
 import { UpdateEmailDto } from '../dto/updateEmail.schema';
 import { HttpException, HttpStatus } from '@nestjs/common';
+import { AppLogger } from '../../../providers/logger.provider';
 
 export const updateEmailHandler = async (
   user: UserDocument,
-  body: UpdateEmailDto
+  body: UpdateEmailDto,
+  logger: AppLogger
 ) => {
   if (
     body.user.emailType === 'primary' &&
@@ -17,7 +19,7 @@ export const updateEmailHandler = async (
     );
   }
 
-  let verifyEmailReturn = await sendVerificationEmail(body.user.email, user);
+  let verifyEmailReturn = await sendVerificationEmail(body.user.email, logger);
 
   if (user.emails.find((email) => email.emailType === body.user.emailType)) {
     user.emails = user.emails.filter(

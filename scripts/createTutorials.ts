@@ -24,7 +24,7 @@ const resetProjects = true;
 async function createTutorial(tutorialPath: string) {
   const tutorialJson = JSON.parse(
     fs.readFileSync(`./tutorials/${tutorialPath}`, 'utf8')
-  ) as any;
+  );
 
   if (await TutorialModel.findOne({ name: tutorialJson.name })) {
     const tutorial = await TutorialModel.findOne({ name: tutorialJson.name });

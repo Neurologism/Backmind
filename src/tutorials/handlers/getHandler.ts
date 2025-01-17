@@ -54,9 +54,9 @@ export const getHandler = async (
     tutorialCompleted: false,
     tutorialStarted: false,
     currentStep: 0,
-    projectId: null,
+    projectId: null as Types.ObjectId | null,
     isUnlocked: true,
-  } as any;
+  };
 
   for (const requiredTutorialId of tutorial.requiredTutorials) {
     if (
@@ -83,7 +83,7 @@ export const getHandler = async (
   const tutorialStarted = project !== null;
   if (tutorialStarted) {
     responseJson.tutorialStarted = true;
-    responseJson.currentStep = project.tutorialStep;
+    responseJson.currentStep = project.tutorialStep as number;
     responseJson.projectId = project._id;
   }
 

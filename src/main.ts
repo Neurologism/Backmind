@@ -21,20 +21,17 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY as string);
 import { connectToDatabase } from '../utility/connectToDatabase';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import {
-  FastifyAdapter,
-  NestFastifyApplication,
-} from '@nestjs/platform-fastify';
+import { FastifyAdapter } from '@nestjs/platform-fastify';
 import fastifyHelmet from '@fastify/helmet';
 import fastifySecureSession from '@fastify/secure-session';
 import fastifyPassport from '@fastify/passport';
 
 async function bootstrap() {
   await connectToDatabase();
-  const app = await NestFactory.create<NestFastifyApplication>(
+  const app = (await NestFactory.create(
     AppModule,
-    new FastifyAdapter()
-  );
+    new FastifyAdapter() as any
+  )) as any;
 
   await app.register(fastifyHelmet, { global: true });
   await app.register(fastifySecureSession, {

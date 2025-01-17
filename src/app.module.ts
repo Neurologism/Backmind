@@ -23,7 +23,7 @@ import { JwtAuthGuard } from './auth/jwt-auth.guard';
     MongooseModule.forRoot(process.env.MONGO_URI as string, {
       dbName: process.env.DB_NAME as string,
     }),
-    forwardRef(() => AuthModule),
+    AuthModule,
     ProjectsModule,
     TasksModule,
     TutorialsModule,

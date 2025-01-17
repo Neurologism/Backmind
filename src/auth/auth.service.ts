@@ -1,4 +1,4 @@
-import { UserModel } from '../../mongooseSchemas/user.schema';
+import { UserDocument, UserModel } from '../../mongooseSchemas/user.schema';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import bcrypt from 'bcrypt';
@@ -8,7 +8,7 @@ import { sendVerificationEmail } from '../../utility/sendVerificationEmail';
 export class AuthService {
   constructor(private jwtService: JwtService) {}
 
-  async validateUser(user: any, pass: string) {
+  async validateUser(user: UserDocument | null, pass: string) {
     if (user === null) {
       throw new HttpException('User not found', HttpStatus.NOT_FOUND);
     }

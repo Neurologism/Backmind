@@ -33,11 +33,15 @@ import { uploadPfpHandler } from './handlers/uploadPfpHandler';
 import { deleteEmailHandler } from './handlers/deleteEmailHandler';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { User } from '../../decorators/user.decorator';
+import { UserDocument } from '../../mongooseSchemas/user.schema';
+import { AppLogger } from '../../providers/logger.provider';
 
 let pfpUploadMulter;
 
 @Controller('users')
 export class UsersController {
+  constructor(private readonly logger: AppLogger) {}
+
   @Get('is-taken')
   async isTaken(
     @Query('brainetTag') brainetTag: string,
@@ -56,7 +60,7 @@ export class UsersController {
   @Get(':userId')
   async get(
     @Param('userId', ParseObjectIdPipe) userId: Types.ObjectId,
-    @User() user: any
+    @User() user: UserDocument
   ) {
     try {
       return await getHandler(userId, user);
@@ -202,7 +206,7 @@ export class UsersController {
   @Patch(':userId/emails')
   async updateEmailHandler(@Body() body: UpdateEmailDto, @User() user: any) {
     try {
-      return await updateEmailHandler(user, body);
+      return await updateEmailHandler(user, body, this.logger);
     } catch (error) {
       throw new HttpException(
         (error as any).message,

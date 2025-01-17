@@ -93,7 +93,7 @@ export class AuthService {
     const salt = await bcrypt.genSalt(Number(process.env.SALT_ROUNDS));
     const hashedPassword = await bcrypt.hash(body.user.plainPassword, salt);
 
-    let verifyEmailReturn = await sendVerificationEmail(
+    const verifyEmailReturn = await sendVerificationEmail(
       body.user.email,
       logger
     );

@@ -12,7 +12,7 @@ export const deleteHandler = async (user: UserDocument) => {
     throw new ConflictException('Cannot delete user with running tasks');
   }
 
-  let promises = [];
+  const promises = [];
 
   promises.push(
     ProjectModel.deleteMany({

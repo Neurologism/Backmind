@@ -19,7 +19,10 @@ export const updateEmailHandler = async (
     );
   }
 
-  let verifyEmailReturn = await sendVerificationEmail(body.user.email, logger);
+  const verifyEmailReturn = await sendVerificationEmail(
+    body.user.email,
+    logger
+  );
 
   if (user.emails.find((email) => email.emailType === body.user.emailType)) {
     user.emails = user.emails.filter(

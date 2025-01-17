@@ -18,7 +18,7 @@ export const getPfpHandler = async (userid: Types.ObjectId) => {
 
   try {
     return fs.readFileSync(pfpPath);
-  } catch (err) {
+  } catch {
     throw new HttpException(
       'There was an error sending the file.',
       HttpStatus.INTERNAL_SERVER_ERROR

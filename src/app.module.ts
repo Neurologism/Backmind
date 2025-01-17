@@ -1,10 +1,5 @@
 // src/app.module.ts
-import {
-  Module,
-  NestModule,
-  MiddlewareConsumer,
-  forwardRef,
-} from '@nestjs/common';
+import { Module, NestModule } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from './auth/auth.module';
 import { ProjectsModule } from './projects/projects.module';
@@ -61,7 +56,7 @@ import { JwtAuthGuard } from './auth/jwt-auth.guard';
 export class AppModule implements NestModule {
   constructor(private readonly appLogger: AppLogger) {}
 
-  configure(consumer: MiddlewareConsumer) {
+  configure() {
     this.appLogger.log('AppModule configured');
   }
 }

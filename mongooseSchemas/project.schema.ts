@@ -1,4 +1,4 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Prop, Schema, SchemaFactory, raw } from '@nestjs/mongoose';
 import {
   HydratedDocument,
   Document,
@@ -8,6 +8,114 @@ import {
 import mongoose from 'mongoose';
 
 export type ProjectDocument = HydratedDocument<Project>;
+
+@Schema()
+export class Node {
+  @Prop({ required: false })
+  id!: string;
+
+  @Prop({ required: false })
+  type!: string;
+
+  @Prop({ required: false })
+  initialized!: boolean;
+
+  @Prop({
+    type: raw({
+      x: { type: Number },
+      y: { type: Number },
+    }),
+    required: false,
+  })
+  position!: Record<string, Number>;
+
+  @Prop({ type: Object, required: false })
+  data!: Record<string, any>;
+
+  @Prop({ required: false })
+  identifier!: string;
+
+  @Prop({ required: false })
+  group_identifier!: string;
+}
+
+@Schema()
+export class Edge {
+  @Prop()
+  id!: string;
+
+  @Prop()
+  type!: string;
+
+  @Prop()
+  source!: string;
+
+  @Prop()
+  target!: string;
+
+  @Prop()
+  sourceHandle!: string;
+
+  @Prop()
+  targetHandle!: string;
+
+  @Prop(raw({}))
+  data!: Record<string, any>;
+
+  @Prop()
+  label!: string;
+
+  @Prop()
+  animated!: boolean;
+
+  @Prop()
+  animationSpeed!: number;
+
+  @Prop(
+    raw({
+      stroke: { type: String },
+      strokeWidth: { type: Number },
+    })
+  )
+  style!: Record<string, any>;
+
+  @Prop()
+  sourceX!: number;
+
+  @Prop()
+  sourceY!: number;
+
+  @Prop()
+  targetX!: number;
+
+  @Prop()
+  targetY!: number;
+}
+
+@Schema()
+export class Components {
+  @Prop({ required: false })
+  nodes!: Node[];
+
+  @Prop({ required: false })
+  edges!: Edge[];
+
+  @Prop({ required: false })
+  position!: number[];
+
+  @Prop({ type: Number, required: false })
+  zoom!: number;
+
+  @Prop({
+    type: raw({
+      x: { type: Number },
+      y: { type: Number },
+      zoom: { type: Number },
+    }),
+    required: false,
+  })
+  viewport!: Record<string, any>;
+}
 
 @Schema()
 export class Project {
@@ -34,8 +142,8 @@ export class Project {
   @Prop({ required: true, default: () => new Date() })
   dateLastEdited!: Date;
 
-  @Prop({ type: MongooseSchema.Types.Mixed, required: true, default: {} })
-  components!: Record<string, any>;
+  @Prop({ required: true, default: {} })
+  components!: Components;
 
   @Prop({ required: true, default: [], ref: 'tasks' })
   tasks!: Types.ObjectId[];

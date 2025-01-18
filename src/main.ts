@@ -19,35 +19,11 @@ import sgMail from '@sendgrid/mail';
 sgMail.setApiKey(process.env.SENDGRID_API_KEY as string);
 
 import { connectToDatabase } from '../utility/connectToDatabase';
-import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
-import { FastifyAdapter } from '@nestjs/platform-fastify';
-import fastifyHelmet from '@fastify/helmet';
-import fastifySecureSession from '@fastify/secure-session';
-import fastifyPassport from '@fastify/passport';
+import { createApp } from './app';
 
 async function bootstrap() {
   await connectToDatabase();
-  const app = (await NestFactory.create(
-    AppModule,
-    new FastifyAdapter() as any
-  )) as any;
-
-  await app.register(fastifyHelmet, { global: true });
-  await app.register(fastifySecureSession, {
-    key: process.env.SECRET_KEY as string,
-  });
-  await app.register(fastifyPassport.initialize());
-  await app.register(fastifyPassport.secureSession());
-
-  app.enableCors({
-    origin:
-      process.env.NODE_ENV === 'development'
-        ? '*'
-        : (process.env.WHITEMIND_HOSTNAME as string),
-    credentials: true,
-  });
-
+  const app = await createApp();
   await app.listen(Number(process.env.EXPRESS_PORT));
 }
 

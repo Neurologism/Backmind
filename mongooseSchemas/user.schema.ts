@@ -58,9 +58,26 @@ export class Token {
 
   @Prop({ type: Date, required: true, default: () => new Date() })
   dateAdded!: Date;
+
+  @Prop({ type: [String], required: true, default: [] })
+  ips!: string[];
+
+  @Prop({ type: [String], required: true, default: [] })
+  userAgents!: string[];
 }
 
 const TokenSchema = SchemaFactory.createForClass(Token);
+
+@Schema()
+export class Request {
+  @Prop({ type: String, required: true })
+  endpoint!: string;
+
+  @Prop({ type: Date, required: true, default: () => new Date() })
+  dateRequested!: Date;
+}
+
+const RequestSchema = SchemaFactory.createForClass(Request);
 
 export type UserDocument = HydratedDocument<User>;
 
@@ -77,6 +94,9 @@ export class User {
 
   @Prop({ type: [TokenSchema], required: true, default: [] })
   tokens!: Token[];
+
+  @Prop({ type: [RequestSchema], required: true, default: [] })
+  requests!: Request[];
 
   @Prop({
     type: String,

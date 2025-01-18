@@ -1,6 +1,8 @@
 import { z } from 'zod';
 import mongoose from 'mongoose';
 
+export const componentSchema = z.record(z.any());
+
 export const updateSchema = z
   .object({
     project: z
@@ -22,7 +24,7 @@ export const updateSchema = z
             }
             return new mongoose.Types.ObjectId(ownerId);
           }),
-        components: z.any().optional(),
+        components: componentSchema.optional(),
       })
       .strict(),
   })

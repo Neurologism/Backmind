@@ -27,6 +27,9 @@ export class AuthController {
   @Public()
   @Post('login')
   async login(@Body() body: LoginDto) {
+    if (!body.user || (!body.user.brainetTag && !body.user.email)) {
+      throw new HttpException('Invalid credentials', HttpStatus.BAD_REQUEST);
+    }
     try {
       if (body.user.brainetTag) {
         await this.authService.validateUserByBrainetTag(
@@ -38,8 +41,6 @@ export class AuthController {
           body.user.email,
           body.user.plainPassword
         );
-      } else {
-        throw new HttpException('Invalid credentials', HttpStatus.BAD_REQUEST);
       }
       return await this.authService.login(body.user);
     } catch (error) {
@@ -87,6 +88,7 @@ export class AuthController {
     }
   }
 
+  @Public()
   @Patch('verify-email')
   async verifyEmail(@Query('token') token: string) {
     try {

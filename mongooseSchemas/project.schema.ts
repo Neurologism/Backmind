@@ -34,7 +34,7 @@ export class Project {
   @Prop({ required: true, default: () => new Date() })
   dateLastEdited!: Date;
 
-  @Prop({ required: true, default: {} })
+  @Prop({ type: MongooseSchema.Types.Mixed, required: true, default: {} })
   components!: Record<string, any>;
 
   @Prop({ required: true, default: [], ref: 'tasks' })

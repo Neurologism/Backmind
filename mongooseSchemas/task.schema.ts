@@ -15,7 +15,7 @@ export class Task {
   @Prop({ required: true, default: [] })
   output!: any[];
 
-  @Prop({ required: true })
+  @Prop({ type: MongooseSchema.Types.Mixed, required: true })
   task!: any;
 
   @Prop({ required: true, default: () => new Date() })

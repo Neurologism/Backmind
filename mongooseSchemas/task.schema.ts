@@ -7,34 +7,33 @@ export type TaskDocument = HydratedDocument<Task>;
 @Schema()
 export class Task {
   @Prop({
-    type: String,
     enum: ['queued', 'training', 'finished', 'error', 'stopped'],
     required: true,
   })
   status!: string;
 
-  @Prop({ type: Array, required: true, default: [] })
+  @Prop({ required: true, default: [] })
   output!: any[];
 
-  @Prop({ type: MongooseSchema.Types.Mixed, required: true })
+  @Prop({ required: true })
   task!: any;
 
-  @Prop({ type: Date, required: true, default: () => new Date() })
+  @Prop({ required: true, default: () => new Date() })
   datelastUpdated!: Date;
 
-  @Prop({ type: Date })
+  @Prop()
   dateQueued?: Date;
 
-  @Prop({ type: Date })
+  @Prop()
   dateStarted?: Date;
 
-  @Prop({ type: Date })
+  @Prop()
   dateFinished?: Date;
 
-  @Prop({ type: Types.ObjectId, required: true, ref: 'projects' })
+  @Prop({ required: true, ref: 'projects' })
   projectId!: Types.ObjectId;
 
-  @Prop({ type: Types.ObjectId, required: true, ref: 'users' })
+  @Prop({ required: true, ref: 'users' })
   ownerId!: Types.ObjectId;
 }
 

@@ -4,25 +4,25 @@ import mongoose from 'mongoose';
 
 @Schema()
 export class Email {
-  @Prop({ type: String, enum: ['primary', 'secondary'], required: true })
+  @Prop({ enum: ['primary', 'secondary'], required: true })
   emailType!: string;
 
-  @Prop({ type: String, required: true })
+  @Prop({ required: true })
   address!: string;
 
-  @Prop({ type: Boolean, required: true, default: false })
+  @Prop({ required: true, default: false })
   verified!: boolean;
 
-  @Prop({ type: String })
+  @Prop()
   verificationToken?: string;
 
-  @Prop({ type: Date })
+  @Prop()
   dateVerificationSent?: Date;
 
-  @Prop({ type: Date, required: true, default: () => new Date() })
+  @Prop({ required: true, default: () => new Date() })
   dateAdded!: Date;
 
-  @Prop({ type: Date })
+  @Prop()
   dateVerified?: Date;
 }
 
@@ -30,22 +30,22 @@ const EmailSchema = SchemaFactory.createForClass(Email);
 
 @Schema()
 export class Phone {
-  @Prop({ type: String })
+  @Prop()
   number?: string;
 
-  @Prop({ type: Boolean, default: false })
+  @Prop({ default: false })
   verified?: boolean;
 
-  @Prop({ type: String })
+  @Prop()
   verificationCode?: string;
 
-  @Prop({ type: Date })
+  @Prop()
   dateVerificationSent?: Date;
 
-  @Prop({ type: Date })
+  @Prop()
   dateAdded?: Date;
 
-  @Prop({ type: Date })
+  @Prop()
   dateVerified?: Date;
 }
 
@@ -53,16 +53,16 @@ const PhoneSchema = SchemaFactory.createForClass(Phone);
 
 @Schema()
 export class Token {
-  @Prop({ type: String, required: true })
+  @Prop({ required: true })
   token!: string;
 
-  @Prop({ type: Date, required: true, default: () => new Date() })
+  @Prop({ required: true, default: () => new Date() })
   dateAdded!: Date;
 
-  @Prop({ type: [String], required: true, default: [] })
+  @Prop({ required: true, default: [] })
   ips!: string[];
 
-  @Prop({ type: [String], required: true, default: [] })
+  @Prop({ required: true, default: [] })
   userAgents!: string[];
 }
 
@@ -70,10 +70,10 @@ const TokenSchema = SchemaFactory.createForClass(Token);
 
 @Schema()
 export class Request {
-  @Prop({ type: String, required: true })
+  @Prop({ required: true })
   endpoint!: string;
 
-  @Prop({ type: Date, required: true, default: () => new Date() })
+  @Prop({ required: true, default: () => new Date() })
   dateRequested!: Date;
 }
 
@@ -83,23 +83,22 @@ export type UserDocument = HydratedDocument<User>;
 
 @Schema()
 export class User {
-  @Prop({ type: String, required: true, index: true, unique: true })
+  @Prop({ required: true, index: true, unique: true })
   brainetTag!: string;
 
-  @Prop({ type: [EmailSchema], required: true })
+  @Prop({ required: true })
   emails!: Email[];
 
-  @Prop({ type: PhoneSchema, required: false })
+  @Prop({ required: false })
   phone?: Phone;
 
-  @Prop({ type: [TokenSchema], required: true, default: [] })
+  @Prop({ required: true, default: [] })
   tokens!: Token[];
 
-  @Prop({ type: [RequestSchema], required: true, default: [] })
+  @Prop({ required: true, default: [] })
   requests!: Request[];
 
   @Prop({
-    type: String,
     required: function () {
       return typeof (this as any).aboutYou !== 'string';
     },
@@ -108,7 +107,6 @@ export class User {
   aboutYou!: string;
 
   @Prop({
-    type: String,
     required: function () {
       return typeof (this as any).displayname !== 'string';
     },
@@ -116,52 +114,50 @@ export class User {
   })
   displayname!: string;
 
-  @Prop({ type: String, required: true })
+  @Prop({ required: true })
   passwordHash!: string;
 
-  @Prop({ type: Date })
+  @Prop()
   dateOfBirth?: Date;
 
   @Prop({
-    type: String,
     enum: ['public', 'private'],
     default: 'public',
     required: true,
   })
   visibility!: string;
 
-  @Prop({ type: String, default: '' })
+  @Prop({ default: '' })
   pronouns!: string;
 
-  @Prop({ type: String, default: '' })
+  @Prop({ default: '' })
   company!: string;
 
-  @Prop({ type: String, default: '' })
+  @Prop({ default: '' })
   location!: string;
 
-  @Prop({ type: Number, required: true, default: 0 })
+  @Prop({ required: true, default: 0 })
   premiumTier!: number;
 
-  @Prop({ type: Number, required: true, default: 600 })
+  @Prop({ required: true, default: 600 })
   remainingCredits!: number;
 
-  @Prop({ type: Date, required: true, default: () => new Date() })
+  @Prop({ required: true, default: () => new Date() })
   dateLastEdited!: Date;
 
-  @Prop({ type: Date, required: true, default: () => new Date() })
+  @Prop({ required: true, default: () => new Date() })
   dateCreatedAt!: Date;
 
-  @Prop({ type: [Types.ObjectId], default: [], ref: 'projects' })
+  @Prop({ default: [], ref: 'projects' })
   projectIds!: Types.ObjectId[];
 
-  @Prop({ type: [Types.ObjectId], required: true, default: [], ref: 'users' })
+  @Prop({ required: true, default: [], ref: 'users' })
   followerIds!: Types.ObjectId[];
 
-  @Prop({ type: [Types.ObjectId], required: true, default: [], ref: 'users' })
+  @Prop({ required: true, default: [], ref: 'users' })
   followingIds!: Types.ObjectId[];
 
   @Prop({
-    type: String,
     required: function () {
       return typeof (this as any).pfpPath !== 'string';
     },
@@ -170,17 +166,16 @@ export class User {
   pfpPath!: string;
 
   @Prop({
-    type: [Types.ObjectId],
     required: true,
     default: [],
     ref: 'tutorials',
   })
   completedTutorials!: Types.ObjectId[];
 
-  @Prop({ type: Number, required: true, default: 0 })
+  @Prop({ required: true, default: 0 })
   experience!: number;
 
-  @Prop({ type: Boolean, required: true, default: false })
+  @Prop({ required: true, default: false })
   admin!: boolean;
 }
 

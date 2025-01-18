@@ -11,13 +11,13 @@ enum PremiumTier {
 
 @Schema()
 class UnlockNode {
-  @Prop({ type: String, required: true })
+  @Prop({ required: true })
   type!: string;
 
-  @Prop({ type: String })
+  @Prop()
   id: string = new Types.ObjectId().toString();
 
-  @Prop({ type: [String], required: true, default: [] })
+  @Prop({ required: true, default: [] })
   data!: string[];
 }
 
@@ -26,7 +26,6 @@ const UnlockNodeSchema = SchemaFactory.createForClass(UnlockNode);
 @Schema()
 class Step {
   @Prop({
-    type: String,
     required: function () {
       return typeof (this as any).text !== 'string';
     },
@@ -34,7 +33,6 @@ class Step {
   text!: string;
 
   @Prop({
-    type: String,
     required: function () {
       return typeof (this as any).narrator !== 'string';
     },
@@ -42,28 +40,28 @@ class Step {
   })
   narrator!: string;
 
-  @Prop({ type: [Object], required: true, default: [] })
+  @Prop({ required: true, default: [] })
   addNodes!: Record<string, any>[];
 
-  @Prop({ type: [Object], required: true, default: [] })
+  @Prop({ required: true, default: [] })
   addEdges!: Record<string, any>[];
 
-  @Prop({ type: [Object], required: true, default: [] })
+  @Prop({ required: true, default: [] })
   removeNodes!: Record<string, any>[];
 
-  @Prop({ type: [Object], required: true, default: [] })
+  @Prop({ required: true, default: [] })
   removeEdges!: Record<string, any>[];
 
-  @Prop({ type: [String], required: true, default: [] })
+  @Prop({ required: true, default: [] })
   highlightNodeTypes!: string[];
 
-  @Prop({ type: [UnlockNodeSchema], required: true, default: [] })
+  @Prop({ required: true, default: [] })
   unlockNodes!: UnlockNode[];
 
-  @Prop({ type: Boolean, required: true, default: false })
+  @Prop({ required: true, default: false })
   trainingEnabled!: boolean;
 
-  @Prop({ type: Types.ObjectId })
+  @Prop()
   trainedModel?: Types.ObjectId;
 }
 
@@ -73,11 +71,10 @@ export type TutorialDocument = HydratedDocument<Tutorial>;
 
 @Schema()
 export class Tutorial {
-  @Prop({ type: String, required: true, index: true, unique: true })
+  @Prop({ required: true, index: true, unique: true })
   name!: string;
 
   @Prop({
-    type: String,
     required: function () {
       return typeof (this as any).summary !== 'string';
     },
@@ -86,7 +83,6 @@ export class Tutorial {
   summary!: string;
 
   @Prop({
-    type: String,
     required: function () {
       return typeof (this as any).description !== 'string';
     },
@@ -94,28 +90,26 @@ export class Tutorial {
   })
   description!: string;
 
-  @Prop({ type: Types.ObjectId, ref: 'users' })
+  @Prop({ ref: 'users' })
   ownerId!: Types.ObjectId;
 
-  @Prop({ type: String, enum: ['public', 'private'], required: true })
+  @Prop({ enum: ['public', 'private'], required: true })
   visibility!: string;
 
   @Prop({
-    type: Number,
     enum: PremiumTier,
     required: true,
     default: PremiumTier.Free,
   })
   requiredPremiumTier!: number;
 
-  @Prop({ type: Date, required: true, default: () => new Date() })
+  @Prop({ required: true, default: () => new Date() })
   dateCreatedAt!: Date;
 
-  @Prop({ type: Date, required: true, default: () => new Date() })
+  @Prop({ required: true, default: () => new Date() })
   dateLastEdited!: Date;
 
   @Prop({
-    type: [Types.ObjectId],
     required: true,
     default: [],
     ref: 'tutorials',
@@ -123,23 +117,22 @@ export class Tutorial {
   requiredTutorials!: Types.ObjectId[];
 
   @Prop({
-    type: [Types.ObjectId],
     required: true,
     default: [],
     ref: 'tutorials',
   })
   nextTutorials!: Types.ObjectId[];
 
-  @Prop({ type: Number, required: true, default: 100 })
+  @Prop({ required: true, default: 100 })
   experienceGain!: number;
 
-  @Prop({ type: Types.ObjectId, required: true, ref: 'projects' })
+  @Prop({ required: true, ref: 'projects' })
   startProject!: Types.ObjectId;
 
-  @Prop({ type: [UnlockNodeSchema], required: true, default: [] })
+  @Prop({ required: true, default: [] })
   unlockNodes!: UnlockNode[];
 
-  @Prop({ type: [StepSchema], required: true, default: [] })
+  @Prop({ required: true, default: [] })
   steps!: Step[];
 }
 

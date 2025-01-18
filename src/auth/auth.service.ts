@@ -148,16 +148,18 @@ export class AuthService {
       );
     }
 
-    const email = user.emails.find(
+    const emailIndex = user.emails.findIndex(
       (email) => email.verificationToken === token
     );
 
-    if (email === undefined) {
+    if (emailIndex === -1) {
       throw new HttpException(
         'Invalid verification token',
         HttpStatus.BAD_REQUEST
       );
     }
+
+    const email = user.emails[emailIndex];
 
     if (email.verified) {
       throw new HttpException('Email already verified', HttpStatus.BAD_REQUEST);
@@ -180,10 +182,15 @@ export class AuthService {
       );
     }
 
-    email.verified = true;
-    email.dateVerified = new Date();
-
-    await user.save();
+    await UserModel.updateOne(
+      { _id: user._id, 'emails.verificationToken': token },
+      {
+        $set: {
+          'emails.$.verified': true,
+          'emails.$.dateVerified': new Date(),
+        },
+      }
+    );
 
     return await this.login(user);
   }

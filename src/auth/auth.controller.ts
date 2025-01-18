@@ -12,7 +12,6 @@ import {
   HttpException,
   HttpStatus,
 } from '@nestjs/common';
-import { AppLogger } from '../../providers/logger.provider';
 import { AuthService } from './auth.service';
 import { Public } from './strategies/jwt.strategy';
 import { User } from '../../decorators/user.decorator';

@@ -1,12 +1,21 @@
-import { UserDocument, UserModel } from '../../mongooseSchemas/user.schema';
+import {
+  Token,
+  UserDocument,
+  UserModel,
+} from '../../mongooseSchemas/user.schema';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import bcrypt from 'bcrypt';
 import { sendVerificationEmail } from '../../utility/sendVerificationEmail';
+import { RegisterDto } from './dto/register.schema';
+import { AppLogger } from '../../providers/logger.provider';
 
 @Injectable()
 export class AuthService {
-  constructor(private jwtService: JwtService) {}
+  constructor(
+    private jwtService: JwtService,
+    private readonly logger: AppLogger
+  ) {}
 
   async validateUser(user: UserDocument | null, pass: string) {
     if (user === null) {
@@ -19,24 +28,27 @@ export class AuthService {
     }
   }
 
-  async validateUserByEmail(email: string, pass: string): Promise<any> {
+  async validateUserByEmail(
+    email: string,
+    pass: string
+  ): Promise<UserDocument> {
     const user = await UserModel.findOne({
       emails: { $elemMatch: { address: email } },
     });
     await this.validateUser(user, pass);
-    return user;
+    return user as UserDocument;
   }
 
   async validateUserByBrainetTag(
     brainetTag: string,
     pass: string
-  ): Promise<any> {
+  ): Promise<UserDocument> {
     const user = await UserModel.findOne({ brainetTag: brainetTag });
     await this.validateUser(user, pass);
-    return user;
+    return user as UserDocument;
   }
 
-  async login(user: any) {
+  async login(user: UserDocument) {
     const access_token = this.jwtService.sign(
       { _id: '' + user._id },
       {
@@ -44,7 +56,12 @@ export class AuthService {
         expiresIn: process.env.JWT_TOKEN_EXPIRE_IN,
       }
     );
-    user.tokens.push({ token: access_token });
+    user.tokens.push({
+      token: access_token,
+      dateAdded: new Date(),
+      ips: [],
+      userAgents: [],
+    });
     const maxTokens = process.env.MAX_TOKENS
       ? parseInt(process.env.MAX_TOKENS)
       : 10;
@@ -57,7 +74,7 @@ export class AuthService {
     };
   }
 
-  async register(body: any, logger: any) {
+  async register(body: RegisterDto) {
     const user = await UserModel.findOne({
       $or: [
         { 'emails.address': body.user.email },
@@ -95,7 +112,7 @@ export class AuthService {
 
     const verifyEmailReturn = await sendVerificationEmail(
       body.user.email,
-      logger
+      this.logger
     );
 
     const newUser = new UserModel({
@@ -171,13 +188,13 @@ export class AuthService {
     return await this.login(user);
   }
 
-  async logout(user: any, token: string) {
-    user.tokens = user.tokens.filter((t: any) => t.token !== token);
+  async logout(user: UserDocument, token: string) {
+    user.tokens = user.tokens.filter((t: Token) => t.token !== token);
     await user.save();
     return { msg: 'Logged out successfully' };
   }
 
-  async logoutAll(user: any) {
+  async logoutAll(user: UserDocument) {
     user.tokens = [];
     await user.save();
     return { msg: 'Logged out from all devices successfully' };

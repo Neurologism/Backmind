@@ -9,8 +9,6 @@ import {
   Query,
   Put,
   Post,
-  HttpException,
-  HttpStatus,
   UseInterceptors,
   UploadedFile,
 } from '@nestjs/common';
@@ -59,22 +57,25 @@ export class UsersController {
   }
 
   @Get('by-name/:brainetTag')
-  async getByName(@Param('brainetTag') brainetTag: string, @User() user: any) {
+  async getByName(
+    @Param('brainetTag') brainetTag: string,
+    @User() user: UserDocument
+  ) {
     return await getByNameHandler(brainetTag, user);
   }
 
   @Delete(':userId')
-  async delete(@User() user: any) {
+  async delete(@User() user: UserDocument) {
     return await deleteHandler(user);
   }
 
   @Patch(':userId')
-  async update(@Body() body: UpdateDto, @User() user: any) {
+  async update(@Body() body: UpdateDto, @User() user: UserDocument) {
     return await updateHandler(user, body);
   }
 
   @Get(':userId/get-credits')
-  async getCredits(@User() user: any) {
+  async getCredits(@User() user: UserDocument) {
     return await getCreditsHandler(user);
   }
 
@@ -84,7 +85,7 @@ export class UsersController {
   }
 
   @Patch(':userId/swap-primary-email')
-  async swapPrimaryEmail(@User() user: any) {
+  async swapPrimaryEmail(@User() user: UserDocument) {
     return await swapPrimaryEmailHandler(user);
   }
 
@@ -93,7 +94,7 @@ export class UsersController {
   async uploadPfp(
     @Param('userId', ParseObjectIdPipe) userId: Types.ObjectId,
     @UploadedFile() file: Express.Multer.File,
-    @User() user: any
+    @User() user: UserDocument
   ) {
     return await uploadPfpHandler(user, file);
   }
@@ -101,7 +102,7 @@ export class UsersController {
   @Post(':userId/followers')
   async follow(
     @Param('userId', ParseObjectIdPipe) userId: Types.ObjectId,
-    @User() user: any
+    @User() user: UserDocument
   ) {
     return await followHandler(userId, user);
   }
@@ -109,18 +110,24 @@ export class UsersController {
   @Delete(':userId/followers')
   async unfollow(
     @Param('userId', ParseObjectIdPipe) userId: Types.ObjectId,
-    @User() user: any
+    @User() user: UserDocument
   ) {
     return await unfollowHandler(userId, user);
   }
 
   @Delete(':userId/emails')
-  async deleteEmail(@Query('emailType') emailType: string, @User() user: any) {
+  async deleteEmail(
+    @Query('emailType') emailType: string,
+    @User() user: UserDocument
+  ) {
     return await deleteEmailHandler(user, emailType);
   }
 
   @Patch(':userId/emails')
-  async updateEmailHandler(@Body() body: UpdateEmailDto, @User() user: any) {
+  async updateEmailHandler(
+    @Body() body: UpdateEmailDto,
+    @User() user: UserDocument
+  ) {
     return await updateEmailHandler(user, body, this.logger);
   }
 }

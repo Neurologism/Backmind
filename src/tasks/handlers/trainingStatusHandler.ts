@@ -1,4 +1,4 @@
-import { TaskModel } from 'mongooseSchemas/task.schema';
+import { TaskModel } from '../../../mongooseSchemas/task.schema';
 import { Types } from 'mongoose';
 import { HttpException, HttpStatus } from '@nestjs/common';
 import { UserDocument } from '../../../mongooseSchemas/user.schema';

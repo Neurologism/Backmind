@@ -21,13 +21,13 @@ export const trainingStartHandler = async (
 
   const isProjectOwner = project.ownerId?.toString() === user._id.toString();
 
-  if (!isProjectOwner) {
+  if (!isProjectOwner && project.visibility === 'private') {
     throw new NotFoundException(
       "There is no project with that id or you don't have access to it."
     );
   }
 
-  if (isProjectOwner) {
+  if (!isProjectOwner) {
     throw new HttpException(
       'You are not the owner of this project.',
       HttpStatus.UNAUTHORIZED

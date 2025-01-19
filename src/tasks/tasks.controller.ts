@@ -14,7 +14,7 @@ import {
   HttpException,
   HttpStatus,
 } from '@nestjs/common';
-import { ParseObjectIdPipe } from 'pipes/parseObjectId.pipe';
+import { ParseObjectIdPipe } from '../../pipes/parseObjectId.pipe';
 import { Types } from 'mongoose';
 import { User } from '../../decorators/user.decorator';
 import { UserDocument } from '../../mongooseSchemas/user.schema';

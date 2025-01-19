@@ -9,6 +9,8 @@ import bcrypt from 'bcrypt';
 import { sendVerificationEmail } from '../../utility/sendVerificationEmail';
 import { RegisterDto } from './dto/register.schema';
 import { AppLogger } from '../../providers/logger.provider';
+import { register } from 'tsconfig-paths';
+import { randomBytes } from 'node:crypto';
 
 @Injectable()
 export class AuthService {
@@ -37,6 +39,25 @@ export class AuthService {
     });
     await this.validateUser(user, pass);
     return user as UserDocument;
+  }
+
+  async successfulAuth(email: string, brainetTag: string) {
+    const user = await UserModel.findOne({
+      emails: { $elemMatch: { address: email } },
+    });
+
+    if (user === null) {
+      return await this.register({
+        user: {
+          email: email,
+          brainetTag: brainetTag,
+          plainPassword: randomBytes(20).toString('hex'),
+        },
+        agreedToTermsOfServiceAndPrivacyPolicy: true,
+      });
+    } else {
+      return await this.login(user);
+    }
   }
 
   async validateUserByBrainetTag(

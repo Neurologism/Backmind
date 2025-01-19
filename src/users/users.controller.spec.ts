@@ -7,7 +7,6 @@ import mongoose from 'mongoose';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import fs from 'fs';
 import path from 'path';
-import { Readable } from 'stream';
 import sharp from 'sharp';
 
 describe('UsersController', () => {

@@ -11,11 +11,17 @@ import {
   Patch,
   HttpException,
   HttpStatus,
+  UseGuards,
+  Get,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { Public } from './strategies/jwt.strategy';
 import { User } from '../../decorators/user.decorator';
 import { UserDocument } from '../../mongooseSchemas/user.schema';
+// import { AuthGuard } from '@nestjs/passport';
+// import fastifyPassport from '@fastify/passport';
+// import { GithubAuthGuard } from './github-auth.guard';
+// import { Request, Response } from '@nestjs/common';
 
 @Controller('auth')
 export class AuthController {
@@ -57,6 +63,22 @@ export class AuthController {
   async logoutAll(@User() user: UserDocument) {
     return await this.authService.logoutAll(user);
   }
+
+  // @Public()
+  // @Get('github')
+  // async github(@Request() req: Request, @Response() res: Response) {
+  //   // This method will be intercepted by the guard
+  //   fastifyPassport.authenticate('github')(req, res);
+  // }
+  //
+  // @Public()
+  // @Get('github/callback')
+  // async githubCallback() {
+  //   // This method will be intercepted by the guard
+  //   fastifyPassport.authenticate('github', { failureRedirect: '/login' });
+  //   let user: UserDocument;
+  //
+  // }
 
   @Delete('logout')
   async logout(@Query('token') token: string, @User() user: UserDocument) {

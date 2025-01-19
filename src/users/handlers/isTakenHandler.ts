@@ -15,10 +15,7 @@ export const isTakenHandler = async (brainetTag: string, email: string) => {
 
   const user = await UserModel.findOne(searchProperties);
   if (user !== null) {
-    throw new HttpException(
-      { msg: 'This email or brainet tag is already in use.' },
-      HttpStatus.CONFLICT
-    );
+    return { msg: 'This user is taken.' };
   }
   return { msg: 'This user is not taken.' };
 };

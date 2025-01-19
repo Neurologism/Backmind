@@ -15,7 +15,7 @@ import {
   UploadedFile,
 } from '@nestjs/common';
 import { Types } from 'mongoose';
-import { ParseObjectIdPipe } from 'pipes/parseObjectId.pipe';
+import { ParseObjectIdPipe } from '../../pipes/parseObjectId.pipe';
 import { UpdateDto } from './dto/update.schema';
 import { UpdateEmailDto } from './dto/updateEmail.schema';
 import { deleteHandler } from './handlers/deleteHandler';

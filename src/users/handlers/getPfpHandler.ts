@@ -11,7 +11,7 @@ export const getPfpHandler = async (userid: Types.ObjectId) => {
   console.log(pfpPath);
   if (!fs.existsSync(pfpPath)) {
     throw new HttpException(
-      "There's no profile picture for this user.",
+      'There is no profile picture for this user.',
       HttpStatus.NOT_FOUND
     );
   }

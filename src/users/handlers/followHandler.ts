@@ -6,6 +6,13 @@ export const followHandler = async (
   userId: Types.ObjectId,
   loggedInUser: UserDocument
 ) => {
+  if (loggedInUser._id.toString() === userId.toString()) {
+    throw new HttpException(
+      'You cannot follow yourself',
+      HttpStatus.BAD_REQUEST
+    );
+  }
+
   const userToFollow = await UserModel.findById(userId);
 
   if (!userToFollow) {

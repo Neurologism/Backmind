@@ -7,7 +7,7 @@ import {
   Body,
   Param,
 } from '@nestjs/common';
-import { ParseObjectIdPipe } from 'pipes/parseObjectId.pipe';
+import { ParseObjectIdPipe } from '../../pipes/parseObjectId.pipe';
 import { Types } from 'mongoose';
 import { getHandler } from './handlers/getHandler';
 import { getByNameHandler } from './handlers/getByNameHandler';

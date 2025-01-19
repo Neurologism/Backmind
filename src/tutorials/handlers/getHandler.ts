@@ -16,7 +16,7 @@ export const getHandler = async (
     });
   } else {
     throw new HttpException(
-      'You need to provide either a tutorialId.',
+      'You need to provide a tutorialId.',
       HttpStatus.BAD_REQUEST
     );
   }

@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import fs from 'fs';
-import { TutorialModel } from '../src/mongooseSchemas/tutorialSchema';
-import { ProjectModel } from '../src/mongooseSchemas/projectSchema';
+import { TutorialModel } from '../mongooseSchemas/tutorial.schema';
+import { ProjectModel } from '../mongooseSchemas/project.schema';
 
 require('dotenv').config();
 
@@ -23,8 +23,8 @@ const resetProjects = true;
 
 async function createTutorial(tutorialPath: string) {
   const tutorialJson = JSON.parse(
-    fs.readFileSync(`./tutorials/${tutorialPath}`, 'utf8')
-  ) as any;
+    fs.readFileSync(`./TutorMind/${tutorialPath}`, 'utf8')
+  );
 
   if (await TutorialModel.findOne({ name: tutorialJson.name })) {
     const tutorial = await TutorialModel.findOne({ name: tutorialJson.name });
@@ -80,7 +80,7 @@ async function createTutorial(tutorialPath: string) {
 
 async function createNextTutorials(tutorialPath: string) {
   const tutorialJson = JSON.parse(
-    fs.readFileSync(`./tutorials/${tutorialPath}`, 'utf8')
+    fs.readFileSync(`./TutorMind/${tutorialPath}`, 'utf8')
   ) as any;
 
   const nextTutorials = [];
@@ -94,12 +94,7 @@ async function createNextTutorials(tutorialPath: string) {
   );
 }
 
-async function main() {
-  await mongoose.connect(process.env.MONGO_URI as string, {
-    dbName: process.env.DB_NAME,
-  });
-  console.log('Connected to database');
-
+export async function tutorialScript() {
   for (const tutorialPath of tutorials) {
     await createTutorial(tutorialPath);
   }
@@ -109,8 +104,17 @@ async function main() {
     await createNextTutorials(tutorialPath);
   }
   console.log('Next tutorials set');
-
-  await mongoose.disconnect();
 }
 
-main();
+// If this script is run directly, execute the tutorialScript function
+if (require.main === module) {
+  mongoose.connect(process.env.MONGO_URI as string, {
+    dbName: process.env.DB_NAME,
+  });
+  console.log('Connected to database');
+  tutorialScript().catch((err) => {
+    console.error(err);
+    process.exit(1);
+  });
+  mongoose.disconnect();
+}

@@ -1,0 +1,3 @@
+[submodule "TutorMind"]
+	path = TutorMind
+	url = https://github.com/Neurologism/TutorMind

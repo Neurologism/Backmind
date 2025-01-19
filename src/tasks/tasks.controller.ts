@@ -28,14 +28,7 @@ export class TasksController {
     @Body() body: TrainingStartDto,
     @User() user: UserDocument
   ) {
-    try {
-      return await trainingStartHandler(body, user);
-    } catch (error) {
-      throw new HttpException(
-        (error as any).message,
-        HttpStatus.INTERNAL_SERVER_ERROR
-      );
-    }
+    return await trainingStartHandler(body, user);
   }
 
   @Get(':taskId')
@@ -43,14 +36,7 @@ export class TasksController {
     @Param('taskId', ParseObjectIdPipe) taskId: Types.ObjectId,
     @User() user: UserDocument
   ) {
-    try {
-      return await trainingStatusHandler(taskId, user);
-    } catch (error) {
-      throw new HttpException(
-        (error as any).message,
-        HttpStatus.INTERNAL_SERVER_ERROR
-      );
-    }
+    return await trainingStatusHandler(taskId, user);
   }
 
   @Patch(':taskId')
@@ -58,14 +44,7 @@ export class TasksController {
     @Param('taskId', ParseObjectIdPipe) taskId: Types.ObjectId,
     @User() user: UserDocument
   ) {
-    try {
-      return await trainingStopHandler(taskId, user);
-    } catch (error) {
-      throw new HttpException(
-        (error as any).message,
-        HttpStatus.INTERNAL_SERVER_ERROR
-      );
-    }
+    return await trainingStopHandler(taskId, user);
   }
 
   @Delete(':taskId')
@@ -73,13 +52,6 @@ export class TasksController {
     @Param('taskId', ParseObjectIdPipe) taskId: Types.ObjectId,
     @User() user: UserDocument
   ) {
-    try {
-      return await deleteTaskHandler(taskId, user);
-    } catch (error) {
-      throw new HttpException(
-        (error as any).message,
-        HttpStatus.INTERNAL_SERVER_ERROR
-      );
-    }
+    return await deleteTaskHandler(taskId, user);
   }
 }

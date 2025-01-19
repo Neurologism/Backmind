@@ -25,14 +25,7 @@ export class TutorialsController {
     @Param('tutorialId', ParseObjectIdPipe) tutorialId: Types.ObjectId,
     @User() user: UserDocument
   ) {
-    try {
-      return await getHandler(tutorialId, user);
-    } catch (error) {
-      throw new HttpException(
-        (error as any).message,
-        HttpStatus.INTERNAL_SERVER_ERROR
-      );
-    }
+    return await getHandler(tutorialId, user);
   }
 
   @Get('by-name/:tutorialName')
@@ -40,14 +33,7 @@ export class TutorialsController {
     @Param('tutorialName') tutorialName: string,
     @User() user: UserDocument
   ) {
-    try {
-      return await getByNameHandler(tutorialName, user);
-    } catch (error) {
-      throw new HttpException(
-        (error as any).message,
-        HttpStatus.INTERNAL_SERVER_ERROR
-      );
-    }
+    return await getByNameHandler(tutorialName, user);
   }
 
   @Patch(':tutorialId')
@@ -56,13 +42,6 @@ export class TutorialsController {
     @Body() body: SetStateDto,
     @User() user: UserDocument
   ) {
-    try {
-      return await setStateHandler(tutorialId, body, user);
-    } catch (error) {
-      throw new HttpException(
-        (error as any).message,
-        HttpStatus.INTERNAL_SERVER_ERROR
-      );
-    }
+    return await setStateHandler(tutorialId, body, user);
   }
 }

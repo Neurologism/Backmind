@@ -47,14 +47,7 @@ export class UsersController {
     @Query('brainetTag') brainetTag: string,
     @Query('email') email: string
   ) {
-    try {
-      return await isTakenHandler(brainetTag, email);
-    } catch (error) {
-      throw new HttpException(
-        (error as any).message,
-        HttpStatus.INTERNAL_SERVER_ERROR
-      );
-    }
+    return await isTakenHandler(brainetTag, email);
   }
 
   @Get(':userId')
@@ -62,86 +55,37 @@ export class UsersController {
     @Param('userId', ParseObjectIdPipe) userId: Types.ObjectId,
     @User() user: UserDocument
   ) {
-    try {
-      return await getHandler(userId, user);
-    } catch (error) {
-      throw new HttpException(
-        (error as any).message,
-        HttpStatus.INTERNAL_SERVER_ERROR
-      );
-    }
+    return await getHandler(userId, user);
   }
 
   @Get('by-name/:brainetTag')
   async getByName(@Param('brainetTag') brainetTag: string, @User() user: any) {
-    try {
-      return await getByNameHandler(brainetTag, user);
-    } catch (error) {
-      throw new HttpException(
-        (error as any).message,
-        HttpStatus.INTERNAL_SERVER_ERROR
-      );
-    }
+    return await getByNameHandler(brainetTag, user);
   }
 
   @Delete(':userId')
   async delete(@User() user: any) {
-    try {
-      return await deleteHandler(user);
-    } catch (error) {
-      throw new HttpException(
-        (error as any).message,
-        HttpStatus.INTERNAL_SERVER_ERROR
-      );
-    }
+    return await deleteHandler(user);
   }
 
   @Patch(':userId')
   async update(@Body() body: UpdateDto, @User() user: any) {
-    try {
-      return await updateHandler(user, body);
-    } catch (error) {
-      throw new HttpException(
-        (error as any).message,
-        HttpStatus.INTERNAL_SERVER_ERROR
-      );
-    }
+    return await updateHandler(user, body);
   }
 
   @Get(':userId/get-credits')
   async getCredits(@User() user: any) {
-    try {
-      return await getCreditsHandler(user);
-    } catch (error) {
-      throw new HttpException(
-        (error as any).message,
-        HttpStatus.INTERNAL_SERVER_ERROR
-      );
-    }
+    return await getCreditsHandler(user);
   }
 
   @Get(':userId/get-pfp')
   async getPfp(@Param('userId', ParseObjectIdPipe) userId: Types.ObjectId) {
-    try {
-      return await getPfpHandler(userId);
-    } catch (error) {
-      throw new HttpException(
-        (error as any).message,
-        HttpStatus.INTERNAL_SERVER_ERROR
-      );
-    }
+    return await getPfpHandler(userId);
   }
 
   @Patch(':userId/swap-primary-email')
   async swapPrimaryEmail(@User() user: any) {
-    try {
-      return await swapPrimaryEmailHandler(user);
-    } catch (error) {
-      throw new HttpException(
-        (error as any).message,
-        HttpStatus.INTERNAL_SERVER_ERROR
-      );
-    }
+    return await swapPrimaryEmailHandler(user);
   }
 
   @Put(':userId/upload-pfp')
@@ -151,14 +95,7 @@ export class UsersController {
     @UploadedFile() file: Express.Multer.File,
     @User() user: any
   ) {
-    try {
-      return await uploadPfpHandler(user, file);
-    } catch (error) {
-      throw new HttpException(
-        (error as any).message,
-        HttpStatus.INTERNAL_SERVER_ERROR
-      );
-    }
+    return await uploadPfpHandler(user, file);
   }
 
   @Post(':userId/followers')
@@ -166,14 +103,7 @@ export class UsersController {
     @Param('userId', ParseObjectIdPipe) userId: Types.ObjectId,
     @User() user: any
   ) {
-    try {
-      return await followHandler(userId, user);
-    } catch (error) {
-      throw new HttpException(
-        (error as any).message,
-        HttpStatus.INTERNAL_SERVER_ERROR
-      );
-    }
+    return await followHandler(userId, user);
   }
 
   @Delete(':userId/followers')
@@ -181,37 +111,16 @@ export class UsersController {
     @Param('userId', ParseObjectIdPipe) userId: Types.ObjectId,
     @User() user: any
   ) {
-    try {
-      return await unfollowHandler(userId, user);
-    } catch (error) {
-      throw new HttpException(
-        (error as any).message,
-        HttpStatus.INTERNAL_SERVER_ERROR
-      );
-    }
+    return await unfollowHandler(userId, user);
   }
 
   @Delete(':userId/emails')
   async deleteEmail(@Query('emailType') emailType: string, @User() user: any) {
-    try {
-      return await deleteEmailHandler(user, emailType);
-    } catch (error) {
-      throw new HttpException(
-        (error as any).message,
-        HttpStatus.INTERNAL_SERVER_ERROR
-      );
-    }
+    return await deleteEmailHandler(user, emailType);
   }
 
   @Patch(':userId/emails')
   async updateEmailHandler(@Body() body: UpdateEmailDto, @User() user: any) {
-    try {
-      return await updateEmailHandler(user, body, this.logger);
-    } catch (error) {
-      throw new HttpException(
-        (error as any).message,
-        HttpStatus.INTERNAL_SERVER_ERROR
-      );
-    }
+    return await updateEmailHandler(user, body, this.logger);
   }
 }

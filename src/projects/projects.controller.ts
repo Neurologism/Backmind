@@ -29,26 +29,12 @@ export class ProjectsController {
     @Param('projectName') projectName: string,
     @User() user: UserDocument
   ) {
-    try {
-      return await isTakenHandler(projectName, user);
-    } catch (error) {
-      throw new HttpException(
-        (error as any).message,
-        HttpStatus.INTERNAL_SERVER_ERROR
-      );
-    }
+    return await isTakenHandler(projectName, user);
   }
 
   @Post()
   async create(@Body() body: CreateDto, @User() user: UserDocument) {
-    try {
-      return await createHandler(user, body);
-    } catch (error) {
-      throw new HttpException(
-        (error as any).message,
-        HttpStatus.INTERNAL_SERVER_ERROR
-      );
-    }
+    return await createHandler(user, body);
   }
 
   @Get(':projectId')
@@ -56,14 +42,7 @@ export class ProjectsController {
     @Param('projectId', ParseObjectIdPipe) projectId: Types.ObjectId,
     @User() user: UserDocument
   ) {
-    try {
-      return await getHandler(projectId, user);
-    } catch (error) {
-      throw new HttpException(
-        (error as any).message,
-        HttpStatus.INTERNAL_SERVER_ERROR
-      );
-    }
+    return await getHandler(projectId, user);
   }
 
   @Delete(':projectId')
@@ -71,14 +50,7 @@ export class ProjectsController {
     @Param('projectId', ParseObjectIdPipe) projectId: Types.ObjectId,
     @User() user: UserDocument
   ) {
-    try {
-      return await deleteHandler(projectId, user);
-    } catch (error) {
-      throw new HttpException(
-        (error as any).message,
-        HttpStatus.INTERNAL_SERVER_ERROR
-      );
-    }
+    return await deleteHandler(projectId, user);
   }
 
   @Patch(':projectId')
@@ -87,13 +59,6 @@ export class ProjectsController {
     @Body() body: UpdateDto,
     @User() user: UserDocument
   ) {
-    try {
-      return await updateHandler(projectId, body, user);
-    } catch (error) {
-      throw new HttpException(
-        (error as any).message,
-        HttpStatus.INTERNAL_SERVER_ERROR
-      );
-    }
+    return await updateHandler(projectId, body, user);
   }
 }

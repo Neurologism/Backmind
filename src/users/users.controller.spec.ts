@@ -89,7 +89,7 @@ describe('UsersController', () => {
 
   describe('getByName', () => {
     it('should return a user by brainetTag', async () => {
-      const result = await usersController.getByName('chisato', user);
+      const result = await usersController.getByName('chisato');
       expect(result).toHaveProperty('user');
       const userResult = result.user;
       expect(userResult).toHaveProperty('_id', user._id);
@@ -97,9 +97,9 @@ describe('UsersController', () => {
     });
 
     it('should throw an error if user not found', async () => {
-      await expect(
-        usersController.getByName('nonexistent', user)
-      ).rejects.toThrow('No user found matching the criteria.');
+      await expect(usersController.getByName('nonexistent')).rejects.toThrow(
+        'No user found matching the criteria.'
+      );
     });
   });
 

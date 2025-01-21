@@ -33,6 +33,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { User } from '../../decorators/user.decorator';
 import { UserDocument } from '../../mongooseSchemas/user.schema';
 import { AppLogger } from '../../providers/logger.provider';
+import { Public } from '../auth/strategies/jwt.strategy';
 
 let pfpUploadMulter;
 
@@ -56,12 +57,10 @@ export class UsersController {
     return await getHandler(userId, user);
   }
 
+  @Public()
   @Get('by-name/:brainetTag')
-  async getByName(
-    @Param('brainetTag') brainetTag: string,
-    @User() user: UserDocument
-  ) {
-    return await getByNameHandler(brainetTag, user);
+  async getByName(@Param('brainetTag') brainetTag: string) {
+    return await getByNameHandler(brainetTag);
   }
 
   @Delete(':userId')

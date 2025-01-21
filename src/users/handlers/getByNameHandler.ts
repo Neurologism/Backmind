@@ -1,10 +1,7 @@
 import { UserDocument, UserModel } from '../../../mongooseSchemas/user.schema';
 import { HttpException, HttpStatus } from '@nestjs/common';
 
-export const getByNameHandler = async (
-  brainetTag: string,
-  loggedInUser: UserDocument
-) => {
+export const getByNameHandler = async (brainetTag: string) => {
   const user = await UserModel.findOne({
     brainetTag: brainetTag,
   });
@@ -15,9 +12,7 @@ export const getByNameHandler = async (
     );
   }
 
-  const ownsProfile = user._id.toString() === loggedInUser._id?.toString();
-
-  if (user.visibility === 'private' && !ownsProfile) {
+  if (user.visibility === 'private') {
     throw new HttpException(
       'This user is private. You can only access private users if they follow you.',
       HttpStatus.FORBIDDEN
@@ -28,38 +23,22 @@ export const getByNameHandler = async (
     isTutorialProject: false,
   } as any;
 
-  if (!ownsProfile) {
-    query['visibility'] = 'public';
-  }
-
   await user.populate({
     path: 'projectIds',
     match: query,
     select: '_id',
   });
 
-  const userJson = {
-    _id: user._id,
-    aboutYou: user.aboutYou,
-    displayname: user.displayname,
-    brainetTag: user.brainetTag,
-    visibility: user.visibility,
-    projectIds: user.projectIds.map((project) => project._id),
-    followerIds: user.followerIds,
-    followingIds: user.followingIds,
-  } as any;
-  if (ownsProfile) {
-    userJson.dateOfBirth = user.dateOfBirth;
-    userJson.emails = [];
-    userJson.remainingCredits = user.remainingCredits;
-    for (const email of user.emails) {
-      userJson.emails.push({
-        emailType: email.emailType,
-        address: email.address,
-        verified: email.verified,
-      });
-    }
-  }
-
-  return { user: userJson };
+  return {
+    user: {
+      _id: user._id,
+      aboutYou: user.aboutYou,
+      displayname: user.displayname,
+      brainetTag: user.brainetTag,
+      visibility: user.visibility,
+      projectIds: user.projectIds.map((project) => project._id),
+      followerIds: user.followerIds,
+      followingIds: user.followingIds,
+    },
+  };
 };

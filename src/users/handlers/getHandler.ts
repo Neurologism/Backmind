@@ -58,6 +58,7 @@ export const getHandler = async (
         verified: email.verified,
       });
     }
+    userJson.phone = user.phone;
   }
 
   return { user: userJson };

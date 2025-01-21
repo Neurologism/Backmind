@@ -70,9 +70,9 @@ describe('UsersController', () => {
     await UserModel.deleteMany({});
   });
 
-  describe('get', () => {
+  describe('getById', () => {
     it('should return a user by id', async () => {
-      const result = await usersController.get(user._id, user);
+      const result = await usersController.getById(user._id, user);
       expect(result).toHaveProperty('user');
       const userResult = result.user;
       expect(userResult).toHaveProperty('_id', user._id);
@@ -81,7 +81,7 @@ describe('UsersController', () => {
 
     it('should throw an error if user not found', async () => {
       const invalidId = new mongoose.Types.ObjectId();
-      await expect(usersController.get(invalidId, user)).rejects.toThrow(
+      await expect(usersController.getById(invalidId, user)).rejects.toThrow(
         'No user found matching the criteria.'
       );
     });

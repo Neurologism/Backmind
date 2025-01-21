@@ -41,6 +41,12 @@ let pfpUploadMulter;
 export class UsersController {
   constructor(private readonly logger: AppLogger) {}
 
+  @Get()
+  async getSelf(@User() user: UserDocument) {
+    const userId = user._id;
+    return await getHandler(userId, user);
+  }
+
   @Get('is-taken')
   async isTaken(
     @Query('brainetTag') brainetTag: string,
@@ -50,7 +56,7 @@ export class UsersController {
   }
 
   @Get(':userId')
-  async get(
+  async getById(
     @Param('userId', ParseObjectIdPipe) userId: Types.ObjectId,
     @User() user: UserDocument
   ) {

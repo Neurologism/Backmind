@@ -1,4 +1,4 @@
-import { UserDocument, UserModel } from '../../../mongooseSchemas/user.schema';
+import { UserModel } from '../../../mongooseSchemas/user.schema';
 import { HttpException, HttpStatus } from '@nestjs/common';
 
 export const getByNameHandler = async (brainetTag: string) => {

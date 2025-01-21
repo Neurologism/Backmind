@@ -33,7 +33,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { User } from '../../decorators/user.decorator';
 import { UserDocument } from '../../mongooseSchemas/user.schema';
 import { AppLogger } from '../../providers/logger.provider';
-import { Public } from 'src/auth/strategies/jwt.strategy';
+import { Public } from '../auth/strategies/jwt.strategy';
 
 let pfpUploadMulter;
 

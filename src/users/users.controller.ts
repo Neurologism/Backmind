@@ -84,6 +84,7 @@ export class UsersController {
     return await getCreditsHandler(user);
   }
 
+  @Public()
   @Get(':userId/get-pfp')
   async getPfp(@Param('userId', ParseObjectIdPipe) userId: Types.ObjectId) {
     return await getPfpHandler(userId);

@@ -59,9 +59,6 @@ importers:
       bcrypt:
         specifier: ^5.1.1
         version: 5.1.1
-      bun:
-        specifier: ^1.1.45
-        version: 1.1.45
       dotenv:
         specifier: ^16.4.7
         version: 16.4.7
@@ -942,61 +939,6 @@ packages:
     engines: {node: '>=8.0.0', npm: '>=5.0.0'}
     hasBin: true
 
-  '@oven/bun-darwin-aarch64@1.1.45':
-    resolution: {integrity: sha512-HH+xHRSF8+B0/T4b+CGOI/DWwN5pDbMhKZ3tJYWHCXCCGSc2DoU5dbVPArKc1U629a5uRtuXsBgm6kmgO7ZRUQ==}
-    cpu: [arm64]
-    os: [darwin]
-
-  '@oven/bun-darwin-x64-baseline@1.1.45':
-    resolution: {integrity: sha512-XWy/qHZUe/UJtcaETiNz5vvS5m8utDA7nzXJJVu3Ji9MGtRUCCB1H8LGxjrB1syTRuZ+YcydotBNF7IY1O6kbw==}
-    cpu: [x64]
-    os: [darwin]
-
-  '@oven/bun-darwin-x64@1.1.45':
-    resolution: {integrity: sha512-3UAmR4/jKw80V1p3dtVk56hClIlK9pYR8IZXIyhUXfv6j343MSDuBIlqVM8iXUh0I00u27sDbpYPJvx8Aul39Q==}
-    cpu: [x64]
-    os: [darwin]
-
-  '@oven/bun-linux-aarch64-musl@1.1.45':
-    resolution: {integrity: sha512-J6OcF6G1lz3tDY+z055bIRF4Ajum7vnnf0Ru2I01GrPukZn5DswXPgNTZwG6aGT9hcRZs3VryTthj8itLWw8ng==}
-    cpu: [aarch64]
-    os: [linux]
-
-  '@oven/bun-linux-aarch64@1.1.45':
-    resolution: {integrity: sha512-8UNG7RZ0tLTi+yS+GJJZB8V6gIB6iBmVTthoERWO7mI1B7RQgxImhzN7lOaKmy4D++D6cEHr7WwlUXUbXY7+9w==}
-    cpu: [arm64]
-    os: [linux]
-
-  '@oven/bun-linux-x64-baseline@1.1.45':
-    resolution: {integrity: sha512-6NlMrpAlga/0471THtCjyWA1bOTnJESnRR8U1rSNNPQsqPh1xsvDfXiZQin0ofAK44jISUsM7pcEEVN/Mb8Vcw==}
-    cpu: [x64]
-    os: [linux]
-
-  '@oven/bun-linux-x64-musl-baseline@1.1.45':
-    resolution: {integrity: sha512-nBvmXOZhZovMRX/f+0jS5sirffT3Zi+WIWBshsBPnlFwKt/YCevNtzRGVpeAOtNzvPxk6WmsrE5Y4nuP4DGhmg==}
-    cpu: [x64]
-    os: [linux]
-
-  '@oven/bun-linux-x64-musl@1.1.45':
-    resolution: {integrity: sha512-DOAxMO2X6AhlH2IOURomgIxbA0YSBFdUo2wOTBCj5wJIgtxmK6f7qb7nK13U4B/G26DcTc5/XSOZmE1xzbi+Pw==}
-    cpu: [x64]
-    os: [linux]
-
-  '@oven/bun-linux-x64@1.1.45':
-    resolution: {integrity: sha512-mbLIJHpKFz7PAj3aW/r+yRm+SMIUzrD+MqjxhMm7hA8pXqmrNA+SWTPEFY0viShqGxTn/PRhTiEcqecJ8e/l4Q==}
-    cpu: [x64]
-    os: [linux]
-
-  '@oven/bun-windows-x64-baseline@1.1.45':
-    resolution: {integrity: sha512-nP7fZ86ghfHRPJcnVkcEC91/uSB3P+9b31Kzh1BLAPj4WCADyyOZ2c2btoTMmo/cGWW/uvzGtf1SMYGtPy6XMw==}
-    cpu: [x64]
-    os: [win32]
-
-  '@oven/bun-windows-x64@1.1.45':
-    resolution: {integrity: sha512-0JKUC6zyNTI+6GJ8cMQxiOBqt4OhFnRLS+WJjkWJIHVkwn2/jxpRSPL8+EmZpSppmMCUmF9Jt1tSVGvbCTwk0g==}
-    cpu: [x64]
-    os: [win32]
-
   '@pkgjs/parseargs@0.11.0':
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
     engines: {node: '>=14'}
@@ -1710,11 +1652,6 @@ packages:
 
   buffer@5.7.1:
     resolution: {integrity: sha512-EHcyIPBQ4BSGlvjB16k5KgAJ27CIsHY/2JBmCRReo48y9rQ3MaUzWX3KVlBa4U7MyX02HdVj0K7C3WaB3ju7FQ==}
-
-  bun@1.1.45:
-    resolution: {integrity: sha512-w1B/bL2OllGYEsgk0F2F16cyehZnspzXcC8/qM5dVE21zUaTwyv+4Otw19Jb+jDzGziZCmc2qtxF/MD4us603A==}
-    os: [darwin, linux, win32]
-    hasBin: true
 
   busboy@1.6.0:
     resolution: {integrity: sha512-8SFQbg/0hQ9xy3UNTB0YEnsNBbWfhf7RtnzpL7TkBiTBRfrQ9Fxcnz7VJsleJpyp6rVLvXiuORqjlHi5q+PYuA==}
@@ -5346,39 +5283,6 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
-  '@oven/bun-darwin-aarch64@1.1.45':
-    optional: true
-
-  '@oven/bun-darwin-x64-baseline@1.1.45':
-    optional: true
-
-  '@oven/bun-darwin-x64@1.1.45':
-    optional: true
-
-  '@oven/bun-linux-aarch64-musl@1.1.45':
-    optional: true
-
-  '@oven/bun-linux-aarch64@1.1.45':
-    optional: true
-
-  '@oven/bun-linux-x64-baseline@1.1.45':
-    optional: true
-
-  '@oven/bun-linux-x64-musl-baseline@1.1.45':
-    optional: true
-
-  '@oven/bun-linux-x64-musl@1.1.45':
-    optional: true
-
-  '@oven/bun-linux-x64@1.1.45':
-    optional: true
-
-  '@oven/bun-windows-x64-baseline@1.1.45':
-    optional: true
-
-  '@oven/bun-windows-x64@1.1.45':
-    optional: true
-
   '@pkgjs/parseargs@0.11.0':
     optional: true
 
@@ -6275,20 +6179,6 @@ snapshots:
     dependencies:
       base64-js: 1.5.1
       ieee754: 1.2.1
-
-  bun@1.1.45:
-    optionalDependencies:
-      '@oven/bun-darwin-aarch64': 1.1.45
-      '@oven/bun-darwin-x64': 1.1.45
-      '@oven/bun-darwin-x64-baseline': 1.1.45
-      '@oven/bun-linux-aarch64': 1.1.45
-      '@oven/bun-linux-aarch64-musl': 1.1.45
-      '@oven/bun-linux-x64': 1.1.45
-      '@oven/bun-linux-x64-baseline': 1.1.45
-      '@oven/bun-linux-x64-musl': 1.1.45
-      '@oven/bun-linux-x64-musl-baseline': 1.1.45
-      '@oven/bun-windows-x64': 1.1.45
-      '@oven/bun-windows-x64-baseline': 1.1.45
 
   busboy@1.6.0:
     dependencies:

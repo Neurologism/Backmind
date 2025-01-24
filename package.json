@@ -36,7 +36,7 @@
     "@nestjs/jwt": "^11.0.0",
     "@nestjs/mapped-types": "^2.1.0",
     "@nestjs/mongoose": "^11.0.0",
-    "@nestjs/passport": "^11.0.5",
+    "@nestjs/passport": "^10.0.3",
     "@nestjs/platform-express": "^11.0.5",
     "@nestjs/platform-fastify": "^11.0.1",
     "@nestjs/throttler": "^6.3.0",

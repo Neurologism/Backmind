@@ -16,7 +16,7 @@ export const setEnv = (filename: string = '.env') => {
     console.warn('WARNING: SECRET_KEY should be set');
   }
 
-  process.env.EXPRESS_PORT = process.env.EXPRESS_PORT || '3000';
+  process.env.PORT = process.env.PORT || '3000';
   process.env.JWT_SECRET =
     process.env.JWT_SECRET || crypto.randomBytes(32).toString('hex');
   process.env.SALT_ROUNDS = process.env.SALT_ROUNDS || '10';

@@ -69,7 +69,7 @@ export class Token {
 const TokenSchema = SchemaFactory.createForClass(Token);
 
 @Schema()
-export class Request {
+export class UserRequest {
   @Prop({ required: true })
   endpoint!: string;
 
@@ -77,7 +77,7 @@ export class Request {
   dateRequested!: Date;
 }
 
-const RequestSchema = SchemaFactory.createForClass(Request);
+const RequestSchema = SchemaFactory.createForClass(UserRequest);
 
 export type UserDocument = HydratedDocument<User>;
 
@@ -96,7 +96,7 @@ export class User {
   tokens!: Token[];
 
   @Prop({ required: true, default: [] })
-  requests!: Request[];
+  requests!: UserRequest[];
 
   @Prop({
     required: function () {

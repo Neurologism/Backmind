@@ -5,7 +5,7 @@ on:
     branches: ['main']
 
 jobs:
-  deploy-express:
+  deploy-nestjs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -18,4 +18,4 @@ jobs:
 
       - name: Deploy to server
         run: |
-          ssh -o StrictHostKeyChecking=no brainet@142.93.175.194 'bash -s' < ./scripts/deployMainExpress.sh
+          ssh -o StrictHostKeyChecking=no brainet@142.93.175.194 'bash -s' < ./scripts/deployMainNestjs.sh

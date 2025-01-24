@@ -18,4 +18,4 @@ jobs:
 
       - name: Deploy to server
         run: |
-          ssh -o StrictHostKeyChecking=no gh-actions@ssh.icinoxis.net -p 22137 'bash -s' < ./scripts/deployDevExpress.sh
+          ssh -o StrictHostKeyChecking=no gh-actions@ssh.icinoxis.net -p 22137 'bash -s' < ./scripts/deployDevNestjs.sh

@@ -10,6 +10,7 @@ import {
   Put,
   Post,
   UseInterceptors,
+  Header,
 } from '@nestjs/common';
 import { Types } from 'mongoose';
 import { ParseObjectIdPipe } from '../../pipes/parseObjectId.pipe';
@@ -84,6 +85,8 @@ export class UsersController {
 
   @Public()
   @Get(':userId/get-pfp')
+  @Header('Content-Type', 'image/jpeg')
+  @Header('Cross-Origin-Resource-Policy', 'cross-origin')
   async getPfp(@Param('userId', ParseObjectIdPipe) userId: Types.ObjectId) {
     return await getPfpHandler(userId);
   }

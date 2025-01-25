@@ -8,6 +8,7 @@ import { MongoMemoryServer } from 'mongodb-memory-server';
 import fs from 'fs';
 import path from 'path';
 import sharp from 'sharp';
+import { Readable } from 'node:stream';
 
 describe('UsersController', () => {
   let usersController: UsersController;
@@ -341,8 +342,16 @@ describe('UsersController', () => {
 
       const result = await usersController.getPfp(user._id);
 
-      // Validate that the result is a valid image
-      const image = sharp(result);
+      async function streamToBuffer(stream: Readable): Promise<Buffer> {
+        return new Promise((resolve, reject) => {
+          const chunks: Buffer[] = [];
+          stream.on('data', (chunk) => chunks.push(chunk));
+          stream.on('end', () => resolve(Buffer.concat(chunks)));
+          stream.on('error', reject);
+        });
+      }
+
+      const image = sharp(await streamToBuffer(result.getStream()));
       const metadata = await image.metadata();
       expect(metadata).toHaveProperty('format', 'png');
     });

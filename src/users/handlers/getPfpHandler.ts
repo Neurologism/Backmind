@@ -1,9 +1,12 @@
-import fs from 'fs';
-import path from 'path';
 import { Types } from 'mongoose';
-import { HttpException, HttpStatus } from '@nestjs/common';
+import path from 'path';
+import fs from 'fs';
+import { HttpException, HttpStatus, StreamableFile } from '@nestjs/common';
+import { createReadStream } from 'fs';
 
-export const getPfpHandler = async (userid: Types.ObjectId) => {
+export const getPfpHandler = async (
+  userid: Types.ObjectId
+): Promise<StreamableFile> => {
   const pfpPath = path.join(
     process.env.PFP_DIRECTORY as string,
     userid.toString() + '.png'
@@ -16,12 +19,6 @@ export const getPfpHandler = async (userid: Types.ObjectId) => {
     );
   }
 
-  try {
-    return fs.readFileSync(pfpPath);
-  } catch {
-    throw new HttpException(
-      'There was an error sending the file.',
-      HttpStatus.INTERNAL_SERVER_ERROR
-    );
-  }
+  const file = createReadStream(pfpPath);
+  return new StreamableFile(file);
 };

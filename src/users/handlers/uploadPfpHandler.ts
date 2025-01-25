@@ -5,13 +5,13 @@ import { HttpException, HttpStatus } from '@nestjs/common';
 
 export const uploadPfpHandler = async (
   user: UserDocument,
-  file: Express.Multer.File
+  files: Record<string, Storage.MultipartFile[]>
 ) => {
-  if (!file) {
+  if (!files) {
     throw new HttpException('No file uploaded', HttpStatus.BAD_REQUEST);
   }
 
-  const { buffer } = file;
+  const buffer = files[Object.keys(files)[0]][0].buffer;
   const image = sharp(buffer);
   const metadata = await image.metadata();
 

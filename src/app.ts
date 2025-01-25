@@ -4,7 +4,7 @@ import { FastifyAdapter } from '@nestjs/platform-fastify';
 import fastifyHelmet from '@fastify/helmet';
 import fastifySecureSession from '@fastify/secure-session';
 import fastifyPassport from '@fastify/passport';
-import fastifyMultipart from '@fastify/multipart';
+import multipart from '@fastify/multipart';
 
 export async function createApp() {
   const app = (await NestFactory.create(
@@ -18,7 +18,7 @@ export async function createApp() {
   });
   await app.register(fastifyPassport.initialize());
   await app.register(fastifyPassport.secureSession());
-  await app.register(fastifyMultipart);
+  await app.register(multipart);
 
   app.enableCors({
     origin:

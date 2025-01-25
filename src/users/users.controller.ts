@@ -10,7 +10,6 @@ import {
   Put,
   Post,
   UseInterceptors,
-  UploadedFile,
 } from '@nestjs/common';
 import { Types } from 'mongoose';
 import { ParseObjectIdPipe } from '../../pipes/parseObjectId.pipe';
@@ -29,13 +28,12 @@ import { updateEmailHandler } from './handlers/updateEmailHandler';
 import { updateHandler } from './handlers/updateHandler';
 import { uploadPfpHandler } from './handlers/uploadPfpHandler';
 import { deleteEmailHandler } from './handlers/deleteEmailHandler';
-import { FileInterceptor } from '@nestjs/platform-express';
 import { User } from '../../decorators/user.decorator';
 import { UserDocument } from '../../mongooseSchemas/user.schema';
 import { AppLogger } from '../../providers/logger.provider';
 import { Public } from '../auth/strategies/jwt.strategy';
-
-let pfpUploadMulter;
+import { MultipartInterceptor } from '../../utility/multipart.interceptor';
+import { Files } from '../../utility/files.decorator';
 
 @Controller('users')
 export class UsersController {
@@ -96,13 +94,15 @@ export class UsersController {
   }
 
   @Put(':userId/upload-pfp')
-  @UseInterceptors(FileInterceptor('pfp', pfpUploadMulter))
+  @UseInterceptors(
+    MultipartInterceptor({ fileType: /jpeg|png/, maxFileSize: 1000_000 })
+  )
   async uploadPfp(
     @Param('userId', ParseObjectIdPipe) userId: Types.ObjectId,
-    @UploadedFile() file: Express.Multer.File,
+    @Files() files: Record<string, Storage.MultipartFile[]>,
     @User() user: UserDocument
   ) {
-    return await uploadPfpHandler(user, file);
+    return await uploadPfpHandler(user, files);
   }
 
   @Post(':userId/followers')

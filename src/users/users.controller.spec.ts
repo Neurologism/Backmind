@@ -66,10 +66,6 @@ describe('UsersController', () => {
     await UserModel.deleteMany({});
   });
 
-  afterEach(async () => {
-    await UserModel.deleteMany({});
-  });
-
   describe('getById', () => {
     it('should return a user by id', async () => {
       const result = await usersController.getById(user._id, user);
@@ -314,7 +310,11 @@ describe('UsersController', () => {
         buffer: fileBuffer,
       };
 
-      const result = await usersController.uploadPfp(user._id, file, user);
+      const result = await usersController.uploadPfp(
+        user._id,
+        { pfp: [file] },
+        user
+      );
       expect(result).toHaveProperty('msg', 'Profile picture uploaded');
     });
   });
@@ -337,7 +337,7 @@ describe('UsersController', () => {
         buffer: fileBuffer,
       };
 
-      await usersController.uploadPfp(user._id, file, user);
+      await usersController.uploadPfp(user._id, { pfp: [file] }, user);
 
       const result = await usersController.getPfp(user._id);
 

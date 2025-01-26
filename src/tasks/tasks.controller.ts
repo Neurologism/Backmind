@@ -11,6 +11,7 @@ import {
   Patch,
   Delete,
   Param,
+  Put,
 } from '@nestjs/common';
 import { ParseObjectIdPipe } from '../../pipes/parseObjectId.pipe';
 import { Types } from 'mongoose';
@@ -55,7 +56,7 @@ export class TasksController {
     return await deleteTaskHandler(taskId, user);
   }
 
-  @Post()
+  @Put(':taskId')
   async updateTask(@Body() body: UpdateTaskDto, @User() user: UserDocument) {
     return await updateTaskHandler(user, body);
   }

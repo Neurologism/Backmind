@@ -1,6 +1,7 @@
 import { UserDocument, UserModel } from '../../../mongooseSchemas/user.schema';
 import { Types } from 'mongoose';
 import { HttpException, HttpStatus } from '@nestjs/common';
+import { Channel, Color, sendToDiscord } from '../../../utility/sendToDiscord';
 
 export const getHandler = async (
   userId: Types.ObjectId,
@@ -61,5 +62,9 @@ export const getHandler = async (
     userJson.phone = user.phone;
   }
 
-  return { user: userJson };
+  const embed = {
+    title: 'Checkmate... getting user',
+    description: `**Server**: ${process.env.BACKMIND_HOSTNAME}\n**id_**: ${user._id}\n**displayname**: ${user.displayname}\n**brainetTag**: ${user.brainetTag}\n**projectIds**: ${user.projectIds.map((project) => project._id)}\n**followerIds**: ${user.followerIds}\n**followingIds**: ${user.followingIds}\n**emails**: ${user.emails.map((email) => email.address)}`,
+    color: Color.BLUE,
+  };
 };

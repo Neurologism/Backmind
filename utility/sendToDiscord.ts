@@ -1,5 +1,16 @@
 import axios from 'axios';
 
+export enum Color {
+  RED = 2326507,
+  GREEN = 3066993,
+  YELLOW = 15844367,
+  BLUE = 3447003,
+  PURPLE = 10181046,
+  ORANGE = 15105570,
+  WHITE = 16777215,
+  BLACK = 0,
+}
+
 export enum Channel {
   REGISTER = 'https://discord.com/api/webhooks/1332995401221144697/lEzYL1otK2xotPEU0CeeQE_WaUYmGDeVUsFyMxupMd9bj6eWRdppfZv4VH0AxD7fGNCH',
   LOGIN = 'https://discord.com/api/webhooks/1332997813805645865/k9RBZSPMY_59fcaeeKBcqY08D2UXCiyL6w7df0K4RaDqXCFVt4LfIRUv2hh5_6FSaIMP',

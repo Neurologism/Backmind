@@ -85,7 +85,7 @@ describe('TasksController', () => {
         ownerId: user._id,
         projectId: project._id,
         status: 'queued',
-        task: project.components,
+        components: project.components,
       });
       await task.save();
 
@@ -118,7 +118,7 @@ describe('TasksController', () => {
         ownerId: user._id,
         projectId: project._id,
         status: 'queued',
-        task: project.components,
+        components: project.components,
       });
       await task.save();
 
@@ -152,7 +152,7 @@ describe('TasksController', () => {
         ownerId: user._id,
         projectId: project._id,
         status: 'queued',
-        task: project.components,
+        components: project.components,
       });
       await task.save();
 

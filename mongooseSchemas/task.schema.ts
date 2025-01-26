@@ -6,6 +6,9 @@ export type TaskDocument = HydratedDocument<Task>;
 
 @Schema()
 export class Task {
+  @Prop({ required: true, default: () => new Date() })
+  name!: string;
+
   @Prop({
     enum: ['queued', 'training', 'finished', 'error', 'stopped'],
     required: true,
@@ -16,7 +19,7 @@ export class Task {
   output!: any[];
 
   @Prop({ type: MongooseSchema.Types.Mixed, required: true })
-  task!: any;
+  components!: any;
 
   @Prop({ required: true, default: () => new Date() })
   datelastUpdated!: Date;
@@ -32,9 +35,6 @@ export class Task {
 
   @Prop({ required: true, ref: 'projects' })
   projectId!: Types.ObjectId;
-
-  @Prop({ required: true, ref: 'users' })
-  ownerId!: Types.ObjectId;
 }
 
 export const TaskSchema = SchemaFactory.createForClass(Task);

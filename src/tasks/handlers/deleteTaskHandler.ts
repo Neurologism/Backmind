@@ -16,7 +16,14 @@ export const deleteTaskHandler = async (
       HttpStatus.NOT_FOUND
     );
   }
-  if (task.ownerId.toString() !== user._id.toString()) {
+  const project = await ProjectModel.findOne({ _id: task.projectId });
+  if (project === null) {
+    throw new HttpException(
+      'Project with that id does not exist.',
+      HttpStatus.NOT_FOUND
+    );
+  }
+  if (project.ownerId.toString() !== user._id.toString()) {
     throw new HttpException('Not authorized.', HttpStatus.FORBIDDEN);
   }
 

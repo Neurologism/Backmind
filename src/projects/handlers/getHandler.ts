@@ -35,17 +35,5 @@ export const getHandler = async (
     }
   }
 
-  const projectJson = {
-    _id: project._id,
-    name: project.name,
-    description: project.description,
-    ownerId: project.ownerId,
-    visibility: project.visibility,
-    dateCreatedAt: project.dateCreatedAt,
-    dateLastEdited: project.dateLastEdited,
-    tasks: project.tasks,
-    components: project.components,
-    isTutorialProject: project.isTutorialProject,
-  };
-  return { project: projectJson };
+  return { project };
 };

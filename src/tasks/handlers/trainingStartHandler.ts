@@ -44,7 +44,7 @@ export const trainingStartHandler = async (
   const insertResult = await new TaskModel({
     status: 'queued',
     output: [],
-    task: project.components,
+    components: project.components,
     datelastUpdated: new Date(),
     dateQueued: new Date(),
     dateStarted: null,

@@ -75,7 +75,7 @@ describe('ProjectsController', () => {
       const task = new TaskModel({
         status: 'queued',
         output: ['output1', 'output2'],
-        task: { some: 'task' },
+        components: { some: 'task' },
         projectId: new Types.ObjectId(),
         ownerId: user._id,
       });
@@ -98,8 +98,8 @@ describe('ProjectsController', () => {
       expect(project2).toHaveProperty('visibility', 'private');
       expect(project2.tasks).toHaveLength(1);
       expect(project2.tasks[0]).toHaveProperty('status', 'queued');
-      expect(project2.tasks[0]).not.toHaveProperty('components');
-      expect(project2.tasks[0]).not.toHaveProperty('output');
+      expect(project2.tasks[0]).toHaveProperty('components', undefined);
+      expect(project2.tasks[0]).toHaveProperty('output', undefined);
     });
 
     it('should throw an error for an invalid project id', async () => {

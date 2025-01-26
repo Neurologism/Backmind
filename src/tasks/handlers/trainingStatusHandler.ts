@@ -2,6 +2,7 @@ import { TaskModel } from '../../../mongooseSchemas/task.schema';
 import { Types } from 'mongoose';
 import { HttpException, HttpStatus } from '@nestjs/common';
 import { UserDocument } from '../../../mongooseSchemas/user.schema';
+import { ProjectModel } from '../../../mongooseSchemas/project.schema';
 
 export const trainingStatusHandler = async (
   taskId: Types.ObjectId,
@@ -14,7 +15,14 @@ export const trainingStatusHandler = async (
       HttpStatus.NOT_FOUND
     );
   }
-  if (task.ownerId.toString() !== user._id.toString()) {
+  const project = await ProjectModel.findOne({ _id: task.projectId });
+  if (project === null) {
+    throw new HttpException(
+      'Project with that id does not exist.',
+      HttpStatus.NOT_FOUND
+    );
+  }
+  if (project.ownerId.toString() !== user._id.toString()) {
     throw new HttpException('Not authorized.', HttpStatus.FORBIDDEN);
   }
 
@@ -26,7 +34,7 @@ export const trainingStatusHandler = async (
       dateStarted: task.dateStarted,
       dateFinished: task.dateFinished,
       projectId: task.projectId,
-      ownerId: task.ownerId,
+      ownerId: project.ownerId,
     },
   };
 };

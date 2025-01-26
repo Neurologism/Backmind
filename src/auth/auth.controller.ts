@@ -11,13 +11,12 @@ import {
   Patch,
   HttpException,
   HttpStatus,
-  UseGuards,
-  Get,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { Public } from './strategies/jwt.strategy';
 import { User } from '../../decorators/user.decorator';
 import { UserDocument } from '../../mongooseSchemas/user.schema';
+import { Channel, Color, sendToDiscord } from '../../utility/sendToDiscord';
 // import { AuthGuard } from '@nestjs/passport';
 // import fastifyPassport from '@fastify/passport';
 // import { GithubAuthGuard } from './github-auth.guard';
@@ -50,7 +49,16 @@ export class AuthController {
         HttpStatus.BAD_REQUEST
       );
     }
-    return await this.authService.login(user);
+    const response = await this.authService.login(user);
+
+    const embed = {
+      title: 'New user registered',
+      description: `**Server**: ${process.env.BACKMIND_HOSTNAME}\n**Email:** ${body.user.email}\n**Brainet Tag:** ${body.user.brainetTag}`,
+      color: Color.GREEN,
+    };
+    await sendToDiscord(embed, Channel.REGISTER);
+
+    return response;
   }
 
   @Public()

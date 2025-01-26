@@ -11,13 +11,13 @@ import {
   Patch,
   Delete,
   Param,
-  HttpException,
-  HttpStatus,
 } from '@nestjs/common';
 import { ParseObjectIdPipe } from '../../pipes/parseObjectId.pipe';
 import { Types } from 'mongoose';
 import { User } from '../../decorators/user.decorator';
 import { UserDocument } from '../../mongooseSchemas/user.schema';
+import { UpdateTaskDto } from './dto/updateTask.schema';
+import { updateTaskHandler } from './handlers/updateTaskHandler';
 
 @Controller('tasks')
 export class TasksController {
@@ -53,5 +53,10 @@ export class TasksController {
     @User() user: UserDocument
   ) {
     return await deleteTaskHandler(taskId, user);
+  }
+
+  @Post()
+  async updateTask(@Body() body: UpdateTaskDto, @User() user: UserDocument) {
+    return await updateTaskHandler(user, body);
   }
 }

@@ -7,6 +7,7 @@ import { UserDocument } from '../../mongooseSchemas/user.schema';
 import { Types } from 'mongoose';
 import { TrainingStartDto } from './dto/trainingStart.schema';
 import { ProjectModel } from '../../mongooseSchemas/project.schema';
+import { UpdateTaskDto } from './dto/updateTask.schema';
 
 describe('TasksController', () => {
   let tasksController: TasksController;
@@ -168,6 +169,106 @@ describe('TasksController', () => {
       await expect(
         tasksController.deleteTask(invalidId, user)
       ).rejects.toThrow();
+    });
+  });
+
+  describe('updateTask', () => {
+    it('should update a task successfully', async () => {
+      const project = new ProjectModel({
+        name: 'testProject',
+        ownerId: user._id,
+        visibility: 'private',
+      });
+      await project.save();
+
+      const task = new TaskModel({
+        name: 'taskToUpdate',
+        description: 'A task to update',
+        ownerId: user._id,
+        projectId: project._id,
+        status: 'queued',
+        components: project.components,
+      });
+      await task.save();
+
+      const updateTaskDto: UpdateTaskDto = {
+        task: {
+          _id: task._id,
+          name: 'updatedTaskName',
+        },
+      };
+
+      const result = await tasksController.updateTask(updateTaskDto, user);
+      expect(result).toEqual({ msg: 'Task updated successfully.' });
+
+      const updatedTask = await TaskModel.findById(task._id);
+      expect(updatedTask?.name).toBe('updatedTaskName');
+    });
+
+    it('should throw an error if the task does not exist', async () => {
+      const updateTaskDto: UpdateTaskDto = {
+        task: {
+          _id: new Types.ObjectId(),
+          name: 'nonExistentTask',
+        },
+      };
+
+      await expect(
+        tasksController.updateTask(updateTaskDto, user)
+      ).rejects.toThrow('Task with that id does not exist.');
+    });
+
+    it('should throw an error if the project does not exist', async () => {
+      const task = new TaskModel({
+        name: 'taskWithNonExistentProject',
+        description: 'A task with a non-existent project',
+        ownerId: user._id,
+        projectId: new Types.ObjectId(),
+        status: 'queued',
+        components: [],
+      });
+      await task.save();
+
+      const updateTaskDto: UpdateTaskDto = {
+        task: {
+          _id: task._id,
+          name: 'updatedTaskName',
+        },
+      };
+
+      await expect(
+        tasksController.updateTask(updateTaskDto, user)
+      ).rejects.toThrow('Project with that id does not exist.');
+    });
+
+    it('should throw an error if the user is not authorized', async () => {
+      const project = new ProjectModel({
+        name: 'testProject',
+        ownerId: new Types.ObjectId(),
+        visibility: 'private',
+      });
+      await project.save();
+
+      const task = new TaskModel({
+        name: 'taskToUpdate',
+        description: 'A task to update',
+        ownerId: user._id,
+        projectId: project._id,
+        status: 'queued',
+        components: project.components,
+      });
+      await task.save();
+
+      const updateTaskDto: UpdateTaskDto = {
+        task: {
+          _id: task._id,
+          name: 'updatedTaskName',
+        },
+      };
+
+      await expect(
+        tasksController.updateTask(updateTaskDto, user)
+      ).rejects.toThrow('Not authorized.');
     });
   });
 });

@@ -271,17 +271,17 @@ describe('UsersController', () => {
   describe('isTaken', () => {
     it('should return that user with brainetTag is taken', async () => {
       const result = await usersController.isTaken('chisato', '');
-      expect(result).toHaveProperty('msg', 'This user is taken.');
+      expect(result).toHaveProperty('isTaken', true);
     });
 
     it('should return that user with email is taken', async () => {
       const result = await usersController.isTaken('', 'chisato@lycoris.jp');
-      expect(result).toHaveProperty('msg', 'This user is taken.');
+      expect(result).toHaveProperty('isTaken', true);
     });
 
     it('should return that user with brainetTag is not taken', async () => {
       const result = await usersController.isTaken('nonexistent', '');
-      expect(result).toHaveProperty('msg', 'This user is not taken.');
+      expect(result).toHaveProperty('isTaken', false);
     });
 
     it('should return that user with email is not taken', async () => {
@@ -289,7 +289,7 @@ describe('UsersController', () => {
         '',
         'nonexistent@lycoris.jp'
       );
-      expect(result).toHaveProperty('msg', 'This user is not taken.');
+      expect(result).toHaveProperty('isTaken', false);
     });
   });
 

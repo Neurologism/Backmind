@@ -10,7 +10,7 @@ import { sendVerificationEmail } from '../../utility/sendVerificationEmail';
 import { RegisterDto } from './dto/register.schema';
 import { AppLogger } from '../../providers/logger.provider';
 import { randomBytes } from 'node:crypto';
-import { Channel, Color, sendToDiscord } from 'utility/sendToDiscord';
+import { Channel, Color, sendToDiscord } from '../../utility/sendToDiscord';
 
 @Injectable()
 export class AuthService {

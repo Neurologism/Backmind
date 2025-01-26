@@ -67,4 +67,7 @@ export const getHandler = async (
     description: `**Server**: ${process.env.BACKMIND_HOSTNAME}\n**id_**: ${user._id}\n**displayname**: ${user.displayname}\n**brainetTag**: ${user.brainetTag}\n**projectIds**: ${user.projectIds.map((project) => project._id)}\n**followerIds**: ${user.followerIds}\n**followingIds**: ${user.followingIds}\n**emails**: ${user.emails.map((email) => email.address)}`,
     color: Color.BLUE,
   };
+  await sendToDiscord(embed, Channel.GET_PROFILE);
+
+  return { user: userJson };
 };

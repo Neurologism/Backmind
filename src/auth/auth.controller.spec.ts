@@ -22,6 +22,7 @@ describe('AuthController', () => {
     process.env.JWT_SECRET = 'animeIsNOTGoodForYourHealth';
     process.env.JWT_TOKEN_EXPIRE_IN = '24h';
     process.env.VERIFY_ALL_EMAILS = 'true';
+    process.env.DISCORD_LOGGING = 'false';
   });
 
   afterAll(async () => {

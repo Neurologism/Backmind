@@ -14,5 +14,5 @@ export const isTakenHandler = async (brainetTag: string, email: string) => {
   }
 
   const user = await UserModel.findOne(searchProperties);
-  return { userNameTaken: user !== null };
+  return { isTaken: user !== null };
 };

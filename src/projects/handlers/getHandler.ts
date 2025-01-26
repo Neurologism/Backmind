@@ -7,7 +7,10 @@ export const getHandler = async (
   projectId: Types.ObjectId,
   user: UserDocument
 ) => {
-  const project = await ProjectModel.findById(projectId);
+  const project = await ProjectModel.findById(projectId).populate({
+    path: 'tasks',
+    select: '-components -output',
+  });
 
   if (project === null) {
     throw new HttpException(

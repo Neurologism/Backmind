@@ -47,6 +47,7 @@ export class UsersController {
   }
 
   @Get('is-taken')
+  @Public()
   async isTaken(
     @Query('brainetTag') brainetTag: string,
     @Query('email') email: string

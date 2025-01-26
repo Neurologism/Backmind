@@ -18,6 +18,10 @@ export enum Channel {
 }
 
 export async function sendToDiscord(embed: any, channel: Channel) {
+  if (!process.env.DISCORD_LOGGING || process.env.DISCORD_LOGGING === 'false') {
+    return;
+  }
+
   const message = {
     embeds: [embed],
     content: '',

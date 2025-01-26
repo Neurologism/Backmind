@@ -113,6 +113,8 @@ export class Components {
       zoom: { type: Number },
     }),
     required: false,
+    // do not initialize x or y to 0 or the viewport will be completely freezed in frontend
+    default: { x: 0.1, y: 0.1, zoom: 1.0 },
   })
   viewport!: Record<string, any>;
 }

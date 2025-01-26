@@ -33,6 +33,7 @@ describe('UsersController', () => {
       '../../dataStorage/pfp'
     );
     process.env.PFP_SAVE_SIZE = '512';
+    process.env.DISCORD_LOGGING = 'false';
   });
 
   afterAll(async () => {

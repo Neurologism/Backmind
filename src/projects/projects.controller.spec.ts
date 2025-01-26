@@ -7,6 +7,7 @@ import { UserModel } from '../../mongooseSchemas/user.schema';
 import { ProjectModel } from '../../mongooseSchemas/project.schema';
 import { UserDocument } from '../../mongooseSchemas/user.schema';
 import { Types } from 'mongoose';
+import { TaskModel } from '../../mongooseSchemas/task.schema';
 
 describe('ProjectsController', () => {
   let projectsController: ProjectsController;
@@ -70,12 +71,22 @@ describe('ProjectsController', () => {
   });
 
   describe('get', () => {
-    it('should return a project by id', async () => {
+    it('should return a project by id with populated tasks excluding components and output', async () => {
+      const task = new TaskModel({
+        status: 'queued',
+        output: ['output1', 'output2'],
+        task: { some: 'task' },
+        projectId: new Types.ObjectId(),
+        ownerId: user._id,
+      });
+      await task.save();
+
       const project = new ProjectModel({
         name: 'existingProject',
         description: 'An existing project',
         ownerId: user._id,
         visibility: 'private',
+        tasks: [task._id],
       });
       await project.save();
 
@@ -85,6 +96,10 @@ describe('ProjectsController', () => {
       expect(project2).toHaveProperty('description', 'An existing project');
       expect(project2).toHaveProperty('ownerId', user._id);
       expect(project2).toHaveProperty('visibility', 'private');
+      expect(project2.tasks).toHaveLength(1);
+      expect(project2.tasks[0]).toHaveProperty('status', 'queued');
+      expect(project2.tasks[0]).not.toHaveProperty('components');
+      expect(project2.tasks[0]).not.toHaveProperty('output');
     });
 
     it('should throw an error for an invalid project id', async () => {

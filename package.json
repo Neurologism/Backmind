@@ -42,6 +42,7 @@
     "@nestjs/throttler": "^6.3.0",
     "@sendgrid/mail": "^8.1.4",
     "@types/passport-google-oauth20": "^2.0.16",
+    "axios": "^1.7.9",
     "bcrypt": "^5.1.1",
     "dotenv": "^16.4.7",
     "fastify": "^5.2.1",

@@ -52,11 +52,11 @@ export class AuthController {
     const response = await this.authService.login(user);
 
     const embed = {
-      title: 'New user registered',
-      description: `**Server**: ${process.env.BACKMIND_HOSTNAME}\n**Email:** ${body.user.email}\n**Brainet Tag:** ${body.user.brainetTag}`,
-      color: Color.GREEN,
+      title: 'User logged in',
+      description: `**Server**: ${process.env.BACKMIND_HOSTNAME}\n**emails:** ${user.emails.map((email) => email.address)}\n**brainetTag:** ${user.brainetTag}`,
+      color: Color.BLUE,
     };
-    await sendToDiscord(embed, Channel.REGISTER);
+    await sendToDiscord(embed, Channel.LOGIN);
 
     return response;
   }

@@ -28,7 +28,7 @@ export const updateTaskHandler = async (
   }
 
   taskToUpdate.name = task.name;
-  taskToUpdate.save();
+  await taskToUpdate.save();
 
   return { msg: 'Task updated successfully.' };
 };

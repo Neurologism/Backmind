@@ -12,13 +12,6 @@ export const getByNameHandler = async (brainetTag: string) => {
     );
   }
 
-  if (user.visibility === 'private') {
-    throw new HttpException(
-      'This user is private. You can only access private users if they follow you.',
-      HttpStatus.FORBIDDEN
-    );
-  }
-
   const query = {
     isTutorialProject: false,
   } as any;
@@ -35,7 +28,6 @@ export const getByNameHandler = async (brainetTag: string) => {
       aboutYou: user.aboutYou,
       displayname: user.displayname,
       brainetTag: user.brainetTag,
-      visibility: user.visibility,
       projectIds: user.projectIds.map((project) => project._id),
       followerIds: user.followerIds,
       followingIds: user.followingIds,

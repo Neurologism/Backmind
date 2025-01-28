@@ -120,13 +120,6 @@ export class User {
   @Prop()
   dateOfBirth?: Date;
 
-  @Prop({
-    enum: ['public', 'private'],
-    default: 'public',
-    required: true,
-  })
-  visibility!: string;
-
   @Prop({ default: '' })
   pronouns!: string;
 

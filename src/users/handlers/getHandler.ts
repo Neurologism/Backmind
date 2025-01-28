@@ -17,13 +17,6 @@ export const getHandler = async (
 
   const ownsProfile = user._id.toString() === loggedInUser._id?.toString();
 
-  if (user.visibility === 'private' && !ownsProfile) {
-    throw new HttpException(
-      'This user is private. You can only access private users if they follow you.',
-      HttpStatus.FORBIDDEN
-    );
-  }
-
   const query = {
     isTutorialProject: false,
   } as any;
@@ -43,7 +36,6 @@ export const getHandler = async (
     aboutYou: user.aboutYou,
     displayname: user.displayname,
     brainetTag: user.brainetTag,
-    visibility: user.visibility,
     projectIds: user.projectIds.map((project) => project._id),
     followerIds: user.followerIds,
     followingIds: user.followingIds,

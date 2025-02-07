@@ -45,7 +45,7 @@ export const trainingStartHandler = async (
     status: 'queued',
     output: [],
     components: project.components,
-    datelastUpdated: new Date(),
+    dateLastUpdated: new Date(),
     dateQueued: new Date(),
     dateStarted: null,
     dateFinished: null,

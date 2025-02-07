@@ -22,7 +22,7 @@ export class Task {
   components!: any;
 
   @Prop({ required: true, default: () => new Date() })
-  datelastUpdated!: Date;
+  dateLastUpdated!: Date;
 
   @Prop()
   dateQueued?: Date;
@@ -40,7 +40,7 @@ export class Task {
 export const TaskSchema = SchemaFactory.createForClass(Task);
 
 TaskSchema.pre('save', function (next) {
-  this.datelastUpdated = new Date();
+  this.dateLastUpdated = new Date();
   next();
 });
 

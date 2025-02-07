@@ -28,6 +28,7 @@ export const trainingStatusHandler = async (
 
   return {
     task: {
+      _id: task._id,
       status: task.status,
       output: task.output,
       dateQueued: task.dateQueued,

@@ -36,6 +36,7 @@ export const trainingStatusHandler = async (
       dateLastUpdated: task.dateLastUpdated,
       projectId: task.projectId,
       ownerId: project.ownerId,
+      name: task.name,
     },
   };
 };

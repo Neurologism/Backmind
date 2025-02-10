@@ -147,7 +147,6 @@ describe('ProjectsController', () => {
         project: {
           name: 'updatedProject',
           description: 'An updated project',
-          _id: project._id,
         },
       };
 

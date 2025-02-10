@@ -25,6 +25,7 @@ export const updateSchema = z
             return new mongoose.Types.ObjectId(ownerId);
           }),
         components: componentSchema.optional(),
+        editorType: z.string().optional(),
       })
       .strict(),
   })
@@ -36,7 +37,8 @@ export const updateSchema = z
         !data.project.description &&
         !data.project.visibility &&
         !data.project.ownerId &&
-        !data.project.components
+        !data.project.components &&
+        !data.project.editorType
       );
     },
     { message: 'You must provide at least one field to update.' }

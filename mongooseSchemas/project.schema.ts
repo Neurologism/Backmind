@@ -147,6 +147,9 @@ export class Project {
   @Prop({ required: true, default: {} })
   components!: Components;
 
+  @Prop({ required: true, default: 'classic' })
+  editorType!: string;
+
   @Prop({ required: true, default: [], ref: 'tasks' })
   tasks!: Types.ObjectId[];
 

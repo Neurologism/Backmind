@@ -36,6 +36,7 @@ export const getHandler = async (
   }
 
   const projectJson = {
+    _id: project._id,
     name: project.name,
     description: project.description,
     ownerId: project.ownerId,

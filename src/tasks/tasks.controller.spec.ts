@@ -61,6 +61,7 @@ describe('TasksController', () => {
       const trainingStartDto: TrainingStartDto = {
         project: {
           _id: project._id,
+          startNodeId: new Types.ObjectId(),
         },
       };
       const result = await tasksController.trainingStart(
@@ -87,6 +88,7 @@ describe('TasksController', () => {
         projectId: project._id,
         status: 'queued',
         components: project.components,
+        startNodeId: new Types.ObjectId(),
       });
       await task.save();
 
@@ -120,6 +122,7 @@ describe('TasksController', () => {
         projectId: project._id,
         status: 'queued',
         components: project.components,
+        startNodeId: new Types.ObjectId(),
       });
       await task.save();
 
@@ -154,6 +157,7 @@ describe('TasksController', () => {
         projectId: project._id,
         status: 'queued',
         components: project.components,
+        startNodeId: new Types.ObjectId(),
       });
       await task.save();
 
@@ -188,6 +192,7 @@ describe('TasksController', () => {
         projectId: project._id,
         status: 'queued',
         components: project.components,
+        startNodeId: new Types.ObjectId(),
       });
       await task.save();
 
@@ -226,6 +231,7 @@ describe('TasksController', () => {
         projectId: new Types.ObjectId(),
         status: 'queued',
         components: [],
+        startNodeId: new Types.ObjectId(),
       });
       await task.save();
 
@@ -256,6 +262,7 @@ describe('TasksController', () => {
         projectId: project._id,
         status: 'queued',
         components: project.components,
+        startNodeId: new Types.ObjectId(),
       });
       await task.save();
 

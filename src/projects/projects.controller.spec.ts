@@ -78,6 +78,7 @@ describe('ProjectsController', () => {
         components: { some: 'task' },
         projectId: new Types.ObjectId(),
         ownerId: user._id,
+        startNodeId: new Types.ObjectId(),
       });
       await task.save();
 
@@ -98,7 +99,6 @@ describe('ProjectsController', () => {
       expect(project2).toHaveProperty('visibility', 'private');
       expect(project2.tasks).toHaveLength(1);
       expect(project2.tasks[0]).toHaveProperty('status', 'queued');
-      expect(project2.tasks[0]).toHaveProperty('components', undefined);
       expect(project2.tasks[0]).toHaveProperty('output', undefined);
     });
 

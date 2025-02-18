@@ -36,8 +36,12 @@ export const trainingStopHandler = async (
     {
       $set: {
         status: 'stopped',
-        dateLastUpdated: new Date(),
-        dateFinished: new Date(),
+        dateLastUpdated: {
+          $date: new Date(),
+        },
+        dateFinished: {
+          $date: new Date(),
+        },
       },
     }
   );

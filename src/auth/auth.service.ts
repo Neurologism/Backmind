@@ -143,9 +143,7 @@ export class AuthService {
           verified: Boolean(process.env.VERIFY_ALL_EMAILS),
           address: body.user.email,
           verificationToken: verifyEmailReturn.mailVerificationToken,
-          dateVerificationSent: {
-            $date: new Date(),
-          },
+          dateVerificationSent: new Date(),
         },
       ],
       brainetTag: body.user.brainetTag,

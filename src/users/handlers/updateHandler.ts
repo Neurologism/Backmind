@@ -26,7 +26,7 @@ export const updateHandler = async (user: UserDocument, body: UpdateDto) => {
   }
 
   user.set(body.user);
-  user.dateLastEdited = { $date: new Date() };
+  user.dateLastEdited = new Date();
   user.markModified('dateLastEdited');
   await user.save();
 

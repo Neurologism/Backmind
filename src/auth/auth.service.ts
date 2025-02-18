@@ -79,7 +79,7 @@ export class AuthService {
     );
     user.tokens.push({
       token: access_token,
-      dateAdded: { $date: new Date() },
+      dateAdded: new Date(),
       ips: [],
       userAgents: [],
     });
@@ -203,9 +203,7 @@ export class AuthService {
     }
 
     if (
-      (new Date().getTime() -
-        new Date(email.dateVerificationSent.$date).getTime()) /
-        60000 >=
+      (new Date().getTime() - email.dateVerificationSent.getTime()) / 60000 >=
       Number(process.env.EMAIL_VERIFICATION_TOKEN_VALID_MINUTES)
     ) {
       throw new HttpException(

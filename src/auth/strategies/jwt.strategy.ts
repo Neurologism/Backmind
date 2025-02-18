@@ -30,7 +30,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     const ip = req.ip;
     const userAgent = req.headers['user-agent'] || '';
     const endpoint = req.originalUrl;
-    const dateRequested = { $date: new Date() };
+    const dateRequested = new Date();
 
     if (ip === undefined || userAgent === undefined) {
       throw new UnauthorizedException();

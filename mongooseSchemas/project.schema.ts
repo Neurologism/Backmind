@@ -103,7 +103,7 @@ export class Components {
   @Prop({ required: false })
   position!: number[];
 
-  @Prop({ type: Number, required: false })
+  @Prop({ required: false })
   zoom!: number;
 
   @Prop({
@@ -117,6 +117,9 @@ export class Components {
     default: { x: 0.1, y: 0.1, zoom: 1.0 },
   })
   viewport!: Record<string, any>;
+
+  @Prop({ required: false })
+  perceptrons!: Array<Object>;
 }
 
 @Schema()

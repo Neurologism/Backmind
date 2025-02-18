@@ -35,8 +35,8 @@ export const updateEmailHandler = async (
     verified: Boolean(process.env.VERIFY_ALL_EMAILS),
     address: body.user.email,
     verificationToken: verifyEmailReturn.mailVerificationToken,
-    dateVerificationSent: new Date(),
-    dateAdded: new Date(),
+    dateVerificationSent: { $date: new Date() },
+    dateAdded: { $date: new Date() },
   });
 
   await user.save();

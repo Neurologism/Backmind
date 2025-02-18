@@ -25,12 +25,16 @@ describe('TasksController', () => {
           emailType: 'primary',
           address: 'chisato@lycoris.jp',
           verified: true,
-          dateAdded: new Date(),
+          dateAdded: {
+            $date: new Date(),
+          },
         },
       ],
       brainetTag: 'chisato',
       passwordHash: 'hashedPassword',
-      dateAdded: new Date(),
+      dateAdded: {
+        $date: new Date(),
+      },
     });
     await user.save();
   });

@@ -21,17 +21,41 @@ export class Task {
   @Prop({ type: MongooseSchema.Types.Mixed, required: true })
   components!: any;
 
-  @Prop({ required: true, default: () => new Date() })
-  dateLastUpdated!: Date;
+  @Prop({
+    type: MongooseSchema.Types.Mixed,
+    required: true,
+    default: () => ({ $date: new Date() }),
+    get: (val: { $date: Date }) => val.$date,
+    set: (val: Date) => ({ $date: val }),
+  })
+  dateLastUpdated!: { $date: Date };
 
-  @Prop()
-  dateQueued?: Date;
+  @Prop({
+    type: MongooseSchema.Types.Mixed,
+    required: true,
+    default: () => ({ $date: new Date() }),
+    get: (val: { $date: Date }) => val.$date,
+    set: (val: Date) => ({ $date: val }),
+  })
+  dateQueued?: { $date: Date };
 
-  @Prop()
-  dateStarted?: Date;
+  @Prop({
+    type: MongooseSchema.Types.Mixed,
+    required: true,
+    default: () => ({ $date: new Date() }),
+    get: (val: { $date: Date }) => val.$date,
+    set: (val: Date) => ({ $date: val }),
+  })
+  dateStarted?: { $date: Date };
 
-  @Prop()
-  dateFinished?: Date;
+  @Prop({
+    type: MongooseSchema.Types.Mixed,
+    required: true,
+    default: () => ({ $date: new Date() }),
+    get: (val: { $date: Date }) => val.$date,
+    set: (val: Date) => ({ $date: val }),
+  })
+  dateFinished?: { $date: Date };
 
   @Prop({ required: true, ref: 'projects' })
   projectId!: Types.ObjectId;
@@ -40,7 +64,7 @@ export class Task {
 export const TaskSchema = SchemaFactory.createForClass(Task);
 
 TaskSchema.pre('save', function (next) {
-  this.dateLastUpdated = new Date();
+  this.dateLastUpdated = { $date: new Date() };
   next();
 });
 

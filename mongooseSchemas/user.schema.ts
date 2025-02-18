@@ -16,14 +16,30 @@ export class Email {
   @Prop()
   verificationToken?: string;
 
-  @Prop()
-  dateVerificationSent?: Date;
+  @Prop({
+    type: mongoose.Schema.Types.Mixed,
+    default: () => ({ $date: new Date() }),
+    get: (val: { $date: Date }) => val.$date,
+    set: (val: Date) => ({ $date: val }),
+  })
+  dateVerificationSent?: { $date: Date };
 
-  @Prop({ required: true, default: () => new Date() })
-  dateAdded!: Date;
+  @Prop({
+    type: mongoose.Schema.Types.Mixed,
+    required: true,
+    default: () => ({ $date: new Date() }),
+    get: (val: { $date: Date }) => val.$date,
+    set: (val: Date) => ({ $date: val }),
+  })
+  dateAdded!: { $date: Date };
 
-  @Prop()
-  dateVerified?: Date;
+  @Prop({
+    type: mongoose.Schema.Types.Mixed,
+    default: () => ({ $date: new Date() }),
+    get: (val: { $date: Date }) => val.$date,
+    set: (val: Date) => ({ $date: val }),
+  })
+  dateVerified?: { $date: Date };
 }
 
 const EmailSchema = SchemaFactory.createForClass(Email);
@@ -39,14 +55,29 @@ export class Phone {
   @Prop()
   verificationCode?: string;
 
-  @Prop()
-  dateVerificationSent?: Date;
+  @Prop({
+    type: mongoose.Schema.Types.Mixed,
+    default: () => ({ $date: new Date() }),
+    get: (val: { $date: Date }) => val.$date,
+    set: (val: Date) => ({ $date: val }),
+  })
+  dateVerificationSent?: { $date: Date };
 
-  @Prop()
-  dateAdded?: Date;
+  @Prop({
+    type: mongoose.Schema.Types.Mixed,
+    default: () => ({ $date: new Date() }),
+    get: (val: { $date: Date }) => val.$date,
+    set: (val: Date) => ({ $date: val }),
+  })
+  dateAdded?: { $date: Date };
 
-  @Prop()
-  dateVerified?: Date;
+  @Prop({
+    type: mongoose.Schema.Types.Mixed,
+    default: () => ({ $date: new Date() }),
+    get: (val: { $date: Date }) => val.$date,
+    set: (val: Date) => ({ $date: val }),
+  })
+  dateVerified?: { $date: Date };
 }
 
 const PhoneSchema = SchemaFactory.createForClass(Phone);
@@ -56,8 +87,14 @@ export class Token {
   @Prop({ required: true })
   token!: string;
 
-  @Prop({ required: true, default: () => new Date() })
-  dateAdded!: Date;
+  @Prop({
+    type: mongoose.Schema.Types.Mixed,
+    required: true,
+    default: () => ({ $date: new Date() }),
+    get: (val: { $date: Date }) => val.$date,
+    set: (val: Date) => ({ $date: val }),
+  })
+  dateAdded!: { $date: Date };
 
   @Prop({ required: true, default: [] })
   ips!: string[];
@@ -73,8 +110,14 @@ export class UserRequest {
   @Prop({ required: true })
   endpoint!: string;
 
-  @Prop({ required: true, default: () => new Date() })
-  dateRequested!: Date;
+  @Prop({
+    type: mongoose.Schema.Types.Mixed,
+    required: true,
+    default: () => ({ $date: new Date() }),
+    get: (val: { $date: Date }) => val.$date,
+    set: (val: Date) => ({ $date: val }),
+  })
+  dateRequested!: { $date: Date };
 }
 
 const RequestSchema = SchemaFactory.createForClass(UserRequest);
@@ -117,8 +160,13 @@ export class User {
   @Prop({ required: true })
   passwordHash!: string;
 
-  @Prop()
-  dateOfBirth?: Date;
+  @Prop({
+    type: mongoose.Schema.Types.Mixed,
+    default: () => ({ $date: new Date() }),
+    get: (val: { $date: Date }) => val.$date,
+    set: (val: Date) => ({ $date: val }),
+  })
+  dateOfBirth?: { $date: Date };
 
   @Prop({ default: '' })
   pronouns!: string;
@@ -135,11 +183,23 @@ export class User {
   @Prop({ required: true, default: 600 })
   remainingCredits!: number;
 
-  @Prop({ required: true, default: () => new Date() })
-  dateLastEdited!: Date;
+  @Prop({
+    type: mongoose.Schema.Types.Mixed,
+    required: true,
+    default: () => ({ $date: new Date() }),
+    get: (val: { $date: Date }) => val.$date,
+    set: (val: Date) => ({ $date: val }),
+  })
+  dateLastEdited!: { $date: Date };
 
-  @Prop({ required: true, default: () => new Date() })
-  dateCreatedAt!: Date;
+  @Prop({
+    type: mongoose.Schema.Types.Mixed,
+    required: true,
+    default: () => ({ $date: new Date() }),
+    get: (val: { $date: Date }) => val.$date,
+    set: (val: Date) => ({ $date: val }),
+  })
+  dateCreatedAt!: { $date: Date };
 
   @Prop({ default: [], ref: 'projects' })
   projectIds!: Types.ObjectId[];
@@ -175,7 +235,7 @@ export class User {
 export const UserSchema = SchemaFactory.createForClass(User);
 
 UserSchema.pre('save', function (next) {
-  this.dateLastEdited = new Date();
+  this.dateLastEdited = { $date: new Date() };
   next();
 });
 

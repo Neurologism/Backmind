@@ -138,11 +138,23 @@ export class Project {
   @Prop({ enum: ['public', 'private'], required: true })
   visibility!: string;
 
-  @Prop({ required: true, default: () => new Date() })
-  dateCreatedAt!: Date;
+  @Prop({
+    type: mongoose.Schema.Types.Mixed,
+    required: true,
+    default: () => ({ $date: new Date() }),
+    get: (val: { $date: Date }) => val.$date,
+    set: (val: Date) => ({ $date: val }),
+  })
+  dateCreatedAt!: { $date: Date };
 
-  @Prop({ required: true, default: () => new Date() })
-  dateLastEdited!: Date;
+  @Prop({
+    type: mongoose.Schema.Types.Mixed,
+    required: true,
+    default: () => ({ $date: new Date() }),
+    get: (val: { $date: Date }) => val.$date,
+    set: (val: Date) => ({ $date: val }),
+  })
+  dateLastEdited!: { $date: Date };
 
   @Prop({ required: true, default: {} })
   components!: Components;
@@ -166,7 +178,7 @@ export class Project {
 export const ProjectSchema = SchemaFactory.createForClass(Project);
 
 ProjectSchema.pre('save', function (next) {
-  this.dateLastEdited = new Date();
+  this.dateLastEdited = { $date: new Date() };
   next();
 });
 

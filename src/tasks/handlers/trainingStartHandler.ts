@@ -51,6 +51,7 @@ export const trainingStartHandler = async (
     dateFinished: null,
     projectId: project._id,
     ownerId: user._id,
+    startNodeId: body.project.startNodeId,
   }).save();
   const taskId = insertResult._id;
   await new QueueItemModel({ taskId: taskId, priority: priority }).save();

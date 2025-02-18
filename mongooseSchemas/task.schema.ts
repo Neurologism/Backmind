@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument, Types, Schema as MongooseSchema } from 'mongoose';
+import { HydratedDocument, Types } from 'mongoose';
 import mongoose from 'mongoose';
 
 export type TaskDocument = HydratedDocument<Task>;
@@ -18,9 +18,6 @@ export class Task {
   @Prop({ required: true, default: [] })
   output!: any[];
 
-  @Prop({ type: MongooseSchema.Types.Mixed, required: true })
-  components!: any;
-
   @Prop({ required: true, default: () => new Date() })
   dateLastUpdated!: Date;
 
@@ -35,6 +32,9 @@ export class Task {
 
   @Prop({ required: true, ref: 'projects' })
   projectId!: Types.ObjectId;
+
+  @Prop({ required: true, ref: 'nodes' })
+  startNodeId!: Types.ObjectId;
 }
 
 export const TaskSchema = SchemaFactory.createForClass(Task);

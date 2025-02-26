@@ -5,6 +5,34 @@ on:
     branches: ['development']
 
 jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install pnpm
+        run: npm install -g pnpm
+
+      - name: Set up pnpm global bin directory
+        run: |
+          mkdir -p ~/.pnpm
+          pnpm config set global-bin-dir ~/.pnpm
+          echo 'export PATH=~/.pnpm:$PATH' >> $GITHUB_ENV
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Deploy
+        run: ssh -o StrictHostKeyChecking=no gh-actions@ssh.icinoxis.net -p 22137 'bash -s' < ./scripts/deployDevNestjs.sh
+        env:
+          SSH_AUTH_SOCK: ${{ secrets.SSH_AUTH_SOCK }}
+          SSH_AGENT_PID: ${{ secrets.SSH_AGENT_PID }}
   deploy-dev:
     runs-on: ubuntu-latest
     steps:
@@ -15,6 +43,9 @@ jobs:
         uses: webfactory/ssh-agent@v0.5.3
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Install dependencies
+        run: pnpm install
 
       - name: Deploy to server
         run: |

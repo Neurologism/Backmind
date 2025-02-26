@@ -32,7 +32,7 @@ describe('UsersController', () => {
       __dirname,
       '../../dataStorage/pfp'
     );
-    process.env.PFP_SAVE_SIZE = '512';
+    process.env.PFP_SAVE_SIZE = '2048';
     process.env.DISCORD_LOGGING = 'false';
   });
 

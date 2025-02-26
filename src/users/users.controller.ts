@@ -99,7 +99,10 @@ export class UsersController {
 
   @Put(':userId/upload-pfp')
   @UseInterceptors(
-    MultipartInterceptor({ fileType: /jpeg|png/, maxFileSize: 1000_000 })
+    MultipartInterceptor({
+      fileType: /jpeg|png|jpg|JPG/,
+      maxFileSize: 1000_000,
+    })
   )
   async uploadPfp(
     @Param('userId', ParseObjectIdPipe) userId: Types.ObjectId,

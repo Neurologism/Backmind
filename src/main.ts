@@ -24,7 +24,7 @@ import { createApp } from './app';
 async function bootstrap() {
   await connectToDatabase();
   const app = await createApp();
-  await app.listen(Number(process.env.PORT));
+  await app.listen(Number(process.env.PORT), process.env.HOST);
 }
 
 bootstrap();

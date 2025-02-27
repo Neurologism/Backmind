@@ -120,6 +120,12 @@ export class Components {
 
   @Prop({ required: false })
   perceptrons!: Array<Object>;
+
+  @Prop({ required: false })
+  inputNodes!: Array<string>;
+
+  @Prop({ required: false })
+  inputNodeUserValues!: Array<number>;
 }
 
 @Schema()

@@ -13,24 +13,13 @@ export const updateSchema = z
         ownerId: z
           .string()
           .length(24)
-          .optional()
-          .transform((ownerId) => {
-            if (ownerId === undefined) {
-              return undefined;
-            }
-            return new mongoose.Types.ObjectId(ownerId);
-          }),
+          .transform((val) => new mongoose.Types.ObjectId(val))
+          .optional(),
         components: componentSchema.optional(),
         editorType: z.string().optional(),
       })
       .strict(),
   })
-  .strict()
-  .refine(
-    async (data) => {
-      return Object.keys(data.project);
-    },
-    { message: 'You must provide at least one field to update.' }
-  );
+  .strict();
 
 export type UpdateDto = z.infer<typeof updateSchema>;

@@ -12,6 +12,7 @@ export const updateHandler = async (
   const project = await ProjectModel.findOne({
     _id: projectId,
   });
+  body.project.ownerId = new Types.ObjectId(body.project.ownerId);
 
   if (!project) {
     throw new HttpException(

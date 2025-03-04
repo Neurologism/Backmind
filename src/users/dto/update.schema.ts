@@ -22,21 +22,21 @@ export const updateSchema = z
       })
       .strict(),
   })
-  .strict()
-  .refine(
-    (data) => {
-      return Object.keys(data.user).length > 0;
-    },
-    { message: 'Provide at least one field to update.' }
-  )
-  .refine(
-    (data) => {
-      return !(
-        data.user.newPassword !== undefined &&
-        data.user.oldPassword === undefined
-      );
-    },
-    { message: 'You need to provide the old password for a password change.' }
-  );
+  .strict();
+// .refine(
+//   (data) => {
+//     return Object.keys(data.user).length > 0;
+//   },
+//   { message: 'Provide at least one field to update.' }
+// )
+// .refine(
+//   (data) => {
+//     return !(
+//       data.user.newPassword !== undefined &&
+//       data.user.oldPassword === undefined
+//     );
+//   },
+//   { message: 'You need to provide the old password for a password change.' }
+// );
 
 export type UpdateDto = z.infer<typeof updateSchema>;

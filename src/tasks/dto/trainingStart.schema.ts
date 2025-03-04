@@ -5,14 +5,9 @@ export const trainingStartSchema = z
   .object({
     project: z
       .object({
-        _id: z
-          .string()
-          .length(24)
-          .transform((_id) => new mongoose.Types.ObjectId(_id)),
-        startNodeId: z
-          .string()
-          .length(24)
-          .transform((startNodeId) => new mongoose.Types.ObjectId(startNodeId)),
+        _id: z.string().length(24),
+        // .transform((_id) => new mongoose.Types.ObjectId(_id)),
+        startNodeId: z.string(),
       })
       .strict(),
   })

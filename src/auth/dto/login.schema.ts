@@ -13,12 +13,12 @@ export const loginSchema = z
       })
       .strict(),
   })
-  .strict();
-// .refine(
-//   async (data) => {
-//     return !(!data.user.email && !data.user.brainetTag);
-//   },
-//   { message: 'Either email or brainetTag must be provided' }
-// );
+  .strict()
+  .refine(
+    async (data) => {
+      return !(!data.user.email && !data.user.brainetTag);
+    },
+    { message: 'Either email or brainetTag must be provided' }
+  );
 
 export type LoginDto = z.infer<typeof loginSchema>;

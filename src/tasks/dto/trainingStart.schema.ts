@@ -9,10 +9,7 @@ export const trainingStartSchema = z
           .string()
           .length(24)
           .transform((_id) => new mongoose.Types.ObjectId(_id)),
-        startNodeId: z
-          .string()
-          .length(24)
-          .transform((startNodeId) => new mongoose.Types.ObjectId(startNodeId)),
+        startNodeId: z.string(),
       })
       .strict(),
   })

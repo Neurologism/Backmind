@@ -1,7 +1,7 @@
 import { UserDocument, UserModel } from '../../../mongooseSchemas/user.schema';
 import { ProjectModel } from '../../../mongooseSchemas/project.schema';
 import { HttpException, HttpStatus } from '@nestjs/common';
-import { Types } from 'mongoose';
+import mongoose, { Types } from 'mongoose';
 import { UpdateDto } from '../dto/update.schema';
 
 export const updateHandler = async (
@@ -12,7 +12,6 @@ export const updateHandler = async (
   const project = await ProjectModel.findOne({
     _id: projectId,
   });
-  body.project.ownerId = new Types.ObjectId(body.project.ownerId);
 
   if (!project) {
     throw new HttpException(

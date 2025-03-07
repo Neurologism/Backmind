@@ -61,7 +61,7 @@ describe('TasksController', () => {
       const trainingStartDto: TrainingStartDto = {
         project: {
           _id: project._id,
-          startNodeId: new Types.ObjectId(),
+          startNodeId: 'asdf',
         },
       };
       const result = await tasksController.trainingStart(

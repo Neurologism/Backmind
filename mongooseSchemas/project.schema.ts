@@ -124,8 +124,8 @@ export class Components {
   @Prop({ required: false })
   inputNodes!: Array<string>;
 
-  @Prop({ required: false })
-  inputNodeUserValues!: Array<number>;
+  @Prop({ type: raw({}), required: false })
+  inputNodeUserValues!: Record<string, number>;
 }
 
 @Schema()

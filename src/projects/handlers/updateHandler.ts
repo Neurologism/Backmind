@@ -12,6 +12,17 @@ export const updateHandler = async (
   const project = await ProjectModel.findOne({
     _id: projectId,
   });
+  if (project === null) {
+    throw new HttpException('Project not found.', HttpStatus.NOT_FOUND);
+  }
+  if (project.ownerId === undefined) {
+    throw new HttpException(
+      'Project does not have an owner.',
+      HttpStatus.NOT_FOUND
+    );
+  }
+
+  body.project.ownerId = new mongoose.Types.ObjectId(project.ownerId);
 
   if (!project) {
     throw new HttpException(

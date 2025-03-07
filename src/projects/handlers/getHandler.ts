@@ -27,8 +27,7 @@ export const getHandler = async (
       );
     }
     const isOwner = project.ownerId.toString() === user._id.toString();
-    console.log(project.ownerId.toString());
-    console.log(user._id.toString());
+
     if (!isOwner) {
       throw new HttpException(
         'This project is private. You do not have access to it.',

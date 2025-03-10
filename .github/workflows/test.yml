@@ -29,6 +29,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - name: Init git submodules
+        run: git submodule update --init --recursive
+
       - name: Run tests
         run: pnpm test
         # retry: 3 # Add retry logic

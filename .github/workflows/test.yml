@@ -17,6 +17,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -28,9 +30,6 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install
-
-      - name: Init git submodules
-        run: git submodule update --init --recursive
 
       - name: Run tests
         run: pnpm test

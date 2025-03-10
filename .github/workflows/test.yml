@@ -28,13 +28,13 @@ jobs:
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 10
+          version: 9
 
       - name: Install dependencies
         run: pnpm install --force
 
-      - name: approve builds
-        run: pnpm approve-builds <<< a <<< y
+      # - name: approve builds
+      #   run: pnpm approve-builds <<< a <<< y
 
       - name: pwd
         run: pwd

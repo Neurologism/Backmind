@@ -24,8 +24,8 @@ jobs:
           node-version: '14'
 
       - name: Install dependencies
-        run: npm install
+        run: pnpm install
 
       - name: Run tests
-        run: npm test
+        run: pnpm test
         # retry: 3 # Add retry logic

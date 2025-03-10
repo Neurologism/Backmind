@@ -12,7 +12,6 @@ jobs:
         options: --health-cmd="exit 0" # Disable health check to avoid flakiness
         ports:
           - 27017:27017
-        # timeout: 300s # Increase timeout
 
     steps:
       - name: Checkout code
@@ -31,11 +30,8 @@ jobs:
         with:
           version: 10
 
-      # - name: Install pnpm
-      #   run: npm install -g pnpm
-
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --force
 
       - name: pwd
         run: pwd
@@ -46,13 +42,8 @@ jobs:
       - name: ls
         run: ls node_modules/.pnpm/
 
-      # - name: Authenticate and initialize submodules
-      #   run: |
-      #     git config --global url."https://${{ secrets.GH_PAT }}@github.com/".insteadOf "https://github.com/"
-      #     git submodule update --init --recursive
       - name: Run tests
         run: pnpm test
-        # retry: 3 # Add retry logic
 
       - name: Test build
         run: pnpm build

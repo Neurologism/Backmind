@@ -34,7 +34,7 @@ jobs:
         run: pnpm install --force
 
       - name: approve builds
-        run: pnpm approve-builds
+        run: pnpm approve-builds <<< a
 
       - name: pwd
         run: pwd

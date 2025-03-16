@@ -33,7 +33,7 @@ export const setStateHandler = async (
 
   if (project === null) {
     project = new ProjectModel({
-      name: tutorial.name,
+      name: tutorial.name + user._id,
       description: tutorial.description,
       ownerId: user._id,
       visibility: 'private',
@@ -53,7 +53,15 @@ export const setStateHandler = async (
     user.completedTutorials.push(tutorial._id);
   }
 
-  await project.save();
+  try {
+    await project.save();
+  } catch (error) {
+    let er = error as Error;
+    throw new HttpException(
+      `Failed to save project: ${er.message}`,
+      HttpStatus.INTERNAL_SERVER_ERROR
+    );
+  }
   await user.save();
 
   return { msg: 'Tutorial state updated', projectId: project._id };

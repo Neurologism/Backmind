@@ -19,7 +19,7 @@ const tutorials = [
   'intro/10.json',
 ];
 
-const resetProjects = false;
+const resetProjects = true;
 
 async function createTutorial(tutorialPath: string) {
   const tutorialJson = JSON.parse(
@@ -108,13 +108,23 @@ export async function tutorialScript() {
 
 // If this script is run directly, execute the tutorialScript function
 if (require.main === module) {
-  mongoose.connect(process.env.MONGO_URI as string, {
-    dbName: process.env.DB_NAME,
-  });
-  console.log('Connected to database');
-  tutorialScript().catch((err) => {
-    console.error(err);
-    process.exit(1);
-  });
-  mongoose.disconnect();
+  mongoose
+    .connect(process.env.MONGO_URI as string, {
+      dbName: process.env.DB_NAME,
+    })
+    .then(() => {
+      console.log('Connected to database');
+      tutorialScript()
+        .catch((err) => {
+          console.error(err);
+          process.exit(1);
+        })
+        .finally(() => {
+          mongoose.disconnect();
+        });
+    })
+    .catch((err) => {
+      console.error('Failed to connect to database', err);
+      process.exit(1);
+    });
 }

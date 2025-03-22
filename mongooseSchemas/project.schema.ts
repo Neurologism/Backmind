@@ -94,10 +94,10 @@ export class Edge {
 
 @Schema()
 export class Components {
-  @Prop({ required: false })
+  @Prop({ required: false, default: [] })
   nodes!: Node[];
 
-  @Prop({ required: false })
+  @Prop({ required: false, default: [] })
   edges!: Edge[];
 
   @Prop({ required: false })

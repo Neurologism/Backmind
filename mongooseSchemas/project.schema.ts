@@ -156,7 +156,6 @@ export class Project {
     required: true,
     default: [],
     ref: 'tasks',
-    type: () => [Types.ObjectId],
   })
   tasks!: Types.ObjectId[];
 

@@ -190,7 +190,10 @@ export class AuthService {
     const email = user.emails[emailIndex];
 
     if (email.verified) {
-      throw new HttpException('Email already verified', HttpStatus.BAD_REQUEST);
+      throw new HttpException(
+        'Email already verified',
+        HttpStatus.ALREADY_REPORTED
+      );
     }
 
     if (email.dateVerificationSent === undefined) {

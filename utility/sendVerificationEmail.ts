@@ -9,7 +9,7 @@ export const sendVerificationEmail = async (
 ) => {
   const mailVerificationToken = crypto.randomBytes(32).toString('hex');
   const verificationLink = new URL(
-    `/api/auth/verify-email?token=${mailVerificationToken}`,
+    `/verify-email?token=${mailVerificationToken}`,
     process.env.BACKMIND_HOSTNAME as string
   ).toString();
 

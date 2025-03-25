@@ -11,6 +11,7 @@ import { RegisterDto } from './dto/register.schema';
 import { AppLogger } from '../../providers/logger.provider';
 import { randomBytes } from 'node:crypto';
 import { Channel, Color, sendToDiscord } from '../../utility/sendToDiscord';
+import { sendPasswordResetEmail } from 'utility/sendPasswordResetEmail';
 
 @Injectable()
 export class AuthService {
@@ -241,21 +242,42 @@ export class AuthService {
   async resetPassword(token: string, userId: string, newPassword: string) {
     const user = await UserModel.findById(userId);
     if (!(user && user.resetPasswordToken && user.resetPasswordTokenCreatedAt))
-      throw HttpStatus.NOT_FOUND;
+      throw new HttpException('Token expired.', HttpStatus.NOT_FOUND);
     if (
       (new Date().getTime() - user.resetPasswordTokenCreatedAt.getTime()) /
         1000 /
         60 >
       Number(process.env.RESET_PASSWORD_EXPIRY_MINTUES)
     ) {
-      throw HttpStatus.UNAUTHORIZED;
+      throw new HttpException('Token expired.', HttpStatus.UNAUTHORIZED);
     }
     if (user.resetPasswordToken !== token) {
-      throw HttpStatus.UNAUTHORIZED;
+      throw new HttpException(
+        'Wrong reset password token.',
+        HttpStatus.UNAUTHORIZED
+      );
     }
     const salt = await bcrypt.genSalt(Number(process.env.SALT_ROUNDS));
     const hashedPassword = await bcrypt.hash(newPassword, salt);
     user.passwordHash = hashedPassword;
     await user.save();
+  }
+
+  async mailResetPassword(email: string) {
+    const user = await UserModel.findOne({
+      emails: {
+        $elemMatch: {
+          address: email,
+          verified: true,
+        },
+      },
+    });
+    if (!user) throw new HttpException('User not found.', HttpStatus.NOT_FOUND);
+    const token = randomBytes(32).toString('hex');
+    user.resetPasswordToken = token;
+    await Promise.all([
+      user.save(),
+      sendPasswordResetEmail(email, this.logger, token, user._id.toString()),
+    ]);
   }
 }

@@ -260,6 +260,7 @@ export class AuthService {
     const salt = await bcrypt.genSalt(Number(process.env.SALT_ROUNDS));
     const hashedPassword = await bcrypt.hash(newPassword, salt);
     user.passwordHash = hashedPassword;
+    user.resetPasswordToken = randomBytes(32).toString('hex');
     await user.save();
   }
 

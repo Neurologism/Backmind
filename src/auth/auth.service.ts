@@ -237,4 +237,25 @@ export class AuthService {
     await user.save();
     return { msg: 'Logged out from all devices successfully' };
   }
+
+  async resetPassword(token: string, userId: string, newPassword: string) {
+    const user = await UserModel.findById(userId);
+    if (!(user && user.resetPasswordToken && user.resetPasswordTokenCreatedAt))
+      throw HttpStatus.NOT_FOUND;
+    if (
+      (new Date().getTime() - user.resetPasswordTokenCreatedAt.getTime()) /
+        1000 /
+        60 >
+      Number(process.env.RESET_PASSWORD_EXPIRY_MINTUES)
+    ) {
+      throw HttpStatus.UNAUTHORIZED;
+    }
+    if (user.resetPasswordToken !== token) {
+      throw HttpStatus.UNAUTHORIZED;
+    }
+    const salt = await bcrypt.genSalt(Number(process.env.SALT_ROUNDS));
+    const hashedPassword = await bcrypt.hash(newPassword, salt);
+    user.passwordHash = hashedPassword;
+    await user.save();
+  }
 }

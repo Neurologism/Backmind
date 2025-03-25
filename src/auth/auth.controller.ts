@@ -111,7 +111,13 @@ export class AuthController {
     return await this.authService.resetPassword(
       token,
       userId,
-      body.user.plainPassword
+      body.plainPassword
     );
+  }
+
+  @Public()
+  @Post('mail-reset-password')
+  async mailResetPassword(@Query('email') email: string) {
+    return await this.authService.mailResetPassword(email);
   }
 }

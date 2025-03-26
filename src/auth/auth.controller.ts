@@ -17,6 +17,8 @@ import { Public } from './strategies/jwt.strategy';
 import { User } from '../../decorators/user.decorator';
 import { UserDocument } from '../../mongooseSchemas/user.schema';
 import { Channel, Color, sendToDiscord } from '../../utility/sendToDiscord';
+import { ResetPasswordDto } from './dto/resetPassword.schema';
+import { HttpStatusCode } from 'axios';
 // import { AuthGuard } from '@nestjs/passport';
 // import fastifyPassport from '@fastify/passport';
 // import { GithubAuthGuard } from './github-auth.guard';
@@ -97,5 +99,25 @@ export class AuthController {
   @Patch('verify-email')
   async verifyEmail(@Query('token') token: string) {
     return await this.authService.verifyEmail(token);
+  }
+
+  @Public()
+  @Patch('reset-password')
+  async resetPassword(
+    @Body() body: ResetPasswordDto,
+    @Query('token') token: string,
+    @Query('user_id') userId: string
+  ) {
+    return await this.authService.resetPassword(
+      token,
+      userId,
+      body.plainPassword
+    );
+  }
+
+  @Public()
+  @Post('mail-reset-password')
+  async mailResetPassword(@Query('email') email: string) {
+    return await this.authService.mailResetPassword(email);
   }
 }

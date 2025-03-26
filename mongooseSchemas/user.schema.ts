@@ -118,6 +118,12 @@ export class User {
   passwordHash!: string;
 
   @Prop()
+  resetPasswordToken!: string;
+
+  @Prop({ default: () => new Date() })
+  resetPasswordTokenCreatedAt!: Date;
+
+  @Prop()
   dateOfBirth?: Date;
 
   @Prop({ default: '' })

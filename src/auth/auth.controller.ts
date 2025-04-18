@@ -16,7 +16,7 @@ import { AuthService } from './auth.service';
 import { Public } from './strategies/jwt.strategy';
 import { User } from '../../decorators/user.decorator';
 import { UserDocument } from '../../mongooseSchemas/user.schema';
-import { Channel, Color, sendToDiscord } from '../../utility/sendToDiscord';
+import { Color, sendToDiscord } from '../../utility/sendToDiscord';
 // import { AuthGuard } from '@nestjs/passport';
 // import fastifyPassport from '@fastify/passport';
 // import { GithubAuthGuard } from './github-auth.guard';
@@ -56,7 +56,7 @@ export class AuthController {
       description: `**Server**: ${process.env.BACKMIND_HOSTNAME}\n**emails:** ${user.emails.map((email) => email.address)}\n**brainetTag:** ${user.brainetTag}`,
       color: Color.BLUE,
     };
-    await sendToDiscord(embed, Channel.LOGIN);
+    await sendToDiscord(embed, process.env.WEBHOOK_URL_LOGIN);
 
     return response;
   }

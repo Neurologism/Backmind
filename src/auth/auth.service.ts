@@ -10,7 +10,7 @@ import { sendVerificationEmail } from '../../utility/sendVerificationEmail';
 import { RegisterDto } from './dto/register.schema';
 import { AppLogger } from '../../providers/logger.provider';
 import { randomBytes } from 'node:crypto';
-import { Channel, Color, sendToDiscord } from '../../utility/sendToDiscord';
+import { Color, sendToDiscord } from '../../utility/sendToDiscord';
 
 @Injectable()
 export class AuthService {
@@ -157,7 +157,7 @@ export class AuthService {
       description: `**Server**: ${process.env.BACKMIND_HOSTNAME}\n**Email:** ${body.user.email}\n**Brainet Tag:** ${body.user.brainetTag}`,
       color: Color.GREEN,
     };
-    await sendToDiscord(embed, Channel.REGISTER);
+    await sendToDiscord(embed, process.env.WEBHOOK_URL_REGISTER);
 
     return await this.login(savedUser);
   }

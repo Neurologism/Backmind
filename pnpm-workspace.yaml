@@ -2,3 +2,6 @@ onlyBuiltDependencies:
   - '@nestjs/core'
   - '@swc/core'
   - mongodb-memory-server
+
+packages:
+  - .

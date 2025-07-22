@@ -26,6 +26,7 @@ export async function createApp() {
         ? '*'
         : (process.env.WHITEMIND_HOSTNAME as string),
     credentials: true,
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   });
 
   return app;

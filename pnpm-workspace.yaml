@@ -1,0 +1,6 @@
+onlyBuiltDependencies:
+  - '@nestjs/core'
+  - '@swc/core'
+  - bcrypt
+  - mongodb-memory-server
+  - sharp

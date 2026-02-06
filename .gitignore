@@ -1,6 +1,7 @@
 # custom
 .vscode/
 dataStorage/
+.idea
 
 # Logs
 logs

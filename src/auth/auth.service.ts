@@ -4,7 +4,7 @@ import {
   UserModel,
 } from '../../mongooseSchemas/user.schema';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
+import { JwtService, type JwtSignOptions } from '@nestjs/jwt';
 import bcrypt from 'bcrypt';
 import { sendVerificationEmail } from '../../utility/sendVerificationEmail';
 import { RegisterDto } from './dto/register.schema';
@@ -70,11 +70,14 @@ export class AuthService {
   }
 
   async login(user: UserDocument) {
+    const expiresIn = process.env.JWT_TOKEN_EXPIRE_IN as
+      | JwtSignOptions['expiresIn']
+      | undefined;
     const access_token = this.jwtService.sign(
       { _id: '' + user._id },
       {
         secret: process.env.JWT_SECRET as string,
-        expiresIn: process.env.JWT_TOKEN_EXPIRE_IN,
+        ...(expiresIn ? { expiresIn } : {}),
       }
     );
     user.tokens.push({

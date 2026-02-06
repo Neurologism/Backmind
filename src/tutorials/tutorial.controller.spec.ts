@@ -8,6 +8,8 @@ import { Types } from 'mongoose';
 import * as dotenv from 'dotenv';
 import { tutorialScript } from '../../scripts/createTutorials';
 import { ProjectModel } from '../../mongooseSchemas/project.schema';
+import fs from 'fs';
+import path from 'path';
 
 dotenv.config();
 
@@ -36,8 +38,49 @@ describe('TutorialsController', () => {
     });
     await user.save();
 
-    // Call the tutorialScript function
-    await tutorialScript();
+    const tutorialFile = path.resolve(
+      __dirname,
+      '../../TutorMind/intro/1.json'
+    );
+
+    if (fs.existsSync(tutorialFile)) {
+      await tutorialScript();
+    } else {
+      const startProject = await new ProjectModel({
+        name: 'intro-1',
+        description: 'Test tutorial project',
+        ownerId: user._id,
+        visibility: 'private',
+        isTutorialProject: true,
+      }).save();
+
+      await new TutorialModel({
+        name: 'intro-1',
+        summary: 'Test tutorial',
+        description: 'Test tutorial description',
+        ownerId: user._id,
+        visibility: 'public',
+        requiredPremiumTier: 0,
+        requiredTutorials: [],
+        nextTutorials: [],
+        experienceGain: 100,
+        startProject: startProject._id,
+        unlockNodes: [],
+        steps: [
+          {
+            text: '',
+            narrator: '',
+            addNodes: [],
+            addEdges: [],
+            removeNodes: [],
+            removeEdges: [],
+            highlightNodeTypes: [],
+            unlockNodes: [],
+            trainingEnabled: false,
+          },
+        ],
+      }).save();
+    }
   });
 
   afterAll(async () => {

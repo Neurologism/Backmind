@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument, Types } from 'mongoose';
+import { Types } from 'mongoose';
 import mongoose from 'mongoose';
 
 enum PremiumTier {
@@ -10,25 +10,28 @@ enum PremiumTier {
 }
 
 @Schema()
-class UnlockNode {
-  @Prop({ required: true })
+export class UnlockNode {
+  @Prop({ required: true, type: () => String })
   type!: string;
 
-  @Prop()
-  id: string = new Types.ObjectId().toString();
+  @Prop({
+    required: true,
+    type: () => String,
+    default: () => new Types.ObjectId().toString(),
+  })
+  id!: string;
 
-  @Prop({ required: true, default: [] })
+  @Prop({ required: true, type: () => [String], default: [] })
   data!: string[];
 }
 
-const UnlockNodeSchema = SchemaFactory.createForClass(UnlockNode);
-
 @Schema()
-class Step {
+export class Step {
   @Prop({
     required: function () {
       return typeof (this as any).text !== 'string';
     },
+    type: () => String,
   })
   text!: string;
 
@@ -37,41 +40,38 @@ class Step {
       return typeof (this as any).narrator !== 'string';
     },
     default: '',
+    type: () => String,
   })
   narrator!: string;
 
-  @Prop({ required: true, default: [] })
+  @Prop({ required: true, default: [], type: () => [Object] })
   addNodes!: Record<string, any>[];
 
-  @Prop({ required: true, default: [] })
+  @Prop({ required: true, default: [], type: () => [Object] })
   addEdges!: Record<string, any>[];
 
-  @Prop({ required: true, default: [] })
+  @Prop({ required: true, default: [], type: () => [Object] })
   removeNodes!: Record<string, any>[];
 
-  @Prop({ required: true, default: [] })
+  @Prop({ required: true, default: [], type: () => [Object] })
   removeEdges!: Record<string, any>[];
 
-  @Prop({ required: true, default: [] })
+  @Prop({ required: true, default: [], type: () => [String] })
   highlightNodeTypes!: string[];
 
-  @Prop({ required: true, default: [] })
+  @Prop({ required: true, default: [], type: () => [UnlockNode] })
   unlockNodes!: UnlockNode[];
 
-  @Prop({ required: true, default: false })
+  @Prop({ required: true, default: false, type: () => Boolean })
   trainingEnabled!: boolean;
 
-  @Prop()
+  @Prop({ type: () => Types.ObjectId })
   trainedModel?: Types.ObjectId;
 }
 
-const StepSchema = SchemaFactory.createForClass(Step);
-
-export type TutorialDocument = HydratedDocument<Tutorial>;
-
 @Schema()
 export class Tutorial {
-  @Prop({ required: true, index: true, unique: true })
+  @Prop({ required: true, index: true, unique: true, type: () => String })
   name!: string;
 
   @Prop({
@@ -79,6 +79,7 @@ export class Tutorial {
       return typeof (this as any).summary !== 'string';
     },
     default: '',
+    type: () => String,
   })
   summary!: string;
 
@@ -87,32 +88,35 @@ export class Tutorial {
       return typeof (this as any).description !== 'string';
     },
     default: '',
+    type: () => String,
   })
   description!: string;
 
-  @Prop({ ref: 'users' })
+  @Prop({ ref: 'users', type: () => Types.ObjectId })
   ownerId!: Types.ObjectId;
 
-  @Prop({ enum: ['public', 'private'], required: true })
+  @Prop({ enum: ['public', 'private'], required: true, type: () => String })
   visibility!: string;
 
   @Prop({
     enum: PremiumTier,
     required: true,
     default: PremiumTier.Free,
+    type: () => Number,
   })
   requiredPremiumTier!: number;
 
-  @Prop({ required: true, default: () => new Date() })
+  @Prop({ required: true, default: () => new Date(), type: () => Date })
   dateCreatedAt!: Date;
 
-  @Prop({ required: true, default: () => new Date() })
+  @Prop({ required: true, default: () => new Date(), type: () => Date })
   dateLastEdited!: Date;
 
   @Prop({
     required: true,
     default: [],
     ref: 'tutorials',
+    type: () => [Types.ObjectId],
   })
   requiredTutorials!: Types.ObjectId[];
 
@@ -120,19 +124,20 @@ export class Tutorial {
     required: true,
     default: [],
     ref: 'tutorials',
+    type: () => [Types.ObjectId],
   })
   nextTutorials!: Types.ObjectId[];
 
-  @Prop({ required: true, default: 100 })
+  @Prop({ required: true, default: 100, type: () => Number })
   experienceGain!: number;
 
-  @Prop({ required: true, ref: 'projects' })
+  @Prop({ required: true, ref: 'projects', type: () => Types.ObjectId })
   startProject!: Types.ObjectId;
 
-  @Prop({ required: true, default: [] })
+  @Prop({ required: true, default: [], type: () => [UnlockNode] })
   unlockNodes!: UnlockNode[];
 
-  @Prop({ required: true, default: [] })
+  @Prop({ required: true, default: [], type: () => [Step] })
   steps!: Step[];
 }
 

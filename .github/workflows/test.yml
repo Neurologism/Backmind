@@ -12,20 +12,41 @@ jobs:
         options: --health-cmd="exit 0" # Disable health check to avoid flakiness
         ports:
           - 27017:27017
-        timeout: 300s # Increase timeout
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          token: ${{ secrets.GH_PAT }}
 
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
-          node-version: '14'
+          node-version: '22'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
 
       - name: Install dependencies
-        run: npm install
+        run: pnpm install --force
+
+      # - name: approve builds
+      #   run: pnpm approve-builds <<< a <<< y
+
+      - name: pwd
+        run: pwd
+
+      - name: ls
+        run: ls node_modules
+
+      - name: ls
+        run: ls node_modules/.pnpm/
 
       - name: Run tests
-        run: npm test
-        retry: 3 # Add retry logic
+        run: pnpm test
+
+      - name: Test build
+        run: pnpm build

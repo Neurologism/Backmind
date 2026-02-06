@@ -20,12 +20,38 @@ export async function createApp() {
   await app.register(fastifyPassport.secureSession());
   await app.register(multipart);
 
+  const normalizeOrigin = (origin: string) => origin.replace(/\/+$/, '').trim();
+
+  const rawOrigins =
+    process.env.CORS_ALLOWED_ORIGINS ?? process.env.WHITEMIND_HOSTNAME ?? '';
+  const allowedOrigins = rawOrigins
+    .split(',')
+    .map((origin) => normalizeOrigin(origin))
+    .filter(Boolean);
+  const allowAllInDev = process.env.NODE_ENV === 'development';
+
   app.enableCors({
-    origin:
-      process.env.NODE_ENV === 'development'
-        ? '*'
-        : (process.env.WHITEMIND_HOSTNAME as string),
+    origin: (origin, callback) => {
+      if (!origin) {
+        callback(null, true);
+        return;
+      }
+
+      if (allowAllInDev) {
+        callback(null, true);
+        return;
+      }
+
+      const normalizedOrigin = normalizeOrigin(origin);
+      if (allowedOrigins.includes(normalizedOrigin)) {
+        callback(null, true);
+        return;
+      }
+
+      callback(new Error('CORS origin not allowed'), false);
+    },
     credentials: true,
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   });
 
   return app;

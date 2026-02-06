@@ -59,4 +59,7 @@ export const setEnv = (filename: string = '.env') => {
   process.env.WRITE_PROJECT_JSON = process.env.WRITE_PROJECT_JSON || 'false';
   process.env.DISCORD_LOGGING = process.env.DISCORD_LOGGING || 'true';
   process.env.HOST = process.env.HOST || '0.0.0.0';
+  process.env.WEBHOOK_URL_LOGIN = process.env.WEBHOOK_URL_LOGIN || '';
+  process.env.WEBHOOK_URL_REGISTER = process.env.WEBHOOK_URL_REGISTER || '';
+  process.env.WEBHOOK_URL_GET_USER = process.env.WEBHOOK_URL_GET_USER || '';
 };

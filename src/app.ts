@@ -12,7 +12,10 @@ export async function createApp() {
     new FastifyAdapter() as any
   )) as any;
 
-  await app.register(fastifyHelmet, { global: true });
+  await app.register(fastifyHelmet, {
+    global: true,
+    crossOriginResourcePolicy: { policy: 'cross-origin' },
+  });
   await app.register(fastifySecureSession, {
     key: process.env.SECRET_KEY as string,
   });

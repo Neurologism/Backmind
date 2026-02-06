@@ -18,4 +18,4 @@ jobs:
 
       - name: Deploy to server
         run: |
-          ssh -o StrictHostKeyChecking=no brainet@142.93.175.194 'bash -s' < ./scripts/deployMainNestjs.sh
+          ssh -o StrictHostKeyChecking=no -p ${{ secrets.AZURE_SSH_PORT }} ${{ secrets.AZURE_SSH_USER }}@${{ secrets.AZURE_SSH_HOST }} 'bash -s' < ./scripts/deployMainNestjs.sh

@@ -136,7 +136,9 @@ resource "azurerm_linux_virtual_machine" "main" {
     # recreate the disk.
     name                 = "backmind_OsDisk_1_9eca476daf194611a2e7b0d7f6252101"
     caching              = "ReadWrite"
-    storage_account_type = "Premium_LRS"
+    # Premium_LRS -> StandardSSD_LRS 2026-07-20; near-zero traffic doesn't
+    # justify premium IOPS (~$3/mo saved).
+    storage_account_type = "StandardSSD_LRS"
     disk_size_gb         = 30
   }
 
